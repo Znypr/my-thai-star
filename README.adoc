@@ -1,3 +1,5 @@
+Test
+
 = My Thai Star
 
 develop: image:https://travis-ci.com/devonfw/my-thai-star.svg?branch=develop["build-status",link="https://travis-ci.com/devonfw/my-thai-star"]
