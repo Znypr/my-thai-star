@@ -19,7 +19,7 @@ public class CountItemReader implements ItemStreamReader<Integer> {
 
   private final static Logger LOG = LoggerFactory.getLogger(CountBatchConfig.class);
 
-  private int maxCount = 101;
+  private int maxCount = 100;
 
   private int currentIndex = 0;
 
