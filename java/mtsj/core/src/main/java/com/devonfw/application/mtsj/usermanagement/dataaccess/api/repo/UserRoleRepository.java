@@ -29,10 +29,10 @@ public interface UserRoleRepository extends DefaultRepository<UserRoleEntity> {
     if ((name != null) && !name.isEmpty()) {
       QueryUtil.get().whereString(query, $(alias.getName()), name, criteria.getNameOption());
     }
-    Boolean active = criteria.getActive();
-    if (active != null) {
-      query.where(Alias.$(alias.getActive()).eq(active));
-    }
+    boolean active = criteria.getActive();
+
+    query.where(Alias.$(alias.getActive()).eq(active));
+
 
     return QueryUtil.get().findPaginated(criteria.getPageable(), query, false);
   }
