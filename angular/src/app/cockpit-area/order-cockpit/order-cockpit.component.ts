@@ -41,6 +41,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     'booking.bookingDate',
     'booking.email',
     'booking.bookingToken',
+    'booking.status',
   ];
 
   pageSizes: number[];
@@ -49,6 +50,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     bookingDate: undefined,
     email: undefined,
     bookingToken: undefined,
+    status: undefined,
   };
 
   constructor(
@@ -76,6 +78,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
           { name: 'booking.email', label: cockpitTable.emailH },
           { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
+          { name: 'booking.status', label: cockpitTable.statusH },
         ];
       });
   }
