@@ -183,7 +183,7 @@ export const DefaultENTest = {
       },
       status: {
         open: 'open',
-        processing: 'processing',
+        preparing: 'processing',
         paid: 'paid',
       },
     },
