@@ -185,6 +185,7 @@
             "reservationDateH": "Число бронирования",
             "emailH": "Эл. почта",
             "bookingTokenH": "Номер ссылки",
+            "statusH": "Статус",
             "ownerH": "Владелец",
             "tableH": "Стол",
             "creationDateH": "Число создания"

@@ -37,6 +37,7 @@ const translocoServiceStub = {
     reservationDateH: 'Reservation Date',
     emailH: 'Email',
     bookingTokenH: 'Reference Number',
+    statusH: 'Status',
     ownerH: 'Owner',
     tableH: 'Table',
     creationDateH: 'Creation date',

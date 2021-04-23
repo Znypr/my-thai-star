@@ -185,6 +185,7 @@
       "reservationDateH": "Fecha de reserva",
       "emailH": "Email",
       "bookingTokenH": "Número de referencia",
+      "statusH": "Estado",
       "ownerH": "Responsable",
       "tableH": "Mesa",
       "creationDateH": "Fecha de creación"

@@ -194,6 +194,7 @@
       "reservationDateH": "Data rezerwacji",
       "emailH": "Email",
       "bookingTokenH": "Numer referencyjny",
+      "statusH": "Stanu",
       "ownerH": "Wlasciciel",
       "tableH": "Stolik",
       "creationDateH": "Data utworzenia"
