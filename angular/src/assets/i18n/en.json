@@ -179,6 +179,11 @@
         "extrasH": "Extra",
         "quantityH": "Quantity",
         "priceH": "Price"
+      },
+      "status": {
+        "open": "open",
+        "processing": "processing",
+        "paid": "paid"
       }
     },
     "reservations": {

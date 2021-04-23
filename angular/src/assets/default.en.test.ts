@@ -181,6 +181,11 @@ export const DefaultENTest = {
         quantityH: 'Quantity',
         priceH: 'Price',
       },
+      status: {
+        open: 'open',
+        processing: 'processing',
+        paid: 'paid',
+      },
     },
     reservations: {
       title: 'Reservations',
@@ -195,6 +200,7 @@ export const DefaultENTest = {
       reservationDateH: 'Reservation Date',
       emailH: 'Email',
       bookingTokenH: 'Reference Number',
+      statusH: 'Status',
       ownerH: 'Owner',
       tableH: 'Table',
       creationDateH: 'Creation date',
