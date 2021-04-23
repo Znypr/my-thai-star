@@ -1,4 +1,11 @@
-<h3 mat-dialog-title>{{'cockpit.orders.dialogTitle' | transloco}} : {{data.booking.bookingToken}} </h3>
+<div class="heading">
+  <h3 mat-dialog-title>{{'cockpit.orders.dialogTitle' | transloco}} : {{data.booking.bookingToken}} </h3>
+  <select name="status" id="status">
+    <option value="open">open</option>
+    <option value="processing">processing</option>
+    <option value="paid">paid</option>
+  </select>
+</div>
 <mat-divider></mat-divider>
 <div class="tableContainer">
    <table mat-table [dataSource]="datat">
