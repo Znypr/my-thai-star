@@ -179,6 +179,11 @@
         "extrasH": "अतिरिक्त",
         "quantityH": "मात्रा",
         "priceH": "मूल्य"
+      },
+      "status": {
+        "open": "खोलें",
+        "preparing": "तैयारी",
+        "paid": "भुगतान किया"
       }
     },
     "reservations": {

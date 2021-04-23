@@ -181,9 +181,9 @@
         "priceH": "Price"
       },
       "status": {
-        "open": "open",
-        "processing": "processing",
-        "paid": "paid"
+        "open": "Open",
+        "preparing": "Preparing",
+        "paid": "Paid"
       }
     },
     "reservations": {

@@ -181,6 +181,11 @@
         "extrasH": "Extras",
         "quantityH": "Quantité",
         "priceH": "Prix"
+      },
+      "status": {
+        "open": "Ouvrir",
+        "preparing": "Préparation",
+        "paid": "Payé"
       }
     },
     "reservations": {

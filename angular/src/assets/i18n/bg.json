@@ -178,6 +178,11 @@
         "extrasH": "Допълнително",
         "quantityH": "Количество",
         "priceH": "Цена"
+      },
+      "status": {
+        "open": "Отворен",
+        "preparing": "Подготовка",
+        "paid": "Платени"
       }
     },
     "reservations": {

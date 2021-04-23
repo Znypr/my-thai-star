@@ -180,6 +180,11 @@
         "extrasH": "Extra",
         "quantityH": "Hoeveelheid",
         "priceH": "Prijs"
+      },
+      "status": {
+        "open": "Open",
+        "preparing": "Voorbereiding",
+        "paid": "Betaald"
       }
     },
     "reservations": {

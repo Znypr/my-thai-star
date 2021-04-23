@@ -187,7 +187,7 @@
       },
       "status": {
         "open": "offen",
-        "processing": "in Zubereitung",
+        "preparing": "In Zubereitung",
         "paid": "bezahlt"
       }
     },

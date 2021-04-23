@@ -179,6 +179,11 @@
         "extrasH": "Dodatkowe",
         "quantityH": "Ilosc",
         "priceH": "Cena"
+      },
+      "status": {
+        "open": "Otwórz",
+        "preparing": "Przygotowanie",
+        "paid": "Wypłacane"
       }
     },
     "reservations": {

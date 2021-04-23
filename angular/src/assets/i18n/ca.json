@@ -180,6 +180,11 @@
         "extrasH": "Extres",
         "quantityH": "Quantitat",
         "priceH": "Preu"
+      },
+      "status": {
+        "open": "Obert",
+        "preparing": "Preparació",
+        "paid": "Pagat"
       }
     },
     "reservations": {

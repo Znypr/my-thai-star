@@ -190,3 +190,4 @@ export interface TwoFactorResponse {
   base64QrCode?: string;
   secret?: string;
 }
+
