@@ -391,5 +391,17 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
     }
   }
 
+  @Override
+  public String getStatus() {
+    
+    return this.order.getStatus();
+  } 
+
+  @Override
+  public void setStatus(String status) {
+    this.order.setStatus(status );
+    
+  }
+
 
 }
