@@ -1,6 +1,6 @@
 -- This is the SQL script for setting up the DDL for the h2 database
 -- In a typical project you would only distinguish between main and test for flyway SQLs
--- However, in this sample application we provde support for multiple databases in parallel
+-- However, in this sample application we provide support for multiple databases in parallel
 -- You can simply choose the DB of your choice by providing -Pmysql, -Ppostgresql, ... in your maven build
 
 CREATE SEQUENCE HIBERNATE_SEQUENCE START WITH 1000000;

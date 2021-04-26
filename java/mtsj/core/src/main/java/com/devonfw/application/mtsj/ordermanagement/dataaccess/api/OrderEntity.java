@@ -34,6 +34,8 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
 
   private List<OrderLineEntity> orderLines;
 
+  private String status;
+
   /**
    * @return booking
    */
