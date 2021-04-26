@@ -30,8 +30,6 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
 
   private String comment;
 
-  private String status;
-
   private Instant bookingDate;
 
   private Instant expirationDate;
@@ -393,17 +391,5 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
     }
   }
 
-  /**
-   * @return status
-   */
-  @Override
-  public String getStatus() {
-    return this.status;
-  }
-
-  @Override
-  public void setStatus(String status) {
-    this.status = status;
-  }
 
 }

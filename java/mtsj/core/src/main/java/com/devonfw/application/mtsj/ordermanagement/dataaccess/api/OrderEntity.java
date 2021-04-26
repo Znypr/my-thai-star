@@ -173,4 +173,23 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
     }
   }
 
+    /**
+   * @return order status
+   */
+  @OneToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "status")
+  public String getStatus() {
+
+    return this.status;
+  }
+
+  /**
+   * @param status new value of {@link #getStatus}.
+   */
+  public void setStatus(String status) {
+
+    this.status = status;
+  }
+
+
 }
