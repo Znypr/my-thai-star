@@ -181,7 +181,7 @@ export const DefaultENTest = {
         quantityH: 'Quantity',
         priceH: 'Price',
       },
-      status: {
+      orderStatus: {
         open: 'open',
         preparing: 'processing',
         paid: 'paid',

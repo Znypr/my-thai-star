@@ -180,7 +180,7 @@
         "quantityH": "मात्रा",
         "priceH": "मूल्य"
       },
-      "status": {
+      "orderStatus": {
         "open": "खोलें",
         "preparing": "तैयारी",
         "paid": "भुगतान किया"

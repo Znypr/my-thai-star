@@ -182,7 +182,7 @@
         "quantityH": "Quantité",
         "priceH": "Prix"
       },
-      "status": {
+      "orderStatus": {
         "open": "Ouvrir",
         "preparing": "Préparation",
         "paid": "Payé"

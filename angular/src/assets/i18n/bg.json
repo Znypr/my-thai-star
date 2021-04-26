@@ -179,7 +179,7 @@
         "quantityH": "Количество",
         "priceH": "Цена"
       },
-      "status": {
+      "orderStatus": {
         "open": "Отворен",
         "preparing": "Подготовка",
         "paid": "Платени"

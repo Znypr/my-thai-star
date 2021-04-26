@@ -180,7 +180,7 @@
         "quantityH": "Quantity",
         "priceH": "Price"
       },
-      "status": {
+      "orderStatus": {
         "open": "Open",
         "preparing": "Preparing",
         "paid": "Paid"

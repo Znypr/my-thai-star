@@ -185,7 +185,7 @@
         "quantityH": "Anzahl",
         "priceH": "Preis"
       },
-      "status": {
+      "orderStatus": {
         "open": "offen",
         "preparing": "In Zubereitung",
         "paid": "bezahlt"

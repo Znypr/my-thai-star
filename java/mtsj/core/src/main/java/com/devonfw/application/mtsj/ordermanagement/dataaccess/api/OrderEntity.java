@@ -34,7 +34,7 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
 
   private List<OrderLineEntity> orderLines;
 
-  private String status;
+  private String orderStatus;
 
   /**
    * @return booking
@@ -176,19 +176,18 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
     /**
    * @return order status
    */
-  @OneToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "status")
-  public String getStatus() {
+  @JoinColumn(name = "orderStatus")
+  public String getOrderStatus() {
 
-    return this.status;
+    return this.orderStatus;
   }
 
   /**
-   * @param status new value of {@link #getStatus}.
+   * @param orderStatus new value of {@link #getstatus}.
    */
-  public void setStatus(String status) {
+  public void setOrderStatus(String orderStatus) {
 
-    this.status = status;
+    this.orderStatus = orderStatus;
   }
 
 

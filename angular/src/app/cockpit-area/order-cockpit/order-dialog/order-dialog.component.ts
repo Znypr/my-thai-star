@@ -1,17 +1,18 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ConfigService } from '../../../core/config/config.service';
 import { BookingView, OrderView } from '../../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { getSelectors } from '@ngrx/router-store';
 
 @Component({
   selector: 'app-cockpit-order-dialog',
   templateUrl: './order-dialog.component.html',
   styleUrls: ['./order-dialog.component.scss'],
 })
-export class OrderDialogComponent implements OnInit {
+export class OrderDialogComponent implements OnInit, OnDestroy {
   private fromRow = 0;
   private currentPage = 1;
 
@@ -108,4 +109,15 @@ export class OrderDialogComponent implements OnInit {
     newData = newData.slice(this.fromRow, this.currentPage * this.pageSize);
     setTimeout(() => (this.filteredData = newData));
   }
+
+  changeOrderStatus(orderStatus: String): void {
+    console.log('Status: ', orderStatus);
+  }
+
+  // idea: get current orderStatus when dialog is closed
+  ngOnDestroy(): void {
+
+    // TODO: logic for obtaining order orderStatus
+  }
+
 }

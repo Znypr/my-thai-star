@@ -16,7 +16,7 @@ public class OrderEto extends AbstractEto implements Order {
 
   private String bookingToken;
 
-  private String status;
+  private String orderStatus;
 
   /**
    * @return bookingToken
@@ -120,15 +120,15 @@ public class OrderEto extends AbstractEto implements Order {
   }
 
   @Override
-  public String getStatus() {
+  public String getOrderStatus() {
  
-    return this.status;
+    return this.orderStatus;
   }
 
   @Override
-  public void setStatus(String status) {
+  public void setOrderStatus(String orderStatus) {
     
-    this.status = status;
+    this.orderStatus = orderStatus;
     
   }
 

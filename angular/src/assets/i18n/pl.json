@@ -180,7 +180,7 @@
         "quantityH": "Ilosc",
         "priceH": "Cena"
       },
-      "status": {
+      "orderStatus": {
         "open": "Otwórz",
         "preparing": "Przygotowanie",
         "paid": "Wypłacane"
