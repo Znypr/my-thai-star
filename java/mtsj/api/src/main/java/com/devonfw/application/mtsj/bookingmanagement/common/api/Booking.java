@@ -59,8 +59,8 @@ public interface Booking extends ApplicationEntity {
 
   public void setUserId(Long userId);
 
-  public String getStatus();
+  // public String getStatus();
 
-  public void setStatus(String status);
+  // public void setStatus(String status);
 
 }

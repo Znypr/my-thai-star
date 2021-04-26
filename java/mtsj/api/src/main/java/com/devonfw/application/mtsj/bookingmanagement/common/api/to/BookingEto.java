@@ -24,7 +24,7 @@ public class BookingEto extends AbstractEto implements Booking {
 
   private String comment;
 
-  private String status;
+  // private String status;
 
   @NotNull
   @Future
@@ -315,13 +315,13 @@ public class BookingEto extends AbstractEto implements Booking {
     this.userId = userId;
   }
 
-  @Override
-  public  String getStatus() {
-    return this.status;
-  }
+  // @Override
+  // public  String getStatus() {
+  //   return this.status;
+  // }
 
-  @Override
-  public void setStatus(String status) {
-    this.status = status;
-  }
+  // @Override
+  // public void setStatus(String status) {
+  //   this.status = status;
+  // }
 }
