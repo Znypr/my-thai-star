@@ -93,25 +93,25 @@ export interface OrderDishListView {
   booking: BookingView;
 }
 
-// Interface to recieve responeses from the server using httpclient for getReservations
+// Interface to receive responses from the server using httpclient for getReservations
 export interface BookingResponse {
   pageable: Pageable;
   content: ReservationView;
 }
 
-// Interface to recieve responeses from the server using httpclient for get orders
+// Interface to receive responses from the server using httpclient to get orders
 export interface OrderResponse {
   pageable: Pageable;
   content: OrderListView;
 }
 
-// Interface to recieve responeses from the server using httpclient for get OrderDishResponse
+// Interface to receive responses from the server using httpclient to get OrderDishResponse
 export interface OrderDishResponse {
   pageable: Pageable;
   result: OrderDishListView;
 }
 
-// Interface to recieve responeses from the server using httpclient for email invitations
+// Interface to receive responses from the server using httpclient for email invitations
 export interface InvitationResponse {
   id: number;
   modificationCounter: number;
@@ -134,7 +134,7 @@ export interface BookingTableResponse extends BookingView {
   userId: number;
 }
 
-// Interface to recieve responeses from the server using httpclient for SaveOrders
+// Interface to receive responses from the server using httpclient for SaveOrders
 export interface SaveOrderResponse {
   bookingId: number;
   bokingToken: string;
