@@ -43,6 +43,7 @@ CREATE TABLE Booking (
   idUser BIGINT,
   name VARCHAR (255) NOT NULL,
   bookingToken VARCHAR (255),
+  status VARCHAR (255) NOT NULL,
   comment VARCHAR (4000),
   email VARCHAR(255) NOT NULL,
   bookingDate TIMESTAMP NOT NULL,
