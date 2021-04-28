@@ -9,6 +9,8 @@ INSERT INTO User(id, modificationCounter, username, password, twoFactorStatus, e
 INSERT INTO User(id, modificationCounter, username, password, twoFactorStatus, email, idRole) VALUES (2, 1, 'manager', '{bcrypt}$2a$10$IsTlZemkiPKE2gjtnSMlJOX5.uitNHXNRpLYyvyxNbHEhjpY.XdTq', false, 'manager@mail.com', 2);
 -- added admin
 INSERT INTO User(id, modificationCounter, username, password, twoFactorStatus, email, idRole) VALUES (3, 1, 'admin', '{bcrypt}$2a$10$1CAKyUHbX6RJqT5cUP6/aOMTIlYYvGIO/a3Dt/erbYKKgmbgJMGsG', false, 'waiter@mail.com', 3);
+INSERT INTO User(id, modificationCounter, username, password, twoFactorStatus, email, idRole) VALUES (4, 1, 'waiter2', '{bcrypt}$2a$10$1CAKyUHbX6RJqT5cUP6/aOMTIlYYvGIO/a3Dt/erbYKKgmbgJMGsG', false, 'waiter@mail.com', 1);
+
 
 INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (0, 1, 4);
 INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (1, 1, 4);

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CoreModule } from '../core/core.module';
 
 import { WaiterCockpitService } from './services/waiter-cockpit.service';
+import { AdminCockpitService } from './services/admin-cockpit.service';
 import { WindowService } from '../core/window/window.service';
 import { PredictionService } from './services/prediction.service';
 import { ClusteringService } from './services/clustering.service';
@@ -17,6 +18,7 @@ import { PredictionCockpitComponent } from './prediction-cockpit/prediction-cock
 import { ClusteringCockpitComponent } from './clustering-cockpit/clustering-cockpit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslocoRootModule } from '../transloco-root.module';
+import { AdminCockpitComponent } from './admin-cockpit/admin-cockpit.component';
 
 @NgModule({
   imports: [
@@ -28,6 +30,7 @@ import { TranslocoRootModule } from '../transloco-root.module';
     ReactiveFormsModule,
   ],
   providers: [
+    AdminCockpitService,
     WaiterCockpitService,
     WindowService,
     PredictionService,
@@ -40,6 +43,7 @@ import { TranslocoRootModule } from '../transloco-root.module';
     OrderDialogComponent,
     PredictionCockpitComponent,
     ClusteringCockpitComponent,
+    AdminCockpitComponent,
   ],
   exports: [
     ReservationCockpitComponent,

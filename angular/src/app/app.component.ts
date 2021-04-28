@@ -10,8 +10,9 @@ import * as fromAuth from './user-area/store';
 import * as fromConfig from './core/config/store';
 import { fadeAnimation } from './core/animations/fade.animation';
 import { PredictionCockpitComponent } from './cockpit-area/prediction-cockpit/prediction-cockpit.component';
+import { AdminCockpitComponent } from './cockpit-area/admin-cockpit/admin-cockpit.component';
 import { ClusteringCockpitComponent } from './cockpit-area/clustering-cockpit/clustering-cockpit.component';
-import { ConfigService } from './core/config/config.service';
+import { ConfigService } from './core/config/config.service'; //HEEEEEEEEREEEEEEEEEEEE!!!
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { TranslocoService } from '@ngneat/transloco';
