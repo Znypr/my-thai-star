@@ -35,7 +35,7 @@ const appRoutes: Routes = [
       path: 'admin',
       component: AdminCockpitComponent,
       // pathMatch: 'full',
-      //canActivate: [AuthGuardService],
+      canActivate: [AuthGuardService],
   },
   {
     path: 'clustering',
