@@ -200,7 +200,7 @@
       "reservationDateH": "Data de reserva",
       "emailH": "Email",
       "bookingTokenH": "Nombre de referència",
-      "statusH": "Estat",
+      "orderStatusH": "Estat",
       "ownerH": "Responsable",
       "tableH": "Taula",
       "creationDateH": "Data de creació"

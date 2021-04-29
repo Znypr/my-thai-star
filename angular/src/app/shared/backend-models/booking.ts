@@ -2,7 +2,7 @@
 export class BookingInfo {
   booking: ReservationInfo;
   invitedGuests?: {
-    [index: number]: { email: string },
+    [index: number]: { email: string }
   };
 }
 
@@ -33,4 +33,5 @@ export class OrderLineInfo {
 export class OrderListInfo {
   booking: { bookingToken: string };
   orderLines: OrderInfo[];
+  orderStatus: string;
 }

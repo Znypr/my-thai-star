@@ -199,7 +199,7 @@
       "reservationDateH": "Data rezerwacji",
       "emailH": "Email",
       "bookingTokenH": "Numer referencyjny",
-      "statusH": "Stanu",
+      "orderStatusH": "Stanu",
       "ownerH": "Wlasciciel",
       "tableH": "Stolik",
       "creationDateH": "Data utworzenia"

@@ -78,7 +78,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
           { name: 'booking.email', label: cockpitTable.emailH },
           { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
-          { name: 'booking.orderStatus', label: cockpitTable.statusH },
+          { name: 'booking.orderStatus', label: cockpitTable.orderStatusH },
         ];
       });
   }

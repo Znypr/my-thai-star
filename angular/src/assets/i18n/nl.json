@@ -200,7 +200,7 @@
       "reservationDateH": "Reserveer datum",
       "emailH": "Email",
       "bookingTokenH": "Boekingsnummer",
-      "statusH": "Status",
+      "orderStatusH": "Status",
       "ownerH": "Eigenaar",
       "tableH": "Tafel",
       "creationDateH": "Aanmaakdatum"

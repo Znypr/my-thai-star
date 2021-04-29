@@ -198,7 +198,7 @@
       "reservationDateH": "Дата на резервация",
       "emailH": "Email",
       "bookingTokenH": "Номер на резервация",
-      "statusH": "Статут",
+      "orderStatusH": "Статут",
       "ownerH": "Създател",
       "tableH": "Маса",
       "creationDateH": "Дата на създаване"

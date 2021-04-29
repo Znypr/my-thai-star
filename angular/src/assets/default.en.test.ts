@@ -200,7 +200,7 @@ export const DefaultENTest = {
       reservationDateH: 'Reservation Date',
       emailH: 'Email',
       bookingTokenH: 'Reference Number',
-      statusH: 'Status',
+      orderStatusH: 'Status',
       ownerH: 'Owner',
       tableH: 'Table',
       creationDateH: 'Creation date',

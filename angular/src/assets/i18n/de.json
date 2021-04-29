@@ -204,7 +204,7 @@
       "reservationDateH": "Reservierungsdatum",
       "emailH": "Email",
       "bookingTokenH": "Referenznummer",
-      "statusH": "Status",
+      "orderStatusH": "Status",
       "ownerH": "Eigentümer",
       "tableH": "Tisch",
       "creationDateH": "Erstelldatum"
