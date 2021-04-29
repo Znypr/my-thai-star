@@ -11,6 +11,7 @@ import {
   FilterAdminCockpit,
   Pageable,
 } from '../../shared/backend-models/interfaces';
+import { AdminDialogComponent } from './admin-dialog/admin-dialog.component';
 
 @Component({
   selector: 'app-admin-cockpit',
@@ -85,6 +86,13 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
         }
         this.totalUsers = data.totalElements;
       });
+  }
+
+  selected(selection: UserListView): void {
+    this.dialog.open(AdminDialogComponent, {
+      width: '80%',
+      data: selection,
+    });
   }
 
 

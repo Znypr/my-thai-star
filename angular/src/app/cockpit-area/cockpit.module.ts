@@ -19,6 +19,7 @@ import { ClusteringCockpitComponent } from './clustering-cockpit/clustering-cock
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslocoRootModule } from '../transloco-root.module';
 import { AdminCockpitComponent } from './admin-cockpit/admin-cockpit.component';
+import { AdminDialogComponent } from './admin-cockpit/admin-dialog/admin-dialog.component';
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import { AdminCockpitComponent } from './admin-cockpit/admin-cockpit.component';
     PredictionCockpitComponent,
     ClusteringCockpitComponent,
     AdminCockpitComponent,
+    AdminDialogComponent,
   ],
   exports: [
     ReservationCockpitComponent,

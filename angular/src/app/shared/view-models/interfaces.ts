@@ -83,7 +83,7 @@ export interface UserView{
 
 //inserted for admin-cockpit
 export interface UserListView {
-  userLines: UserView[];
+  user: UserView[];
 }
 
 export interface OrderViewResult {
