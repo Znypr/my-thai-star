@@ -80,7 +80,7 @@ CREATE COLUMN TABLE Orders (
   idBooking BIGINT NOT NULL,
   idInvitedGuest BIGINT,
   idHost BIGINT,
-  status VARCHR(255),
+  orderStatus VARCHAR(255),
   CONSTRAINT PK_Order PRIMARY KEY(id),
   CONSTRAINT FK_Order_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) ,
   CONSTRAINT FK_Order_idInvitedGuest FOREIGN KEY(idInvitedGuest) REFERENCES InvitedGuest(id)

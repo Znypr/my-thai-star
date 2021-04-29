@@ -22,7 +22,7 @@ public class OrderSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
   private String bookingToken;
 
-  private String status;
+  private String orderStatus;
 
   private StringSearchConfigTo hostTokenOption;
 
@@ -30,7 +30,7 @@ public class OrderSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
   private StringSearchConfigTo bookingTokenOption;
 
-  private StringSearchConfigTo statusOption;
+  private StringSearchConfigTo orderStatusOption;
 
   /**
    * The constructor.
@@ -164,34 +164,34 @@ public class OrderSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
 
   /**
-   * @return statusOption
+   * @return orderStatusOption
    */
   public StringSearchConfigTo getStatusOption() {
 
-    return this.statusOption;
+    return this.orderStatusOption;
   }
 
   /**
-   * @param statusOption new value of {@link #getstatusOption}.
+   * @param orderStatusOption new value of {@link #getorderStatusOption}.
    */
-  public void setStatusOption(StringSearchConfigTo statusOption) {
+  public void setStatusOption(StringSearchConfigTo orderStatusOption) {
 
-    this.statusOption = statusOption;
+    this.orderStatusOption = orderStatusOption;
   }
 
   /**
-   * @return status
+   * @return orderStatus
    */
   public String getStatus() {
 
-    return this.status;
+    return this.orderStatus;
   }
 
   /**
-   * @param status new value of {@link #getstatus}.
+   * @param orderStatus new value of {@link #getorderStatus}.
    */
-  public void setstatus(String status) {
+  public void setorderStatus(String orderStatus) {
 
-    this.status = status;
+    this.orderStatus = orderStatus;
   }
 }

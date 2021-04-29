@@ -38,8 +38,6 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
 
   private String email;
 
-  // private String status;
-
   private Boolean canceled;
 
   private BookingType bookingType;
@@ -392,20 +390,5 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
       this.user = userEntity;
     }
   }
-
-  // @Override
-  // public String getStatus() {
-    
-  //   // return this.order.getStatus();
-  //   return this.status;
-  // } 
-
-  // @Override
-  // public void setStatus(String status) {
-  //   // this.order.setStatus(status );
-  //   this.status = status;
-    
-  // }
-
 
 }
