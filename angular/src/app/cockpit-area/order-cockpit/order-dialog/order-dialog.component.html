@@ -1,11 +1,13 @@
 <div class="heading">
   <h3 mat-dialog-title>{{'cockpit.orders.dialogTitle' | transloco}} : {{data.booking.bookingToken}} </h3>
-  <select (change)="changeOrderStatus($event.target.value)" name='orderStatus' id='orderStatus'>
-    <option value="open">{{'cockpit.orders.orderStatus.open' | transloco}}</option>
-    <option value="preparing">{{'cockpit.orders.orderStatus.preparing' | transloco}}</option>
-    <option value="paid">{{'cockpit.orders.orderStatus.paid' | transloco}}</option>
-    <option value="cancelled">{{'cockpit.orders.orderStatus.cancelled' | transloco}}</option>
-  </select>
+  <mat-form-field>
+    <mat-label>{{'cockpit.table.orderStatusH' | transloco}}</mat-label>
+    <mat-select (selectionChange)="onChange($event.target.value)" name="orderStatus">
+      <mat-option *ngFor="let status of displayedOrderStatus" [value]="status.value">
+        {{status.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 <mat-divider></mat-divider>
 <div class="tableContainer">

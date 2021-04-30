@@ -191,3 +191,8 @@ export interface TwoFactorResponse {
   secret?: string;
 }
 
+export interface OrderStatus {
+  value: string;
+  viewValue: string;
+}
+

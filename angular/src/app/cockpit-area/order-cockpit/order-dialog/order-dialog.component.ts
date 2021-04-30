@@ -1,8 +1,9 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 import { PageEvent } from '@angular/material/paginator';
 import { ConfigService } from '../../../core/config/config.service';
-import { BookingView, OrderView } from '../../../shared/view-models/interfaces';
+import { BookingView, OrderStatus, OrderView } from '../../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { getSelectors } from '@ngrx/router-store';
@@ -17,6 +18,14 @@ export class OrderDialogComponent implements OnInit {
   private currentPage = 1;
 
   pageSize = 4;
+
+  orderStatus: any[];
+  displayedOrderStatus: OrderStatus[] = [
+    { value: '0', viewValue: 'open' },
+    { value: '1', viewValue: 'preparing' },
+    { value: '2', viewValue: 'paid' },
+    { value: '3', viewValue: 'cancelled' },
+  ];
 
   data: any;
   datat: BookingView[] = [];
@@ -67,6 +76,7 @@ export class OrderDialogComponent implements OnInit {
   }
 
   setTableHeaders(lang: string): void {
+
     this.translocoService
       .selectTranslateObject('cockpit.table', {}, lang)
       .subscribe((cockpitTable) => {
@@ -95,6 +105,29 @@ export class OrderDialogComponent implements OnInit {
           },
         ];
       });
+
+      this.translocoService
+        .selectTranslateObject('cockpit.orders.orderStatus', {}, lang)
+        .subscribe((cockpitStatus) => {
+          this.orderStatus = [
+            {
+              name: 'open',
+              label: cockpitStatus.open,
+            },
+            {
+              name: 'preparing',
+              label: cockpitStatus.preparing,
+            },
+            {
+              name: 'paid',
+              label: cockpitStatus.paid,
+            },
+            {
+              name: 'cancelled',
+              label: cockpitStatus.cancelled,
+            },
+          ];
+        });
   }
 
   page(pagingEvent: PageEvent): void {
@@ -110,7 +143,7 @@ export class OrderDialogComponent implements OnInit {
     setTimeout(() => (this.filteredData = newData));
   }
 
-  changeOrderStatus(orderStatus: String): void {
+  onChange(orderStatus: String): void {
     console.log('Status: ', orderStatus);
   }
 }
