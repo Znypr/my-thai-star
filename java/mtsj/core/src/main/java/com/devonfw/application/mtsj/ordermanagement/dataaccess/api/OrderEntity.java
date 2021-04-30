@@ -183,7 +183,7 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
   }
 
   /**
-   * @param orderStatus new value of {@link #getstatus}.
+   * @param orderStatus new value of {@link #getorderstatus}.
    */
   public void setOrderStatus(String orderStatus) {
 

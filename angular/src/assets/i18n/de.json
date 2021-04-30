@@ -186,9 +186,10 @@
         "priceH": "Preis"
       },
       "orderStatus": {
-        "open": "offen",
+        "open": "Offen",
         "preparing": "In Zubereitung",
-        "paid": "bezahlt"
+        "paid": "Bezahlt",
+        "cancelled": "Storniert"
       }
     },
     "reservations": {

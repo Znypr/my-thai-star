@@ -185,6 +185,7 @@ export const DefaultENTest = {
         open: 'open',
         preparing: 'processing',
         paid: 'paid',
+        cancelled: 'cancelled'
       },
     },
     reservations: {

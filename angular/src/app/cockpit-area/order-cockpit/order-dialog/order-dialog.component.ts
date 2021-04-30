@@ -12,7 +12,7 @@ import { getSelectors } from '@ngrx/router-store';
   templateUrl: './order-dialog.component.html',
   styleUrls: ['./order-dialog.component.scss'],
 })
-export class OrderDialogComponent implements OnInit, OnDestroy {
+export class OrderDialogComponent implements OnInit {
   private fromRow = 0;
   private currentPage = 1;
 
@@ -113,11 +113,4 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
   changeOrderStatus(orderStatus: String): void {
     console.log('Status: ', orderStatus);
   }
-
-  // idea: get current orderStatus when dialog is closed
-  ngOnDestroy(): void {
-
-    // TODO: logic for obtaining order orderStatus
-  }
-
 }

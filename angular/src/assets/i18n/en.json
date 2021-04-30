@@ -183,7 +183,8 @@
       "orderStatus": {
         "open": "Open",
         "preparing": "Preparing",
-        "paid": "Paid"
+        "paid": "Paid",
+        "cancelled": "Cancelled"
       }
     },
     "reservations": {

@@ -18,6 +18,6 @@ public interface Order extends ApplicationEntity {
 
   public String getOrderStatus();
 
-  public void setOrderStatus(String status);
+  public void setOrderStatus(String orderStatus);
 
 }
