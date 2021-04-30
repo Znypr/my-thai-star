@@ -1,4 +1,4 @@
-<p>Folgender Benutzer:</p>
+<p>Folgender Benutzer: {{data.username}}</p>
 <mat-divider></mat-divider>
 <div class="tableContainer">
    <table mat-table [dataSource]="datat">
@@ -21,8 +21,8 @@
      <tr mat-row *matRowDef="let row; columns: displayedColumnsT;"></tr>
    </table>
 </div>
-<div class="actionButtons">
-  <button mat-button (click)="deleteUser(4)">Löschen</button>
+<div class="actionButtons" >
+  <button mat-button (click)="deleteUser(data.id)">Löschen</button>
   <button mat-button >Rücksetzlink schicken</button>
 </div>
 <div class="align-right actionButtons">
