@@ -34,7 +34,7 @@ namespace OASP4Net.Business.Common.BookingManagement.Dto
         [JsonProperty(PropertyName = "email")]
         public string Email { get; set; }
 
-        [JsonProperty(PropertyName = "canceled")]
+        [JsonProperty(PropertyName = "cancelled")]
         public bool Canceled { get; set; }
 
         [JsonProperty(PropertyName = "bookingType")]

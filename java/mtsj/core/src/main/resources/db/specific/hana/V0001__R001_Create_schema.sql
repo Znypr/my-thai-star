@@ -49,7 +49,7 @@ CREATE COLUMN TABLE Booking (
   bookingDate TIMESTAMP NOT NULL,
   expirationDate TIMESTAMP,
   creationDate TIMESTAMP,
-  canceled BOOLEAN NOT NULL DEFAULT FALSE ,
+  cancelled BOOLEAN NOT NULL DEFAULT FALSE ,
   bookingType INTEGER,
   idTable BIGINT,
   idOrder BIGINT,
@@ -80,7 +80,7 @@ CREATE COLUMN TABLE Orders (
   idBooking BIGINT NOT NULL,
   idInvitedGuest BIGINT,
   idHost BIGINT,
-  orderStatus VARCHAR(255) NOT NULL,
+  orderStatus BIGINT NOT NULL,
   CONSTRAINT PK_Order PRIMARY KEY(id),
   CONSTRAINT FK_Order_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) ,
   CONSTRAINT FK_Order_idInvitedGuest FOREIGN KEY(idInvitedGuest) REFERENCES InvitedGuest(id)

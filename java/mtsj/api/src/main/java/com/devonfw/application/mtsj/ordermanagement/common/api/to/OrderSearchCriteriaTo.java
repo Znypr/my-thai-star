@@ -182,7 +182,7 @@ public class OrderSearchCriteriaTo extends AbstractSearchCriteriaTo {
   /**
    * @return orderStatus
    */
-  public String getStatus() {
+  public String getOrderStatus() {
 
     return this.orderStatus;
   }
@@ -190,7 +190,7 @@ public class OrderSearchCriteriaTo extends AbstractSearchCriteriaTo {
   /**
    * @param orderStatus new value of {@link #getorderStatus}.
    */
-  public void setorderStatus(String orderStatus) {
+  public void setOrderStatus(String orderStatus) {
 
     this.orderStatus = orderStatus;
   }

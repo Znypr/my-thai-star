@@ -10,7 +10,7 @@ export const bookingSample: Booking = {
   bookingDate: new Date(),
   expirationDate: new Date(),
   creationDate: new Date(),
-  canceled: false,
+  cancelled: false,
   bookingType: 0,
   assistants: 5,
 };

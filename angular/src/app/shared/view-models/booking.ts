@@ -79,7 +79,7 @@ export interface InvitationResponse {
 // Not sure if this should just use bookingview interface, just in case Im creating a new interface that extends booking view
 export interface BookingTableResponse extends BookingView {
   bookingType: string;
-  canceled: false;
+  cancelled: false;
   comment: string;
   expeditionDate: string;
   id: number;

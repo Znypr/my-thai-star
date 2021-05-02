@@ -25,7 +25,7 @@ namespace MyThaiStar.Core.Pages
 
         private async void PopUpPageCancel(object sender, EventArgs e)
         {
-            await Navigation.PushPopupAsync(new PopUpPage("You canceled your order", "info.png"));
+            await Navigation.PushPopupAsync(new PopUpPage("You cancelled your order", "info.png"));
         }
 
         private async void AcceptTerms(object sender, EventArgs e)

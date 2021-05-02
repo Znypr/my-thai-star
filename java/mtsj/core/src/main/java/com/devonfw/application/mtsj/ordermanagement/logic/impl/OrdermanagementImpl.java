@@ -161,6 +161,17 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
+  public List<OrderCto> findOrdersByOrderStatus(String orderStatus) {
+
+    List<OrderCto> ctos = new ArrayList<>();
+    List<OrderEntity> orders = getOrderDao().findOrdersByOrderStatus(orderStatus);
+    for (OrderEntity order : orders) {
+      processOrders(ctos, order);
+    }
+    return ctos;
+  }
+
+  @Override
   public Page<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria) {
 
     List<OrderCto> ctos = new ArrayList<>();

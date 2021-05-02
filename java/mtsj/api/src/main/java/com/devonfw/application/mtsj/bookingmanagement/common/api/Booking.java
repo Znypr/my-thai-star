@@ -37,7 +37,7 @@ public interface Booking extends ApplicationEntity {
 
   public Boolean getCanceled();
 
-  public void setCanceled(Boolean canceled);
+  public void setCanceled(Boolean cancelled);
 
   public BookingType getBookingType();
 

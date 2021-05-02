@@ -48,7 +48,7 @@ CREATE TABLE Booking (
   bookingDate TIMESTAMP NOT NULL,
   expirationDate TIMESTAMP,
   creationDate TIMESTAMP,
-  canceled BOOLEAN NOT NULL DEFAULT ((0)) ,
+  cancelled BOOLEAN NOT NULL DEFAULT ((0)) ,
   bookingType INTEGER,
   idTable BIGINT,
   idOrder BIGINT,
@@ -79,7 +79,7 @@ CREATE TABLE Orders (
   idBooking BIGINT NOT NULL,
   idInvitedGuest BIGINT,
   idHost BIGINT,
-  orderStatus VARCHAR(255) NOT NULL,
+  orderStatus BIGINT NOT NULL,
   CONSTRAINT PK_Order PRIMARY KEY(id),
   CONSTRAINT FK_Order_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK,
   CONSTRAINT FK_Order_idInvitedGuest FOREIGN KEY(idInvitedGuest) REFERENCES InvitedGuest(id) NOCHECK

@@ -124,7 +124,7 @@ export class BookingMailerUseCase {
           to: booking.email,
           subject: 'Event cancellation',
         },
-        'canceledBooking',
+        'cancelledBooking',
         {
           booking,
         },
@@ -137,7 +137,7 @@ export class BookingMailerUseCase {
             to: guest.email,
             subject: 'Event cancellation',
           },
-          'canceledInvitedGuest',
+          'cancelledInvitedGuest',
           {
             booking,
             invitedGuest: guest,

@@ -67,9 +67,9 @@ public interface BookingRepository extends DefaultRepository<BookingEntity> {
       QueryUtil.get().whereString(query, $(alias.getEmail()), email, criteria.getEmailOption());
 
     }
-    Boolean canceled = criteria.getCanceled();
-    if (canceled != null) {
-      query.where(Alias.$(alias.getCanceled()).eq(canceled));
+    Boolean cancelled = criteria.getCanceled();
+    if (cancelled != null) {
+      query.where(Alias.$(alias.getCanceled()).eq(cancelled));
     }
     BookingType bookingType = criteria.getBookingType();
     if (bookingType != null) {

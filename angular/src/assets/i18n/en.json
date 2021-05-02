@@ -27,8 +27,8 @@
     "email confirmations": {
       "invitationAccept": "Invitation succesfully accepted",
       "invitationReject": "Invitation succesfully rejected",
-      "bookingCancel": "Booking succesfully canceled",
-      "orderCancel": "Order succesfully canceled"
+      "bookingCancel": "Booking succesfully cancelled",
+      "orderCancel": "Order succesfully cancelled"
     },
     "orderID":
       "To order a menu it is necessary to obtain a booking id. Either you enter your already known booking id or you book a table",

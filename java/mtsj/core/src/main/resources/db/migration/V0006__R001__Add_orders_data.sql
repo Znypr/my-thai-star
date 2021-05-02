@@ -1,11 +1,11 @@
-INSERT INTO Orders (id, modificationCounter, idBooking, idInvitedGuest, idHost, orderStatus) VALUES (0, 1, 0, null, 0, 'paid');
-INSERT INTO Orders (id, modificationCounter, idBooking, idInvitedGuest, idHost, orderStatus) VALUES (1, 1, 3, 0, null, 'paid');
-INSERT INTO Orders (id, modificationCounter, idBooking, idInvitedGuest, idHost, orderStatus) VALUES (2, 1, 3, 1, null, 'paid');
-INSERT INTO Orders (id, modificationCounter, idBooking, idInvitedGuest, idHost, orderStatus) VALUES (3, 1, 3, 2, null, 'paid');
-INSERT INTO Orders (id, modificationCounter, idBooking, idInvitedGuest, idHost, orderStatus) VALUES (4, 1, 3, 3, null, 'paid');
-INSERT INTO Orders (id, modificationCounter, idBooking, idInvitedGuest, idHost, orderStatus) VALUES (5, 1, 3, 4, null, 'paid');
-INSERT INTO Orders (id, modificationCounter, idBooking, idInvitedGuest, idHost, orderStatus) VALUES (6, 1, 4, 8, null, 'paid');
-INSERT INTO Orders (id, modificationCounter, idBooking, idInvitedGuest, idHost, orderStatus) VALUES (7, 1, 4, 9, null, 'paid');
+INSERT INTO Orders (id, modificationCounter, idBooking, idInvitedGuest, idHost, orderStatus) VALUES (0, 1, 0, null, 0, 0);
+INSERT INTO Orders (id, modificationCounter, idBooking, idInvitedGuest, idHost, orderStatus) VALUES (1, 1, 3, 0, null, 0);
+INSERT INTO Orders (id, modificationCounter, idBooking, idInvitedGuest, idHost, orderStatus) VALUES (2, 1, 3, 1, null, 2);
+INSERT INTO Orders (id, modificationCounter, idBooking, idInvitedGuest, idHost, orderStatus) VALUES (3, 1, 3, 2, null, 3);
+INSERT INTO Orders (id, modificationCounter, idBooking, idInvitedGuest, idHost, orderStatus) VALUES (4, 1, 3, 3, null, 1);
+INSERT INTO Orders (id, modificationCounter, idBooking, idInvitedGuest, idHost, orderStatus) VALUES (5, 1, 3, 4, null, 1);
+INSERT INTO Orders (id, modificationCounter, idBooking, idInvitedGuest, idHost, orderStatus) VALUES (6, 1, 4, 8, null, 3);
+INSERT INTO Orders (id, modificationCounter, idBooking, idInvitedGuest, idHost, orderStatus) VALUES (7, 1, 4, 9, null, 3);
 
 
 

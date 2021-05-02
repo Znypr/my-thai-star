@@ -59,6 +59,14 @@ public interface Ordermanagement {
   List<OrderCto> findOrdersByBookingToken(String bookingToken);
 
   /**
+   * Returns the list of OrderCto
+   *
+   * @param orderStatus
+   * @return the list {@link OrderCto}
+   */
+  List<OrderCto> findOrdersByOrderStatus(String orderStatus);
+
+  /**
    * Returns the list of OrderCtos
    *
    * @param idBooking
