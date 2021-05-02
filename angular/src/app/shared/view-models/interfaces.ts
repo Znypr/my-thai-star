@@ -86,6 +86,7 @@ export interface OrderViewResult {
 export interface OrderListView {
   orderLines: OrderView[];
   booking: BookingView;
+  orderStatus: string;
 }
 
 export interface OrderDishListView {
@@ -191,8 +192,4 @@ export interface TwoFactorResponse {
   secret?: string;
 }
 
-export interface OrderStatus {
-  value: string;
-  viewValue: string;
-}
 

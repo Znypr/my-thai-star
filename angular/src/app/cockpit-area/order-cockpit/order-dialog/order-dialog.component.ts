@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { PageEvent } from '@angular/material/paginator';
 import { ConfigService } from '../../../core/config/config.service';
-import { BookingView, OrderStatus, OrderView } from '../../../shared/view-models/interfaces';
+import { BookingView, OrderView } from '../../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { getSelectors } from '@ngrx/router-store';
@@ -16,15 +16,17 @@ import { getSelectors } from '@ngrx/router-store';
 export class OrderDialogComponent implements OnInit {
   private fromRow = 0;
   private currentPage = 1;
+  private currentOrderStatus: number;
 
   pageSize = 4;
 
-  orderStatus: any[];
-  displayedOrderStatus: OrderStatus[] = [
-    { value: '0', viewValue: 'open' },
-    { value: '1', viewValue: 'preparing' },
-    { value: '2', viewValue: 'paid' },
-    { value: '3', viewValue: 'cancelled' },
+  
+  columnss: any;
+  displayedColumnsS: any[] = [
+    {name: 'cockpit.orders.orderStatus.open', value: 0},
+    {name: 'cockpit.orders.orderStatus.preparing', value: 1},
+    {name: 'cockpit.orders.orderStatus.paid', value: 2},
+    {name: 'cockpit.orders.orderStatus.cancelled', value: 3},
   ];
 
   data: any;
@@ -80,6 +82,13 @@ export class OrderDialogComponent implements OnInit {
     this.translocoService
       .selectTranslateObject('cockpit.table', {}, lang)
       .subscribe((cockpitTable) => {
+        this.columnss = 
+          { name: 'orderStatus', label: cockpitTable.orderStatusH }
+      });
+
+    this.translocoService
+      .selectTranslateObject('cockpit.table', {}, lang)
+      .subscribe((cockpitTable) => {
         this.columnst = [
           { name: 'bookingDate', label: cockpitTable.reservationDateH },
           { name: 'creationDate', label: cockpitTable.creationDateH },
@@ -105,29 +114,6 @@ export class OrderDialogComponent implements OnInit {
           },
         ];
       });
-
-      this.translocoService
-        .selectTranslateObject('cockpit.orders.orderStatus', {}, lang)
-        .subscribe((cockpitStatus) => {
-          this.orderStatus = [
-            {
-              name: 'open',
-              label: cockpitStatus.open,
-            },
-            {
-              name: 'preparing',
-              label: cockpitStatus.preparing,
-            },
-            {
-              name: 'paid',
-              label: cockpitStatus.paid,
-            },
-            {
-              name: 'cancelled',
-              label: cockpitStatus.cancelled,
-            },
-          ];
-        });
   }
 
   page(pagingEvent: PageEvent): void {
@@ -143,7 +129,8 @@ export class OrderDialogComponent implements OnInit {
     setTimeout(() => (this.filteredData = newData));
   }
 
-  onChange(orderStatus: String): void {
+  onChange(orderStatus: number): void {
+    this.currentOrderStatus = orderStatus;
     console.log('Status: ', orderStatus);
   }
 }
