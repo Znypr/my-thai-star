@@ -7,26 +7,26 @@ import { BookingView, OrderView } from '../../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { getSelectors } from '@ngrx/router-store';
+import { Booking } from 'app/book-table/models/booking.model';
 
 @Component({
   selector: 'app-cockpit-order-dialog',
   templateUrl: './order-dialog.component.html',
   styleUrls: ['./order-dialog.component.scss'],
 })
-export class OrderDialogComponent implements OnInit {
+export class OrderDialogComponent implements OnInit, OnDestroy {
   private fromRow = 0;
   private currentPage = 1;
-  private currentOrderStatus: number;
 
   pageSize = 4;
 
   
   columnss: any;
   displayedColumnsS: any[] = [
-    {name: 'cockpit.orders.orderStatus.open', value: 0},
-    {name: 'cockpit.orders.orderStatus.preparing', value: 1},
-    {name: 'cockpit.orders.orderStatus.paid', value: 2},
-    {name: 'cockpit.orders.orderStatus.cancelled', value: 3},
+    'cockpit.orders.orderStatus.open', 
+    'cockpit.orders.orderStatus.preparing',
+    'cockpit.orders.orderStatus.paid',
+    'cockpit.orders.orderStatus.cancelled',
   ];
 
   data: any;
@@ -129,8 +129,13 @@ export class OrderDialogComponent implements OnInit {
     setTimeout(() => (this.filteredData = newData));
   }
 
-  onChange(orderStatus: number): void {
-    this.currentOrderStatus = orderStatus;
+  onChange(orderStatus: string): void {
+
     console.log('Status: ', orderStatus);
+    this.waiterCockpitService.updateOrderStatus(orderStatus, this.data.bookingToken);
+  }
+
+  ngOnDestroy(): void {
+    
   }
 }
