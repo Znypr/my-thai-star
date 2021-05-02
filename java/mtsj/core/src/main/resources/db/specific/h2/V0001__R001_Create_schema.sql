@@ -44,7 +44,7 @@ CREATE TABLE Booking (
   name VARCHAR (255) NOT NULL,
   bookingToken VARCHAR (255),
   comment VARCHAR (4000),
-  email VARCHAR(255) NOT NULL,
+  email VARCHAR (255) NOT NULL,
   bookingDate TIMESTAMP NOT NULL,
   expirationDate TIMESTAMP,
   creationDate TIMESTAMP,
@@ -79,7 +79,7 @@ CREATE TABLE Orders (
   idBooking BIGINT NOT NULL,
   idInvitedGuest BIGINT,
   idHost BIGINT,
-  orderStatus BIGINT NOT NULL,
+  orderStatus VARCHAR (255) NOT NULL,
   CONSTRAINT PK_Order PRIMARY KEY(id),
   CONSTRAINT FK_Order_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK,
   CONSTRAINT FK_Order_idInvitedGuest FOREIGN KEY(idInvitedGuest) REFERENCES InvitedGuest(id) NOCHECK

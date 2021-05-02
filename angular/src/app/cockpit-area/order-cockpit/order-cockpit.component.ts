@@ -20,6 +20,7 @@ import { OrderDialogComponent } from './order-dialog/order-dialog.component';
   styleUrls: ['./order-cockpit.component.scss'],
 })
 export class OrderCockpitComponent implements OnInit, OnDestroy {
+
   private translocoSubscription = Subscription.EMPTY;
   private pageable: Pageable = {
     pageSize: 8,
@@ -29,6 +30,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   private sorting: any[] = [];
 
   pageSize = 8;
+  
 
   @ViewChild('pagingBar', { static: true }) pagingBar: MatPaginator;
 

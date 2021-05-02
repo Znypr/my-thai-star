@@ -1,5 +1,6 @@
+import { QueryRunner } from 'typeorm';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Query } from '@angular/core';
 import {
   FilterCockpit,
   Pageable,
@@ -87,4 +88,10 @@ export class WaiterCockpitService {
   getTotalPrice(orderLines: OrderView[]): number {
     return this.priceCalculator.getTotalPrice(orderLines);
   }
+
+  updateOrderStatus(queryRunner: QueryRunner, status: string, bookingID: BigInt): void{
+        queryRunner.query('UPDATE Order SET orderStatus = status WHERE id = bookingID');
+  }
 }
+
+
