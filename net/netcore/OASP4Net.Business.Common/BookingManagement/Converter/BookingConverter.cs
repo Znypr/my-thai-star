@@ -22,7 +22,7 @@ namespace OASP4Net.Business.Common.BookingManagement.Converter
                 assistants = item.Assistants,
                 bookingDate = JsonConvert.SerializeObject(ConvertDateTimeToMilliseconds(item.BookingDate)),
                 bookingType = item.IdBookingType == 0 ? "COMMON" : "INVITED",
-                cancelled = item.Canceled ?? false,
+                cancelled = item.Cancelled ?? false,
                 comment = item.Comments,
                 creationDate = JsonConvert.SerializeObject(item.CreationDate),
                 expirationDate = item.ExpirationDate != null
@@ -50,7 +50,7 @@ namespace OASP4Net.Business.Common.BookingManagement.Converter
                     assistants = item.Assistants,
                     bookingDate = JsonConvert.SerializeObject(ConvertDateTimeToMilliseconds(item.BookingDate)),
                     bookingType = item.IdBookingType == 0 ? "COMMON" : "INVITED",
-                    cancelled = item.Canceled ?? false,
+                    cancelled = item.Cancelled ?? false,
                     comment = item.Comments,
                     creationDate = JsonConvert.SerializeObject(item.CreationDate),
                     expirationDate = item.ExpirationDate != null

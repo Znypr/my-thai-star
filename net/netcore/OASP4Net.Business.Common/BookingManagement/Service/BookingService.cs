@@ -146,7 +146,7 @@ namespace OASP4Net.Business.Common.BookingManagement.Service
                 BookingDate = JsonConvert.SerializeObject(reservation.BookingDate),
                 ModificationCounter = 0,
                 BookingToken = reservation.ReservationToken,
-                Canceled = reservation.Canceled ?? false,
+                Cancelled = reservation.Cancelled ?? false,
                 Comment = reservation.Comments,
                 CreationDate = JsonConvert.SerializeObject(reservation.CreationDate),
                 ExpirationDate = JsonConvert.SerializeObject(reservation.ExpirationDate),
@@ -246,7 +246,7 @@ namespace OASP4Net.Business.Common.BookingManagement.Service
             {
                 var booking = await UoW.Repository<Booking>().GetAsync(b => b.ReservationToken == token);
                 if (booking == null) return false;
-                booking.Canceled = true;
+                booking.Cancelled = true;
 
                 UoW.Commit();
                 return true;
@@ -368,7 +368,7 @@ namespace OASP4Net.Business.Common.BookingManagement.Service
                 Name = reservationDtoName,
                 IdBookingType = bookingDtoType,
                 BookingDate = Convert.ToDateTime(reservationDtoDate),
-                Canceled = false,
+                Cancelled = false,
                 CreationDate = DateTime.Now,
                 UserId = userId,
                 ReservationToken = GetReservationToken(bookingTypeStringToken, reservationDtoEmail),

@@ -176,7 +176,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
    * @return cancelled
    */
   @Override
-  public Boolean getCanceled() {
+  public Boolean getCancelled() {
 
     return this.cancelled;
   }
@@ -185,7 +185,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
    * @param cancelled new value of {@link #getcancelled}.
    */
   @Override
-  public void setCanceled(Boolean cancelled) {
+  public void setCancelled(Boolean cancelled) {
 
     this.cancelled = cancelled;
   }

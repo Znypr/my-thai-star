@@ -19,7 +19,7 @@ namespace OASP4Net.Test.Model
         public string BookingDate { get; set; }
         public string ExpirationDate { get; set; }
         public string CreationDate { get; set; }
-        public string Canceled { get; set; }
+        public string Cancelled { get; set; }
         public long? IdBookingType { get; set; }
         public long? TableId { get; set; }
         public string Email { get; set; }

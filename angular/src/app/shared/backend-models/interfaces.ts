@@ -81,7 +81,6 @@ export class OrderLineInfo {
 export class OrderListInfo {
   booking: { bookingToken: string };
   orderLines: OrderInfo[];
-  orderStatus: string;
 }
 
 export class PredictionCriteria {
