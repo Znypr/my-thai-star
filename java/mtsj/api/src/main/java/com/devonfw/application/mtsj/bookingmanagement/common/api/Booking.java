@@ -35,9 +35,9 @@ public interface Booking extends ApplicationEntity {
 
   public void setEmail(String email);
 
-  public Boolean getCanceled();
+  public Boolean getCancelled();
 
-  public void setCanceled(Boolean cancelled);
+  public void setCancelled(Boolean cancelled);
 
   public BookingType getBookingType();
 

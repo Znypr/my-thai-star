@@ -117,7 +117,7 @@ export class BookingMailerUseCase {
     }
   }
 
-  sendCanceledEmails(booking: Booking, invitedGuests: InvitedGuest[] | undefined): void {
+  sendCancelledEmails(booking: Booking, invitedGuests: InvitedGuest[] | undefined): void {
     this.mailer
       .sendTemplateMail(
         {

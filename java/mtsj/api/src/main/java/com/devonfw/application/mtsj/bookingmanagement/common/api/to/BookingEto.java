@@ -133,13 +133,13 @@ public class BookingEto extends AbstractEto implements Booking {
   }
 
   @Override
-  public Boolean getCanceled() {
+  public Boolean getCancelled() {
 
     return this.cancelled;
   }
 
   @Override
-  public void setCanceled(Boolean cancelled) {
+  public void setCancelled(Boolean cancelled) {
 
     this.cancelled = cancelled;
   }

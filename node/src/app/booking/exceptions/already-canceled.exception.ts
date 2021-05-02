@@ -1,6 +1,6 @@
 import { BusinessLogicException } from '../../shared/exceptions/business-logic.exception';
 
-export class AlreadyCanceledException extends BusinessLogicException {
+export class AlreadyCancelledException extends BusinessLogicException {
   constructor() {
     super('Already cancelled');
   }
