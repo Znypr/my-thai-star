@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, Query } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { FilterSearchComponent } from 'app/menu/components/menu-filters/filter-search/filter-search.component';
 import {
   FilterCockpit,
+  OrderLineInfo,
   Pageable,
   Sort,
 } from 'app/shared/backend-models/interfaces';
@@ -11,6 +13,7 @@ import { exhaustMap } from 'rxjs/operators';
 import { ConfigService } from '../../core/config/config.service';
 import {
   BookingResponse,
+  OrderListView,
   OrderResponse,
   OrderView,
   OrderViewResult,
@@ -26,9 +29,11 @@ export class WaiterCockpitService {
   private readonly filterOrdersRestPath: string =
     'ordermanagement/v1/order/search';
 
-  private readonly restServiceRoot$: Observable<
-    string
-  > = this.config.getRestServiceRoot();
+  private readonly saveOrdersRestPath: string = 'ordermanagement/v1/order';
+  private readonly getOrderRestPath: string = 'ordermanagement/v1/order/{id}';
+  private readonly deleteOrderRestPath: string = 'ordermangement/v1/order/{id}';
+
+  private readonly restServiceRoot$: Observable<string> = this.config.getRestServiceRoot();
 
   constructor(
     private http: HttpClient,
@@ -54,6 +59,22 @@ export class WaiterCockpitService {
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
         this.http.post<OrderResponse[]>(`${restServiceRoot}${path}`, filters),
+      ),
+    );
+  }
+
+  updateOrderStatus(status: string, token: any): Observable<OrderListView[]> {
+
+    let filters: OrderListView;
+    filters.booking.bookingToken = token;
+    filters.orderStatus = status;
+
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.post<OrderListView[]>(
+          `${restServiceRoot}${this.getOrderRestPath}`,
+          filters
+        ),
       ),
     );
   }
@@ -87,10 +108,4 @@ export class WaiterCockpitService {
   getTotalPrice(orderLines: OrderView[]): number {
     return this.priceCalculator.getTotalPrice(orderLines);
   }
-
-  // updateOrderStatus(status: string, bookingID: BigInt): void{
-  //       query('UPDATE Order SET orderStatus = status WHERE id = bookingID');
-  // }
 }
-
-

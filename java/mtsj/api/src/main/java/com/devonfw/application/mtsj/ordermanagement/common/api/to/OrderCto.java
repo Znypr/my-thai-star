@@ -23,6 +23,18 @@ public class OrderCto extends AbstractCto {
 
   private BookingEto host;
 
+  private String orderStatus;
+
+  public String getOrderStatus() {
+
+    return this.orderStatus;
+  }
+
+  public void setOrderStatus(String orderStatus) {
+
+    this.orderStatus = orderStatus;
+  }
+
   public OrderEto getOrder() {
 
     return this.order;

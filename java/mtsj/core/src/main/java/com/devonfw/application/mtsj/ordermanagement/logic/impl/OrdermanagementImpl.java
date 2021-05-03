@@ -212,6 +212,20 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     ctos.add(cto);
   }
 
+  /**
+   * @param id
+   * @param orderStatus
+   */
+  @Override
+  public long updateOrderStatus(long id, String orderStatus) {
+
+    OrderCto cto = this.findOrder(id); 
+    cto.setOrderStatus(orderStatus);
+    this.saveOrder(cto);
+    this.deleteOrder(id);
+    return cto.getOrder().getId();
+  }
+
   @Override
   public List<OrderCto> findOrders(Long idBooking) {
 
@@ -263,6 +277,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     // initialize, validate orderEntity here if necessary
     orderEntity = getValidatedOrder(orderEntity.getBooking().getBookingToken(), orderEntity);
     orderEntity.setOrderLines(orderLineEntities);
+    orderEntity.setOrderStatus(order.getOrderStatus());
     OrderEntity resultOrderEntity = getOrderDao().save(orderEntity);
     LOG.debug("Order with id '{}' has been created.", resultOrderEntity.getId());
 
