@@ -47,18 +47,18 @@ public interface OrdermanagementRestService {
    */
   @POST
   @Path("/order/")
-  public OrderEto saveOrder(OrderCto order);
+  public OrderEto saveOrder(OrderCto cto);
 
 
 /**
  * Delegates to {@link Ordermanagement#updateOrderStatus}.
  * 
- * @param id the ID of the {@link OrderEto}
- * @return the {@link OrderEto}
+ * @param order the {@link OrderCto} to be updated
+ * @return the updated {@link OrderCto}
  */
 @POST
-@Path("/order/{id}/")
-public long updateOrderStatus(@PathParam("id") long id, String orderStatus);
+@Path("/order/changeState/")
+public OrderCto updateOrderStatus(OrderCto order);
 
 
   /**

@@ -212,18 +212,20 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     ctos.add(cto);
   }
 
-  /**
-   * @param id
-   * @param orderStatus
+    /**
+   * @param order
    */
   @Override
-  public long updateOrderStatus(long id, String orderStatus) {
+  public OrderCto updateOrderStatus(OrderCto order) {
 
-    OrderCto cto = this.findOrder(id); 
-    cto.setOrderStatus(orderStatus);
-    this.saveOrder(cto);
-    this.deleteOrder(id);
-    return cto.getOrder().getId();
+    OrderEntity orderEntity = getBeanMapper().map(getOrderDao().find(order.getBooking().getOrderId()), OrderEntity.class);
+
+    // initialize, validate userEntity here if necessary
+    orderEntity.setOrderStatus(order.getOrderStatus());
+    OrderEntity resultEntity = getOrderDao().save(orderEntity);
+    LOG.debug("Order with id '{}' has been modified.", resultEntity.getId());
+    return getBeanMapper().map(resultEntity, OrderCto.class);
+
   }
 
   @Override

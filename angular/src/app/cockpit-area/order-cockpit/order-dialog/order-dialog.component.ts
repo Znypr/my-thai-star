@@ -20,10 +20,9 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
 
   pageSize = 4;
 
-  
   columnss: any;
   displayedColumnsS: any[] = [
-    'cockpit.orders.orderStatus.open', 
+    'cockpit.orders.orderStatus.open',
     'cockpit.orders.orderStatus.preparing',
     'cockpit.orders.orderStatus.paid',
     'cockpit.orders.orderStatus.cancelled',
@@ -78,12 +77,13 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
   }
 
   setTableHeaders(lang: string): void {
-
     this.translocoService
       .selectTranslateObject('cockpit.table', {}, lang)
       .subscribe((cockpitTable) => {
-        this.columnss = 
-          { name: 'orderStatus', label: cockpitTable.orderStatusH }
+        this.columnss = {
+          name: 'orderStatus',
+          label: cockpitTable.orderStatusH,
+        };
       });
 
     this.translocoService
@@ -130,12 +130,11 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
   }
 
   onChange(orderStatus: string): void {
-
     console.log('Status: ', orderStatus);
-    this.waiterCockpitService.updateOrderStatus(orderStatus, this.data.bookingToken).subscribe();
+    this.waiterCockpitService
+      .updateOrderStatus(this.data.orderId, orderStatus)
+      .subscribe();
   }
 
-  ngOnDestroy(): void {
-    
-  }
+  ngOnDestroy(): void {}
 }

@@ -19,12 +19,12 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesS
 public interface Ordermanagement {
 
   /**
-   * Returns id of new order with updated state
+   * Returns an Order with updated state
    * 
    * @param order id, new order status
-   * @return The {@link OrderCto} with id 'id'
+   * @return The {@link OrderCto} with state 'orderStatus'
    */
-  long updateOrderStatus(long id, String orderStatus);
+  OrderCto updateOrderStatus(OrderCto order);
 
   /**
    * Returns a Order by its id 'id'.
