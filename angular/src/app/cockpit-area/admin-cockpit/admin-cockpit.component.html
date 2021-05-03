@@ -7,7 +7,32 @@
     </mat-expansion-panel-header>
   </mat-expansion-panel>
 </div> -->
-<form (ngSubmit)="applyFilters()" #filterForm="ngForm">  </form>
+
+<form (ngSubmit)="getUserInput($event)">
+  <mat-form-field appearance="fill">
+    <mat-label>Username</mat-label>
+    <input id="Username" matInput placeholder="Username">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input id="Email" matInput placeholder="user@mail.com">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Role</mat-label>
+    <input id="Role" type="number" min="0" max="3" matInput placeholder="0-3">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Enter your password</mat-label>
+    <input id="Password" matInput [type]="hide ? 'password' : 'text'" placeholder="I<3MOM">
+    <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <button mat-button type="submit"> Neuen Nutzer anlegen </button>
+
+</form>
+
 <div class="tableContainer">
   <table mat-table [dataSource]="users" >
 

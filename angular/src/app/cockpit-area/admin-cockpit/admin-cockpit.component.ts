@@ -13,6 +13,7 @@ import {
 } from '../../shared/backend-models/interfaces';
 import { AdminDialogComponent } from './admin-dialog/admin-dialog.component';
 
+
 @Component({
   selector: 'app-admin-cockpit',
   templateUrl: './admin-cockpit.component.html',
@@ -20,6 +21,8 @@ import { AdminDialogComponent } from './admin-dialog/admin-dialog.component';
 })
 export class AdminCockpitComponent implements OnInit, OnDestroy {
   // private translocoSubscription = Subscription.EMPTY;
+  hide=true;
+
   private pageable: Pageable = {
     pageSize: 8,
     pageNumber: 0,
@@ -95,6 +98,16 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
     });
   }
 
+  getUserInput(event:any) {
+    var info= [
+      event.target.Username.value,
+      event.target.Email.value,
+      event.target.Role.value,
+      event.target.Password.value,
+    ];
+    this.adminCockpitService.reloadPage('/admin');
+    return this.adminCockpitService.addUser(info[0],info[1],info[2],info[3]).subscribe();
+  }
 
   //
   // ngOnDestroy(): void {

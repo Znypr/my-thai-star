@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ConfigService } from '../../../core/config/config.service';
 import { UserView, UserListView } from '../../../shared/view-models/interfaces';
 import { AdminCockpitService } from '../../services/admin-cockpit.service';
@@ -16,6 +16,8 @@ export class AdminDialogComponent implements OnInit {
   private currentPage = 1;
 
   pageSize = 4;
+
+  @ViewChild('pagingBar', { static: true }) pagingBar: MatPaginator;
 
   data: any;
   datat: UserListView[] = [];
@@ -42,30 +44,19 @@ export class AdminDialogComponent implements OnInit {
     private adminCockpitService: AdminCockpitService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
     private configService: ConfigService,
+
   ) {
     this.data = dialogData;
     this.pageSizes = this.configService.getValues().pageSizesDialog;
   }
 
-  page(pagingEvent: PageEvent): void {
-    this.currentPage = pagingEvent.pageIndex + 1;
-    this.pageSize = pagingEvent.pageSize;
-    this.fromRow = pagingEvent.pageSize * pagingEvent.pageIndex;
-    // this.filter();
-  }
-
-  // filter(): void {
-  //   let newData: any[] = this.datat;
-  //   newData = newData.slice(this.fromRow, this.currentPage * this.pageSize);
-  //   setTimeout(() => (this.filteredData = newData));
-  // }
 
 // You have to subscribe to execute the observable,
-// which initiates the DELETE request  
+// which initiates the DELETE request
   deleteUser(userId:number){
     this.adminCockpitService.deleteUser(userId).subscribe();
+    this.adminCockpitService.reloadPage('/admin');
   }
-
 
 
   ngOnInit(): void {

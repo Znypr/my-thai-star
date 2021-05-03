@@ -18,6 +18,8 @@ public class UserEto extends AbstractEto implements User {
 
   private Long userRoleId;
 
+  private String password;
+
   @Override
   public String getUsername() {
 
@@ -66,6 +68,13 @@ public class UserEto extends AbstractEto implements User {
     this.userRoleId = userRoleId;
   }
 
+  // added for adding users in admin-cockpit
+  @Override
+  public void setPassword(String password) {
+
+    this.password = password;
+  }
+
   @Override
   public int hashCode() {
 
@@ -74,6 +83,8 @@ public class UserEto extends AbstractEto implements User {
     result = prime * result + ((this.username == null) ? 0 : this.username.hashCode());
     result = prime * result + ((this.email == null) ? 0 : this.email.hashCode());
     result = prime * result + ((this.userRoleId == null) ? 0 : this.userRoleId.hashCode());
+    // added for adding users in admin-cockpit
+    result = prime * result + ((this.password == null) ? 0 : this.password.hashCode());
 
     return result;
   }
@@ -112,6 +123,15 @@ public class UserEto extends AbstractEto implements User {
         return false;
       }
     } else if (!this.userRoleId.equals(other.userRoleId)) {
+      return false;
+    }
+
+    // added for adding users in admin-cockpit
+    if (this.password == null) {
+      if (other.password != null) {
+        return false;
+      }
+    } else if (!this.password.equals(other.password)) {
       return false;
     }
 

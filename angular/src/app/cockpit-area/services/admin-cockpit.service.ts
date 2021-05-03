@@ -14,6 +14,7 @@ import {
   UserResponse,
 } from '../../shared/view-models/interfaces';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 
 @Injectable()
@@ -24,6 +25,8 @@ export class AdminCockpitService {
     'usermanagement/v1/userrole/search';
   private readonly deleteUserRestPath: string =
     'usermanagement/v1/user';
+  private readonly addUserRestPath: string =
+    'usermanagement/v1/user';
 
   private readonly restServiceRoot$: Observable<
     string
@@ -33,6 +36,8 @@ export class AdminCockpitService {
     private http: HttpClient,
     private config: ConfigService,
     private _snackBar: MatSnackBar,
+    private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
 // get all Users from database
@@ -60,13 +65,30 @@ export class AdminCockpitService {
 // delete certain user from database by id
   deleteUser(userId: number): Observable<{}> {
     let path = this.deleteUserRestPath;
-    this._snackBar.open("gelöscht", "ok");
-    return this.restServiceRoot$.pipe(
+    this._snackBar.open("gelöscht", "verstanden");
+    let result= this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
         this.http.delete(`${restServiceRoot}${path}/${userId}`),
       ),
     );
-    }
+    return result;
+  }
+
+// admin can add a user
+  addUser(username: string, email: string, userRoleId: number, password: string,) {
+    let path= this.addUserRestPath;
+    return  this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.post(`${restServiceRoot}${path}`,{username,email,userRoleId, password}),
+      ),
+    );
+  }
+
+  // reloads the page
+  async reloadPage(url: string): Promise<boolean> {
+    await this.router.navigateByUrl('/restaurant', { skipLocationChange: true });
+    return this.router.navigateByUrl(url);
+  }
 
   userComposer(userList: UserView[]): UserView[] {
     const users: UserView[] = cloneDeep(userList);
