@@ -65,15 +65,11 @@ export class WaiterCockpitService {
 
   updateOrderStatus(status: string, token: any): Observable<OrderListView[]> {
 
-    let filters: OrderListView;
-    filters.booking.bookingToken = token;
-    filters.orderStatus = status;
-
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
         this.http.post<OrderListView[]>(
           `${restServiceRoot}${this.getOrderRestPath}`,
-          filters
+          {status, token}
         ),
       ),
     );
