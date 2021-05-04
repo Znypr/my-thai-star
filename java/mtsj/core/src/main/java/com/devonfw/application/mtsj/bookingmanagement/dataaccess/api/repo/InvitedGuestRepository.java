@@ -58,10 +58,10 @@ public interface InvitedGuestRepository extends DefaultRepository<InvitedGuestEn
     if ((email != null) && !email.isEmpty()) {
       QueryUtil.get().whereString(query, $(alias.getEmail()), email, criteria.getEmailOption());
     }
-    boolean accepted = criteria.getAccepted();
-
-    query.where(Alias.$(alias.getAccepted()).eq(accepted));
-
+    Boolean accepted = criteria.getAccepted();
+    if (accepted != null) {
+      query.where(Alias.$(alias.getAccepted()).eq(accepted));
+    }
     Instant modificationDate = criteria.getModificationDate();
     if (modificationDate != null) {
       query.where(Alias.$(alias.getModificationDate()).eq(modificationDate));

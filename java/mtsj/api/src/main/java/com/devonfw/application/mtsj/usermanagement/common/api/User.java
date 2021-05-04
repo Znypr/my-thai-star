@@ -20,9 +20,4 @@ public interface User extends ApplicationEntity {
 
   public void setTwoFactorStatus(boolean twoFactorStatus);
 
-  // added for adding users in admin-cockpit
-  public String getPassword();
-
-  public void setPassword(String password);
-
 }

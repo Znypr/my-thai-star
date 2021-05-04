@@ -40,7 +40,6 @@ export const config: Config = {
     { name: 'CUSTOMER', permission: 0 },
     { name: 'WAITER', permission: 1 },
     { name: 'MANAGER', permission: 2 },
-    { name: 'ADMIN', permission: 3 }, //added admin
   ],
   langs: [
     { label: 'English', value: 'en' },

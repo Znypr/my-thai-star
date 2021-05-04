@@ -8,8 +8,8 @@ public interface UserRole extends ApplicationEntity {
 
   public void setName(String name);
 
-  public boolean getActive();
+  public Boolean getActive();
 
-  public void setActive(boolean active);
+  public void setActive(Boolean active);
 
 }

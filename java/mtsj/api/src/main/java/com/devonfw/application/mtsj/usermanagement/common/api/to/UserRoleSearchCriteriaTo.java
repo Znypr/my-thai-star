@@ -12,7 +12,7 @@ public class UserRoleSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
   private String name;
 
-  private boolean active;
+  private Boolean active;
 
   private StringSearchConfigTo nameOption;
 
@@ -34,12 +34,12 @@ public class UserRoleSearchCriteriaTo extends AbstractSearchCriteriaTo {
     this.name = name;
   }
 
-  public boolean getActive() {
+  public Boolean getActive() {
 
     return this.active;
   }
 
-  public void setActive(boolean active) {
+  public void setActive(Boolean active) {
 
     this.active = active;
   }

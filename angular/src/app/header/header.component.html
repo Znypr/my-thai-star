@@ -36,36 +36,6 @@
       </a>
     </nav>
   </div>
-  <div *ngIf="(auth.getRole() | async) === 'ADMIN'" class="forDesktop">
-    <nav mat-tab-nav-bar>
-      <a
-        mat-tab-link
-        routerLink="/admin"
-        routerLinkActive="navBottomBorder"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-      <!-- TODO: remove hard-coded admin title  -->
-      ADMIN
-        {{ 'main.menu' | transloco | uppercase }}
-      </a>
-      <a
-        mat-tab-link
-        routerLink="/menu"
-        routerLinkActive="navBottomBorder"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        {{ 'main.menu' | transloco | uppercase }}
-      </a>
-      <a
-        mat-tab-link
-        routerLink="/bookTable"
-        routerLinkActive="navBottomBorder"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        {{ 'main.book' | transloco | uppercase }}
-      </a>
-    </nav>
-  </div>
   <div *ngIf="(auth.getRole() | async) === 'WAITER'" class="forDesktop">
     <nav mat-tab-nav-bar>
       <a

@@ -16,7 +16,7 @@ public class UserRoleEntity extends ApplicationPersistenceEntity implements User
 
   private String name;
 
-  private boolean active;
+  private Boolean active;
 
   private List<UserEntity> users;
 
@@ -41,7 +41,7 @@ public class UserRoleEntity extends ApplicationPersistenceEntity implements User
   /**
    * @return active
    */
-  public boolean getActive() {
+  public Boolean getActive() {
 
     return this.active;
   }
@@ -49,7 +49,7 @@ public class UserRoleEntity extends ApplicationPersistenceEntity implements User
   /**
    * @param active new value of {@link #getactive}.
    */
-  public void setActive(boolean active) {
+  public void setActive(Boolean active) {
 
     this.active = active;
   }

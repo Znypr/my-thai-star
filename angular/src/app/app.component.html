@@ -57,20 +57,6 @@
               RESERVATIONS
             </a>
           </mat-nav-list>
-          <mat-nav-list menu-items *ngIf="(role$ | async) === 'ADMIN'"> //added 
-            <a mat-list-item (click)="navigateTo('restaurant')">
-              <mat-icon>home</mat-icon>
-              HOME
-            </a>
-            <a mat-list-item (click)="navigateTo('admin')">
-              <mat-icon>admin</mat-icon>
-              ADMIN
-            </a>
-            <a mat-list-item (click)="navigateTo('admin')">
-              <mat-icon>admin</mat-icon>
-              ADMIN
-            </a>
-          </mat-nav-list>
         </mat-sidenav>
 
         <router-outlet #fade="outlet"></router-outlet>
@@ -79,7 +65,6 @@
 
     <mat-toolbar class="appFooter forDesktop">
       <span>MY THAI STAR {{ year }} - {{ version$ | async }}</span>
-      <span> <b> ROLE: {{ role$ | async }} </b></span>
       <span>Devonfw</span>
     </mat-toolbar>
   </div>

@@ -4,7 +4,7 @@ import java.security.Principal;
 
 public enum Role implements Principal {
 
- ADMIN(3L, "Admin"), MANAGER(2L, "Manager"), WAITER(1L, "Waiter"), CUSTOMER(0L, "Customer");
+  MANAGER(2L, "Manager"), WAITER(1L, "Waiter"), CUSTOMER(0L, "Customer");
 
   private final Long id;
 

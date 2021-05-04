@@ -89,7 +89,7 @@ public class ApplicationAccessControlConfig extends AccessControlConfig {
 
   public static final String GROUP_READ_MASTER_DATA = PREFIX + "ReadMasterData";
 
-  public static final String GROUP_ADMIN = Roles.ADMIN;
+  public static final String GROUP_ADMIN = "Admin";
 
   public static final String GROUP_WAITER = Roles.WAITER;
 
@@ -104,15 +104,11 @@ public class ApplicationAccessControlConfig extends AccessControlConfig {
 
     super();
 
-    AccessControlGroup customer = group(GROUP_CUSTOMER, PERMISSION_FIND_ORDER, PERMISSION_FIND_BOOKING);
-
     AccessControlGroup waiter = group(GROUP_WAITER, PERMISSION_FIND_ORDER, PERMISSION_FIND_BOOKING);
 
     AccessControlGroup manager = group(GROUP_MANAGER, PERMISSION_FIND_BOOKING, PERMISSION_FIND_ORDER,
         PERMISSION_FIND_NEXT_WEEK_PREDICTION, PERMISSION_FIND_GEO_CLUSTER);
 
-    AccessControlGroup admin = group(GROUP_ADMIN, PERMISSION_FIND_BOOKING, PERMISSION_FIND_ORDER,
-        PERMISSION_FIND_NEXT_WEEK_PREDICTION, PERMISSION_FIND_GEO_CLUSTER, PERMISSION_FIND_USER_ROLE);
   }
 
 }
