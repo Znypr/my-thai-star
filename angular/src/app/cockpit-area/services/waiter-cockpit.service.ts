@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FilterSearchComponent } from 'app/menu/components/menu-filters/filter-search/filter-search.component';
 import {
+  BookingInfo,
   FilterCockpit,
   OrderLineInfo,
   Pageable,
@@ -28,7 +29,7 @@ export class WaiterCockpitService {
     'ordermanagement/v1/order/search';
   private readonly filterOrdersRestPath: string =
     'ordermanagement/v1/order/search';
-  private readonly getOrderRestPath: string =
+  private readonly getOrderUpdateRestPath: string =
     'ordermanagement/v1/order/changeState';
 
   private readonly restServiceRoot$: Observable<string> = this.config.getRestServiceRoot();
@@ -65,9 +66,9 @@ export class WaiterCockpitService {
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
         this.http.post<OrderListView[]>(
-          `${restServiceRoot}${this.getOrderRestPath}`,
+          `${restServiceRoot}${this.getOrderUpdateRestPath}`,
           // `${restServiceRoot}${this.getOrderRestPath}${orderID}`,
-          { orderId: orderID, orderStatus: status },
+          {id: orderID, orderStatus: status},
         ),
       ),
     );

@@ -42,7 +42,7 @@ public interface OrdermanagementRestService {
   /**
    * Delegates to {@link Ordermanagement#saveOrder}.
    *
-   * @param order the {@link OrderEto} to be saved
+   * @param {@link OrderEto} to be saved
    * @return the recently created {@link OrderEto}
    */
   @POST
@@ -50,15 +50,15 @@ public interface OrdermanagementRestService {
   public OrderEto saveOrder(OrderCto cto);
 
 
-/**
- * Delegates to {@link Ordermanagement#updateOrderStatus}.
- * 
- * @param order the {@link OrderCto} to be updated
- * @return the updated {@link OrderCto}
- */
-@POST
-@Path("/order/changeState/")
-public OrderCto updateOrderStatus(OrderCto order);
+    /**
+     * Delegates to {@link Ordermanagement#updateOrderStatus}.
+     *
+     * @param {@link OrderCto} to be updated
+     * @return the updated {@link OrderCto}
+     */
+    @POST
+    @Path("/order/changeState/")
+    public OrderCto updateOrderStatus(OrderEto order);
 
 
   /**
@@ -113,11 +113,11 @@ public OrderCto updateOrderStatus(OrderCto order);
   @Path("/orderline/{id}/")
   public void deleteOrderLine(@PathParam("id") long id);
 
-  /**
-   * Delegates to {@link Ordermanagement#findOrderLineEtos}.
-   *
-   * @param searchCriteriaTo the pagination and search criteria to be used for finding orderlines.
-   * @return the {@link Page list} of matching {@link OrderLineEto}s.
+    /**
+     * Delegates to {@link Ordermanagement#}.
+     *
+     * @param searchCriteriaTo the pagination and search criteria to be used for finding orderlines.
+     * @return the {@link Page list} of matching {@link OrderLineEto}s.
    */
   @Path("/orderline/search")
   @POST

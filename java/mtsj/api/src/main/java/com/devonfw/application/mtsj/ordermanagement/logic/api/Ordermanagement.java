@@ -20,11 +20,11 @@ public interface Ordermanagement {
 
   /**
    * Returns an Order with updated state
-   * 
-   * @param order id, new order status
+   *
+   * @param order status
    * @return The {@link OrderCto} with state 'orderStatus'
    */
-  OrderCto updateOrderStatus(OrderCto order);
+  OrderCto updateOrderStatus(OrderEto order);
 
   /**
    * Returns a Order by its id 'id'.
