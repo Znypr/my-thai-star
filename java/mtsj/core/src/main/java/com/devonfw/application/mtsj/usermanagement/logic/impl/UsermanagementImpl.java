@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 
+import com.devonfw.application.mtsj.general.service.impl.config.WebSecurityBeansConfig;
 import org.jboss.aerogear.security.otp.api.Base32;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,6 +105,9 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
   public UserEto saveUser(UserEto user) {
 
     Objects.requireNonNull(user, "user");
+    WebSecurityBeansConfig webSecurityBeansConfig = new WebSecurityBeansConfig();
+    user.setPassword(webSecurityBeansConfig.passwordEncoder().encode(user.getPassword()));
+
     UserEntity userEntity = getBeanMapper().map(user, UserEntity.class);
 
     // initialize, validate userEntity here if necessary

@@ -21,7 +21,7 @@ import { AdminDialogComponent } from './admin-dialog/admin-dialog.component';
 })
 export class AdminCockpitComponent implements OnInit, OnDestroy {
   // private translocoSubscription = Subscription.EMPTY;
-  hide=true;
+  hide = true;
 
   private pageable: Pageable = {
     pageSize: 8,
@@ -59,7 +59,6 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialog: MatDialog,
-    //private translocoService: TranslocoService,
     private adminCockpitService: AdminCockpitService,
     private configService: ConfigService,
   ) {
@@ -98,15 +97,18 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
     });
   }
 
-  getUserInput(event:any) {
-    var info= [
+  // tslint:disable-next-line:typedef
+  getUserInput(event: any) {
+    const info = [
       event.target.Username.value,
       event.target.Email.value,
       event.target.Role.value,
-      event.target.Password.value,
+      event.target.Password.value
     ];
-    this.adminCockpitService.reloadPage('/admin');
-    return this.adminCockpitService.addUser(info[0],info[1],info[2],"{bcrypt}$2a$10$1CAKyUHbX6RJqT5cUP6/aOMTIlYYvGIO/a3Dt/erbYKKgmbgJMGsG").subscribe();
+    const responseOfCreation = this.adminCockpitService.addUser(info[0], info[1], info[2], info[3]).subscribe(res => {
+      this.applyFilters();
+    });
+    return responseOfCreation;
   }
 
   //
@@ -115,8 +117,10 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   // }
 
   // THIS NEEDS TO BE HERE TO WORK
-  ngOnInit(){
+  ngOnInit() {
     this.applyFilters();
-  };
-  ngOnDestroy(){};
+  }
+
+  ngOnDestroy() {
+  }
 }

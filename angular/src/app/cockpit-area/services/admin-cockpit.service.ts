@@ -75,11 +75,16 @@ export class AdminCockpitService {
   }
 
 // admin can add a user
-  addUser(username: string, email: string, userRoleId: number, password: string,) {
-    let path= this.addUserRestPath;
-    return  this.restServiceRoot$.pipe(
+  addUser(username: string, email: string, userRoleId: number, password: string) {
+    let path = this.addUserRestPath;
+    return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
-        this.http.post(`${restServiceRoot}${path}`,{username: username,email: email,userRoleId: userRoleId, password: password}),
+        this.http.post(`${restServiceRoot}${path}`, {
+          username: username,
+          email: email,
+          userRoleId: userRoleId,
+          password: password
+        }),
       ),
     );
   }
