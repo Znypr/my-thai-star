@@ -70,6 +70,22 @@ export interface OrderView {
   extras: ExtraView[];
 }
 
+// inserted for admin-cockpit
+// TODO: ADD IMPORTANT DATA
+export interface UserView{
+  user: {
+    id: number;
+    username: string;
+    email: string;
+    idRole: number;
+  };
+}
+
+
+export interface UserListView {
+  user: UserView[];
+}
+
 export interface OrderViewResult {
   dish: {
     id: number;
@@ -191,5 +207,3 @@ export interface TwoFactorResponse {
   base64QrCode?: string;
   secret?: string;
 }
-
-

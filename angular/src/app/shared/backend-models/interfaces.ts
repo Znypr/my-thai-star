@@ -19,6 +19,15 @@ export class FilterCockpit {
   orderStatus?: string;
 }
 
+// to filter users in admin-cockpit
+export class FilterAdminCockpit {
+  pageable?: Pageable;
+  id: number;
+  username: string;
+  email: string;
+  idRole: number;
+}
+
 export class FilterOrdersCockpit {
   pageable?: Pageable;
   // sort?: Sorting[];

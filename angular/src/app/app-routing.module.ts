@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BookTableComponent } from './book-table/container/book-table/book-table.component';
 import { OrderCockpitComponent } from './cockpit-area/order-cockpit/order-cockpit.component';
+import { AdminCockpitComponent } from './cockpit-area/admin-cockpit/admin-cockpit.component';
 import { ReservationCockpitComponent } from './cockpit-area/reservation-cockpit/reservation-cockpit.component';
 import { AuthGuardService } from './core/authentication/auth-guard.service';
 import { NotFoundComponent } from './core/not-found/not-found.component';
@@ -29,6 +30,12 @@ const appRoutes: Routes = [
     path: 'prediction',
     component: NotSupportedComponent,
     canActivate: [AuthGuardService],
+  },
+  {
+      path: 'admin',
+      component: AdminCockpitComponent,
+      // pathMatch: 'full',
+      canActivate: [AuthGuardService],
   },
   {
     path: 'clustering',
