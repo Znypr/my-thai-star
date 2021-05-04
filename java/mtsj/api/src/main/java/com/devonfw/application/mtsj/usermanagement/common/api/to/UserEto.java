@@ -70,6 +70,12 @@ public class UserEto extends AbstractEto implements User {
 
   // added for adding users in admin-cockpit
   @Override
+  public String getPassword() {
+
+    return this.password;
+  }
+
+  @Override
   public void setPassword(String password) {
 
     this.password = password;

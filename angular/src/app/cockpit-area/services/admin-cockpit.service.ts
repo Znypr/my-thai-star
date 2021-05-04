@@ -79,7 +79,7 @@ export class AdminCockpitService {
     let path= this.addUserRestPath;
     return  this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
-        this.http.post(`${restServiceRoot}${path}`,{username,email,userRoleId, password}),
+        this.http.post(`${restServiceRoot}${path}`,{username: username,email: email,userRoleId: userRoleId, password: password}),
       ),
     );
   }

@@ -106,7 +106,7 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
       event.target.Password.value,
     ];
     this.adminCockpitService.reloadPage('/admin');
-    return this.adminCockpitService.addUser(info[0],info[1],info[2],info[3]).subscribe();
+    return this.adminCockpitService.addUser(info[0],info[1],info[2],"{bcrypt}$2a$10$1CAKyUHbX6RJqT5cUP6/aOMTIlYYvGIO/a3Dt/erbYKKgmbgJMGsG").subscribe();
   }
 
   //

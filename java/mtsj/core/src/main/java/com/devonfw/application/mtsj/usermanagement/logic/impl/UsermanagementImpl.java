@@ -108,6 +108,7 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
 
     // initialize, validate userEntity here if necessary
     UserEntity resultEntity = getUserDao().save(userEntity);
+    // debugging
     LOG.debug("User with id '{}' has been created.", resultEntity.getId());
     return getBeanMapper().map(resultEntity, UserEto.class);
   }
