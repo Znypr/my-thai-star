@@ -20,13 +20,13 @@ public class BeansJpaConfig {
   private DataSource appDataSource;
 
   @Value("${database.migration.auto}")
-  private Boolean enabled;
+  private boolean enabled;
 
-  @Value("${database.migration.testdata}")
-  private Boolean testdata;
+    @Value("${database.migration.testdata}")
+    private boolean testdata;
 
-  @Value("${database.migration.clean}")
-  private Boolean clean;
+    @Value("${database.migration.clean}")
+    private boolean clean;
 
   @Bean
   public DatabaseMigrator getFlyway() {

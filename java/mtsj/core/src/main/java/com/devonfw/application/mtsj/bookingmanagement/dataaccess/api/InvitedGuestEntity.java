@@ -24,7 +24,7 @@ public class InvitedGuestEntity extends ApplicationPersistenceEntity implements 
 
   private String email;
 
-  private Boolean accepted;
+  private boolean accepted;
 
   private Instant modificationDate;
 
@@ -87,20 +87,20 @@ public class InvitedGuestEntity extends ApplicationPersistenceEntity implements 
     this.email = email;
   }
 
-  /**
-   * @return accepted
-   */
-  public Boolean getAccepted() {
+    /**
+     * @return accepted
+     */
+    public boolean getAccepted() {
 
-    return this.accepted;
-  }
+        return this.accepted;
+    }
 
-  /**
-   * @param accepted new value of {@link #getaccepted}.
-   */
-  public void setAccepted(Boolean accepted) {
+    /**
+     * @param accepted new value of {@link #getaccepted}.
+     */
+    public void setAccepted(boolean accepted) {
 
-    this.accepted = accepted;
+        this.accepted = accepted;
   }
 
   /**

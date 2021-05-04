@@ -70,6 +70,22 @@ export interface OrderView {
   extras: ExtraView[];
 }
 
+// inserted for admin-cockpit
+// TODO: ADD IMPORTANT DATA
+export interface UserView{
+  user: {
+    id: number;
+    username: string;
+    email: string;
+    idRole: number;
+  };
+}
+
+
+export interface UserListView {
+  user: UserView[];
+}
+
 export interface OrderViewResult {
   dish: {
     id: number;
@@ -94,7 +110,14 @@ export interface OrderDishListView {
   booking: BookingView;
 }
 
-// Interface to receive responses from the server using httpclient for getReservations
+// Interface to recieve responeses from the server using httpclient for get users
+//added for admin-cockpit
+export interface UserResponse {
+  pageable: Pageable;
+  content: UserListView;
+}
+
+// Interface to recieve responeses from the server using httpclient for getReservations
 export interface BookingResponse {
   pageable: Pageable;
   content: ReservationView;
@@ -191,5 +214,3 @@ export interface TwoFactorResponse {
   base64QrCode?: string;
   secret?: string;
 }
-
-
