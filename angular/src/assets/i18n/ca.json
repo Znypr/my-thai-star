@@ -180,6 +180,11 @@
         "extrasH": "Extres",
         "quantityH": "Quantitat",
         "priceH": "Preu"
+      },
+      "orderStatus": {
+        "open": "Obert",
+        "preparing": "Preparació",
+        "paid": "Pagat"
       }
     },
     "reservations": {
@@ -195,6 +200,7 @@
       "reservationDateH": "Data de reserva",
       "emailH": "Email",
       "bookingTokenH": "Nombre de referència",
+      "orderStatusH": "Estat",
       "ownerH": "Responsable",
       "tableH": "Taula",
       "creationDateH": "Data de creació"

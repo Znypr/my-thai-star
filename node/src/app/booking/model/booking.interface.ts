@@ -7,7 +7,7 @@ export interface IBooking {
   bookingDate: Date;
   expirationDate?: Date;
   creationDate?: Date;
-  canceled?: boolean;
+  cancelled?: boolean;
   bookingType?: number;
   tableId?: number;
   orderId?: number;

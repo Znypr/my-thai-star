@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FilterSearchComponent } from 'app/menu/components/menu-filters/filter-search/filter-search.component';
 import {
+  BookingInfo,
   FilterCockpit,
+  OrderLineInfo,
   Pageable,
   Sort,
 } from 'app/shared/backend-models/interfaces';
@@ -11,6 +14,7 @@ import { exhaustMap } from 'rxjs/operators';
 import { ConfigService } from '../../core/config/config.service';
 import {
   BookingResponse,
+  OrderListView,
   OrderResponse,
   OrderView,
   OrderViewResult,
@@ -25,10 +29,10 @@ export class WaiterCockpitService {
     'ordermanagement/v1/order/search';
   private readonly filterOrdersRestPath: string =
     'ordermanagement/v1/order/search';
+  private readonly getOrderUpdateRestPath: string =
+    'ordermanagement/v1/order/changeState';
 
-  private readonly restServiceRoot$: Observable<
-    string
-  > = this.config.getRestServiceRoot();
+  private readonly restServiceRoot$: Observable<string> = this.config.getRestServiceRoot();
 
   constructor(
     private http: HttpClient,
@@ -54,6 +58,18 @@ export class WaiterCockpitService {
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
         this.http.post<OrderResponse[]>(`${restServiceRoot}${path}`, filters),
+      ),
+    );
+  }
+
+  updateOrderStatus(orderID: any, status: any): Observable<OrderListView[]> {
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.post<OrderListView[]>(
+          `${restServiceRoot}${this.getOrderUpdateRestPath}`,
+          // `${restServiceRoot}${this.getOrderRestPath}${orderID}`,
+          {id: orderID, orderStatus: status},
+        ),
       ),
     );
   }

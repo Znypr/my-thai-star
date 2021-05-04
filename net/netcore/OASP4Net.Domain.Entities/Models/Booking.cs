@@ -19,7 +19,7 @@ namespace OASP4Net.Domain.Entities.Models
         public DateTime BookingDate { get; set; }
         public DateTime? ExpirationDate { get; set; }
         public DateTime? CreationDate { get; set; }
-        public bool? Canceled { get; set; }
+        public bool? Cancelled { get; set; }
         public int? IdBookingType { get; set; }
         public long? TableId { get; set; }
         public string Email { get; set; }

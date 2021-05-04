@@ -179,6 +179,11 @@
         "extrasH": "Dodatkowe",
         "quantityH": "Ilosc",
         "priceH": "Cena"
+      },
+      "orderStatus": {
+        "open": "Otwórz",
+        "preparing": "Przygotowanie",
+        "paid": "Wypłacane"
       }
     },
     "reservations": {
@@ -194,6 +199,7 @@
       "reservationDateH": "Data rezerwacji",
       "emailH": "Email",
       "bookingTokenH": "Numer referencyjny",
+      "orderStatusH": "Stanu",
       "ownerH": "Wlasciciel",
       "tableH": "Stolik",
       "creationDateH": "Data utworzenia"

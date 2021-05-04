@@ -119,7 +119,7 @@ A guest accept an invitation sent by a host. It will receive another email to de
 A guest decline the invitation.
 
 ==== Cancel Reservation
-A host cancel the reservation, everybody that has accepted or not already answered will receive an email notifying this event is canceled. Also all the orders related to this reservations will be removed.
+A host cancel the reservation, everybody that has accepted or not already answered will receive an email notifying this event is cancelled. Also all the orders related to this reservations will be removed.
 
 ==== Cancel Orders
 When you have a reservation, you will be assigned to a token, with that token you can save your order in the restaurant. When sent, you will receive an email confirming the order and the possibility to remove it.

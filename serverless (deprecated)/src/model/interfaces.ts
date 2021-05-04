@@ -236,7 +236,7 @@ export interface BookingEntity {
     expirationDate?: string;
     creationDate?: string;
     email?: string;
-    canceled?: boolean;
+    cancelled?: boolean;
     bookingType?: number;
     tableId?: number;
     orderId?: number;
@@ -253,7 +253,7 @@ export function isBookingEntity(elem: any): elem is BookingEntity {
         expirationDate: ['optional', 'string'],
         creationDate: ['optional', 'string'],
         email: ['optional', 'string'],
-        canceled: ['optional', 'boolean'],
+        cancelled: ['optional', 'boolean'],
         bookingType: ['optional', 'number'],
         tableId: ['optional', 'number'],
         orderId: ['optional', 'number'],

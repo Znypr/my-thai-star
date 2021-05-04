@@ -34,6 +34,8 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
 
   private List<OrderLineEntity> orderLines;
 
+  private String orderStatus;
+
   /**
    * @return booking
    */
@@ -170,5 +172,23 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
       this.host = bookingEntity;
     }
   }
+
+    /**
+   * @return order status
+   */
+  @JoinColumn(name = "orderStatus")
+  public String getOrderStatus() {
+
+    return this.orderStatus;
+  }
+
+  /**
+   * @param orderStatus new value of {@link #getorderstatus}.
+   */
+  public void setOrderStatus(String orderStatus) {
+
+    this.orderStatus = orderStatus;
+  }
+
 
 }

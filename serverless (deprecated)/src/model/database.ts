@@ -47,7 +47,7 @@ export interface OrderLine {
 export interface Order {
     id: string;
     lines: OrderLine[];
-    // canceled: boolean;
+    // cancelled: boolean;
     idBooking: string;
     idInvitedGuest?: string;
 }
@@ -62,7 +62,7 @@ export interface Booking {
     bookingDate: string;
     expirationDate: string;
     creationDate: string;
-    canceled: boolean;
+    cancelled: boolean;
     bookingType: number;
     assistants?: number;
     guestList?: string[];

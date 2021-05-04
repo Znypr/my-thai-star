@@ -22,7 +22,7 @@ CREATE TABLE [dbo].[Booking]
 [BookingDate] [datetime] NOT NULL,
 [ExpirationDate] [datetime] NULL,
 [CreationDate] [datetime] NULL,
-[Canceled] [bit] NOT NULL CONSTRAINT [DF__Reservati__Cance__14270015] DEFAULT ((0)),
+[Cancelled] [bit] NOT NULL CONSTRAINT [DF__Reservati__Cance__14270015] DEFAULT ((0)),
 [IdBookingType] [int] NULL,
 [TableId] [bigint] NULL,
 [Email] [nvarchar] (255) COLLATE Modern_Spanish_CI_AS NULL,

@@ -34,8 +34,8 @@ namespace MyThaiStar.Core.Business.Dto.BookingManagement
         [JsonProperty(PropertyName = "email")]
         public string Email { get; set; }
 
-        [JsonProperty(PropertyName = "canceled")]
-        public bool Canceled { get; set; }
+        [JsonProperty(PropertyName = "cancelled")]
+        public bool Cancelled { get; set; }
 
         [JsonProperty(PropertyName = "bookingType")]
         public string BookingType { get; set; }

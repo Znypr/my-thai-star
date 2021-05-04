@@ -161,6 +161,17 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
+  public List<OrderCto> findOrdersByOrderStatus(String orderStatus) {
+
+    List<OrderCto> ctos = new ArrayList<>();
+    List<OrderEntity> orders = getOrderDao().findOrdersByOrderStatus(orderStatus);
+    for (OrderEntity order : orders) {
+      processOrders(ctos, order);
+    }
+    return ctos;
+  }
+
+  @Override
   public Page<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria) {
 
     List<OrderCto> ctos = new ArrayList<>();
@@ -200,6 +211,21 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     cto.setOrderLines(orderLinesCto);
     ctos.add(cto);
   }
+
+    /**
+     * @param order
+     */
+    @Override
+    public OrderCto updateOrderStatus(OrderEto order) {
+
+      System.out.println(order);
+      OrderEntity orderEntity = getOrderDao().find(order.getId());
+      orderEntity.setOrderStatus(order.getOrderStatus());
+      OrderEntity resultEntity = getOrderDao().save(orderEntity);
+      LOG.debug("Order with id '{}' has been modified.", resultEntity.getId());
+      return getBeanMapper().map(resultEntity, OrderCto.class);
+
+    }
 
   @Override
   public List<OrderCto> findOrders(Long idBooking) {
@@ -252,6 +278,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     // initialize, validate orderEntity here if necessary
     orderEntity = getValidatedOrder(orderEntity.getBooking().getBookingToken(), orderEntity);
     orderEntity.setOrderLines(orderLineEntities);
+    orderEntity.setOrderStatus(order.getOrderStatus());
     OrderEntity resultOrderEntity = getOrderDao().save(orderEntity);
     LOG.debug("Order with id '{}' has been created.", resultOrderEntity.getId());
 
@@ -269,7 +296,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   /**
    * Returns the field 'orderDao'.
    *
-   * @return the {@link OrderDao} instance.
+   * @return the {@link } instance.
    */
   public OrderRepository getOrderDao() {
 
@@ -325,7 +352,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   /**
    * Returns the field 'orderLineDao'.
    *
-   * @return the {@link OrderLineDao} instance.
+   * @return the {@link } instance.
    */
   public OrderLineRepository getOrderLineDao() {
 

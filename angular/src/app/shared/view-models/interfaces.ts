@@ -70,22 +70,6 @@ export interface OrderView {
   extras: ExtraView[];
 }
 
-// inserted for admin-cockpit
-// TODO: ADD IMPORTANT DATA
-export interface UserView{
-  user: {
-    id: number;
-    username: string;
-    email: string;
-    idRole: number;
-  };
-}
-
-//inserted for admin-cockpit
-export interface UserListView {
-  user: UserView[];
-}
-
 export interface OrderViewResult {
   dish: {
     id: number;
@@ -102,6 +86,7 @@ export interface OrderViewResult {
 export interface OrderListView {
   orderLines: OrderView[];
   booking: BookingView;
+  orderStatus: string;
 }
 
 export interface OrderDishListView {
@@ -109,32 +94,25 @@ export interface OrderDishListView {
   booking: BookingView;
 }
 
-// Interface to recieve responeses from the server using httpclient for get users
-//added for admin-cockpit
-export interface UserResponse {
-  pageable: Pageable;
-  content: UserListView;
-}
-
-// Interface to recieve responeses from the server using httpclient for getReservations
+// Interface to receive responses from the server using httpclient for getReservations
 export interface BookingResponse {
   pageable: Pageable;
   content: ReservationView;
 }
 
-// Interface to recieve responeses from the server using httpclient for get orders
+// Interface to receive responses from the server using httpclient to get orders
 export interface OrderResponse {
   pageable: Pageable;
   content: OrderListView;
 }
 
-// Interface to recieve responeses from the server using httpclient for get OrderDishResponse
+// Interface to receive responses from the server using httpclient to get OrderDishResponse
 export interface OrderDishResponse {
   pageable: Pageable;
   result: OrderDishListView;
 }
 
-// Interface to recieve responeses from the server using httpclient for email invitations
+// Interface to receive responses from the server using httpclient for email invitations
 export interface InvitationResponse {
   id: number;
   modificationCounter: number;
@@ -147,7 +125,7 @@ export interface InvitationResponse {
 // Not sure if this should just use bookingview interface, just in case Im creating a new interface that extends booking view
 export interface BookingTableResponse extends BookingView {
   bookingType: string;
-  canceled: false;
+  cancelled: false;
   comment: string;
   expeditionDate: string;
   id: number;
@@ -157,7 +135,7 @@ export interface BookingTableResponse extends BookingView {
   userId: number;
 }
 
-// Interface to recieve responeses from the server using httpclient for SaveOrders
+// Interface to receive responses from the server using httpclient for SaveOrders
 export interface SaveOrderResponse {
   bookingId: number;
   bokingToken: string;
@@ -213,3 +191,5 @@ export interface TwoFactorResponse {
   base64QrCode?: string;
   secret?: string;
 }
+
+

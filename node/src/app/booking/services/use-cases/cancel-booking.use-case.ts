@@ -39,7 +39,7 @@ export class CancelBookingUseCase {
 
     // Send the emails
     if (this.bookingMailerService) {
-      this.bookingMailerService.sendCanceledEmails(booking, booking.invitedGuests);
+      this.bookingMailerService.sendCancelledEmails(booking, booking.invitedGuests);
     }
   }
 }

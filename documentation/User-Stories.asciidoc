@@ -147,7 +147,7 @@ AC:
 . the cancelation is only possible one hour before my reservation takes place
 . my order is deleted from the system
 
-Remark: Changing the order is not possible. For that the order must be canceled and created from scratch again
+Remark: Changing the order is not possible. For that the order must be cancelled and created from scratch again
 
 === US: Read twitter rating for dishes
 

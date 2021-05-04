@@ -26,6 +26,11 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
   private Ordermanagement ordermanagement;
 
   @Override
+  public OrderCto updateOrderStatus(OrderEto order) {
+    return this.ordermanagement.updateOrderStatus(order);
+  }
+
+  @Override
   public OrderCto getOrder(long id) {
 
     return this.ordermanagement.findOrder(id);

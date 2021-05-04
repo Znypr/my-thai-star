@@ -9964,7 +9964,7 @@ var Zone$1 = (function (global) {
                     (task.zone || NO_ZONE).name + '; Execution: ' + this.name + ')');
             }
             // https://github.com/angular/zone.js/issues/778, sometimes eventTask
-            // will run in notScheduled(canceled) state, we should not try to
+            // will run in notScheduled(cancelled) state, we should not try to
             // run such kind of task but just return
             // we have to define an variable here, if not
             // typescript compiler will complain below
@@ -11749,7 +11749,7 @@ function patchTimer(window, setName, cancelName, nameSuffix) {
             if (task && typeof task.type === STRING) {
                 if (task.state !== NOT_SCHEDULED &&
                     (task.cancelFn && task.data.isPeriodic || task.runCount === 0)) {
-                    // Do not cancel already canceled functions
+                    // Do not cancel already cancelled functions
                     task.zone.cancelTask(task);
                 }
             }

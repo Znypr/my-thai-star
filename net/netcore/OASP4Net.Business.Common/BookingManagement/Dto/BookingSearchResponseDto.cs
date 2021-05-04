@@ -26,7 +26,7 @@ namespace OASP4Net.Business.Common.BookingManagement.Dto
         public string expirationDate { get; set; }
         public string creationDate { get; set; }
         public string email { get; set; }
-        public bool canceled { get; set; }
+        public bool cancelled { get; set; }
         public string bookingType { get; set; }
         public long? tableId { get; set; }
         public long? orderId { get; set; }

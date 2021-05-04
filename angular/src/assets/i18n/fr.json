@@ -181,6 +181,11 @@
         "extrasH": "Extras",
         "quantityH": "Quantité",
         "priceH": "Prix"
+      },
+      "orderStatus": {
+        "open": "Ouvrir",
+        "preparing": "Préparation",
+        "paid": "Payé"
       }
     },
     "reservations": {
@@ -196,6 +201,7 @@
       "reservationDateH": "Date de réservation",
       "emailH": "Email",
       "bookingTokenH": "Numéro de référence",
+      "orderStatusH": "Statut",
       "ownerH": "Responsable",
       "tableH": "Tableau",
       "creationDateH": "Date de création"

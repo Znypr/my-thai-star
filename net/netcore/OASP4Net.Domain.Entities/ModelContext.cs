@@ -48,7 +48,7 @@ namespace OASP4Net.Domain.Entities
 
                 entity.Property(e => e.BookingDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Canceled).HasDefaultValueSql("((0))");
+                entity.Property(e => e.Cancelled).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Comments).HasMaxLength(255);
 

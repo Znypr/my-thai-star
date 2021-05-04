@@ -90,7 +90,7 @@ export class Booking extends BaseEntity implements IBooking {
   @IsBoolean()
   @IsOptional()
   @Expose()
-  canceled?: boolean = false;
+  cancelled?: boolean = false;
 
   @Column('integer', { nullable: true })
   @IsInt()
@@ -152,7 +152,7 @@ export class Booking extends BaseEntity implements IBooking {
     const calculatedValues: Partial<Booking> = {
       bookingToken: 'CB_' + now.format('YYYYMMDD') + '_' + md5(newBooking.email + now.format('YYYYMMDDHHmmss')),
       expirationDate: bookingDate.subtract(1, 'hour').toDate(),
-      canceled: false,
+      cancelled: false,
       creationDate: now.toDate(),
     };
 

@@ -278,7 +278,7 @@ describe('Testing the application logic', () => {
             });
         });
 
-        it('should return an error if the InvitedGuest is already canceled', (done) => {
+        it('should return an error if the InvitedGuest is already cancelled', (done) => {
             business.updateInvitation(fguestToken, false, (err) => {
                 should.exist(err);
 
@@ -420,7 +420,7 @@ describe('Testing the application logic', () => {
             });
         });
 
-        it('should return an error if the order is already canceled', (done) => {
+        it('should return an error if the order is already cancelled', (done) => {
             business.cancelOrder(orderId!, (err) => {
                 should.exist(err);
 

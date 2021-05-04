@@ -180,6 +180,11 @@
         "extrasH": "Extra",
         "quantityH": "Hoeveelheid",
         "priceH": "Prijs"
+      },
+      "orderStatus": {
+        "open": "Open",
+        "preparing": "Voorbereiding",
+        "paid": "Betaald"
       }
     },
     "reservations": {
@@ -195,6 +200,7 @@
       "reservationDateH": "Reserveer datum",
       "emailH": "Email",
       "bookingTokenH": "Boekingsnummer",
+      "orderStatusH": "Status",
       "ownerH": "Eigenaar",
       "tableH": "Tafel",
       "creationDateH": "Aanmaakdatum"

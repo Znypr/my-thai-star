@@ -27,8 +27,8 @@ export const DefaultENTest = {
     'email confirmations': {
       invitationAccept: 'Invitation succesfully accepted',
       invitationReject: 'Invitation succesfully rejected',
-      bookingCancel: 'Booking succesfully canceled',
-      orderCancel: 'Order succesfully canceled',
+      bookingCancel: 'Booking succesfully cancelled',
+      orderCancel: 'Order succesfully cancelled',
     },
     orderID:
       'To order a menu it is necessary to obtain a booking id. Either you enter your already known booking id or you book a table',
@@ -181,6 +181,12 @@ export const DefaultENTest = {
         quantityH: 'Quantity',
         priceH: 'Price',
       },
+      orderStatus: {
+        open: 'open',
+        preparing: 'processing',
+        paid: 'paid',
+        cancelled: 'cancelled'
+      },
     },
     reservations: {
       title: 'Reservations',
@@ -195,6 +201,7 @@ export const DefaultENTest = {
       reservationDateH: 'Reservation Date',
       emailH: 'Email',
       bookingTokenH: 'Reference Number',
+      orderStatusH: 'Status',
       ownerH: 'Owner',
       tableH: 'Table',
       creationDateH: 'Creation date',
