@@ -15,7 +15,7 @@ export const BookTableDialogComponentStub = {
     expirationDate: 1591788523.0,
     creationDate: 1589977782.4627239,
     email: 'chillalkar@gmail.com',
-    canceled: false,
+    cancelled: false,
     bookingType: 'INVITED',
     tableId: null,
     orderId: null,

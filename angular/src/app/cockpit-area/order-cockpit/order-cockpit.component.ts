@@ -20,6 +20,7 @@ import { OrderDialogComponent } from './order-dialog/order-dialog.component';
   styleUrls: ['./order-cockpit.component.scss'],
 })
 export class OrderCockpitComponent implements OnInit, OnDestroy {
+
   private translocoSubscription = Subscription.EMPTY;
   private pageable: Pageable = {
     pageSize: 8,
@@ -29,6 +30,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   private sorting: any[] = [];
 
   pageSize = 8;
+  
 
   @ViewChild('pagingBar', { static: true }) pagingBar: MatPaginator;
 
@@ -41,6 +43,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     'booking.bookingDate',
     'booking.email',
     'booking.bookingToken',
+    'orderStatus',
   ];
 
   pageSizes: number[];
@@ -49,6 +52,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     bookingDate: undefined,
     email: undefined,
     bookingToken: undefined,
+    orderStatus: undefined,
   };
 
   constructor(
@@ -76,6 +80,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
           { name: 'booking.email', label: cockpitTable.emailH },
           { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
+          { name: 'orderStatus', label: cockpitTable.orderStatusH },
         ];
       });
   }

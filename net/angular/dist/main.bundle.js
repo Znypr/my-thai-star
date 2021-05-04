@@ -3182,14 +3182,14 @@ var EmailConfirmationsComponent = (function () {
                         break;
                     case 'cancel':
                         _this.emailService.sendCancelBooking(token).subscribe(function (res) {
-                            _this.snackBarService.openSnack('Booking succesfully canceled', 10000, 'green');
+                            _this.snackBarService.openSnack('Booking succesfully cancelled', 10000, 'green');
                         }, function (error) {
                             _this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'red');
                         });
                         break;
                     case 'cancelOrder':
                         _this.emailService.sendCancelOrder(token).subscribe(function (res) {
-                            _this.snackBarService.openSnack('Order succesfully canceled', 10000, 'green');
+                            _this.snackBarService.openSnack('Order succesfully cancelled', 10000, 'green');
                         }, function (error) {
                             _this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'red');
                         });

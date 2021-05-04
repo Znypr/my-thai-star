@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SpringBootApp<mtsj-core>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.devonfw.application.mtsj.SpringBootApp",
+            "projectName": "mtsj-core",
+            "args": ""
+        }
+    ]
+}

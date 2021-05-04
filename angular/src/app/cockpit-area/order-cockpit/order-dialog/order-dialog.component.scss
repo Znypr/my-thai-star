@@ -2,6 +2,18 @@
   word-break: break-word;
 }
 
+.heading {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+select {
+  text-align-last: center;
+  height: 40px;
+}
+
 .tableContainer {
   width: 100%;
   overflow: auto;

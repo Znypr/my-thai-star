@@ -1,5 +1,5 @@
-import {Pageable} from '../backend-models/interfaces';
-import {ExtraView} from './interfaces';
+import { Pageable } from '../backend-models/interfaces';
+import { ExtraView } from './interfaces';
 
 // BOOKING
 export interface ReservationView {
@@ -51,6 +51,7 @@ export interface OrderViewResult {
 export interface OrderListView {
   orderLines: OrderView[];
   booking: BookingView;
+  orderStatus: string;
 }
 
 // Interface to recieve responeses from the server using httpclient for getReservations
@@ -78,7 +79,7 @@ export interface InvitationResponse {
 // Not sure if this should just use bookingview interface, just in case Im creating a new interface that extends booking view
 export interface BookingTableResponse extends BookingView {
   bookingType: string;
-  canceled: false;
+  cancelled: false;
   comment: string;
   expeditionDate: string;
   id: number;

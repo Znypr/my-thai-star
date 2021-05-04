@@ -184,6 +184,12 @@
         "extrasH": "Extra",
         "quantityH": "Anzahl",
         "priceH": "Preis"
+      },
+      "orderStatus": {
+        "open": "Offen",
+        "preparing": "In Zubereitung",
+        "paid": "Bezahlt",
+        "cancelled": "Storniert"
       }
     },
     "reservations": {
@@ -199,6 +205,7 @@
       "reservationDateH": "Reservierungsdatum",
       "emailH": "Email",
       "bookingTokenH": "Referenznummer",
+      "orderStatusH": "Status",
       "ownerH": "Eigentümer",
       "tableH": "Tisch",
       "creationDateH": "Erstelldatum"

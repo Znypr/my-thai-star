@@ -42,6 +42,14 @@ public interface OrderRepository extends DefaultRepository<OrderEntity> {
       + " WHERE orders.booking.bookingToken = :bookingToken")
   List<OrderEntity> findOrdersByBookingToken(@Param("bookingToken") String bookingToken);
 
+   /**
+   * @param orderStatus
+   * @return the {@link OrderEntity} objects that matched the search.
+   */
+  @Query("SELECT orders FROM OrderEntity orders" //
+      + " WHERE orders.orderStatus = :orderStatus")
+  List<OrderEntity> findOrdersByOrderStatus(@Param("orderStatus") String orderStatus);
+
   /**
    * @param criteria the {@link OrderSearchCriteriaTo} with the criteria to search.
    * @return the {@link Page} of the {@link OrderEntity} objects that matched the search.
@@ -71,6 +79,11 @@ public interface OrderRepository extends DefaultRepository<OrderEntity> {
     if ((bookingToken != null) && alias.getBooking() != null) {
       query.where(Alias.$(alias.getBooking().getBookingToken()).toLowerCase().eq(bookingToken.toLowerCase()));
     }
+    String orderStatus = criteria.getOrderStatus();
+    if ((orderStatus != null) && alias.getOrderStatus() != null) {
+      query.where(Alias.$(alias.getOrderStatus()).eq(orderStatus));
+    }
+    
     return QueryUtil.get().findPaginated(criteria.getPageable(), query, true);
   }
 

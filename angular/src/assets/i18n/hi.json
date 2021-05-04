@@ -179,6 +179,11 @@
         "extrasH": "अतिरिक्त",
         "quantityH": "मात्रा",
         "priceH": "मूल्य"
+      },
+      "orderStatus": {
+        "open": "खोलें",
+        "preparing": "तैयारी",
+        "paid": "भुगतान किया"
       }
     },
     "reservations": {
@@ -194,6 +199,7 @@
       "reservationDateH": "आरक्षण की तिथि",
       "emailH": "ईमेल",
       "bookingTokenH": "संदर्भ संख्या",
+      "orderStatusH": "दर्जा",
       "ownerH": "मालिक",
       "tableH": "मेज",
       "creationDateH": "रचना तिथि"

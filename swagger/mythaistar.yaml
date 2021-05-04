@@ -197,7 +197,7 @@ paths:
     get:
       tags:
         - Mail
-      summary: "Method to cancel the invitation. Once is cancelled the system will send a cancelation email to all guests.\r\nAn invitation only can be canceled if the cancelation request is not send an hour before the booking"
+      summary: "Method to cancel the invitation. Once is cancelled the system will send a cancelation email to all guests.\r\nAn invitation only can be cancelled if the cancelation request is not send an hour before the booking"
       operationId: Mail_Booking/CancelInvitation
       consumes: []
       produces:
@@ -215,7 +215,7 @@ paths:
           type: string
       responses:
         '204':
-          description: 'Ok, no content. Invitation canceled'
+          description: 'Ok, no content. Invitation cancelled'
           schema:
             type: object
         '400':
@@ -251,7 +251,7 @@ paths:
           type: string
       responses:
         '204':
-          description: 'Ok, no content. Invitation canceled'
+          description: 'Ok, no content. Invitation cancelled'
           schema:
             type: object
         '400':
@@ -637,7 +637,7 @@ definitions:
         type: string
       email:
         type: string
-      canceled:
+      cancelled:
         type: boolean
       bookingType:
         $ref: '#/definitions/BookingType'

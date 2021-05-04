@@ -12,7 +12,7 @@ export const config: any = {
     { label: 'Español', value: 'es' },
     { label: 'Català', value: 'ca' },
     { label: 'Français', value: 'fr' },
-    { label: 'Nederlands', value: 'nl' },
+    { label: 'Dutch', value: 'nl' },
     { label: 'हिन्दी', value: 'hi' },
     { label: 'Polski', value: 'pl' },
     { label: 'Русский', value: 'ru' },

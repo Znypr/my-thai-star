@@ -755,7 +755,7 @@ describe('API endpoints', function () {
     });
 
     describe('GET /mythaistar/services/rest/ordermanagement/v1/order/cancelorder/:id', () => {
-        it('should return an error because the order is already canceled', (done) => {
+        it('should return an error because the order is already cancelled', (done) => {
             const event: HttpEvent = <HttpEvent>{
                 method: 'GET',
                 path: {},

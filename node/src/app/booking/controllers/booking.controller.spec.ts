@@ -63,8 +63,8 @@ describe('BookingController', () => {
       expect(response.bookingToken).toBeDefined();
       expect(response.bookingToken).toMatch(/CB_/);
       expect(response.bookingType).toStrictEqual(BookingTypes.COMMON);
-      expect(response.canceled).toBeDefined();
-      expect(response.canceled).toBeFalsy();
+      expect(response.cancelled).toBeDefined();
+      expect(response.cancelled).toBeFalsy();
       expect(response.comment).toStrictEqual(null);
       expect(response.creationDate).toBeDefined();
       expect(response.creationDate).toBeInstanceOf(Date);

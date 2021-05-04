@@ -45,7 +45,7 @@ CREATE TABLE Booking (
   bookingDate DATETIME NOT NULL,
   expirationDate DATETIME,
   creationDate DATETIME,
-  canceled BOOLEAN NOT NULL DEFAULT FALSE,
+  cancelled BOOLEAN NOT NULL DEFAULT FALSE,
   bookingType INTEGER,
   idTable BIGINT,
   idOrder BIGINT,
@@ -74,6 +74,7 @@ CREATE TABLE Orders (
   idBooking BIGINT NOT NULL,
   idInvitedGuest BIGINT,
   idHost BIGINT,
+  orderStatus BIGINT NOT NULL,
   CONSTRAINT FK_Order_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) ,
   CONSTRAINT FK_Order_idInvitedGuest FOREIGN KEY(idInvitedGuest) REFERENCES InvitedGuest(id)
 );`);

@@ -48,7 +48,7 @@ namespace OASP4Net.Test.Model
                     .IsRequired()
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.Canceled)
+                entity.Property(e => e.Cancelled)
                     .IsRequired()
                     .HasColumnType("bit")
                     .HasDefaultValueSql("0");

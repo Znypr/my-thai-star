@@ -19,10 +19,18 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesS
 public interface Ordermanagement {
 
   /**
+   * Returns an Order with updated state
+   *
+   * @param order status
+   * @return The {@link OrderCto} with state 'orderStatus'
+   */
+  OrderCto updateOrderStatus(OrderEto order);
+
+  /**
    * Returns a Order by its id 'id'.
    *
    * @param id The id 'id' of the Order.
-   * @return The {@link OrderEto} with id 'id'
+   * @return The {@link OrderCto} with id 'id'
    */
   OrderCto findOrder(Long id);
 
@@ -57,6 +65,14 @@ public interface Ordermanagement {
    * @return the list {@link OrderCto}
    */
   List<OrderCto> findOrdersByBookingToken(String bookingToken);
+
+  /**
+   * Returns the list of OrderCto
+   *
+   * @param orderStatus
+   * @return the list {@link OrderCto}
+   */
+  List<OrderCto> findOrdersByOrderStatus(String orderStatus);
 
   /**
    * Returns the list of OrderCtos

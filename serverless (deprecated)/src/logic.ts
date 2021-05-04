@@ -139,7 +139,7 @@ export async function createBooking(reserv: types.BookingPostView,
             bookingDate: reserv.booking.bookingDate as string,
             expirationDate: bookDate.subtract(1, 'hour').toJSON(),
             creationDate: date.toJSON(),
-            canceled: false,
+            cancelled: false,
             bookingType: reserv.booking.bookingType as number,
             assistants: (reserv.booking.bookingType === types.BookingTypes.booking) ? Math.floor(reserv.booking.assistants!) : undefined,
             table: (reserv.booking.bookingType === types.BookingTypes.booking) ? table : undefined,
@@ -282,7 +282,7 @@ export async function updateBookingWithTable(id: string, table: string) {
 
 export function getAllInvitedBookings(date?: string): Promise<dbtypes.Booking[]> {
     return oasp4fn.table('Booking').filter((o: dbtypes.Booking) => {
-        let res = (o.canceled === undefined || o.canceled === false) && o.bookingType === types.BookingTypes.invited;
+        let res = (o.cancelled === undefined || o.cancelled === false) && o.bookingType === types.BookingTypes.invited;
 
         if (date === undefined) res = res && moment(o.bookingDate).isAfter(moment().add(1, 'hour'));
         else res = res && date === o.bookingDate;
@@ -367,8 +367,8 @@ export async function cancelBooking(token: string, callback: (err: types.Error |
             throw { code: 400, message: 'You can\'t cancel the booking at this time' };
         }
 
-        if (reg[0].canceled) {
-            throw { code: 400, message: 'Already canceled' };
+        if (reg[0].cancelled) {
+            throw { code: 400, message: 'Already cancelled' };
         }
         // end errors ////////////////////////////////////////////////////////
 
@@ -406,21 +406,21 @@ export async function cancelBooking(token: string, callback: (err: types.Error |
         try {
             if (serverConfig.mailConfig === serverConfig.MailType.api || serverConfig.mailConfig === serverConfig.MailType.both) {
                 //TODO: send email
-                // mailer.sendEmail(null, reg[0].email, '[MyThaiStar] Invitation canceled', undefined, pug.renderFile('./src/emails/order.pug', {
-                //     title: 'Invitation canceled',
+                // mailer.sendEmail(null, reg[0].email, '[MyThaiStar] Invitation cancelled', undefined, pug.renderFile('./src/emails/order.pug', {
+                //     title: 'Invitation cancelled',
                 //     name: reg[0].name,
                 // }));
 
                 // if (guest !== undefined) {
                 //     guest.forEach((elem: any) => {
-                //         mailer.sendEmail(elem.email, '[MyThaiStar] Invitation canceled', undefined, pug.renderFile('./src/emails/order.pug', {
-                //             title: 'Invitation canceled',
+                //         mailer.sendEmail(elem.email, '[MyThaiStar] Invitation cancelled', undefined, pug.renderFile('./src/emails/order.pug', {
+                //             title: 'Invitation cancelled',
                 //             name: elem.email,
                 //         }));
                 //     });
                 // }
             } else if (serverConfig.mailConfig === serverConfig.MailType.mock || serverConfig.mailConfig === serverConfig.MailType.both) {
-                console.log(`Booking canceled: ${token}`);
+                console.log(`Booking cancelled: ${token}`);
             }
         } catch (err) {
             console.error(err);
@@ -444,7 +444,7 @@ export async function updateInvitation(token: string, response: boolean, callbac
         }
 
         if (reg[0].accepted !== undefined && reg[0].accepted === false) {
-            throw { code: 400, message: 'The invitation is canceled, you can\'t do any modification' };
+            throw { code: 400, message: 'The invitation is cancelled, you can\'t do any modification' };
         }
 
         if (reg[0].accepted !== undefined && reg[0].accepted === true && response === true) {
@@ -530,9 +530,9 @@ export async function createOrder(order: types.OrderPostView, callback: (err: ty
         }
 
         if (order.booking.bookingToken.startsWith('CB')) {
-            // booking canceled
-            if (reg[0].canceled !== undefined && reg[0].canceled === true) {
-                throw { code: 400, message: 'The booking is canceled' };
+            // booking cancelled
+            if (reg[0].cancelled !== undefined && reg[0].cancelled === true) {
+                throw { code: 400, message: 'The booking is cancelled' };
             }
 
             // less than 1 hour to the booking date
@@ -547,9 +547,9 @@ export async function createOrder(order: types.OrderPostView, callback: (err: ty
             }
 
             const reg2 = await oasp4fn.table('Booking', reg[0].idBooking).promise() as dbtypes.Booking;
-            // booking canceled
-            if (reg2.canceled !== undefined && reg2.canceled === true) {
-                throw { code: 400, message: 'The booking is canceled' };
+            // booking cancelled
+            if (reg2.cancelled !== undefined && reg2.cancelled === true) {
+                throw { code: 400, message: 'The booking is cancelled' };
             }
 
             // less than 1 hour to the booking date
@@ -686,18 +686,18 @@ export async function cancelOrder(orderId: string, callback: (err: types.Error |
             if (serverConfig.mailConfig === serverConfig.MailType.api || serverConfig.mailConfig === serverConfig.MailType.both) {
                 //TODO: send email
                 // if (order.startsWith('CB')) {
-                //     mailer.sendEmail(reg[0].email, '[MyThaiStar] Order canceled', undefined, pug.renderFile('./src/emails/order.pug', {
-                //         title: 'Order canceled',
+                //     mailer.sendEmail(reg[0].email, '[MyThaiStar] Order cancelled', undefined, pug.renderFile('./src/emails/order.pug', {
+                //         title: 'Order cancelled',
                 //         name: reg[0].name,
                 //     }));
                 // } else {
-                //     mailer.sendEmail(reg[0].email, '[MyThaiStar] Order canceled', undefined, pug.renderFile('./src/emails/order.pug', {
-                //         title: 'Order canceled',
+                //     mailer.sendEmail(reg[0].email, '[MyThaiStar] Order cancelled', undefined, pug.renderFile('./src/emails/order.pug', {
+                //         title: 'Order cancelled',
                 //         name: reg[0].email,
                 //     }));
                 // }
             } else if (serverConfig.mailConfig === serverConfig.MailType.api || serverConfig.mailConfig === serverConfig.MailType.both) {
-                console.log(`Order ${orderId} successfully canceled`);
+                console.log(`Order ${orderId} successfully cancelled`);
             }
         } catch (err) {
             console.error(err);
@@ -765,7 +765,7 @@ export async function getAllOrders(sort?: types.SortByView[]): Promise<types.Ord
                     expirationDate: booking[elem.idBooking].expirationDate,
                     creationDate: booking[elem.idBooking].creationDate,
                     email: booking[elem.idBooking].email,
-                    canceled: booking[elem.idBooking].canceled,
+                    cancelled: booking[elem.idBooking].cancelled,
                     bookingType: booking[elem.idBooking].bookingType,
                     tableId: booking[elem.idBooking].table,
                     orderId: elem.id,
@@ -820,7 +820,7 @@ export async function getFreeTable(date: string, assistants: number, previousTab
         const date2 = moment(elem.bookingDate);
         date2.add(1, 'hour');
 
-        return !elem.canceled && moment(date).isBetween(bookDate, date2, undefined, '[)');
+        return !elem.cancelled && moment(date).isBetween(bookDate, date2, undefined, '[)');
     }).map((elem: dbtypes.Booking) => elem.table || '-1').promise() as Promise<string[]>]);
 
     if (previousTable !== undefined) {

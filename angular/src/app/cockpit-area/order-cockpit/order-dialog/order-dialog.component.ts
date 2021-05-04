@@ -1,21 +1,32 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 import { PageEvent } from '@angular/material/paginator';
 import { ConfigService } from '../../../core/config/config.service';
 import { BookingView, OrderView } from '../../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { getSelectors } from '@ngrx/router-store';
+import { Booking } from 'app/book-table/models/booking.model';
 
 @Component({
   selector: 'app-cockpit-order-dialog',
   templateUrl: './order-dialog.component.html',
   styleUrls: ['./order-dialog.component.scss'],
 })
-export class OrderDialogComponent implements OnInit {
+export class OrderDialogComponent implements OnInit, OnDestroy {
   private fromRow = 0;
   private currentPage = 1;
 
   pageSize = 4;
+
+  columnss: any;
+  displayedColumnsS: any[] = [
+    'cockpit.orders.orderStatus.open',
+    'cockpit.orders.orderStatus.preparing',
+    'cockpit.orders.orderStatus.paid',
+    'cockpit.orders.orderStatus.cancelled',
+  ];
 
   data: any;
   datat: BookingView[] = [];
@@ -69,6 +80,15 @@ export class OrderDialogComponent implements OnInit {
     this.translocoService
       .selectTranslateObject('cockpit.table', {}, lang)
       .subscribe((cockpitTable) => {
+        this.columnss = {
+          name: 'orderStatus',
+          label: cockpitTable.orderStatusH,
+        };
+      });
+
+    this.translocoService
+      .selectTranslateObject('cockpit.table', {}, lang)
+      .subscribe((cockpitTable) => {
         this.columnst = [
           { name: 'bookingDate', label: cockpitTable.reservationDateH },
           { name: 'creationDate', label: cockpitTable.creationDateH },
@@ -108,4 +128,15 @@ export class OrderDialogComponent implements OnInit {
     newData = newData.slice(this.fromRow, this.currentPage * this.pageSize);
     setTimeout(() => (this.filteredData = newData));
   }
+
+  onChange(orderStatus: string): void {
+    console.log('Status: ', orderStatus);
+    this.data.order.orderStatus = orderStatus;
+    this.ngOnInit();
+    this.waiterCockpitService
+      .updateOrderStatus(this.data.order.id, orderStatus)
+      .subscribe();
+  }
+
+  ngOnDestroy(): void {}
 }

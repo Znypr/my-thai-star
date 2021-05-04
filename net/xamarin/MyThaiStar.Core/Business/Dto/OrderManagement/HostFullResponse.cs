@@ -12,7 +12,7 @@
         public long expirationDate { get; set; }
         public long creationDate { get; set; }
         public string email { get; set; }
-        public bool canceled { get; set; }
+        public bool cancelled { get; set; }
         public string bookingType { get; set; }
         public int tableId { get; set; }
         public int orderId { get; set; }

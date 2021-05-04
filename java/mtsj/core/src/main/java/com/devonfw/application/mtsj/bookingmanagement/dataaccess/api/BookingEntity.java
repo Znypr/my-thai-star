@@ -38,7 +38,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
 
   private String email;
 
-  private boolean canceled;
+  private Boolean cancelled;
 
   private BookingType bookingType;
 
@@ -61,7 +61,7 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
   public BookingEntity() {
 
     super();
-    this.canceled = false;
+    this.cancelled = false;
   }
 
   /**
@@ -173,19 +173,21 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
   }
 
   /**
-   * @return canceled
+   * @return cancelled
    */
   @Override
-  public boolean getCanceled() {
+  public Boolean getCancelled() {
 
-    return this.canceled;
+    return this.cancelled;
   }
 
-
+  /**
+   * @param cancelled new value of {@link #getcancelled}.
+   */
   @Override
-  public void setCanceled(boolean canceled) {
+  public void setCancelled(Boolean cancelled) {
 
-    this.canceled = canceled;
+    this.cancelled = cancelled;
   }
 
   /**

@@ -29,7 +29,7 @@ public class BookingSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
   private String email;
 
-  private boolean canceled;
+  private Boolean cancelled;
 
   private BookingType bookingType;
 
@@ -127,14 +127,14 @@ public class BookingSearchCriteriaTo extends AbstractSearchCriteriaTo {
     this.email = email;
   }
 
-  public boolean getCanceled() {
+  public Boolean getCancelled() {
 
-    return this.canceled;
+    return this.cancelled;
   }
 
-  public void setCanceled(boolean canceled) {
+  public void setCancelled(Boolean cancelled) {
 
-    this.canceled = canceled;
+    this.cancelled = cancelled;
   }
 
   public BookingType getBookingType() {

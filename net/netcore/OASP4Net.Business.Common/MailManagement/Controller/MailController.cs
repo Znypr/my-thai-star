@@ -51,10 +51,10 @@ namespace OASP4Net.Business.Common.MailManagement.Controller
 
 
         /// <summary>
-        /// Method to cancel the invitation. Once is cancelled the system will send a cancelation email to all guests.  An invitation only can be canceled if the cancelation request is not send an hour before the booking
+        /// Method to cancel the invitation. Once is cancelled the system will send a cancelation email to all guests.  An invitation only can be cancelled if the cancelation request is not send an hour before the booking
         /// </summary>
         /// <param name="bookingToken">Token generated in the booking process where guests are invited. Mandatory</param>
-        /// <response code="204">Ok, no content. Invitation canceled</response>
+        /// <response code="204">Ok, no content. Invitation cancelled</response>
         /// <response code="400">Bad Request. Incorrect Invitation token given or parse error.The invitation cannot be cancelled because the request is an hour before the event.</response>
         /// <response code="401">Unathorized. Autentication fail</response>
         /// <response code="403">Forbidden. Authorization error.</response>
@@ -65,7 +65,7 @@ namespace OASP4Net.Business.Common.MailManagement.Controller
         {
             try
             {
-                var result = await BookingService.CancelBooking(bookingToken) ? "Reservation canceled" : "Unable to cancel reservation";
+                var result = await BookingService.CancelBooking(bookingToken) ? "Reservation cancelled" : "Unable to cancel reservation";
                 var serializerSettings = new JsonSerializerSettings
                 {
                     Formatting = Formatting.None
@@ -90,7 +90,7 @@ namespace OASP4Net.Business.Common.MailManagement.Controller
         /// </summary>
 
         /// <param name="id"></param>
-        /// <response code="204">Ok, no content. Invitation canceled</response>
+        /// <response code="204">Ok, no content. Invitation cancelled</response>
         /// <response code="400">Bad Request. Incorrect Invitation token given or parse error.</response>
         /// <response code="401">Unathorized. Autentication fail</response>
         /// <response code="403">Forbidden. Authorization error.</response>

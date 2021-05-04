@@ -11,7 +11,7 @@ export interface BookingDTO extends Booking {
   id: 7;
   bookingToken: string;
   bookingType: number;
-  canceled: boolean;
+  cancelled: boolean;
   creationDate: number;
   expirationDate: number;
   tableId: number;
