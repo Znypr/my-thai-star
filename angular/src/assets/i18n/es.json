@@ -174,7 +174,8 @@
       "orderStatus": {
         "open": "Abrir",
         "preparing": "Preparando",
-        "paid": "Pagado"
+        "paid": "Pagado",
+        "cancelled": "Cancelado"
       }
     },
     "reservations": {
