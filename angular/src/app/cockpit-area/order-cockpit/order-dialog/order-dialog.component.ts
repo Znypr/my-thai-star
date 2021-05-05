@@ -130,11 +130,12 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
   }
 
   onChange(orderStatus: string): void {
-    console.log('Status: ', orderStatus);
-    this.data.order.orderStatus = orderStatus;
+    let state = orderStatus.split('.')[3].split("'")[0];
+    console.log('Status: ', state);
+    this.data.order.orderStatus = state;
     this.ngOnInit();
     this.waiterCockpitService
-      .updateOrderStatus(this.data.order.id, orderStatus)
+      .updateOrderStatus(this.data.order.id, state)
       .subscribe();
   }
 
