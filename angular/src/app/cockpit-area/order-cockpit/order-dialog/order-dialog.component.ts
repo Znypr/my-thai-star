@@ -20,13 +20,8 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
 
   pageSize = 4;
 
-  columnss: any;
-  displayedColumnsS: any[] = [
-    'cockpit.orders.orderStatus.open',
-    'cockpit.orders.orderStatus.preparing',
-    'cockpit.orders.orderStatus.paid',
-    'cockpit.orders.orderStatus.cancelled',
-  ];
+  columnss: any[];
+  displayedColumnsS: any[] = ['open', 'preparing', 'paid', 'cancelled'];
 
   data: any;
   datat: BookingView[] = [];
@@ -66,6 +61,7 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders(event);
+      this.setOrderStatus(event);
     });
 
     this.totalPrice = this.waiterCockpitService.getTotalPrice(
@@ -76,16 +72,26 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
     this.filter();
   }
 
-  setTableHeaders(lang: string): void {
+  setOrderStatus(lang: string): void {
     this.translocoService
-      .selectTranslateObject('cockpit.table', {}, lang)
-      .subscribe((cockpitTable) => {
-        this.columnss = {
-          name: 'orderStatus',
-          label: cockpitTable.orderStatusH,
-        };
+      .selectTranslateObject('cockpit.orders.orderStatus', {}, lang)
+      .subscribe((cockpitOrders) => {
+        this.columnss = [
+          { name: 'open', label: cockpitOrders.open },
+          {
+            name: 'preparing',
+            label: cockpitOrders.preparing,
+          },
+          { name: 'paid', label: cockpitOrders.paid },
+          {
+            name: 'cancelled',
+            label: cockpitOrders.cancelled,
+          },
+        ];
       });
+  }
 
+  setTableHeaders(lang: string): void {
     this.translocoService
       .selectTranslateObject('cockpit.table', {}, lang)
       .subscribe((cockpitTable) => {
@@ -130,12 +136,11 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
   }
 
   onChange(orderStatus: string): void {
-    let state = orderStatus.split('.')[3].split("'")[0];
-    console.log('Status: ', state);
-    this.data.order.orderStatus = state;
+    console.log('Status: ', orderStatus);
+    this.data.order.orderStatus = orderStatus;
     this.ngOnInit();
     this.waiterCockpitService
-      .updateOrderStatus(this.data.order.id, state)
+      .updateOrderStatus(this.data.order.id, orderStatus)
       .subscribe();
   }
 

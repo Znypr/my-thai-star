@@ -11,6 +11,7 @@ import { ClusteringService } from './services/clustering.service';
 
 import { ReservationCockpitComponent } from './reservation-cockpit/reservation-cockpit.component';
 import { OrderCockpitComponent } from './order-cockpit/order-cockpit.component';
+import { OrderArchiveComponent } from './order-archive/order-archive.component';
 import { OrderDialogComponent } from './order-cockpit/order-dialog/order-dialog.component';
 import { ReservationDialogComponent } from './reservation-cockpit/reservation-dialog/reservation-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -40,6 +41,7 @@ import { AdminDialogComponent } from './admin-cockpit/admin-dialog/admin-dialog.
   declarations: [
     ReservationCockpitComponent,
     OrderCockpitComponent,
+    OrderArchiveComponent,
     ReservationDialogComponent,
     OrderDialogComponent,
     PredictionCockpitComponent,
@@ -60,4 +62,4 @@ import { AdminDialogComponent } from './admin-cockpit/admin-dialog/admin-dialog.
     ClusteringCockpitComponent,
   ],
 })
-export class WaiterCockpitModule { }
+export class WaiterCockpitModule {}
