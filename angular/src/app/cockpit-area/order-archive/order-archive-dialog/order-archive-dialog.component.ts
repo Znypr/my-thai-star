@@ -10,7 +10,7 @@ import { getSelectors } from '@ngrx/router-store';
 import { Booking } from 'app/book-table/models/booking.model';
 
 @Component({
-  selector: 'app-cockpit-order-dialog',
+  selector: 'app-cockpit-order-archive-dialog',
   templateUrl: './order-archive-dialog.component.html',
   styleUrls: ['./order-archive-dialog.component.scss'],
 })
