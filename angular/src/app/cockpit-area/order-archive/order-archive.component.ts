@@ -12,12 +12,12 @@ import {
 } from '../../shared/backend-models/interfaces';
 import { OrderListView } from '../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
-import { OrderDialogComponent } from '../order-cockpit/order-dialog/order-dialog.component';
+import { OrderDialogComponent } from './order-archive-dialog/order-archive-dialog.component';
 
 @Component({
   selector: 'app-cockpit-order-archive',
   templateUrl: './order-archive.component.html',
-  styleUrls: ['../order-archive/order-archive.component.scss'],
+  styleUrls: ['./order-archive.component.scss'],
   //uses order-cockpit scss, it should allways look the same!
 })
 export class OrderArchiveComponent implements OnInit, OnDestroy {
