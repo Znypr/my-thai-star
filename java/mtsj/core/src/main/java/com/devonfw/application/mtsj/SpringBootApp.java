@@ -1,6 +1,7 @@
 package com.devonfw.application.mtsj;
 
 import java.util.Arrays;
+import java.util.TimeZone;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,11 +12,19 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import com.devonfw.module.jpa.dataaccess.api.AdvancedRevisionEntity;
 import com.devonfw.module.jpa.dataaccess.impl.data.GenericRepositoryFactoryBean;
 
+import javax.annotation.PostConstruct;
+
 @SpringBootApplication
-@EntityScan(basePackages = { "com.devonfw.application.mtsj" }, basePackageClasses = { AdvancedRevisionEntity.class })
+@EntityScan(basePackages = {"com.devonfw.application.mtsj"}, basePackageClasses = {AdvancedRevisionEntity.class})
 @EnableJpaRepositories(repositoryFactoryBeanClass = GenericRepositoryFactoryBean.class)
 @EnableGlobalMethodSecurity(jsr250Enabled = true)
 public class SpringBootApp {
+
+  @PostConstruct
+  public void init() {
+    // Setting Spring Boot SetTimeZone
+    TimeZone.setDefault(TimeZone.getTimeZone("CET"));
+  }
 
   /**
    * Entry point for spring-boot based app

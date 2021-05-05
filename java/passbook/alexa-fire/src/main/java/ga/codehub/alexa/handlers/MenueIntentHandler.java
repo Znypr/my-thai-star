@@ -25,15 +25,14 @@ import java.util.Map;
 import java.util.Optional;
 
 import static com.amazon.ask.request.Predicates.intentName;
+import static ga.codehub.alexa.MyThaiStartStreamHandler.BASE_URL;
 
-public class HelloWorldIntentHandler implements RequestHandler {
+public class MenueIntentHandler implements RequestHandler {
 
-
-    public static final String BASE_URL = "https://0d6e5de4b6ee.ngrok.io/";
 
     @Override
     public boolean canHandle(HandlerInput input) {
-        return input.matches(intentName("HelloWorldIntent"));
+        return input.matches(intentName("MenueIntent"));
     }
 
 
@@ -41,55 +40,32 @@ public class HelloWorldIntentHandler implements RequestHandler {
     public Optional<Response> handle(HandlerInput input) {
 
         String speechText = "";
-        String name;
-        String userEmail;
-        try {
-            try {
-                name = input.getServiceClientFactory().getUpsService().getProfileName();
-                userEmail = input.getServiceClientFactory().getUpsService().getProfileEmail();
 
-            } catch (NullPointerException nullp) {
-                speechText = "Deine Alexa braucht zusätliche Berechtigungen !";
-                throw new AlexaException();
-            }
+        try {
+/*
 
             Request request = input.getRequestEnvelope().getRequest();
             IntentRequest intentRequest = (IntentRequest) request;
             Intent intent = intentRequest.getIntent();
-
-            Map<String, Slot> slotMap = intent.getSlots();
-            Slot personCount = slotMap.get("count");
-            Slot time = slotMap.get("time");
-            Slot date = slotMap.get("date");
-
-            String date_time = date.getValue() + "T" + time.getValue() + ":00Z";
-
-            ga.codehub.entity.booking.Request myApiRequest = new ga.codehub.entity.booking.Request();
-            myApiRequest.booking = new Booking();
-            myApiRequest.booking.email = userEmail;
-            myApiRequest.booking.assistants = personCount.getValue();
-            myApiRequest.booking.bookingDate = date_time;
-            myApiRequest.booking.name = name;
-
-            int guest_check_int = Integer.parseInt(myApiRequest.booking.assistants);
+*/
 
 
-            if (guest_check_int > 12 || guest_check_int < 1) {
-                speechText = "Du kannst maximal 12 Gäste mitbringen und musst mindestens alleine kommen";
-                throw new AlexaException();
-            }
             BasicOperations bo = new BasicOperations();
             Gson gson = new Gson();
-            String payload = gson.toJson(myApiRequest);
+            String payload = "{\"categories\":[],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
+            String response;
+            ga.codehub.entity.menue.Response resp;
             try {
-                bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/bookingmanagement/v1/booking");
+                response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/dishmanagement/v1/dish/search");
+                resp = gson.fromJson(response, ga.codehub.entity.menue.Response.class);
             } catch (Exception ex) {
                 speechText = "Der MyThaiStar-Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben";
                 throw new AlexaException();
 
             }
 
-            speechText = "Cool wir sehen uns dann !";
+
+            speechText = "Es gibt : " + resp.toString();
 
         } catch (AlexaException e) {
             e.printStackTrace();
