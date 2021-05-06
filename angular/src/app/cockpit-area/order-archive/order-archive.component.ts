@@ -12,8 +12,7 @@ import {
 } from '../../shared/backend-models/interfaces';
 import { OrderListView } from '../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
-import { OrderDialogComponent } from './order-dialog/order-dialog.component';
-
+import { ArchiveDialogComponent } from './archive-dialog/archive-dialog.component';
 @Component({
   selector: 'app-cockpit-order-archive',
   templateUrl: './order-archive.component.html',
@@ -123,12 +122,12 @@ export class OrderArchiveComponent implements OnInit, OnDestroy {
     this.applyFilters();
   }
 
-  // selected(selection: OrderListView): void {
-  //   this.dialog.open(OrderDialogComponent, {
-  //     width: '80%',
-  //     data: selection,
-  //   });
-  // }
+  selected(selection: OrderListView): void {
+    this.dialog.open(ArchiveDialogComponent, {
+      width: '80%',
+      data: selection,
+    });
+  }
 
   ngOnDestroy(): void {
     this.translocoSubscription.unsubscribe();

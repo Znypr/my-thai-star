@@ -20,13 +20,7 @@ export class ArchiveDialogComponent implements OnInit, OnDestroy {
   pageSize = 4;
 
   columnss: any[];
-  displayedColumnsS: any[] = [
-    'open',
-    'preparing',
-    'delivered',
-    'paid',
-    'cancelled',
-  ];
+  displayedColumnsS: any[] = ['open', 'paid', 'cancelled'];
 
   data: any;
   datat: BookingView[] = [];
@@ -79,14 +73,11 @@ export class ArchiveDialogComponent implements OnInit, OnDestroy {
 
   setOrderStatus(lang: string): void {
     this.translocoService
-      .selectTranslateObject('cockpit.orders.orderStatus', {}, lang)
+      .selectTranslateObject('cockpit.order-archive.orderStatus', {}, lang)
       .subscribe((cockpitOrders) => {
         this.columnss = [
           { name: 'open', label: cockpitOrders.open },
-          {
-            name: 'preparing',
-            label: cockpitOrders.preparing,
-          },
+
           { name: 'paid', label: cockpitOrders.paid },
           {
             name: 'cancelled',
