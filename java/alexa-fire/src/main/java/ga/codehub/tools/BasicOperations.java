@@ -15,6 +15,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.LaxRedirectStrategy;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HttpContext;
 
 import java.io.*;
@@ -28,6 +29,8 @@ public class BasicOperations {
     HttpClient http = null;
     org.apache.http.client.config.RequestConfig RequestConfig;
     Header[] basicHeaders;
+
+    String authentication;
 
     public BasicOperations() {
 
@@ -149,6 +152,49 @@ public class BasicOperations {
         }
 
         return return_string;
+    }
+
+    public HttpResponse basicPostWithHttpResponse(String json_payload, String url) throws IOException, NotFound, Different {
+
+
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setConfig(RequestConfig);
+        httpPost.setHeaders(basicHeaders);
+
+        StringEntity entity = new StringEntity(
+                json_payload,
+                ContentType.APPLICATION_JSON);
+        httpPost.setEntity(entity);
+        HttpResponse httpResponse = http.execute(httpPost);
+
+        String return_string = InputToString(httpResponse.getEntity().getContent());
+
+
+        this.basicHeaders = new Header[]{new BasicHeader("Authorization", httpResponse.getFirstHeader("Authorization").getValue())};
+
+        httpResponse.getEntity().getContent().close();
+
+
+        if (httpResponse.getStatusLine().getStatusCode() == 404) {
+            httpPost.completed();
+            httpPost.releaseConnection();
+            System.out.println(url);
+            throw new NotFound();
+        } else if (httpResponse.getStatusLine().getStatusCode() != 200) {
+            httpPost.completed();
+            httpPost.releaseConnection();
+
+            System.out.println(httpResponse.getStatusLine().getStatusCode());
+            System.out.println(url);
+            throw new Different();
+
+        } else {
+            httpPost.completed();
+            httpPost.releaseConnection();
+
+        }
+
+        return httpResponse;
     }
 
 
