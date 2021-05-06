@@ -12,7 +12,7 @@ import {
 } from '../../shared/backend-models/interfaces';
 import { OrderListView } from '../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
-import { OrderDialogComponent } from '../order-cockpit/order-dialog/order-dialog.component';
+import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 
 @Component({
   selector: 'app-cockpit-order-archive',
