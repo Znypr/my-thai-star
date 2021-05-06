@@ -89,6 +89,7 @@ export const DefaultENTest = {
     book: 'Book table',
     orders: 'Orders',
     reservations: 'Reservations',
+    archive: 'Archive',
     userActions: {
       user: 'User',
       pairing: 'Set two-factor authentication',
@@ -171,6 +172,22 @@ export const DefaultENTest = {
   },
   cockpit: {
     filter: 'Filter',
+    'order-archive': {
+      title: 'Order Archive',
+      dialogTitle: 'ORDER DETAILS - REFERENCE NUMBER',
+      dialogTable: {
+        dishH: 'Dish',
+        commentsH: 'Comments',
+        extrasH: 'Extra',
+        quantityH: 'Quantity',
+        priceH: 'Price',
+      },
+      orderStatus: {
+        reopen: 'Reopen',
+        paid: 'Paid',
+        cancelled: 'Cancelled',
+      },
+    },
     orders: {
       title: 'Orders',
       dialogTitle: 'ORDER DETAILS - REFERENCE NUMBER',
@@ -182,10 +199,11 @@ export const DefaultENTest = {
         priceH: 'Price',
       },
       orderStatus: {
-        open: 'open',
-        preparing: 'processing',
-        paid: 'paid',
-        cancelled: 'cancelled'
+        open: 'Open',
+        preparing: 'Processing',
+        delivered: 'Delivered',
+        paid: 'Paid',
+        cancelled: 'Cancelled',
       },
     },
     reservations: {

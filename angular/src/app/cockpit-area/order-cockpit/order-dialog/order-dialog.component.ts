@@ -21,7 +21,13 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
   pageSize = 4;
 
   columnss: any[];
-  displayedColumnsS: any[] = ['open', 'preparing', 'paid', 'cancelled'];
+  displayedColumnsS: any[] = [
+    'open',
+    'preparing',
+    'delivered',
+    'paid',
+    'cancelled',
+  ];
 
   data: any;
   datat: BookingView[] = [];

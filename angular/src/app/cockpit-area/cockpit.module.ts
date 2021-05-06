@@ -13,6 +13,7 @@ import { ReservationCockpitComponent } from './reservation-cockpit/reservation-c
 import { OrderCockpitComponent } from './order-cockpit/order-cockpit.component';
 import { OrderArchiveComponent } from './order-archive/order-archive.component';
 import { OrderDialogComponent } from './order-cockpit/order-dialog/order-dialog.component';
+import { ArchiveDialogComponent } from './order-archive/archive-dialog/archive-dialog.component';
 import { ReservationDialogComponent } from './reservation-cockpit/reservation-dialog/reservation-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PredictionCockpitComponent } from './prediction-cockpit/prediction-cockpit.component';
@@ -44,6 +45,7 @@ import { AdminDialogComponent } from './admin-cockpit/admin-dialog/admin-dialog.
     OrderArchiveComponent,
     ReservationDialogComponent,
     OrderDialogComponent,
+    ArchiveDialogComponent,
     PredictionCockpitComponent,
     ClusteringCockpitComponent,
     AdminCockpitComponent,
@@ -52,12 +54,14 @@ import { AdminDialogComponent } from './admin-cockpit/admin-dialog/admin-dialog.
   exports: [
     ReservationCockpitComponent,
     OrderCockpitComponent,
+    OrderArchiveComponent,
     PredictionCockpitComponent,
     ClusteringCockpitComponent,
   ],
   entryComponents: [
     ReservationDialogComponent,
     OrderDialogComponent,
+    ArchiveDialogComponent,
     PredictionCockpitComponent,
     ClusteringCockpitComponent,
   ],

@@ -76,6 +76,9 @@
       >
         {{ 'main.orders' | transloco | uppercase }}
       </a>
+      <a mat-tab-link routerLink="/order-archive" routerLinkActive="navBottomBorder" [routerLinkActiveOptions]="{ exact: true }">
+        {{ 'main.archive' | transloco | uppercase }}
+      </a>
       <a
         mat-tab-link
         routerLink="/reservations"

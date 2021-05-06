@@ -7,21 +7,26 @@ import { BookingView, OrderView } from '../../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { getSelectors } from '@ngrx/router-store';
-import { Booking } from 'app/book-table/models/booking.model';
 
 @Component({
-  selector: 'app-cockpit-order-archive-dialog',
-  templateUrl: './order-archive-dialog.component.html',
-  styleUrls: ['./order-archive-dialog.component.scss'],
+  selector: 'app-cockpit-archive-dialog',
+  templateUrl: './archive-dialog.component.html',
+  styleUrls: ['./archive-dialog.component.scss'],
 })
-export class OrderDialogComponent implements OnInit, OnDestroy {
+export class ArchiveDialogComponent implements OnInit, OnDestroy {
   private fromRow = 0;
   private currentPage = 1;
 
   pageSize = 4;
 
   columnss: any[];
-  displayedColumnsS: any[] = ['open', 'preparing', 'paid', 'cancelled'];
+  displayedColumnsS: any[] = [
+    'open',
+    'preparing',
+    'delivered',
+    'paid',
+    'cancelled',
+  ];
 
   data: any;
   datat: BookingView[] = [];
