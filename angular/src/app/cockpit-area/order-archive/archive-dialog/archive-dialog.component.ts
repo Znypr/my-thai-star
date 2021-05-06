@@ -29,19 +29,9 @@ export class ArchiveDialogComponent implements OnInit, OnDestroy {
     'bookingDate',
     'creationDate',
     'name',
-    'email',
-    'tableId',
   ];
 
   datao: OrderView[] = [];
-  columnso: any[];
-  displayedColumnsO: string[] = [
-    'dish.name',
-    'orderLine.comment',
-    'extras',
-    'orderLine.amount',
-    'dish.price',
-  ];
 
   pageSizes: number[];
   filteredData: OrderView[] = this.datao;
@@ -95,25 +85,6 @@ export class ArchiveDialogComponent implements OnInit, OnDestroy {
           { name: 'bookingDate', label: cockpitTable.reservationDateH },
           { name: 'creationDate', label: cockpitTable.creationDateH },
           { name: 'name', label: cockpitTable.ownerH },
-          { name: 'email', label: cockpitTable.emailH },
-          { name: 'tableId', label: cockpitTable.tableH },
-        ];
-      });
-
-    this.translocoService
-      .selectTranslateObject('cockpit.orders.dialogTable', {}, lang)
-      .subscribe((cockpitDialogTable) => {
-        this.columnso = [
-          { name: 'dish.name', label: cockpitDialogTable.dishH },
-          { name: 'orderLine.comment', label: cockpitDialogTable.commentsH },
-          { name: 'extras', label: cockpitDialogTable.extrasH },
-          { name: 'orderLine.amount', label: cockpitDialogTable.quantityH },
-          {
-            name: 'dish.price',
-            label: cockpitDialogTable.priceH,
-            numeric: true,
-            format: (v: number) => v.toFixed(2),
-          },
         ];
       });
   }
