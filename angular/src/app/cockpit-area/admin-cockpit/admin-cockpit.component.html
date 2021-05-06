@@ -15,12 +15,23 @@
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Email</mat-label>
-    <input id="Email" matInput placeholder="user@mail.com">
+    <input id="Email" type="email" name="email" matInput placeholder="user@mail.com" ngModel [email]="true">
+    <mat-error>
+      Please enter a valid email address
+    </mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Role</mat-label>
     <input id="Role" type="number" min="0" max="3" matInput placeholder="0-3">
   </mat-form-field>
+  <!-- <mat-form-field appearance="fill">
+  <mat-label>Role</mat-label>
+    <mat-select>
+      <mat-option matInput id="Role" type="number" *ngFor="let element of config.roles" value="element.permission">
+        {{element.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field> -->
   <mat-form-field appearance="fill">
     <mat-label>Enter your password</mat-label>
     <input id="Password" matInput [type]="hide ? 'password' : 'text'" placeholder="I<3MOM">
@@ -65,6 +76,8 @@
 
   </table>
 </div>
+<mat-paginator #pagingBar [length]="totalUsers" [pageSize]="pageSize" [pageSizeOptions]="pageSizes" [showFirstLastButtons]="true" (page)="page($event)">
+</mat-paginator>
 <!-- <mat-expansion-panel-header>
     <mat-panel-title>{{ 'cockpit.filter' | transloco }}</mat-panel-title>
 </mat-expansion-panel-header>

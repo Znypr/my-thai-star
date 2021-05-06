@@ -12,6 +12,7 @@ import {
   Pageable,
 } from '../../shared/backend-models/interfaces';
 import { AdminDialogComponent } from './admin-dialog/admin-dialog.component';
+import * as config from '../../config'
 
 
 @Component({
@@ -22,6 +23,7 @@ import { AdminDialogComponent } from './admin-dialog/admin-dialog.component';
 export class AdminCockpitComponent implements OnInit, OnDestroy {
   // private translocoSubscription = Subscription.EMPTY;
   hide = true;
+  config = config.config;
 
   private pageable: Pageable = {
     pageSize: 8,
@@ -110,6 +112,22 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
     });
     return responseOfCreation;
   }
+
+  clearFilters(filters: any): void {
+    filters.reset();
+    this.applyFilters();
+    this.pagingBar.firstPage();
+  }
+
+  page(pagingEvent: PageEvent): void {
+    this.pageable = {
+      pageSize: pagingEvent.pageSize,
+      pageNumber: pagingEvent.pageIndex,
+      sort: this.pageable.sort,
+    };
+    this.applyFilters();
+  }
+
 
   //
   // ngOnDestroy(): void {
