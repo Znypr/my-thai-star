@@ -37,6 +37,10 @@
       "registerSuccess": "Registrierung erfolgreich",
       "registerFail": "Registrierung fehlgeschlagen, Benutzername bereits in Verwendung",
       "logoutSuccess": "Abmeldung erfolgreich, komme bald wieder!"
+    },
+    "orderStatus": {
+      "statusSuccess": "Statusänderung erfolgreich",
+      "statusFail": "Statusänderung fehlgeschlagen"
     }
   },
   "formFields": {

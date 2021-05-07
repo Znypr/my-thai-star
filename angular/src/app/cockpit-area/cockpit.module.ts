@@ -61,6 +61,7 @@ import { AdminDialogComponent } from './admin-cockpit/admin-dialog/admin-dialog.
   entryComponents: [
     ReservationDialogComponent,
     OrderDialogComponent,
+    OrderCockpitComponent,
     ArchiveDialogComponent,
     PredictionCockpitComponent,
     ClusteringCockpitComponent,

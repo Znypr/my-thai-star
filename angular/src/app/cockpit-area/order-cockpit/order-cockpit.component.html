@@ -62,7 +62,13 @@
         <!-- Status Column -->
         <ng-container matColumnDef="orderStatus">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[3].label}} </th>
-          <td mat-cell *matCellDef="let element"> {{element.order.orderStatus}} </td>
+          <td mat-cell *matCellDef="let element"> 
+            <mat-select (selectionChange)="onChange($event.value)">
+              <mat-option *ngFor="let status of displayedColumnsS" [value]="status">
+                {{status}}
+              </mat-option>
+            </mat-select>
+          </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

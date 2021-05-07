@@ -1,13 +1,6 @@
 <div class="heading">
   <h3 mat-dialog-title>{{'cockpit.orders.dialogTitle' | transloco}} : {{data.booking.bookingToken}} </h3>
-  <mat-form-field>
-    <mat-label>{{'cockpit.table.orderStatusH' | transloco}}</mat-label>
-    <mat-select (selectionChange)="onChange($event.value)" value="order.orderStatus" name="orderStatus">
-      <mat-option *ngFor="let status of displayedColumnsS" [value]="status">
-        {{status | transloco}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <span class="align-right">{{'cockpit.table.orderStatusH' | transloco}} : {{data.order.orderStatus}}</span>
 </div>
 <mat-divider></mat-divider>
 <div class="tableContainer">

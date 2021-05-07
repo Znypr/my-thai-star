@@ -39,6 +39,10 @@ export const DefaultENTest = {
       registerFail: 'Register failed, username already in use',
       logoutSuccess: 'Log out successful, come back soon!',
     },
+    orderStatus: {
+      statusSuccess: 'Status change successful',
+      statusFail: 'Status change failed',
+    }
   },
   formFields: {
     username: 'Username',
