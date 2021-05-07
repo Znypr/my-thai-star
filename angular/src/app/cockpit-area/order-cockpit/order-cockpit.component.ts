@@ -1,5 +1,5 @@
-import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { TranslocoService } from '@ngneat/transloco';
@@ -36,15 +36,13 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   totalOrders: number;
 
   columns: any[];
-  data: any;
 
-  columnss: any[];
-  displayedColumnsS: any[] = [
-    'open',
-    'preparing',
-    'delivered',
-    'paid',
-    'cancelled',
+  displayedStates: string[] = [
+    'cockpit.orders.orderStatus.open',
+    'cockpit.orders.orderStatus.preparing',
+    'cockpit.orders.orderStatus.delivered',
+    'cockpit.orders.orderStatus.paid',
+    'cockpit.orders.orderStatus.cancelled',
   ];
 
   displayedColumns: string[] = [
@@ -68,9 +66,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     private translocoService: TranslocoService,
     private waiterCockpitService: WaiterCockpitService,
     private configService: ConfigService,
-    @Inject(MAT_DIALOG_DATA) dialogData: any,
   ) {
-    this.data = dialogData;
     this.pageSizes = this.configService.getValues().pageSizes;
   }
 
@@ -139,34 +135,6 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       width: '80%',
       data: selection,
     });
-  }
-
-  setOrderStatus(lang: string): void {
-    this.translocoService
-      .selectTranslateObject('cockpit.orders.orderStatus', {}, lang)
-      .subscribe((cockpitOrders) => {
-        this.columnss = [
-          { name: 'open', label: cockpitOrders.open },
-          {
-            name: 'preparing',
-            label: cockpitOrders.preparing,
-          },
-          { name: 'paid', label: cockpitOrders.paid },
-          {
-            name: 'cancelled',
-            label: cockpitOrders.cancelled,
-          },
-        ];
-      });
-  }
-
-  onChange(orderStatus: string): void {
-    console.log('Status: ', orderStatus);
-    this.data.order.orderStatus = orderStatus;
-    this.ngOnInit();
-    this.waiterCockpitService
-      .updateOrderStatus(this.data.order.id, orderStatus)
-      .subscribe();
   }
 
   ngOnDestroy(): void {

@@ -62,12 +62,15 @@
         <!-- Status Column -->
         <ng-container matColumnDef="orderStatus">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[3].label}} </th>
-          <td mat-cell *matCellDef="let element"> 
-            <mat-select (selectionChange)="onChange($event.value)">
-              <mat-option *ngFor="let status of displayedColumnsS" [value]="status">
-                {{status}}
-              </mat-option>
-            </mat-select>
+          <td mat-cell *matCellDef="let element">
+            <mat-form-field>
+              <mat-label>{{'cockpit.table.orderStatusH' | transloco}}</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let status of displayedStates" [value]="status">
+                  {{status | transloco}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </td>
         </ng-container>
 
