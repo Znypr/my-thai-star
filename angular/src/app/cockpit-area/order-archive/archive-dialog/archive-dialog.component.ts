@@ -20,16 +20,11 @@ export class ArchiveDialogComponent implements OnInit, OnDestroy {
   pageSize = 4;
 
   columnss: any[];
-  displayedColumnsS: any[] = ['open', 'paid', 'cancelled'];
 
   data: any;
   datat: BookingView[] = [];
   columnst: any[];
-  displayedColumnsT: string[] = [
-    'bookingDate',
-    'creationDate',
-    'name',
-  ];
+  displayedColumnsT: string[] = ['bookingDate', 'creationDate', 'name'];
 
   datao: OrderView[] = [];
 

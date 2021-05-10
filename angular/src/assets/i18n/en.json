@@ -179,7 +179,7 @@
         "priceH": "Price"
       },
       "orderStatus": {
-        "reopen": "Reopen",
+        "open": "Reopen",
         "paid": "Paid",
         "cancelled": "Cancelled"
       }
@@ -198,7 +198,6 @@
         "open": "Open",
         "preparing": "Preparing",
         "delivered": "Delivered",
-        "paid": "Paid",
         "cancelled": "Cancelled"
       }
     },
@@ -216,6 +215,7 @@
       "emailH": "Email",
       "bookingTokenH": "Reference Number",
       "orderStatusH": "Status",
+      "paidH": "Paid",
       "ownerH": "Owner",
       "tableH": "Table",
       "creationDateH": "Creation date"

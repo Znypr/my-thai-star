@@ -42,7 +42,7 @@ export const DefaultENTest = {
     orderStatus: {
       statusSuccess: 'Status change successful',
       statusFail: 'Status change failed',
-    }
+    },
   },
   formFields: {
     username: 'Username',
@@ -187,7 +187,7 @@ export const DefaultENTest = {
         priceH: 'Price',
       },
       orderStatus: {
-        reopen: 'Reopen',
+        open: 'Reopen',
         paid: 'Paid',
         cancelled: 'Cancelled',
       },
@@ -206,7 +206,6 @@ export const DefaultENTest = {
         open: 'Open',
         preparing: 'Processing',
         delivered: 'Delivered',
-        paid: 'Paid',
         cancelled: 'Cancelled',
       },
     },
@@ -224,6 +223,7 @@ export const DefaultENTest = {
       emailH: 'Email',
       bookingTokenH: 'Reference Number',
       orderStatusH: 'Status',
+      paidH: 'Paid',
       ownerH: 'Owner',
       tableH: 'Table',
       creationDateH: 'Creation date',

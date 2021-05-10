@@ -179,7 +179,7 @@
         "priceH": "Preis"
       },
       "orderStatus": {
-        "reopen": "Wieder Öffnen",
+        "open": "Wieder Öffnen",
         "paid": "Bezahlt",
         "cancelled": "Storniert"
       }
@@ -198,7 +198,6 @@
         "open": "Offen",
         "preparing": "In Zubereitung",
         "delivered": "Geliefert",
-        "paid": "Bezahlt",
         "cancelled": "Storniert"
       }
     },
@@ -216,6 +215,7 @@
       "emailH": "Email",
       "bookingTokenH": "Referenznummer",
       "orderStatusH": "Status",
+      "paidH": "Bezahlt",
       "ownerH": "Eigentümer",
       "tableH": "Tisch",
       "creationDateH": "Erstelldatum"

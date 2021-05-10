@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
@@ -35,20 +35,15 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   orders: OrderListView[] = [];
   totalOrders: number;
 
+  data: any;
   columns: any[];
-
-  displayedStates: string[] = [
-    'cockpit.orders.orderStatus.open',
-    'cockpit.orders.orderStatus.preparing',
-    'cockpit.orders.orderStatus.delivered',
-    'cockpit.orders.orderStatus.paid',
-    'cockpit.orders.orderStatus.cancelled',
-  ];
+  columnss: any[];
 
   displayedColumns: string[] = [
     'booking.bookingDate',
     'booking.email',
     'booking.bookingToken',
+    'paid',
     'orderStatus',
   ];
 
@@ -59,6 +54,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     email: undefined,
     bookingToken: undefined,
     orderStatus: undefined,
+    paid: undefined,
   };
 
   constructor(
@@ -66,16 +62,35 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     private translocoService: TranslocoService,
     private waiterCockpitService: WaiterCockpitService,
     private configService: ConfigService,
-  ) {
+  ) // @Inject(MAT_DIALOG_DATA) dialogData: any,
+  {
     this.pageSizes = this.configService.getValues().pageSizes;
+    //  this.data = dialogData;
   }
 
   ngOnInit(): void {
     this.applyFilters();
     this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders(event);
+      this.setOrderStatus(event);
       moment.locale(this.translocoService.getActiveLang());
     });
+  }
+
+  setOrderStatus(lang: string): void {
+    this.translocoService
+      .selectTranslateObject('cockpit.orders.orderStatus', {}, lang)
+      .subscribe((cockpitOrders) => {
+        this.columnss = [
+          { name: 'open', label: cockpitOrders.open },
+          { name: 'preparing', label: cockpitOrders.preparing },
+          { name: 'delivered', label: cockpitOrders.delivered },
+          {
+            name: 'cancelled',
+            label: cockpitOrders.cancelled,
+          },
+        ];
+      });
   }
 
   setTableHeaders(lang: string): void {
@@ -86,6 +101,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
           { name: 'booking.email', label: cockpitTable.emailH },
           { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
+          { name: 'paid', label: cockpitTable.paidH },
           { name: 'orderStatus', label: cockpitTable.orderStatusH },
         ];
       });
@@ -135,6 +151,24 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       width: '80%',
       data: selection,
     });
+  }
+
+  // updatePaid(paid: Boolean): void {
+  //   console.log('Paid: ', paid);
+  //   this.data.order.paid = paid;
+  //   this.ngOnInit();
+  //   this.waiterCockpitService
+  //     .updateOrderStatus(this.data.order.id, paid)
+  //     .subscribe();
+  // }
+
+  onChange(orderStatus: string): void {
+    console.log('Status: ', orderStatus);
+    this.data.order.orderStatus = orderStatus;
+    this.ngOnInit();
+    this.waiterCockpitService
+      .updateOrderStatus(this.data.order.id, orderStatus)
+      .subscribe();
   }
 
   ngOnDestroy(): void {
