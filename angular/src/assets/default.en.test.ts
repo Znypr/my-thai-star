@@ -43,6 +43,10 @@ export const DefaultENTest = {
       statusSuccess: 'Status change successful',
       statusFail: 'Status change failed',
     },
+    paid: {
+      paidSuccess: 'Payment successful',
+      paidFail: 'Payment failed',
+    },
   },
   formFields: {
     username: 'Username',

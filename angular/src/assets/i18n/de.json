@@ -41,6 +41,10 @@
     "orderStatus": {
       "statusSuccess": "Statusänderung erfolgreich",
       "statusFail": "Statusänderung fehlgeschlagen"
+    },
+    "paid": {
+      "paidSuccess": "Bezahlung erfolgreich",
+      "paidFail": "Bezahlung fehlgeschlagen"
     }
   },
   "formFields": {

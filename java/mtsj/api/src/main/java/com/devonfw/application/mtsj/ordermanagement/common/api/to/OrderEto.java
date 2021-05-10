@@ -18,6 +18,8 @@ public class OrderEto extends AbstractEto implements Order {
 
   private String orderStatus;
 
+  private Boolean paid;
+
   /**
    * @return bookingToken
    */
@@ -129,7 +131,18 @@ public class OrderEto extends AbstractEto implements Order {
   public void setOrderStatus(String orderStatus) {
     
     this.orderStatus = orderStatus;
+  }
+
+  @Override
+  public Boolean getPaid() {
+ 
+    return this.paid;
+  }
+
+  @Override
+  public void setPaid(Boolean paid) {
     
+    this.paid = paid;
   }
 
 }

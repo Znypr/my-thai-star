@@ -22,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslocoRootModule } from '../transloco-root.module';
 import { AdminCockpitComponent } from './admin-cockpit/admin-cockpit.component';
 import { AdminDialogComponent } from './admin-cockpit/admin-dialog/admin-dialog.component';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { AdminDialogComponent } from './admin-cockpit/admin-dialog/admin-dialog.
     WindowService,
     PredictionService,
     ClusteringService,
+    { provide: MAT_DIALOG_DATA, useValue: [] },
   ],
   declarations: [
     ReservationCockpitComponent,

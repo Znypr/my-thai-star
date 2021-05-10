@@ -25,6 +25,14 @@ public interface Ordermanagement {
    * @return The {@link OrderCto} with state 'orderStatus'
    */
   OrderCto updateOrderStatus(OrderEto order);
+  
+  /**
+   * Returns an Order with updated payment state
+   *
+   * @param paid status
+   * @return The {@link OrderCto} with state 'paid'
+   */
+  OrderCto updatePaid(OrderEto order);
 
   /**
    * Returns a Order by its id 'id'.

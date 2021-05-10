@@ -60,6 +60,16 @@ public interface OrdermanagementRestService {
     @Path("/order/changeState/")
     public OrderCto updateOrderStatus(OrderEto order);
 
+    /**
+     * Delegates to {@link Ordermanagement#updatePaid}.
+     *
+     * @param {@link OrderCto} to be updated
+     * @return the updated {@link OrderCto}
+     */
+    @POST
+    @Path("/order/paid/")
+    public OrderCto updatePaid(OrderEto order);
+
 
   /**
    * Delegates to {@link Ordermanagement#deleteOrder}.

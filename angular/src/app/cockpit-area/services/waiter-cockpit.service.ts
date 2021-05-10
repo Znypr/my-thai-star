@@ -83,6 +83,21 @@ export class WaiterCockpitService {
     );
   }
 
+  updatePaid(orderID: any, paid: any): Observable<OrderListView[]> {
+    this.translocoSubscription = this.translocoService
+      .selectTranslate('alerts.paid.statusSuccess')
+      .subscribe((alert) => this.snackBar.openSnack(alert, 4000, 'green'));
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.post<OrderListView[]>(
+          `${restServiceRoot}${this.getOrderUpdateRestPath}`,
+          // `${restServiceRoot}${this.getOrderRestPath}${orderID}`,
+          { id: orderID, paid: status },
+        ),
+      ),
+    );
+  }
+
   getReservations(
     pageable: Pageable,
     sorting: Sort[],

@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { TranslocoService } from '@ngneat/transloco';
@@ -61,11 +61,13 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private translocoService: TranslocoService,
     private waiterCockpitService: WaiterCockpitService,
-    private configService: ConfigService,
-  ) // @Inject(MAT_DIALOG_DATA) dialogData: any,
-  {
+    @Inject(MAT_DIALOG_DATA) dialogData: any,
+    private configService: ConfigService, 
+    
+  ) {
+    this.data = dialogData;
     this.pageSizes = this.configService.getValues().pageSizes;
-    //  this.data = dialogData;
+    
   }
 
   ngOnInit(): void {
@@ -153,14 +155,14 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     });
   }
 
-  // updatePaid(paid: Boolean): void {
-  //   console.log('Paid: ', paid);
-  //   this.data.order.paid = paid;
-  //   this.ngOnInit();
-  //   this.waiterCockpitService
-  //     .updateOrderStatus(this.data.order.id, paid)
-  //     .subscribe();
-  // }
+  updatePaid(paid: Boolean): void {
+    console.log('Paid: ', paid);
+    this.data.order.paid = paid;
+    this.ngOnInit();
+    this.waiterCockpitService
+      .updateOrderStatus(this.data.order.id, paid)
+      .subscribe();
+  }
 
   onChange(orderStatus: string): void {
     console.log('Status: ', orderStatus);
