@@ -63,7 +63,7 @@
         <ng-container matColumnDef="paid"> 
           <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[3].label}} </th>
           <td mat-cell *matCellDef="let element"> 
-            <mat-checkbox (change)="updatePaid($event)"></mat-checkbox>
+            <mat-checkbox checked={{element.order.paid}} (change)="updatePaid($event)"></mat-checkbox>
           </td>
         </ng-container>
 
@@ -72,7 +72,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[4].label}} </th>
           <td mat-cell *matCellDef="let element">
             <mat-form-field [floatLabel]="'never'">
-              <mat-label></mat-label>
+              <mat-label>{{element.order.orderStatus}}</mat-label>
               <mat-select (selectionChange)="onChange($event.value)">
                 <mat-option *ngFor="let status of columnss"  [value]="status.name">
                   {{status.label}}

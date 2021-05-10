@@ -63,6 +63,7 @@ export class OrderArchiveComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) dialogData: any,
   ) {
     this.pageSizes = this.configService.getValues().pageSizes;
+    this.data = dialogData;
   }
 
   ngOnInit(): void {
