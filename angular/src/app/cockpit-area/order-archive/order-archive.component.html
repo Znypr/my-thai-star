@@ -47,30 +47,38 @@
                <!-- Date Column -->
                <ng-container matColumnDef="booking.bookingDate">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[0].label}} </th>
-                    <td mat-cell *matCellDef="let element">
+                    <td mat-cell *matCellDef="let element; let row;" (click)="selected(row)">
                          {{element.booking.bookingDate|amFromUnix|amDateFormat:'lll'}} </td>
                </ng-container>
 
                <!-- Email Column -->
                <ng-container matColumnDef="booking.email">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[1].label}} </th>
-                    <td mat-cell *matCellDef="let element"> {{element.booking.email}} </td>
+                    <td mat-cell *matCellDef="let element; let row;" (click)="selected(row)"> {{element.booking.email}} </td>
                </ng-container>
 
                <!-- Ref No Column -->
                <ng-container matColumnDef="booking.bookingToken">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[2].label}} </th>
-                    <td mat-cell *matCellDef="let element"> {{element.booking.bookingToken}} </td>
+                    <td mat-cell *matCellDef="let element; let row;" (click)="selected(row)"> {{element.booking.bookingToken}} </td>
                </ng-container>
 
                <!-- Status Column -->
                <ng-container matColumnDef="orderStatus">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[3].label}} </th>
-                    <td mat-cell *matCellDef="let element"> {{element.order.orderStatus}} </td>
+                    <td mat-cell *matCellDef="let element">
+                         <mat-form-field [floatLabel]="'never'">
+                         <mat-label></mat-label>
+                         <mat-select (selectionChange)="onChange($event.value)">
+                              <mat-option *ngFor="let status of columnss" [value]="status.name">
+                                   {{status.label}}
+                              </mat-option>
+                         </mat-select>
+                    </mat-form-field> </td>
                </ng-container>
 
                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-               <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selected(row)"></tr>
+               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
           </table>
      </div>

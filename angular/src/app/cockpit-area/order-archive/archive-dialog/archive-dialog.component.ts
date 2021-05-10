@@ -45,7 +45,6 @@ export class ArchiveDialogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders(event);
-      this.setOrderStatus(event);
     });
 
     this.totalPrice = this.waiterCockpitService.getTotalPrice(
@@ -56,21 +55,6 @@ export class ArchiveDialogComponent implements OnInit, OnDestroy {
     this.filter();
   }
 
-  setOrderStatus(lang: string): void {
-    this.translocoService
-      .selectTranslateObject('cockpit.order-archive.orderStatus', {}, lang)
-      .subscribe((cockpitOrders) => {
-        this.columnss = [
-          { name: 'open', label: cockpitOrders.open },
-
-          { name: 'paid', label: cockpitOrders.paid },
-          {
-            name: 'cancelled',
-            label: cockpitOrders.cancelled,
-          },
-        ];
-      });
-  }
 
   setTableHeaders(lang: string): void {
     this.translocoService
@@ -95,15 +79,6 @@ export class ArchiveDialogComponent implements OnInit, OnDestroy {
     let newData: any[] = this.datao;
     newData = newData.slice(this.fromRow, this.currentPage * this.pageSize);
     setTimeout(() => (this.filteredData = newData));
-  }
-
-  onChange(orderStatus: string): void {
-    console.log('Status: ', orderStatus);
-    this.data.order.orderStatus = orderStatus;
-    this.ngOnInit();
-    this.waiterCockpitService
-      .updateOrderStatus(this.data.order.id, orderStatus)
-      .subscribe();
   }
 
   ngOnDestroy(): void {}

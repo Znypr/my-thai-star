@@ -62,12 +62,10 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     private translocoService: TranslocoService,
     private waiterCockpitService: WaiterCockpitService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
-    private configService: ConfigService, 
-    
+    private configService: ConfigService,
   ) {
     this.data = dialogData;
     this.pageSizes = this.configService.getValues().pageSizes;
-    
   }
 
   ngOnInit(): void {
@@ -155,9 +153,9 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     });
   }
 
-  updatePaid(paid: Boolean): void {
-    console.log('Paid: ', paid);
-    this.data.order.paid = paid;
+  updatePaid(paid: any): void {
+    console.log('Paid: ', paid.checked);
+    this.data.order.paid = paid.checked;
     this.ngOnInit();
     this.waiterCockpitService
       .updateOrderStatus(this.data.order.id, paid)

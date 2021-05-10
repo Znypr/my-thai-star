@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { TranslocoService } from '@ngneat/transloco';
@@ -35,6 +35,8 @@ export class OrderArchiveComponent implements OnInit, OnDestroy {
   orders: OrderListView[] = [];
   totalOrders: number;
 
+  data: any;
+  columnss: any[];
   columns: any[];
 
   displayedColumns: string[] = [
@@ -58,6 +60,7 @@ export class OrderArchiveComponent implements OnInit, OnDestroy {
     private translocoService: TranslocoService,
     private waiterCockpitService: WaiterCockpitService,
     private configService: ConfigService,
+    @Inject(MAT_DIALOG_DATA) dialogData: any,
   ) {
     this.pageSizes = this.configService.getValues().pageSizes;
   }
@@ -66,8 +69,25 @@ export class OrderArchiveComponent implements OnInit, OnDestroy {
     this.applyFilters();
     this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders(event);
+      this.setOrderStatus(event);
       moment.locale(this.translocoService.getActiveLang());
     });
+  }
+
+  setOrderStatus(lang: string): void {
+    this.translocoService
+      .selectTranslateObject('cockpit.order-archive.orderStatus', {}, lang)
+      .subscribe((cockpitOrders) => {
+        this.columnss = [
+          { name: 'open', label: cockpitOrders.open },
+
+          { name: 'paid', label: cockpitOrders.paid },
+          {
+            name: 'cancelled',
+            label: cockpitOrders.cancelled,
+          },
+        ];
+      });
   }
 
   setTableHeaders(lang: string): void {
@@ -127,6 +147,15 @@ export class OrderArchiveComponent implements OnInit, OnDestroy {
       width: '80%',
       data: selection,
     });
+  }
+
+  onChange(orderStatus: string): void {
+    console.log('Status: ', orderStatus);
+    this.data.order.orderStatus = orderStatus;
+    this.ngOnInit();
+    this.waiterCockpitService
+      .updateOrderStatus(this.data.order.id, orderStatus)
+      .subscribe();
   }
 
   ngOnDestroy(): void {
