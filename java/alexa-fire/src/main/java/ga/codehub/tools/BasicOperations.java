@@ -121,9 +121,7 @@ public class BasicOperations {
         httpPost.setConfig(RequestConfig);
         httpPost.setHeaders(basicHeaders);
 
-        StringEntity entity = new StringEntity(
-                json_payload,
-                ContentType.APPLICATION_JSON);
+        StringEntity entity = new StringEntity(json_payload, ContentType.APPLICATION_JSON);
         httpPost.setEntity(entity);
         HttpResponse httpResponse = http.execute(httpPost);
 

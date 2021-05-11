@@ -103,7 +103,7 @@ public class Main {
                     }
 
 
-                    String user_creation = "{\"username\":\"" + user.email + "\",\"email\":\"" + user.email + "\",\"userRoleId\":\"1\",\"password\":\"waiter\"}";
+                    String user_creation = "{\"username\":\"" + user.username + "\",\"email\":\"" + user.email + "\",\"userRoleId\":\"1\",\"password\":\"waiter\"}";
 
                     try {
                         bo.basicPost(user_creation, "http://localhost:8081/mythaistar/services/rest/usermanagement/v1/user");

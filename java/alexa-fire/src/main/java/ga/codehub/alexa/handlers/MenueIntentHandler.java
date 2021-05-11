@@ -29,6 +29,22 @@ import static ga.codehub.alexa.MyThaiStartStreamHandler.BASE_URL;
 
 public class MenueIntentHandler implements RequestHandler {
 
+    public static void main(String[] args) {
+        BasicOperations bo = new BasicOperations();
+        Gson gson = new Gson();
+        String payload = "{\"categories\":[],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
+        String response;
+        ga.codehub.entity.menue.Response resp;
+        try {
+            response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/dishmanagement/v1/dish/search");
+            resp = gson.fromJson(response, ga.codehub.entity.menue.Response.class);
+            System.out.println(response);
+        } catch (Exception ex) {
+
+
+        }
+
+    }
 
     @Override
     public boolean canHandle(HandlerInput input) {
@@ -41,6 +57,7 @@ public class MenueIntentHandler implements RequestHandler {
 
         String speechText = "";
 
+
         try {
 /*
 
@@ -48,18 +65,25 @@ public class MenueIntentHandler implements RequestHandler {
             IntentRequest intentRequest = (IntentRequest) request;
             Intent intent = intentRequest.getIntent();
 */
+            String payload = "";
+
+            if (input.matches(intentName("MenueIntent")))
+                payload = "{\"categories\":[],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
+            if (input.matches(intentName("FoodIntent")))
+                payload = "{\"categories\":[],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
+            if (input.matches(intentName("DrinkIntent")))
+                payload = "{\"categories\":[],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
 
 
             BasicOperations bo = new BasicOperations();
             Gson gson = new Gson();
-            String payload = "{\"categories\":[],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
             String response;
             ga.codehub.entity.menue.Response resp;
             try {
                 response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/dishmanagement/v1/dish/search");
                 resp = gson.fromJson(response, ga.codehub.entity.menue.Response.class);
             } catch (Exception ex) {
-                speechText = "Der MyThaiStar-Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben";
+                speechText = "Der MyThaiStar-Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben " + ex.toString();
                 throw new AlexaException();
 
             }
