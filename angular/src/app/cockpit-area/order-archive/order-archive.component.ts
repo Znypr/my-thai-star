@@ -81,8 +81,6 @@ export class OrderArchiveComponent implements OnInit, OnDestroy {
       .subscribe((cockpitOrders) => {
         this.columnss = [
           { name: 'open', label: cockpitOrders.open },
-
-          { name: 'paid', label: cockpitOrders.paid },
           {
             name: 'cancelled',
             label: cockpitOrders.cancelled,
@@ -111,9 +109,14 @@ export class OrderArchiveComponent implements OnInit, OnDestroy {
         if (!data) {
           this.orders = [];
         } else {
-          this.orders = data.content;
+          this.orders = [];
+          for (let entry of data.content) {
+            if (entry.order.orderStatus == "cancelled" && entry.order.paid == false || entry.order.orderStatus == "delivered" && entry.order.paid == true) {
+              this.orders.push(entry);
+            }
+          }
         }
-        this.totalOrders = data.totalElements;
+        this.totalOrders = this.orders.length;
       });
   }
 
@@ -150,13 +153,23 @@ export class OrderArchiveComponent implements OnInit, OnDestroy {
     });
   }
 
-  onChange(orderStatus: string): void {
-    console.log('Status: ', orderStatus);
-    this.data.order.orderStatus = orderStatus;
-    this.ngOnInit();
+  onChange(orderStatus: string, element: any): void {
+    element.order.orderStatus = orderStatus;    
     this.waiterCockpitService
-      .updateOrderStatus(this.data.order.id, orderStatus)
-      .subscribe();
+      .updateOrderStatus(element.order.id, orderStatus)
+      .subscribe((data: any) => {
+      this.applyFilters();
+    });
+  }
+
+  disableCurrentStatusOption(orderStatus: string, element: any) {
+    if(orderStatus == element.order.orderStatus) return true;
+    else return false;
+  }
+
+  checkIfCancelled(element: any) {
+    if(element.order.orderStatus == "cancelled") return true;
+    else return false;
   }
 
   ngOnDestroy(): void {

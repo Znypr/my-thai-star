@@ -114,9 +114,14 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
         if (!data) {
           this.orders = [];
         } else {
-          this.orders = data.content;
+          this.orders = [];
+          for (let entry of data.content) {
+             if (!(entry.order.orderStatus == "cancelled" && entry.order.paid == false || entry.order.orderStatus == "delivered" && entry.order.paid == true)) {
+              this.orders.push(entry);
+            }
+          }
         }
-        this.totalOrders = data.totalElements;
+        this.totalOrders = this.orders.length;
       });
   }
 
@@ -153,23 +158,35 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     });
   }
 
-  updatePaid(paid: any): void {
-    console.log('Paid: ', paid.checked);
-    this.data.order.paid = paid.checked;
-    this.ngOnInit();
+  updatePaid(paid: any, element: any): void {
+    element.order.paid = paid.checked;
     this.waiterCockpitService
-      .updateOrderStatus(this.data.order.id, paid)
-      .subscribe();
+      .updatePaid(element.order.id, paid.checked)
+      .subscribe((data: any) => {
+      this.applyFilters();
+    });
   }
 
-  onChange(orderStatus: string): void {
-    console.log('Status: ', orderStatus);
-    this.data.order.orderStatus = orderStatus;
-    this.ngOnInit();
+  onChange(orderStatus: string, element: any ): void {
+    element.order.orderStatus = orderStatus;
     this.waiterCockpitService
-      .updateOrderStatus(this.data.order.id, orderStatus)
-      .subscribe();
+      .updateOrderStatus(element.order.id, orderStatus)
+      .subscribe((data: any) => {
+      this.applyFilters();
+    });
   }
+
+   disableCurrentStatusOption(orderStatus: string, element: any) {
+    if(orderStatus == element.order.orderStatus) return true;
+    else return false;
+  }
+
+  checkOrderStatus(element: any): boolean {
+    if(element.order.orderStatus == "delivered") return true;
+    else false;
+  }
+  
+
 
   ngOnDestroy(): void {
     this.translocoSubscription.unsubscribe();

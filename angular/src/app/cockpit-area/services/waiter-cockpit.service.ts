@@ -32,8 +32,10 @@ export class WaiterCockpitService {
     'ordermanagement/v1/order/search';
   private readonly filterOrdersRestPath: string =
     'ordermanagement/v1/order/search';
-  private readonly getOrderUpdateRestPath: string =
+  private readonly getOrderStatusUpdateRestPath: string =
     'ordermanagement/v1/order/changeState';
+  private readonly getOrderPaidUpdateRestPath: string =
+    'ordermanagement/v1/order/paid';
 
   private readonly restServiceRoot$: Observable<string> = this.config.getRestServiceRoot();
   private translocoSubscription = Subscription.EMPTY;
@@ -75,7 +77,7 @@ export class WaiterCockpitService {
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
         this.http.post<OrderListView[]>(
-          `${restServiceRoot}${this.getOrderUpdateRestPath}`,
+          `${restServiceRoot}${this.getOrderStatusUpdateRestPath}`,
           // `${restServiceRoot}${this.getOrderRestPath}${orderID}`,
           { id: orderID, orderStatus: status },
         ),
@@ -85,14 +87,14 @@ export class WaiterCockpitService {
 
   updatePaid(orderID: any, paid: any): Observable<OrderListView[]> {
     this.translocoSubscription = this.translocoService
-      .selectTranslate('alerts.paid.statusSuccess')
+      .selectTranslate('alerts.paid.paidSuccess')
       .subscribe((alert) => this.snackBar.openSnack(alert, 4000, 'green'));
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
         this.http.post<OrderListView[]>(
-          `${restServiceRoot}${this.getOrderUpdateRestPath}`,
+          `${restServiceRoot}${this.getOrderPaidUpdateRestPath}`,
           // `${restServiceRoot}${this.getOrderRestPath}${orderID}`,
-          { id: orderID, paid: status },
+          { id: orderID, paid: paid },
         ),
       ),
     );
