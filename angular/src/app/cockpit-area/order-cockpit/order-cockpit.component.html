@@ -74,7 +74,7 @@
             <mat-form-field [floatLabel]="'never'">
               <mat-label>{{element.order.orderStatus}}</mat-label>
               <mat-select (selectionChange)="onChange($event.value, element)" >
-                <mat-option *ngFor="let status of columnss"  [value]="status.name" [disabled]="disableCurrentStatusOption(status.name, element)">
+                <mat-option *ngFor="let status of columnss"  [value]="status.name" [disabled]="disableOption(status.name, element)">
                   {{status.label}}
                 </mat-option>
               </mat-select>

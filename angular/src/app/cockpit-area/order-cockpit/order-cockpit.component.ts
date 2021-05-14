@@ -176,13 +176,18 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     });
   }
 
-   disableCurrentStatusOption(orderStatus: string, element: any) {
+  disableOption(orderStatus: string, element: any) : boolean {
+    return this.disableCurrentStatusOption(orderStatus, element) || this.checkValidStatusTransition(orderStatus, element);
+  }
+
+   disableCurrentStatusOption(orderStatus: string, element: any): boolean {
     if(orderStatus == element.order.orderStatus) return true;
     else return false;
   }
 
-  checkOrderStatus(element: any): boolean {
-    if(element.order.orderStatus == "delivered") return true;
+  checkValidStatusTransition(orderStatus: string, element: any): boolean {
+    if(element.order.orderStatus == "delivered" && orderStatus == "open") return true;
+    if(element.order.orderStatus == "preparing" && orderStatus == "open") return true;
     else false;
   }
   

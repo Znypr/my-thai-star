@@ -80,7 +80,7 @@ export class OrderArchiveComponent implements OnInit, OnDestroy {
       .selectTranslateObject('cockpit.order-archive.orderStatus', {}, lang)
       .subscribe((cockpitOrders) => {
         this.columnss = [
-          { name: 'open', label: cockpitOrders.open },
+          { name: 'preparing', label: cockpitOrders.open },
           {
             name: 'cancelled',
             label: cockpitOrders.cancelled,
