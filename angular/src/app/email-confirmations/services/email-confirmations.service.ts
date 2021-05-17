@@ -18,6 +18,8 @@ export class EmailConfirmationsService {
     'bookingmanagement/v1/booking/cancel/';
   private readonly cancelOrderRestPath: string =
     'ordermanagement/v1/order/cancelorder/';
+  private readonly resetPasswordRestPath: string =
+    'usermanagement/v1/resetPassword/';
 
   constructor(private http: HttpClient, private config: ConfigService) {}
 

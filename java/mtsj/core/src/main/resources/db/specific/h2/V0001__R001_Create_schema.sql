@@ -36,6 +36,18 @@ CREATE TABLE User (
   CONSTRAINT PK_User_idRole FOREIGN KEY(idRole) REFERENCES UserRole(id) NOCHECK
 );
 
+-- *** ResetToken ***
+CREATE TABLE ResetToken (
+id BIGINT NOT NULL AUTO_INCREMENT,
+modificationCounter INTEGER NOT NULL,
+idUser BIGINT NOT NULL,
+expires TIMESTAMP NOT NULL,
+token VARCHAR (255) NOT NULL,
+flag BIT NOT NULL,
+CONSTRAINT PK_ResetToken PRIMARY KEY(id),
+CONSTRAINT FK_ResetToken_idUser FOREIGN KEY(idUser) REFERENCES User(id) NOCHECK
+);
+
 -- *** Booking ***
 CREATE TABLE Booking (
   id BIGINT NOT NULL AUTO_INCREMENT,

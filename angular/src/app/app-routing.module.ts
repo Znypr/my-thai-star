@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BookTableComponent } from './book-table/container/book-table/book-table.component';
 import { OrderCockpitComponent } from './cockpit-area/order-cockpit/order-cockpit.component';
 import { AdminCockpitComponent } from './cockpit-area/admin-cockpit/admin-cockpit.component';
+import { ResetPasswordCockpitComponent } from './cockpit-area/reset-password-cockpit/reset-password-cockpit.component';
 import { ReservationCockpitComponent } from './cockpit-area/reservation-cockpit/reservation-cockpit.component';
 import { AuthGuardService } from './core/authentication/auth-guard.service';
 import { NotFoundComponent } from './core/not-found/not-found.component';
@@ -16,6 +17,7 @@ const appRoutes: Routes = [
   { path: 'menu', component: MenuComponent },
   { path: 'bookTable', component: BookTableComponent },
   { path: 'booking/:action/:token', component: EmailConfirmationsComponent },
+  { path: 'resetPassword', component: ResetPasswordCockpitComponent },
   {
     path: 'orders',
     component: OrderCockpitComponent,
@@ -32,10 +34,10 @@ const appRoutes: Routes = [
     canActivate: [AuthGuardService],
   },
   {
-      path: 'admin',
-      component: AdminCockpitComponent,
-      // pathMatch: 'full',
-      canActivate: [AuthGuardService],
+    path: 'admin',
+    component: AdminCockpitComponent,
+    // pathMatch: 'full',
+    canActivate: [AuthGuardService],
   },
   {
     path: 'clustering',

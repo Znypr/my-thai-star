@@ -58,6 +58,12 @@ export class AdminDialogComponent implements OnInit {
     this.adminCockpitService.reloadPage('/admin');
   }
 
+  sendPasswordResetMail(userId: number){
+    this.adminCockpitService.sendPasswordResetMail(userId).subscribe(
+      (res) => {
+        alert("Die Email wird verarbeitet und in Kürze versendet");
+      });
+  }
 
   ngOnInit(): void {
     this.datat.push(this.data);

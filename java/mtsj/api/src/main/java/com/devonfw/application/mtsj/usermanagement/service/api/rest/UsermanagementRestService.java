@@ -15,6 +15,7 @@ import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleEto;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleSearchCriteriaTo;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserSearchCriteriaTo;
+import com.devonfw.application.mtsj.usermanagement.logic.api.ResetToken;
 import com.devonfw.application.mtsj.usermanagement.logic.api.Usermanagement;
 
 /**
@@ -34,6 +35,24 @@ public interface UsermanagementRestService {
   @GET
   @Path("/user/{id}/")
   public UserEto getUser(@PathParam("id") long id);
+
+  /**
+   * @author akkus Delegates to {@link UsermanagementImpl#resetPassword}.
+   *
+   * @param id ID of the {@link User} to be reset
+   */
+  @GET
+  @Path("/resetPassword/{id}/")
+  public void resetPassword(@PathParam("id") long id);
+
+  /**
+   * @author akkus Delegates to {@link UsermanagementImpl#getResetTokenByToken}.
+   * @param token
+   * @return
+   */
+  @GET
+  @Path("/token/{token}/")
+  public ResetToken getResetTokenByToken(@PathParam("token") String token);
 
   /**
    * Delegates to {@link Usermanagement#saveUser}.
