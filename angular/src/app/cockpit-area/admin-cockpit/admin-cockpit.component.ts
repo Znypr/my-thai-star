@@ -38,6 +38,7 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   //
   users: UserListView[] = [];
   totalUsers: number;
+  resetTokenEntity:any;
   //
   columns: any[];
   //
@@ -79,6 +80,29 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   //     });
   // }
 
+  onButtonClick(token: String){
+    this.adminCockpitService.getTokenByToken(token).subscribe(
+      (data: any) => {
+        if (!data) {
+          this.resetTokenEntity = [];
+        } else {
+          this.resetTokenEntity = data;
+        }
+    });
+    // console.log(this.entity.content);
+  }
+
+  funk(){
+    console.log(this.resetTokenEntity.token);
+    return true;
+  }
+
+  changePassword(password: String){
+
+  }
+
+
+
   applyFilters(): void {
     this.adminCockpitService
       .getUsers(this.pageable, this.sorting, this.filters)
@@ -98,6 +122,13 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
       data: selection,
     });
   }
+
+  // sendPasswordResetMail(){
+  //   this.adminCockpitService.sendPasswordResetLink(0).subscribe(
+  //     (res) => {
+  //       alert("hallo");
+  //     });
+  // }
 
   // tslint:disable-next-line:typedef
   getUserInput(event: any) {

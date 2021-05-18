@@ -1,31 +1,46 @@
 package com.devonfw.application.mtsj.usermanagement.logic.impl;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
-import com.devonfw.application.mtsj.general.service.impl.config.WebSecurityBeansConfig;
 import org.jboss.aerogear.security.otp.api.Base32;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.devonfw.application.mtsj.general.common.api.UserProfile;
 import com.devonfw.application.mtsj.general.common.api.datatype.Role;
 import com.devonfw.application.mtsj.general.common.api.to.UserDetailsClientTo;
 import com.devonfw.application.mtsj.general.common.base.QrCodeService;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
+import com.devonfw.application.mtsj.general.service.impl.config.WebSecurityBeansConfig;
+import com.devonfw.application.mtsj.mailservice.logic.api.Mail;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.ResetTokenEto;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserQrCodeTo;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleEto;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleSearchCriteriaTo;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserSearchCriteriaTo;
+import com.devonfw.application.mtsj.usermanagement.dataaccess.api.ResetTokenEntity;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserEntity;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserRoleEntity;
+import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.ResetTokenRepository;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRepository;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRoleRepository;
+import com.devonfw.application.mtsj.usermanagement.logic.api.ResetToken;
 import com.devonfw.application.mtsj.usermanagement.logic.api.Usermanagement;
 
 /**
@@ -33,7 +48,7 @@ import com.devonfw.application.mtsj.usermanagement.logic.api.Usermanagement;
  */
 @Named
 @Transactional
-public class UsermanagementImpl extends AbstractComponentFacade implements Usermanagement {
+public class UsermanagementImpl extends AbstractComponentFacade implements Usermanagement, ResetToken {
 
   private static final Logger LOG = LoggerFactory.getLogger(UsermanagementImpl.class);
 
@@ -43,12 +58,112 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
   @Inject
   private UserRoleRepository userRoleDao;
 
+  @Inject
+  private ResetTokenRepository resetDao;
+
+  @Inject
+  private Mail mailService;
+
+  @Value("${client.port}")
+  private int clientPort;
+
+  @Value("${server.servlet.context-path}")
+  private String serverContextPath;
+
+  @Value("${mythaistar.hourslimitcancellation}")
+  private int hoursLimit;
+
   /**
    * The constructor.
    */
   public UsermanagementImpl() {
 
     super();
+  }
+
+  @Override
+  public ResetTokenEto getResetTokenByToken(String token) {
+
+    LOG.debug("Get User with token {} from database.", token);
+    LOG.error("ResetDAO: " + getResetDao().find((long) 0).toString());
+    return getBeanMapper().map(getResetDao().find((long) 0), ResetTokenEto.class);
+    // ResetTokenEto tokenTo = getBeanMapper().map(getResetDao().find((long) 0), ResetTokenEto.class);
+    // LOG.error("tokenTo: " + tokenTo.getIdUser() + "/n " + tokenTo.getToken());
+    // return tokenTo;
+  }
+
+  private String buildToken(String email) throws NoSuchAlgorithmException {
+
+    Instant now = Instant.now();
+    LocalDateTime ldt1 = LocalDateTime.ofInstant(now, ZoneId.systemDefault());
+    String date = String.format("%04d", ldt1.getYear()) + String.format("%02d", ldt1.getMonthValue())
+        + String.format("%02d", ldt1.getDayOfMonth()) + "_";
+
+    String time = String.format("%02d", ldt1.getHour()) + String.format("%02d", ldt1.getMinute())
+        + String.format("%02d", ldt1.getSecond());
+
+    MessageDigest md = MessageDigest.getInstance("MD5");
+    md.update((email + date + time).getBytes());
+    byte[] digest = md.digest();
+    StringBuilder sb = new StringBuilder();
+    for (byte b : digest) {
+      sb.append(String.format("%02x", b & 0xff));
+    }
+    return "RT_" + date + sb;
+  }
+
+  /**
+   * @param id of the user
+   * @return true, if password reset worked
+   */
+  @Override
+  public boolean resetPassword(Long id) {
+
+    UserEntity user = getUserDao().find(id);
+    String token;
+    try {
+
+      token = buildToken(user.getEmail());
+      sendResetEmailToUser(user, token);
+
+      ResetTokenEntity resetTokenEntity = new ResetTokenEntity();
+      resetTokenEntity.setExpires(new Date());
+      resetTokenEntity.setFlag(false);
+      resetTokenEntity.setIdUser(id);
+      resetTokenEntity.setToken(token);
+      getResetDao().save(resetTokenEntity);
+
+    } catch (NoSuchAlgorithmException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return true;
+  }
+
+  /**
+   * Send a reset email to an user
+   *
+   * @param user identifies the user
+   */
+  private void sendResetEmailToUser(UserEntity user, String token) {
+
+    try {
+      StringBuilder resetMailContent = new StringBuilder();
+      resetMailContent.append("MY THAI STAR").append("\n");
+      resetMailContent.append("Hi ").append(user.getEmail()).append("\n");
+      resetMailContent.append("You have requested a password reset");
+
+      // TODO akkus <RestPath needs to be implemented and added here>
+      String linkReset = getClientUrl() + "/resetPassword/?token=" + token;
+
+      resetMailContent.append("To reset: ").append(linkReset).append("\n");
+
+      LOG.error("Die Emailadresse lautet: " + user.getEmail());
+      this.mailService.sendMail(user.getEmail(), "Password Reset", resetMailContent.toString());
+    } catch (Exception e) {
+      LOG.error("Email not sent. {}", e.getMessage());
+    }
+
   }
 
   @Override
@@ -140,6 +255,14 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
     return this.userDao;
   }
 
+  /**
+   * @return
+   */
+  public ResetTokenRepository getResetDao() {
+
+    return this.resetDao;
+  }
+
   @Override
   public UserRoleEto findUserRole(Long id) {
 
@@ -208,6 +331,23 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
     profile.setId(userEto.getId());
     profile.setRole(Role.getRoleById(userEto.getUserRoleId()));
     return profile;
+  }
+
+  private String getClientUrl() {
+
+    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    String clientUrl = request.getHeader("origin");
+    if (clientUrl == null) {
+      return "http://localhost:" + this.clientPort;
+    }
+    return clientUrl;
+  }
+
+  @Override
+  public Long getIdUserByResetToken(String token) {
+
+    // getResetDao().findAll();
+    return null;
   }
 
 }

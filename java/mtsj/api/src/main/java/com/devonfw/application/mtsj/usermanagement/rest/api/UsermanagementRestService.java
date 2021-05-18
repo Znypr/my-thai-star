@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.data.domain.Page;
 
+import com.devonfw.application.mtsj.usermanagement.common.api.to.ResetTokenEto;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserQrCodeTo;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleEto;
@@ -35,6 +36,33 @@ public interface UsermanagementRestService {
   @GET
   @Path("/user/{id}/")
   public UserEto getUser(@PathParam("id") long id);
+
+  /**
+   * @author akkus Delegates to {@link UsermanagementImpl#resetPassword}.
+   *
+   * @param id ID of the {@link User} to be reset
+   */
+  @GET
+  @Path("/resetPassword/{id}/")
+  public void resetPassword(@PathParam("id") long id);
+
+  /**
+   * @author akkus Delegates to {@link UsermanagementImpl#changePassword}.
+   *
+   * @param id ID of the {@link User} to change the password
+   */
+  @POST
+  @Path("/changePassword/")
+  public void changePassword(@PathParam("password") String password);
+
+  /**
+   * @author akkus Delegates to {@link UsermanagementImpl#getResetTokenByToken}.
+   * @param token
+   * @return token-entity
+   */
+  @GET
+  @Path("/token/{token}/")
+  public ResetTokenEto getResetTokenByToken(@PathParam("token") String token);
 
   /**
    * Delegates to {@link Usermanagement#generateUserQrCode}.

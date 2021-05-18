@@ -12,6 +12,7 @@ import {
 import {
   UserView,
   UserResponse,
+  ResetTokenView
 } from '../../shared/view-models/interfaces';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -27,6 +28,10 @@ export class AdminCockpitService {
     'usermanagement/v1/user';
   private readonly addUserRestPath: string =
     'usermanagement/v1/user';
+  private readonly resetPasswordMailRestPath: string =
+    'usermanagement/v1/resetPassword';
+  private readonly tokenRestPath: string =
+    'usermanagement/v1/token';
 
   private readonly restServiceRoot$: Observable<
     string
@@ -60,7 +65,30 @@ export class AdminCockpitService {
         this.http.post<UserResponse[]>(`${restServiceRoot}${path}`, filters),
       ),
     );
-  };
+  }
+
+  sendPasswordResetMail(userId: number): Observable<{}> {
+    let path = this.resetPasswordMailRestPath;
+    return  this.restServiceRoot$.pipe(
+            exhaustMap((restServiceRoot) =>
+            this.http.get(`${restServiceRoot}${path}/${userId}`),
+      ),
+    );
+  }
+
+
+  getTokenByToken(token: String): Observable<{}> {
+    let path = this.tokenRestPath;
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.get(`${restServiceRoot}${path}/${token}`)
+      )
+    );
+  }
+
+  // changePassword(userId: number) {
+  //   let path = this.addUserRestPath;
+  // }
 
 // delete certain user from database by id
   deleteUser(userId: number): Observable<{}> {
