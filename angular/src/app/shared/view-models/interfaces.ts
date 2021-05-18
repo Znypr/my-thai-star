@@ -81,6 +81,15 @@ export interface UserView{
   };
 }
 
+export interface ResetTokenView{
+  token: {
+    id: number;
+    idUser: number;
+    expires: Date;
+    flag: boolean;
+  }
+}
+
 
 export interface UserListView {
   user: UserView[];
@@ -115,6 +124,13 @@ export interface OrderDishListView {
 export interface UserResponse {
   pageable: Pageable;
   content: UserListView;
+}
+
+// Interface to recieve responeses from the server using httpclient for get users
+//added for admin-cockpit
+export interface ResetTokenResponse {
+  pageable: Pageable;
+  content: ResetTokenView;
 }
 
 // Interface to recieve responeses from the server using httpclient for getReservations

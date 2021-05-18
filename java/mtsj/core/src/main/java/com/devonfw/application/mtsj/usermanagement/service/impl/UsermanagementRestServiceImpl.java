@@ -3,13 +3,14 @@ package com.devonfw.application.mtsj.usermanagement.service.impl;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.data.domain.Page;
+
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserQrCodeTo;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleEto;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleSearchCriteriaTo;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserSearchCriteriaTo;
-import org.springframework.data.domain.Page;
-
+import com.devonfw.application.mtsj.usermanagement.logic.api.ResetToken;
 import com.devonfw.application.mtsj.usermanagement.logic.api.Usermanagement;
 import com.devonfw.application.mtsj.usermanagement.rest.api.UsermanagementRestService;
 
@@ -21,6 +22,9 @@ public class UsermanagementRestServiceImpl implements UsermanagementRestService 
 
   @Inject
   private Usermanagement usermanagement;
+
+  @Inject
+  private ResetToken resetToken;
 
   @Override
   public UserEto getUser(long id) {
@@ -87,5 +91,26 @@ public class UsermanagementRestServiceImpl implements UsermanagementRestService 
 
     return this.usermanagement.findUserRoleEtos(searchCriteriaTo);
   }
+
+  @Override
+  public void resetPassword(long id) {
+
+    this.usermanagement.resetPassword(id);
+
+  }
+
+  @Override
+  public ResetToken getResetTokenByToken(String token) {
+
+    return this.resetToken.getResetTokenByToken(token);
+
+  }
+
+  // @Override
+  // public ResetTokenEto getIdUserByResetToken(String token) {
+  //
+  // return this.usermanagement.getIdUserByResetToken(token);
+  //
+  // }
 
 }

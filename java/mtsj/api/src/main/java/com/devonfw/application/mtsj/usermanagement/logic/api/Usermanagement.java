@@ -23,6 +23,24 @@ public interface Usermanagement {
   UserEto findUser(Long id);
 
   /**
+   * @param id of the user
+   * @return true, if password reset worked
+   */
+  public boolean resetPassword(Long id);
+
+  // /**
+  // * @param id of the user
+  // * @return true, if password reset worked
+  // */
+  // public ResetTokenEntity getResetTokenByToken(String token);
+
+  /**
+   * @param token ResetToken
+   * @return id of User
+   */
+  public Long getIdUserByResetToken(String token);
+
+  /**
    * Returns a User by its userName 'userName'.
    *
    * @param userName The userName 'userName' of the User.
