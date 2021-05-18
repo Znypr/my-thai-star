@@ -227,6 +227,21 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
 
     }
 
+        /**
+     * @param order
+     */
+    @Override
+    public OrderCto updatePaid(OrderEto order) {
+
+      System.out.println(order);
+      OrderEntity orderEntity = getOrderDao().find(order.getId());
+      orderEntity.setPaid(order.getPaid());
+      OrderEntity resultEntity = getOrderDao().save(orderEntity);
+      LOG.debug("Order with id '{}' has been modified.", resultEntity.getId());
+      return getBeanMapper().map(resultEntity, OrderCto.class);
+
+    }
+
   @Override
   public List<OrderCto> findOrders(Long idBooking) {
 

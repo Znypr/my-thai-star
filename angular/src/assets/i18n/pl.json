@@ -29,8 +29,7 @@
       "bookingCancel": "Rezerwacja anulowana",
       "orderCancel": "Zamówienie anulowane"
     },
-    "orderID":
-      "Kod rezerwacji jest konieczny do zlozenia zamówienia. Wprowadz swój kod lub zarezerwuj stolik.",
+    "orderID": "Kod rezerwacji jest konieczny do zlozenia zamówienia. Wprowadz swój kod lub zarezerwuj stolik.",
     "passwordError": "Haslo nieprawidlowe",
     "authAlerts": {
       "loginSuccess": "Jestes zalogowany",
@@ -71,18 +70,13 @@
       "bookingError": "Rezerwacja nieudana, spróbuj ponownie"
     },
     "formErrors": {
-      "nameRequired":
-        "Pole obowiazkowe. Podaj imie, aby móc zarezerwowac stolik.",
-      "emailRequired":
-        "Pole obowiazkowe. Podaj email, aby móc zarezerwowac stolik.",
-      "emailPattern":
-        "Podaj poprawny adres email, aby otrzymac szczególy rezerwacji, np. email@email.com.",
+      "nameRequired": "Pole obowiazkowe. Podaj imie, aby móc zarezerwowac stolik.",
+      "emailRequired": "Pole obowiazkowe. Podaj email, aby móc zarezerwowac stolik.",
+      "emailPattern": "Podaj poprawny adres email, aby otrzymac szczególy rezerwacji, np. email@email.com.",
       "emailFormat": "Niepoprawny format adresu email",
       "assistantsRequired": "Pole obowiazkowe. Podaj liczbe uczestników.",
-      "assistantsMax":
-        "Nie mozesz zaprosic wiecej gosci niz zmiesci sie przy najwiekszym stoliku (8). Jesli potrzebujesz wiecej stolików, zrób wiecej rezerwacji.",
-      "assistantsMin":
-        "Nie mozesz zrobic rezerwacji dla liczby uczestników równej zero ani ujemnej"
+      "assistantsMax": "Nie mozesz zaprosic wiecej gosci niz zmiesci sie przy najwiekszym stoliku (8). Jesli potrzebujesz wiecej stolików, zrób wiecej rezerwacji.",
+      "assistantsMin": "Nie mozesz zrobic rezerwacji dla liczby uczestników równej zero ani ujemnej"
     }
   },
   "main": {
@@ -105,12 +99,10 @@
     "subtitle": "Wiecej niz pyszne jedzenie",
     "restaurantTitle": "Nasza restauracja",
     "restaurantImage": "Jeden z naszych klientów czyta książkę, delektując się posiłkiem",
-    "restaurantContent":
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.",
+    "restaurantContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus.",
     "menuTitle": "Nasza karta",
     "menuImage": "W naszym menu znajdziecie Państwo szereg pysznych dań do wyboru",
-    "menuContent":
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus."
+    "menuContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum tellus eget volutpat porta. Duis pellentesque velit venenatis, tincidunt ligula ac, rhoncus felis. Donec aliquam nulla id turpis dignissim laoreet. Vestibulum sit amet ante eu lacus convallis lobortis sit amet eu orci. Nam vitae felis ac nisi accumsan faucibus."
   },
   "menu": {
     "filterTitle": "FILTRY",
@@ -138,8 +130,7 @@
     "noSelection": "Brak zamówien",
     "dialog": {
       "title": "Dodaj komentarz",
-      "content":
-        "Tutaj mozesz przekazac naszym kucharzom krótkie wskazówki odnosnie sposobu przyrzadzenia twojego dania."
+      "content": "Tutaj mozesz przekazac naszym kucharzom krótkie wskazówki odnosnie sposobu przyrzadzenia twojego dania."
     }
   },
   "userArea": {
@@ -183,7 +174,8 @@
       "orderStatus": {
         "open": "Otwórz",
         "preparing": "Przygotowanie",
-        "paid": "Wypłacane"
+        "paid": "Wypłacane",
+        "cancelled": "Anulowany"
       }
     },
     "reservations": {

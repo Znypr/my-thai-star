@@ -92,6 +92,7 @@ CREATE TABLE Orders (
   idInvitedGuest BIGINT,
   idHost BIGINT,
   orderStatus VARCHAR (255) NOT NULL,
+  paid BOOLEAN NOT NULL,
   CONSTRAINT PK_Order PRIMARY KEY(id),
   CONSTRAINT FK_Order_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK,
   CONSTRAINT FK_Order_idInvitedGuest FOREIGN KEY(idInvitedGuest) REFERENCES InvitedGuest(id) NOCHECK

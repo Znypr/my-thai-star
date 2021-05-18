@@ -20,4 +20,8 @@ public interface Order extends ApplicationEntity {
 
   public void setOrderStatus(String orderStatus);
 
+  public Boolean getPaid();
+
+  public void setPaid(Boolean paid);
+
 }

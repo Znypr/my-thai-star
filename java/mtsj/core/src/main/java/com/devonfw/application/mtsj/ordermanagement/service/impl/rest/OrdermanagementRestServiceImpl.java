@@ -30,6 +30,11 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
     return this.ordermanagement.updateOrderStatus(order);
   }
 
+    @Override
+  public OrderCto updatePaid(OrderEto order) {
+    return this.ordermanagement.updatePaid(order);
+  }
+
   @Override
   public OrderCto getOrder(long id) {
 

@@ -39,6 +39,14 @@ export const DefaultENTest = {
       registerFail: 'Register failed, username already in use',
       logoutSuccess: 'Log out successful, come back soon!',
     },
+    orderStatus: {
+      statusSuccess: 'Status change successful',
+      statusFail: 'Status change failed',
+    },
+    paid: {
+      paidSuccess: 'Payment successful',
+      paidFail: 'Payment failed',
+    },
   },
   formFields: {
     username: 'Username',
@@ -89,6 +97,7 @@ export const DefaultENTest = {
     book: 'Book table',
     orders: 'Orders',
     reservations: 'Reservations',
+    archive: 'Archive',
     userActions: {
       user: 'User',
       pairing: 'Set two-factor authentication',
@@ -171,6 +180,22 @@ export const DefaultENTest = {
   },
   cockpit: {
     filter: 'Filter',
+    'order-archive': {
+      title: 'Order Archive',
+      dialogTitle: 'ORDER DETAILS - REFERENCE NUMBER',
+      dialogTable: {
+        dishH: 'Dish',
+        commentsH: 'Comments',
+        extrasH: 'Extra',
+        quantityH: 'Quantity',
+        priceH: 'Price',
+      },
+      orderStatus: {
+        open: 'Reopen',
+        paid: 'Paid',
+        cancelled: 'Cancelled',
+      },
+    },
     orders: {
       title: 'Orders',
       dialogTitle: 'ORDER DETAILS - REFERENCE NUMBER',
@@ -182,10 +207,10 @@ export const DefaultENTest = {
         priceH: 'Price',
       },
       orderStatus: {
-        open: 'open',
-        preparing: 'processing',
-        paid: 'paid',
-        cancelled: 'cancelled'
+        open: 'Open',
+        preparing: 'Processing',
+        delivered: 'Delivered',
+        cancelled: 'Cancelled',
       },
     },
     reservations: {
@@ -202,6 +227,7 @@ export const DefaultENTest = {
       emailH: 'Email',
       bookingTokenH: 'Reference Number',
       orderStatusH: 'Status',
+      paidH: 'Paid',
       ownerH: 'Owner',
       tableH: 'Table',
       creationDateH: 'Creation date',
