@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.devonfw.java.mtsj</groupId>
@@ -15,7 +14,7 @@
   <properties>
     <java.version>1.8</java.version>
     <mts.database.name>h2</mts.database.name>
-    <mts.database.profile>h2mem</mts.database.profile>    <!-- profile for spring -->
+    <mts.database.profile>h2mem</mts.database.profile> <!-- profile for spring -->
     <mts.database.groupId>com.h2database</mts.database.groupId>
     <mts.database.artifactId>h2</mts.database.artifactId>
     <mts.database.version>1.4.194</mts.database.version>
@@ -38,10 +37,10 @@
       <groupId>com.devonfw.java.modules</groupId>
       <artifactId>devon4j-beanmapping-orika</artifactId>
     </dependency>
-	<dependency>
-	  <groupId>org.apache.commons</groupId>
-	  <artifactId>commons-lang3</artifactId>
-	</dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+    </dependency>
     <dependency>
       <groupId>com.devonfw.java.modules</groupId>
       <artifactId>devon4j-security</artifactId>
@@ -153,7 +152,8 @@
       <artifactId>${mts.database.artifactId}</artifactId>
       <version>${mts.database.version}</version>
     </dependency>
-    <dependency>      <!-- Need for SAP Hana-->
+    <dependency>
+      <!-- Need for SAP Hana-->
       <groupId>com.sap.cloud.db.jdbc</groupId>
       <artifactId>ngdbc</artifactId>
       <version>2.3.48</version>
@@ -193,8 +193,8 @@
         </exclusion>
       </exclusions>
     </dependency>
-    
-     <!-- Only required if you want to call external REST services within your Java application -->
+
+    <!-- Only required if you want to call external REST services within your Java application -->
     <dependency>
       <groupId>com.devonfw.java.starters</groupId>
       <artifactId>devon4j-starter-cxf-client-rest</artifactId>

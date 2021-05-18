@@ -17,6 +17,7 @@ export class FilterCockpit {
   email: string;
   bookingToken: number;
   orderStatus?: string;
+  paid?: boolean;
 }
 
 // to filter users in admin-cockpit

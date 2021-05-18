@@ -12,14 +12,14 @@ import {
 } from '../../shared/backend-models/interfaces';
 import { OrderListView } from '../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
-import { OrderDialogComponent } from './order-dialog/order-dialog.component';
-
+import { ArchiveDialogComponent } from './archive-dialog/archive-dialog.component';
 @Component({
-  selector: 'app-cockpit-order-cockpit',
-  templateUrl: './order-cockpit.component.html',
-  styleUrls: ['./order-cockpit.component.scss'],
+  selector: 'app-cockpit-order-archive',
+  templateUrl: './order-archive.component.html',
+  styleUrls: ['./order-archive.component.scss'],
+  //uses order-cockpit scss, it should allways look the same!
 })
-export class OrderCockpitComponent implements OnInit, OnDestroy {
+export class OrderArchiveComponent implements OnInit, OnDestroy {
   private translocoSubscription = Subscription.EMPTY;
   private pageable: Pageable = {
     pageSize: 8,
@@ -36,14 +36,13 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   totalOrders: number;
 
   data: any;
-  columns: any[];
   columnss: any[];
+  columns: any[];
 
   displayedColumns: string[] = [
     'booking.bookingDate',
     'booking.email',
     'booking.bookingToken',
-    'paid',
     'orderStatus',
   ];
 
@@ -54,18 +53,17 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     email: undefined,
     bookingToken: undefined,
     orderStatus: undefined,
-    paid: undefined,
   };
 
   constructor(
     private dialog: MatDialog,
     private translocoService: TranslocoService,
     private waiterCockpitService: WaiterCockpitService,
-    @Inject(MAT_DIALOG_DATA) dialogData: any,
     private configService: ConfigService,
+    @Inject(MAT_DIALOG_DATA) dialogData: any,
   ) {
-    this.data = dialogData;
     this.pageSizes = this.configService.getValues().pageSizes;
+    this.data = dialogData;
   }
 
   ngOnInit(): void {
@@ -79,12 +77,10 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
 
   setOrderStatus(lang: string): void {
     this.translocoService
-      .selectTranslateObject('cockpit.orders.orderStatus', {}, lang)
+      .selectTranslateObject('cockpit.order-archive.orderStatus', {}, lang)
       .subscribe((cockpitOrders) => {
         this.columnss = [
           { name: 'open', label: cockpitOrders.open },
-          { name: 'preparing', label: cockpitOrders.preparing },
-          { name: 'delivered', label: cockpitOrders.delivered },
           {
             name: 'cancelled',
             label: cockpitOrders.cancelled,
@@ -101,7 +97,6 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
           { name: 'booking.email', label: cockpitTable.emailH },
           { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
-          { name: 'paid', label: cockpitTable.paidH },
           { name: 'orderStatus', label: cockpitTable.orderStatusH },
         ];
       });
@@ -116,7 +111,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
         } else {
           this.orders = [];
           for (let entry of data.content) {
-             if (!(entry.order.orderStatus == "cancelled" && entry.order.paid == false || entry.order.orderStatus == "delivered" && entry.order.paid == true)) {
+            if (entry.order.orderStatus == "cancelled" && entry.order.paid == false || entry.order.orderStatus == "delivered" && entry.order.paid == true) {
               this.orders.push(entry);
             }
           }
@@ -152,23 +147,14 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   }
 
   selected(selection: OrderListView): void {
-    this.dialog.open(OrderDialogComponent, {
+    this.dialog.open(ArchiveDialogComponent, {
       width: '80%',
       data: selection,
     });
   }
 
-  updatePaid(paid: any, element: any): void {
-    element.order.paid = paid.checked;
-    this.waiterCockpitService
-      .updatePaid(element.order.id, paid.checked)
-      .subscribe((data: any) => {
-      this.applyFilters();
-    });
-  }
-
-  onChange(orderStatus: string, element: any ): void {
-    element.order.orderStatus = orderStatus;
+  onChange(orderStatus: string, element: any): void {
+    element.order.orderStatus = orderStatus;    
     this.waiterCockpitService
       .updateOrderStatus(element.order.id, orderStatus)
       .subscribe((data: any) => {
@@ -176,17 +162,15 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     });
   }
 
-   disableCurrentStatusOption(orderStatus: string, element: any) {
+  disableCurrentStatusOption(orderStatus: string, element: any) {
     if(orderStatus == element.order.orderStatus) return true;
     else return false;
   }
 
-  checkOrderStatus(element: any): boolean {
-    if(element.order.orderStatus == "delivered") return true;
-    else false;
+  checkIfCancelled(element: any) {
+    if(element.order.orderStatus == "cancelled") return true;
+    else return false;
   }
-  
-
 
   ngOnDestroy(): void {
     this.translocoSubscription.unsubscribe();

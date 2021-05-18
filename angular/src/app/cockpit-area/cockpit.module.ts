@@ -11,7 +11,9 @@ import { ClusteringService } from './services/clustering.service';
 
 import { ReservationCockpitComponent } from './reservation-cockpit/reservation-cockpit.component';
 import { OrderCockpitComponent } from './order-cockpit/order-cockpit.component';
+import { OrderArchiveComponent } from './order-archive/order-archive.component';
 import { OrderDialogComponent } from './order-cockpit/order-dialog/order-dialog.component';
+import { ArchiveDialogComponent } from './order-archive/archive-dialog/archive-dialog.component';
 import { ReservationDialogComponent } from './reservation-cockpit/reservation-dialog/reservation-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PredictionCockpitComponent } from './prediction-cockpit/prediction-cockpit.component';
@@ -20,7 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslocoRootModule } from '../transloco-root.module';
 import { AdminCockpitComponent } from './admin-cockpit/admin-cockpit.component';
 import { AdminDialogComponent } from './admin-cockpit/admin-dialog/admin-dialog.component';
-import { ResetPasswordCockpitComponent } from './reset-password-cockpit/reset-password-cockpit.component';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -37,29 +39,34 @@ import { ResetPasswordCockpitComponent } from './reset-password-cockpit/reset-pa
     WindowService,
     PredictionService,
     ClusteringService,
+    { provide: MAT_DIALOG_DATA, useValue: [] },
   ],
   declarations: [
     ReservationCockpitComponent,
     OrderCockpitComponent,
+    OrderArchiveComponent,
     ReservationDialogComponent,
     OrderDialogComponent,
+    ArchiveDialogComponent,
     PredictionCockpitComponent,
     ClusteringCockpitComponent,
     AdminCockpitComponent,
     AdminDialogComponent,
-    ResetPasswordCockpitComponent,
   ],
   exports: [
     ReservationCockpitComponent,
     OrderCockpitComponent,
+    OrderArchiveComponent,
     PredictionCockpitComponent,
     ClusteringCockpitComponent,
   ],
   entryComponents: [
     ReservationDialogComponent,
     OrderDialogComponent,
+    OrderCockpitComponent,
+    ArchiveDialogComponent,
     PredictionCockpitComponent,
     ClusteringCockpitComponent,
   ],
 })
-export class WaiterCockpitModule { }
+export class WaiterCockpitModule {}

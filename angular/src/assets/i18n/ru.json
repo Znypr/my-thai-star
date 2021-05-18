@@ -173,8 +173,9 @@
       },
       "orderStatus": {
         "open": "Открытый",
-        "preparing": "Подготовка ",
-        "paid": "Оплачены "
+        "preparing": "Подготовка",
+        "paid": "Оплачены",
+        "cancelled": "Отменен"
       }
     },
     "reservations": {

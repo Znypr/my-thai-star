@@ -36,6 +36,8 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
 
   private String orderStatus;
 
+  private Boolean paid;
+
   /**
    * @return booking
    */
@@ -188,6 +190,23 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
   public void setOrderStatus(String orderStatus) {
 
     this.orderStatus = orderStatus;
+  }
+
+      /**
+   * @return boolean if paid
+   */
+  @JoinColumn(name = "paid")
+  public Boolean getPaid() {
+
+    return this.paid;
+  }
+
+  /**
+   * @param paid new value of {@link #getpaid}.
+   */
+  public void setPaid(Boolean paid) {
+
+    this.paid = paid;
   }
 
 
