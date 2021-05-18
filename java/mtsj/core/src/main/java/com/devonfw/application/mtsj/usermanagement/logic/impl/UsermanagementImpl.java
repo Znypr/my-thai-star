@@ -28,6 +28,7 @@ import com.devonfw.application.mtsj.general.common.base.QrCodeService;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
 import com.devonfw.application.mtsj.general.service.impl.config.WebSecurityBeansConfig;
 import com.devonfw.application.mtsj.mailservice.logic.api.Mail;
+import com.devonfw.application.mtsj.usermanagement.common.api.to.ResetTokenEto;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserQrCodeTo;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleEto;
@@ -81,32 +82,17 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
   }
 
   @Override
-  public ResetTokenEntity getResetTokenByToken(String token) {
+  public ResetTokenEto getResetTokenByToken(String token) {
 
     LOG.debug("Get User with token {} from database.", token);
-    LOG.error("ResetDAO: " + getResetDao().findByToken(token).toString());
-    return getBeanMapper().map(getResetDao().find((long) 0), ResetTokenEntity.class);
+    LOG.error("ResetDAO: " + getResetDao().find((long) 0).toString());
+    return getBeanMapper().map(getResetDao().find((long) 0), ResetTokenEto.class);
     // ResetTokenEto tokenTo = getBeanMapper().map(getResetDao().find((long) 0), ResetTokenEto.class);
     // LOG.error("tokenTo: " + tokenTo.getIdUser() + "/n " + tokenTo.getToken());
     // return tokenTo;
   }
 
   private String buildToken(String email) throws NoSuchAlgorithmException {
-
-    // byte[] array = new byte[64]; // length is bounded by 7
-    // new Random().nextBytes(array);
-    // String generatedString = new String(array, Charset.forName("UTF-8"));
-    //
-    // ResetTokenEntity resetTokenEntity = new ResetTokenEntity();
-    // resetTokenEntity.setExpires(new Date());
-    // resetTokenEntity.setFlag(false);
-    // resetTokenEntity.setIdUser(id);
-    // resetTokenEntity.setToken(generatedString);
-    // LOG.error("STRING: " + generatedString);
-    //
-    // getResetDao().save(resetTokenEntity);
-    //
-    // return generatedString;
 
     Instant now = Instant.now();
     LocalDateTime ldt1 = LocalDateTime.ofInstant(now, ZoneId.systemDefault());

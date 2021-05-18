@@ -11,6 +11,7 @@ export class ResetPasswordCockpitComponent implements OnInit {
   hide = true;
   token: String;
   isValid= false;
+  resetTokenEntity: any;
 
   constructor(
    private route: ActivatedRoute,
@@ -35,9 +36,28 @@ export class ResetPasswordCockpitComponent implements OnInit {
   }
 
   getTokenByToken(token: String) {
-    let tokens= this.adminCockpitService.getTokenByToken(token).subscribe(res => {},err =>{ console.log(err)});
-    console.log("token: " ,tokens);
-    return tokens;
+    this.adminCockpitService.getTokenByToken(token).subscribe(
+      (data: any) => {
+        if (!data) {
+          this.resetTokenEntity = [];
+        } else {
+          this.resetTokenEntity = data;
+        }
+      }
+    );
+    console.log("token: " ,this.resetTokenEntity.id);
+  }
+
+  onButtonClick(token: String){
+    this.adminCockpitService.getTokenByToken(token).subscribe(
+      (data: any) => {
+        if (!data) {
+          this.resetTokenEntity = [];
+        } else {
+          this.resetTokenEntity = data;
+        }
+    });
+    // console.log(this.entity.content);
   }
 
     // this.route.snapshot.paramMap.get('token');

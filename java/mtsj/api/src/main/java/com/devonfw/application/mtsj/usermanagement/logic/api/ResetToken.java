@@ -1,5 +1,7 @@
 package com.devonfw.application.mtsj.usermanagement.logic.api;
 
+import com.devonfw.application.mtsj.usermanagement.common.api.to.ResetTokenEto;
+
 /**
  * TODO akkus This type ...
  *
@@ -16,5 +18,5 @@ public interface ResetToken {
    * @param token
    * @return id of the user
    */
-  public ResetToken getResetTokenByToken(String token);
+  public ResetTokenEto getResetTokenByToken(String token);
 }
