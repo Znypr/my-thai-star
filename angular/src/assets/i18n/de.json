@@ -43,7 +43,8 @@
       "statusFail": "Statusänderung fehlgeschlagen"
     },
     "paid": {
-      "paidSuccess": "Bezahlung erfolgreich",
+      "paidSuccess": "Bezahlung erfolgreich eingetragen",
+      "unpaidSuccess": "Bezahlung erfolgreich entfernt",
       "paidFail": "Bezahlung fehlgeschlagen"
     }
   },
@@ -63,7 +64,8 @@
     "guestsPH": "Gib die Einladungs-Email ein",
     "comment": "Kommentar",
     "total": "Gesamt",
-    "referenceNumber": "Referenznummer"
+    "referenceNumber": "Referenznummer",
+    "orderStatus": "Status"
   },
   "bookTable": {
     "title": "Du kannst deine Freunde zum Mittagessen einladen oder einen Tisch buchen",

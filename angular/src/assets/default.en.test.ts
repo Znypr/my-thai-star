@@ -44,7 +44,8 @@ export const DefaultENTest = {
       statusFail: 'Status change failed',
     },
     paid: {
-      paidSuccess: 'Payment successful',
+      paidSuccess: 'Payment successful registered',
+      unpaidSuccess: 'Payment successful removed',
       paidFail: 'Payment failed',
     },
   },
@@ -65,6 +66,7 @@ export const DefaultENTest = {
     comment: 'Comment',
     total: 'Total',
     referenceNumber: 'Reference number',
+    orderStatus: 'Status',
   },
   bookTable: {
     title: 'You can invite your friends to lunch or book a table',
