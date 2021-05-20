@@ -20,7 +20,7 @@ import ga.codehub.alexa.handlers.*;
 
 public class MyThaiStartStreamHandler extends SkillStreamHandler {
 
-    public static final String BASE_URL = "http://6ad442748171.ngrok.io ";
+    public static final String BASE_URL = "https://389ee43b5ef0.ngrok.io";
 
 
     private static Skill getSkill() {
