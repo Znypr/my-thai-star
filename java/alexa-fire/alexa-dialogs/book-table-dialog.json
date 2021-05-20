@@ -62,7 +62,9 @@
             "Können wir gegen {time} kommen",
             "Ich brauche einen Tisch für {count}",
             "einen Tisch für {count} Personen am {date} um {time}",
-            "Buche einen Tisch für {count} Personen um {time} am {date}"
+            "Buche einen Tisch für {count} Personen um {time} am {date}",
+            "Tisch reservieren",
+            "Tisch buchen"
           ]
         },
         {
@@ -77,21 +79,30 @@
           "name": "MenueIntent",
           "slots": [],
           "samples": [
-            "Was kann man bei euch essen",
-            "Was kann ich bei euch essen",
-            "Was gibt es bei euch zu essen",
             "Kannst du mir sagen was auf der Karte steht",
-            "Kannst du mir sagen was es zu essen gibt",
-            "Welche Gerichte bietet Ihr an",
             "Was steht auf der Karte",
             "Dürfte ich Einsicht in die Speisekarte erlangen",
             "Könnte ich bitte die Speisekarte haben",
-            "Was gibt es hier zu essen",
-            "Können Sie mir die Karte Zeigen",
-            "Kannst du mir die Karte Zeigen",
-            "Welche Gerichte bieten Sie an",
+            "Können Sie mir die Karte zeigen",
+            "Kannst du mir die Karte zeigen",
             "Was steht auf der Speisekarte",
-            "was gibt es zu essen"
+            "Speisekarte"
+          ]
+        },
+        {
+          "name": "FoodIntent",
+          "slots": [],
+          "samples": [
+            "Was kann man bei euch essen",
+            "Was kann ich bei euch essen",
+            "Was gibt es bei euch zu essen",
+            "Kannst du mir sagen was es zu essen gibt",
+            "Welche Gerichte bietet Ihr an",
+            "Was gibt es hier zu essen",
+            "Welche Gerichte bieten Sie an",
+            "Was gibt es zu essen",
+            "Gerichte",
+            "Speisen"
           ]
         }
       ],
