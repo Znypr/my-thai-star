@@ -52,7 +52,7 @@ public class BookingIntentHandler implements RequestHandler {
                 name = input.getServiceClientFactory().getUpsService().getProfileName();
                 userEmail = input.getServiceClientFactory().getUpsService().getProfileEmail();
             } catch (NullPointerException nullp) {
-                speechText = "Deine Alexa braucht zusätliche Berechtigungen !";
+                speechText = "Deine Alexa braucht zusätzliche Berechtigungen !";
                 throw new AlexaException();
             }
 
@@ -86,7 +86,7 @@ public class BookingIntentHandler implements RequestHandler {
 
 
             if (guest_check_int > 8 || guest_check_int < 1) {
-                speechText = "Du kannst maximal 8 Gäste mitbringen und musst mindestens alleine kommen";
+                speechText = "Es können maximal acht Gäste und mindestens ein Gast an einem Tisch sitzen.";
                 throw new AlexaException();
             }
             BasicOperations bo = new BasicOperations();

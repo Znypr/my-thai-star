@@ -20,7 +20,7 @@ import ga.codehub.alexa.handlers.*;
 
 public class MyThaiStartStreamHandler extends SkillStreamHandler {
 
-    public static final String BASE_URL = "http://6ad442748171.ngrok.io ";
+    public static final String BASE_URL = "http://568c04c2075d.ngrok.io ";
 
 
     private static Skill getSkill() {
@@ -29,12 +29,13 @@ public class MyThaiStartStreamHandler extends SkillStreamHandler {
                         new ga.codehub.alexa.handlers.CancelandStopIntentHandler(),
                         new BookingIntentHandler(),
                         new MenueIntentHandler(),
+                        new FoodIntentHandler(),
                         new HelpIntentHandler(),
                         new LaunchRequestHandler(),
                         new SessionEndedRequestHandler(),
                         new FallbackIntentHandler())
                 // Add your skill id below
-                .withSkillId("amzn1.ask.skill.b849ee87-c5b0-4a88-ba30-5b823f89ddea")
+                .withSkillId("amzn1.ask.skill.f5fa69a6-0822-4a5f-b959-ad2893865a9e")
                 .build();
     }
 

@@ -27,7 +27,7 @@ import java.util.Optional;
 import static com.amazon.ask.request.Predicates.intentName;
 import static ga.codehub.alexa.MyThaiStartStreamHandler.BASE_URL;
 
-public class MenueIntentHandler implements RequestHandler {
+public class FoodIntentHandler implements RequestHandler {
 
     public static void main(String[] args) {
         BasicOperations bo = new BasicOperations();
@@ -48,7 +48,7 @@ public class MenueIntentHandler implements RequestHandler {
 
     @Override
     public boolean canHandle(HandlerInput input) {
-        return input.matches(intentName("MenueIntent"));
+        return input.matches(intentName("FoodIntent"));
     }
 
 
@@ -66,11 +66,12 @@ public class MenueIntentHandler implements RequestHandler {
             Intent intent = intentRequest.getIntent();
 */
             String payload = "";
+            String dish_category = "id=\"0\";id=\"1\";id=\"2\"";
 
             if (input.matches(intentName("MenueIntent")))
                 payload = "{\"categories\":[],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
             if (input.matches(intentName("FoodIntent")))
-                payload = "{\"categories\":[],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
+                payload = "{\"categories\":[{" + dish_category + "}],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
             if (input.matches(intentName("DrinkIntent")))
                 payload = "{\"categories\":[],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
 
