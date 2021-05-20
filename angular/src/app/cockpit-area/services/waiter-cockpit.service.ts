@@ -56,11 +56,12 @@ export class WaiterCockpitService {
     let path: string;
     filters.pageable = pageable;
     filters.pageable.sort = sorting;
-    if (filters.email || filters.bookingToken) {
+    if (filters.email || filters.bookingToken || filters.orderStatus) {
       path = this.filterOrdersRestPath;
     } else {
       delete filters.email;
       delete filters.bookingToken;
+      delete filters.orderStatus;
       path = this.getOrdersRestPath;
     }
     return this.restServiceRoot$.pipe(
@@ -86,9 +87,16 @@ export class WaiterCockpitService {
   }
 
   updatePaid(orderID: any, paid: any): Observable<OrderListView[]> {
-    this.translocoSubscription = this.translocoService
-      .selectTranslate('alerts.paid.paidSuccess')
-      .subscribe((alert) => this.snackBar.openSnack(alert, 4000, 'green'));
+
+    if(paid) {
+      this.translocoSubscription = this.translocoService
+        .selectTranslate('alerts.paid.paidSuccess')
+        .subscribe((alert) => this.snackBar.openSnack(alert, 4000, 'green'));
+    } else {
+      this.translocoSubscription = this.translocoService
+        .selectTranslate('alerts.paid.unpaidSuccess')
+        .subscribe((alert) => this.snackBar.openSnack(alert, 4000, 'green'));
+    }
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
         this.http.post<OrderListView[]>(

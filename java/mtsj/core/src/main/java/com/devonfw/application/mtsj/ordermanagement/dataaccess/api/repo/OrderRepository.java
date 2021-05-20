@@ -81,7 +81,7 @@ public interface OrderRepository extends DefaultRepository<OrderEntity> {
     }
     String orderStatus = criteria.getOrderStatus();
     if ((orderStatus != null) && alias.getOrderStatus() != null) {
-      query.where(Alias.$(alias.getOrderStatus()).eq(orderStatus));
+      query.where(Alias.$(alias.getOrderStatus().toLowerCase()).eq(orderStatus.toLowerCase()));
     }
     
     return QueryUtil.get().findPaginated(criteria.getPageable(), query, true);
