@@ -9,7 +9,6 @@ public class Response {
 
     @Override
     public String toString() {
-
         StringBuilder sb = new StringBuilder();
         for (Content c : content) {
             sb.append(c.dish.name + ", ");

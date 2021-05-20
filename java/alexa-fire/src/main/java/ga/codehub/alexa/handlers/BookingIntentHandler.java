@@ -85,8 +85,8 @@ public class BookingIntentHandler implements RequestHandler {
             int guest_check_int = Integer.parseInt(myApiRequest.booking.assistants);
 
 
-            if (guest_check_int > 12 || guest_check_int < 1) {
-                speechText = "Du kannst maximal 12 Gäste mitbringen und musst mindestens alleine kommen";
+            if (guest_check_int > 8 || guest_check_int < 1) {
+                speechText = "Du kannst maximal 8 Gäste mitbringen und musst mindestens alleine kommen";
                 throw new AlexaException();
             }
             BasicOperations bo = new BasicOperations();

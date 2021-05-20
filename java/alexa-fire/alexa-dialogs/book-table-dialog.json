@@ -16,22 +16,51 @@
           "samples": []
         },
         {
-          "name": "HelloWorldIntent",
+          "name": "BookingIntent",
           "slots": [
             {
               "name": "count",
-              "type": "AMAZON.FOUR_DIGIT_NUMBER"
+              "type": "AMAZON.FOUR_DIGIT_NUMBER",
+              "samples": [
+                "{count}"
+              ]
             },
             {
               "name": "time",
-              "type": "AMAZON.TIME"
+              "type": "AMAZON.TIME",
+              "samples": [
+                "{time}"
+              ]
             },
             {
               "name": "date",
-              "type": "AMAZON.DATE"
+              "type": "AMAZON.DATE",
+              "samples": [
+                "{date}"
+              ]
             }
           ],
           "samples": [
+            "Hätten Sie noch einen Tisch frei für {time}",
+            "Hätten Sie noch einen Tisch frei für {date}",
+            "Hätten Sie noch einen Tisch frei für {count}",
+            "Hätten Sie noch einen Tisch frei für {count} Personen",
+            "Ich würde gerne mit {count} vorbeikommen",
+            "Ich würde gerne um {time} vorbeikommen",
+            "Ich würde gerne {date} vorbeikommen",
+            "Ich hätte gerne einen Tisch für {date}",
+            "Ich würde gerne einen Tisch reservieren {count}",
+            "Ich würde gerne einen Tisch reservieren für {date}",
+            "Ich hätte gerne einen Tisch am {date}",
+            "Ich hätte gerne einen Tisch um {time}",
+            "Ich hätte gerne einen Tisch für {count}",
+            "Ich hätte gerne einen Tisch für {count} Personen",
+            "Ich komme {date} mit {count} Personen",
+            "resevieren einen Tisch für {count}",
+            "reserviere einen Tisch am {date}",
+            "reserviere einen Tisch um {time}",
+            "Können wir gegen {time} kommen",
+            "Ich brauche einen Tisch für {count}",
             "einen Tisch für {count} Personen am {date} um {time}",
             "Buche einen Tisch für {count} Personen um {time} am {date}"
           ]
@@ -43,9 +72,98 @@
         {
           "name": "AMAZON.NavigateHomeIntent",
           "samples": []
+        },
+        {
+          "name": "MenueIntent",
+          "slots": [],
+          "samples": [
+            "Was kann man bei euch essen",
+            "Was kann ich bei euch essen",
+            "Was gibt es bei euch zu essen",
+            "Kannst du mir sagen was auf der Karte steht",
+            "Kannst du mir sagen was es zu essen gibt",
+            "Welche Gerichte bietet Ihr an",
+            "Was steht auf der Karte",
+            "Dürfte ich Einsicht in die Speisekarte erlangen",
+            "Könnte ich bitte die Speisekarte haben",
+            "Was gibt es hier zu essen",
+            "Können Sie mir die Karte Zeigen",
+            "Kannst du mir die Karte Zeigen",
+            "Welche Gerichte bieten Sie an",
+            "Was steht auf der Speisekarte",
+            "was gibt es zu essen"
+          ]
         }
       ],
       "types": []
-    }
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "BookingIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "count",
+              "type": "AMAZON.FOUR_DIGIT_NUMBER",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.638601641517.1343819274126"
+              }
+            },
+            {
+              "name": "time",
+              "type": "AMAZON.TIME",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.638601641517.1465548728509"
+              }
+            },
+            {
+              "name": "date",
+              "type": "AMAZON.DATE",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.638601641517.133236874959"
+              }
+            }
+          ]
+        }
+      ],
+      "delegationStrategy": "ALWAYS"
+    },
+    "prompts": [
+      {
+        "id": "Elicit.Slot.638601641517.1343819274126",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Mit wievielen Leuten möchtest du kommen ?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.638601641517.1465548728509",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Um wieviel Uhr soll ich deinen Tisch freihalten ?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.638601641517.133236874959",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "An welchem Tag wollt Ihr kommen"
+          }
+        ]
+      }
+    ]
   }
 }
