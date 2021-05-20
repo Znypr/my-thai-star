@@ -5,6 +5,7 @@ import javax.inject.Named;
 
 import org.springframework.data.domain.Page;
 
+import com.devonfw.application.mtsj.usermanagement.common.api.to.ResetTokenEto;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserQrCodeTo;
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserRoleEto;
@@ -100,9 +101,16 @@ public class UsermanagementRestServiceImpl implements UsermanagementRestService 
   }
 
   @Override
-  public ResetToken getResetTokenByToken(String token) {
+  public ResetTokenEto getResetTokenByToken(String token) {
 
     return this.resetToken.getResetTokenByToken(token);
+
+  }
+
+  @Override
+  public void changePassword(String password) {
+
+    // this.usermanagement.findUser(id).setPassword(null);
 
   }
 

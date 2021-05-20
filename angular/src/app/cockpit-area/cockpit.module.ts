@@ -23,6 +23,7 @@ import { TranslocoRootModule } from '../transloco-root.module';
 import { AdminCockpitComponent } from './admin-cockpit/admin-cockpit.component';
 import { AdminDialogComponent } from './admin-cockpit/admin-dialog/admin-dialog.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ResetPasswordCockpitComponent } from './reset-password-cockpit/reset-password-cockpit.component';
 
 @NgModule({
   imports: [
@@ -52,6 +53,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
     ClusteringCockpitComponent,
     AdminCockpitComponent,
     AdminDialogComponent,
+    ResetPasswordCockpitComponent,
   ],
   exports: [
     ReservationCockpitComponent,

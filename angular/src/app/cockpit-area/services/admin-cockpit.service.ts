@@ -82,7 +82,6 @@ export class AdminCockpitService {
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
         this.http.get(`${restServiceRoot}${path}/${token}`)
-
       )
     );
   }
