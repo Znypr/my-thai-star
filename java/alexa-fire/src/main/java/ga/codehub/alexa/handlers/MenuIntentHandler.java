@@ -27,7 +27,7 @@ import java.util.Optional;
 import static com.amazon.ask.request.Predicates.intentName;
 import static ga.codehub.alexa.MyThaiStartStreamHandler.BASE_URL;
 
-public class FoodIntentHandler implements RequestHandler {
+public class MenuIntentHandler implements RequestHandler {
 
     public static void main(String[] args) {
         BasicOperations bo = new BasicOperations();
@@ -48,7 +48,17 @@ public class FoodIntentHandler implements RequestHandler {
 
     @Override
     public boolean canHandle(HandlerInput input) {
-        return input.matches(intentName("FoodIntent"));
+        return input.matches(intentName("MenueIntent")) 
+        || input.matches(intentName("FoodIntent"))
+        || input.matches(intentName("DrinkIntent"))
+        || input.matches(intentName("CurryIntent"))
+        || input.matches(intentName("VeganIntent"))
+        || input.matches(intentName("RiceIntent"))
+        || input.matches(intentName("VegetarianIntent"))
+        || input.matches(intentName("StarterIntent"))
+        || input.matches(intentName("DessertIntent"))
+        || input.matches(intentName("NoodleIntent"));
+        // || input.matches(intentName("FavoritIntent"));
     }
 
 
@@ -66,14 +76,33 @@ public class FoodIntentHandler implements RequestHandler {
             Intent intent = intentRequest.getIntent();
 */
             String payload = "";
-            String dish_category = "{id=\"0\"},{id=\"1\"},{id=\"2\"}";
+            String dish_category = "";
 
             if (input.matches(intentName("MenueIntent")))
-                payload = "{\"categories\":[],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
+                dish_category = "";
             if (input.matches(intentName("FoodIntent")))
-                payload = "{\"categories\":[" + dish_category + "],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
+                dish_category = "{\"id\":0}";
             if (input.matches(intentName("DrinkIntent")))
-                payload = "{\"categories\":[],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
+                dish_category = "{\"id\":8}";
+            if (input.matches(intentName("CurryIntent")))
+                dish_category = "{\"id\":5}";    
+            if (input.matches(intentName("VeganIntent")))
+                dish_category = "{\"id\":6}";
+            if (input.matches(intentName("RiceIntent")))
+                dish_category = "{\"id\":4}";
+            if (input.matches(intentName("VegetarianIntent")))
+                dish_category = "{\"id\":7}";
+            if (input.matches(intentName("StarterIntent")))
+                dish_category = "{\"id\":1}";    
+            if (input.matches(intentName("DessertIntent")))
+                dish_category = "{\"id\":2}";
+            if (input.matches(intentName("NoodleIntent")))
+                dish_category = "{\"id\":3}";
+            // if (input.matches(intentName("FavoritIntent")))
+            //     dish_category = "{\"id\":2},";
+
+            payload = "{\"categories\":[" + dish_category + "],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
+                
 
 
             BasicOperations bo = new BasicOperations();

@@ -21,15 +21,14 @@ import ga.codehub.alexa.handlers.*;
 public class MyThaiStartStreamHandler extends SkillStreamHandler {
 
     // public static final String BASE_URL = "http://568c04c2075d.ngrok.io"; // Rebecca
-    public static final String BASE_URL = "http://389ee43b5ef0.ngrok.io"; // Candra
+    public static final String BASE_URL = "http://d5c35b63e511.ngrok.io"; // Candra
 
     private static Skill getSkill() {
         return Skills.standard()
                 .addRequestHandlers(
                         new ga.codehub.alexa.handlers.CancelandStopIntentHandler(),
                         new BookingIntentHandler(),
-                        new MenueIntentHandler(),
-                        new FoodIntentHandler(),
+                        new MenuIntentHandler(),           
                         new HelpIntentHandler(),
                         new LaunchRequestHandler(),
                         new SessionEndedRequestHandler(),

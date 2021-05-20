@@ -104,7 +104,136 @@
             "Gerichte",
             "Speisen"
           ]
+        },
+        {
+          "name": "DrinkIntent",
+          "slots": [],
+          "samples": [
+            "Was kann man bei euch drinken",
+            "Was kann ich bei euch drinken",
+            "Was gibt es bei euch zu drinken",
+            "Kannst du mir sagen was es zu drinken gibt",
+            "Welche Getränke bietet Ihr an",
+            "Was gibt es hier zu drinken",
+            "Welche Getränke bieten Sie an",
+            "Was gibt es zu trinken",
+            "Getränke",
+            "Drinks",
+            "Trinken",
+            "Ich habe Durst",
+            "Was gibts zu trinken"
+          ]
+        },
+        {
+          "name": "CurryIntent",
+          "slots": [],
+          "samples": [
+            "Curry",
+            "Curry Gerichte",
+            "Curry Speisen",
+            "Curry Mahlzeiten"
+          ]
+        },
+        {
+          "name": "VeganIntent",
+          "slots": [],
+          "samples": [
+            "Vegan",
+            "Vegane Gerichte",
+            "Vegane Speisen",
+            "Vegane Mahlzeiten",
+            "Was gibt es an veganen Gerichten",
+            "Was gibt es an veganen Speisen"
+          ]
+        },
+        {
+          "name": "RiceIntent",
+          "slots": [],
+          "samples": [
+            "Reis",
+            "Reis Gerichte",
+            "Gerichte mit Reis",
+            "Speisen mit Reis",
+            "Mahlzeiten mit Reis",
+            "Was gibt es an Speisen mit Reis",
+            "Was gibt es an Gerichten mit Reis"
+          ]
+        },
+        {
+          "name": "VegetarianIntent",
+          "slots": [],
+          "samples": [
+            "Vegetarisch",
+            "Vegetarische Gerichte",
+            "Vegetarische Speisen",
+            "Vegetarische Mahlzeiten",
+            "Was gibt es an vegetarischen Gerichten",
+            "Was gibt es an vegetarischen Speisen"
+          ]
+        },
+        {
+          "name": "StarterIntent",
+          "slots": [],
+          "samples": [
+            "Vorspeisen",
+            "Starter",
+            "Welche Vorspeisen gibt es",
+            "Welche Starter gibt es",
+            "Was gibt es an Vorspeisen",
+            "Was gibt es an Startern"
+          ]
+        },
+        {
+          "name": "DessertIntent",
+          "slots": [],
+          "samples": [
+            "Desserts",
+            "Nachspeisen",
+            "Welche Desserts gibt es",
+            "Welche Nachspeisen gibt es",
+            "Was gibt es an Desserts",
+            "Was gibt es für Desserts",
+            "Was gibt es an Nachspeisen",
+            "Was gibt es für Nachspeisen"
+          ]
+        },
+        {
+          "name": "NoodleIntent",
+          "slots": [],
+          "samples": [
+            "Nudeln",
+            "Nudel Gerichte",
+            "Nudel Mahlzeiten",
+            "Nudel Speisen",
+            "Welche Nudel Gerichte gibt es",
+            "Welche Nudel Mahlzeiten gibt es",
+            "Welche Nudel Speisen gibt es",
+            "Was gibt es an Nudeln",
+            "Was gibt es an Mahlzeiten mit Nudeln",
+            "Was gibt es an Speisen mit Nudeln",
+            "Was gibt es an Gerichten mit Nudeln"
+          ]
+        },
+        {
+          "name": "FavoritIntent",
+          "slots": [],
+          "samples": [
+            "Favouriten",
+            "Lieblingsessen",
+            "Lieblingsspeisen",
+            "Lieblingsgerichte",
+            "Lieblingsmahlzeiten",
+            "Welche Speisen esse ich am liebsten",
+            "Welche Gerichte esse ich am liebsten",
+            "Welche Mahlzeiten esse ich am liebsten",
+            "Was sind meine Favoriten",
+            "Was sind meine Lieblingsgerichte",
+            "Was sind meine Lieblingsessen",
+            "Was sind meine Lieblingsgerichte",
+            "Was sind meine Lieblingsmahlzeiten"
+          ]
         }
+        
       ],
       "types": []
     },
