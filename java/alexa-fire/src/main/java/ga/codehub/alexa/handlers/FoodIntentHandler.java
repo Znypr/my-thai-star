@@ -66,12 +66,12 @@ public class FoodIntentHandler implements RequestHandler {
             Intent intent = intentRequest.getIntent();
 */
             String payload = "";
-            String dish_category = "id=\"0\";id=\"1\";id=\"2\"";
+            String dish_category = "{id=\"0\"},{id=\"1\"},{id=\"2\"}";
 
             if (input.matches(intentName("MenueIntent")))
                 payload = "{\"categories\":[],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
             if (input.matches(intentName("FoodIntent")))
-                payload = "{\"categories\":[{" + dish_category + "}],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
+                payload = "{\"categories\":[" + dish_category + "],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
             if (input.matches(intentName("DrinkIntent")))
                 payload = "{\"categories\":[],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
 
