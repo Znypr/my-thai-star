@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static com.amazon.ask.request.Predicates.intentName;
-import static ga.codehub.alexa.MyThaiStartStreamHandler.BASE_URL;
+import static ga.codehub.alexa.MyThaiStarStreamHandler.BASE_URL;
 
 public class MenuIntentHandler implements RequestHandler {
 
@@ -34,10 +34,10 @@ public class MenuIntentHandler implements RequestHandler {
         Gson gson = new Gson();
         String payload = "{\"categories\":[],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
         String response;
-        ga.codehub.entity.menue.Response resp;
+        ga.codehub.entity.menu.Response resp;
         try {
             response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/dishmanagement/v1/dish/search");
-            resp = gson.fromJson(response, ga.codehub.entity.menue.Response.class);
+            resp = gson.fromJson(response, ga.codehub.entity.menu.Response.class);
             System.out.println(response);
         } catch (Exception ex) {
 
@@ -48,7 +48,7 @@ public class MenuIntentHandler implements RequestHandler {
 
     @Override
     public boolean canHandle(HandlerInput input) {
-        return input.matches(intentName("MenueIntent")) 
+        return input.matches(intentName("MenuIntent")) 
         || input.matches(intentName("FoodIntent"))
         || input.matches(intentName("DrinkIntent"))
         || input.matches(intentName("CurryIntent"))
@@ -93,14 +93,14 @@ public class MenuIntentHandler implements RequestHandler {
             Intent intent = intentRequest.getIntent();
 
             Map<String, Slot> slotMap = intent.getSlots();
-            if (slotMap.size() != 1) {
-                throw new AlexaException();
-            }
+            // if (slotMap.size() != 1) {
+            //     throw new AlexaException();
+            // }
             Slot maxPrice = slotMap.get("maxPrice");
 
  
             // Filter Menu
-            if (input.matches(intentName("MenueIntent")))
+            if (input.matches(intentName("MenuIntent")))
                 dish_category = "";
             if (input.matches(intentName("FoodIntent")))
                 dish_category = "{\"id\":0}";
@@ -151,7 +151,7 @@ public class MenuIntentHandler implements RequestHandler {
             if(input.matches(intentName("SortByLikesASCIntent"))) {
                 property = "\"description\"";
                 direction = "\"ASC\"";
-                 speechText = "Es wird nun nach Likes in aufsteigender Richtung sortiert.";
+                speechText = "Es wird nun nach Likes in aufsteigender Richtung sortiert.";
             }
 
 
@@ -162,10 +162,10 @@ public class MenuIntentHandler implements RequestHandler {
             BasicOperations bo = new BasicOperations();
             Gson gson = new Gson();
             String response;
-            ga.codehub.entity.menue.Response resp;
+            ga.codehub.entity.menu.Response resp;
             try {
                 response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/dishmanagement/v1/dish/search");
-                resp = gson.fromJson(response, ga.codehub.entity.menue.Response.class);
+                resp = gson.fromJson(response, ga.codehub.entity.menu.Response.class);
             } catch (Exception ex) {
                 speechText = "Der MyThaiStar-Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben ." + ex.toString();
                 throw new AlexaException();
