@@ -215,62 +215,6 @@
           ]
         },
         {
-          "name": "SortByNameDESCIntent",
-          "slots": [],
-          "samples": [
-            "Speisen nach Namen rückwärts",
-            "sortier nach Name rückwärts",
-            "sortier alphabetisch rückwärts",
-            "Speisekarte nach Name rückwärts"
-          ]
-        },
-        {
-          "name": "SortByPriceDESCIntent",
-          "slots": [],
-          "samples": [
-            "Speisen nach Preis rückwärts",
-            "sortier nach Preis rückwärts",
-            "Speisekarte nach Preis rückwärts"
-          ]
-        },
-        {
-          "name": "SortByLikesDESCIntent",
-          "slots": [],
-          "samples": [
-            "Speisen nach Likes rückwärts",
-            "sortier nach Likes rückwärts",
-            "Speisekarte nach Likes rückwärts"
-          ]
-        },
-        {
-          "name": "SortByNameASCIntent",
-          "slots": [],
-          "samples": [
-            "Speisen nach Namen",
-            "sortier nach Name",
-            "sortier alphabetisch",
-            "Speisekarte nach Name"
-          ]
-        },
-        {
-          "name": "SortByPriceASCIntent",
-          "slots": [],
-          "samples": [
-            "Speisen nach Preis",
-            "sortier nach Preis",
-            "Speisekarte nach Preis"
-          ]
-        },
-        {
-          "name": "SortByLikesASCIntent",
-          "slots": [],
-          "samples": [
-            "Speisen nach Likes",
-            "sortier nach Likes",
-            "Speisekarte nach Likes"
-          ]
-        },
-        {
           "name": "FavoritIntent",
           "slots": [],
           "samples": [
@@ -288,9 +232,95 @@
             "Was sind meine Lieblingsgerichte",
             "Was sind meine Lieblingsmahlzeiten"
           ]
+        },
+        {
+          "name": "SortIntent",
+          "slots": [
+            {
+              "name": "direction",
+              "type": "DIRECTION"
+            },
+            {
+              "name": "property",
+              "type": "SORTCATEGORY",
+              "samples": [
+                "Nach Likes sortieren",
+                "Nach Preis sortieren",
+                "Nach Name sortieren",
+                "Nach Likes",
+                "Nach Preis",
+                "Nach Name"
+              ]
+            }
+          ],
+          "samples": [
+            "Sortier die Speisekarte {direction}",
+            "Sortier die Speisekarte {direction} nach {property}",
+            "Sortier die Speisekarte nach {property}",
+            "Speisekarte nach {property}",
+            "Speisekarte {direction} nach {property}",
+            "Sortier das Menü {direction} nach {property}",
+            "Sortier das Menü {direction}",
+            "Sortier das Menü nach {property}",
+            "Sortier das Menü"
+          ]
+        },
+        {
+          "name": "ChangeDirectionIntent",
+          "slots": [
+            {
+              "name": "direction",
+              "type": "DIRECTION",
+              "samples": [
+                "absteigend",
+                "aufsteigend"
+              ]
+            }
+          ],
+          "samples": [
+            "ändere die sortierreihenfolge zu {direction}",
+            "ändere die sortierreihenfolge",
+            "sortier {direction}"
+          ]
         }
       ],
-      "types": []
+      "types": [
+        {
+          "name": "DIRECTION",
+          "values": [
+            {
+              "name": {
+                "value": "absteigend"
+              }
+            },
+            {
+              "name": {
+                "value": "aufsteigend"
+              }
+            }
+          ]
+        },
+        {
+          "name": "SORTCATEGORY",
+          "values": [
+            {
+              "name": {
+                "value": "Preis"
+              }
+            },
+            {
+              "name": {
+                "value": "Likes"
+              }
+            },
+            {
+              "name": {
+                "value": "Name"
+              }
+            }
+          ]
+        }
+      ]
     },
     "dialog": {
       "intents": [
@@ -327,6 +357,45 @@
               }
             }
           ]
+        },
+        {
+          "name": "SortIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "direction",
+              "type": "DIRECTION",
+              "confirmationRequired": false,
+              "elicitationRequired": false,
+              "prompts": {}
+            },
+            {
+              "name": "property",
+              "type": "SORTCATEGORY",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.844326227827.732129452023"
+              }
+            }
+          ]
+        },
+        {
+          "name": "ChangeDirectionIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "direction",
+              "type": "DIRECTION",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.906245739529.1513247883848"
+              }
+            }
+          ]
         }
       ],
       "delegationStrategy": "ALWAYS"
@@ -356,6 +425,41 @@
           {
             "type": "PlainText",
             "value": "An welchem Tag wollt Ihr kommen"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.844326227827.959037062903",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Soll das Menü aufsteigend oder absteigend sortiert werden?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.844326227827.732129452023",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Soll nach Name, Preis oder Likes sortiert werden?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Nach welcher Kategorie soll sortiert werden?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Nach was soll sortiert werden?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.906245739529.1513247883848",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "In welcher Richtung soll sortiert werden?"
           }
         ]
       }

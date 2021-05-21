@@ -58,12 +58,8 @@ public class MenuIntentHandler implements RequestHandler {
         || input.matches(intentName("StarterIntent"))
         || input.matches(intentName("DessertIntent"))
         || input.matches(intentName("NoodleIntent"))
-        || input.matches(intentName("SortByNameDESCIntent"))
-        || input.matches(intentName("SortByPriceDESCIntent"))
-        || input.matches(intentName("SortByLikesDESCIntent"))
-        || input.matches(intentName("SortByNameASCIntent"))
-        || input.matches(intentName("SortByPriceASCIntent"))
-        || input.matches(intentName("SortByLikesASCIntent"));
+        || input.matches(intentName("SortIntent"))
+        || input.matches(intentName("ChangeDirectionIntent"));
         // || input.matches(intentName("FavoritIntent"));
     }
 
@@ -83,7 +79,7 @@ public class MenuIntentHandler implements RequestHandler {
 */
             String payload = "";
             String dish_category = "";
-            String property = "";
+            String property = "\"price\"";
             String direction = "\"DESC\"";
 
             if (input.matches(intentName("MenueIntent")))
@@ -106,22 +102,41 @@ public class MenuIntentHandler implements RequestHandler {
                 dish_category = "{\"id\":2}";
             if (input.matches(intentName("NoodleIntent")))
                 dish_category = "{\"id\":3}";
-            if(input.matches(intentName("SortByNameDESCIntent")))
-                property = "\"name\"";
-            if(input.matches(intentName("SortByPriceDESCIntent")))
-                property = "\"price\"";
-            if(input.matches(intentName("SortByLikesDESCIntent")))
-                property = "\"description\"";
-            if(input.matches(intentName("SortByNameASCIntent"))) {
-                property = "\"name\"";
-                direction = "\"ASC\"";
-            } if(input.matches(intentName("SortByPriceASCIntent"))) {
-                property = "\"price\"";
-                direction = "\"ASC\"";
-            }
-            if(input.matches(intentName("SortByLikesASCIntent"))) {
-                property = "\"description\"";
-                direction = "\"ASC\"";
+            if(input.matches(intentName("SortIntent"))) {
+                Request request = input.getRequestEnvelope().getRequest();
+                IntentRequest intentRequest = (IntentRequest) request;
+                Intent intent = intentRequest.getIntent();
+
+                Map<String, Slot> slotMap = intent.getSlots();
+                if ((slotMap.size() != 2) && (slotMap.size() != 1)) {
+                    throw new AlexaException();
+                }
+                Slot direction_slot = slotMap.get("direction");
+                Slot property_slot = slotMap.get("property");
+                if(direction_slot.getValue() != null){
+                    if(direction_slot.getValue().equals("aufsteigend")){
+                        direction = "\"ASC\"";
+                    }
+                }
+
+                if(property_slot.getValue().toLowerCase().equals("name")){
+                    property = "\"name\"";
+                }else if(property_slot.getValue().toLowerCase().equals("likes")){
+                    property = "\"description\"";
+                }
+            }if(input.matches(intentName("ChangeDirectionIntent"))) {
+                Request request = input.getRequestEnvelope().getRequest();
+                IntentRequest intentRequest = (IntentRequest) request;
+                Intent intent = intentRequest.getIntent();
+
+                Map<String, Slot> slotMap = intent.getSlots();
+                if (slotMap.size() != 1) {
+                    throw new AlexaException();
+                }
+                Slot direction_slot = slotMap.get("direction");
+                if(direction_slot.getValue().equals("aufsteigend")){
+                    direction = "\"ASC\"";
+                }
             }
             // if (input.matches(intentName("FavoritIntent")))
             //     dish_category = "{\"id\":2},";
