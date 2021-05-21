@@ -18,10 +18,10 @@ import com.amazon.ask.SkillStreamHandler;
 import com.amazon.ask.Skills;
 import ga.codehub.alexa.handlers.*;
 
-public class MyThaiStartStreamHandler extends SkillStreamHandler {
+public class MyThaiStarStreamHandler extends SkillStreamHandler {
 
     // public static final String BASE_URL = "http://568c04c2075d.ngrok.io"; // Rebecca
-    public static final String BASE_URL = "http://d5c35b63e511.ngrok.io"; // Candra
+    public static final String BASE_URL = "http://624e88d31004.ngrok.io"; // Candra
 
     private static Skill getSkill() {
         return Skills.standard()
@@ -39,7 +39,7 @@ public class MyThaiStartStreamHandler extends SkillStreamHandler {
                 .build();
     }
 
-    public MyThaiStartStreamHandler() {
+    public MyThaiStarStreamHandler() {
         super(getSkill());
     }
 
