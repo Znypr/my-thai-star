@@ -271,6 +271,26 @@
           ]
         },
         {
+          "name": "PriceLimitIntent",
+          "slots": [
+            {
+              "name": "maxPrice",
+              "type": "AMAZON.FOUR_DIGIT_NUMBER",
+              "samples": [
+                "{maxPrice}"
+              ]
+            }
+          ],
+          "samples": [
+            "Preis auf {maxPrice} Euro beschränken",
+            "maximal {maxPrice} Euro",
+            "höchstens {maxPrice} Euro",
+            "unter {maxPrice} Euro",
+            "{maxPrice} Euro maximal",
+            "{maxPrice} Euro höchstens"
+          ]
+        },
+        {
           "name": "FavoritIntent",
           "slots": [],
           "samples": [

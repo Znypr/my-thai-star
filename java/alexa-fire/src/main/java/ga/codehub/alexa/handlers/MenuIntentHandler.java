@@ -63,7 +63,8 @@ public class MenuIntentHandler implements RequestHandler {
         || input.matches(intentName("SortByLikesDESCIntent"))
         || input.matches(intentName("SortByNameASCIntent"))
         || input.matches(intentName("SortByPriceASCIntent"))
-        || input.matches(intentName("SortByLikesASCIntent"));
+        || input.matches(intentName("SortByLikesASCIntent"))
+        || input.matches(intentName("MaxPriceIntent"));
         // || input.matches(intentName("FavoritIntent"));
     }
 
@@ -85,6 +86,17 @@ public class MenuIntentHandler implements RequestHandler {
             String dish_category = "";
             String property = "";
             String direction = "\"DESC\"";
+            String priceLimit = null;
+
+            Request request = input.getRequestEnvelope().getRequest();
+            IntentRequest intentRequest = (IntentRequest) request;
+            Intent intent = intentRequest.getIntent();
+
+            Map<String, Slot> slotMap = intent.getSlots();
+            if (slotMap.size() != 1) {
+                throw new AlexaException();
+            }
+            Slot maxPrice = slotMap.get("maxPrice");
 
  
             // Filter Menu
@@ -108,16 +120,21 @@ public class MenuIntentHandler implements RequestHandler {
                 dish_category = "{\"id\":2}";
             if (input.matches(intentName("NoodleIntent")))
                 dish_category = "{\"id\":3}";
+            
+            if (input.matches(intentName("MaxPriceIntent")))
+                priceLimit = maxPrice.getValue();
 
 
             // Sort Menu
             if(input.matches(intentName("SortByNameDESCIntent"))) {
                 property = "\"name\"";
                 speechText = "Es wird nun nach dem Namen in absteigender Richtung sortiert.";
-            }if(input.matches(intentName("SortByPriceDESCIntent"))) {
+            }
+            if(input.matches(intentName("SortByPriceDESCIntent"))) {
                 property = "\"price\"";
                 speechText = "Es wird nun nach dem Preis in absteigender Richtung sortiert.";
-            }if(input.matches(intentName("SortByLikesDESCIntent"))) {
+            }
+            if(input.matches(intentName("SortByLikesDESCIntent"))) {
                 property = "\"description\"";
                 speechText = "Es wird nun nach Likes in absteigender Richtung sortiert.";
             }
@@ -125,7 +142,8 @@ public class MenuIntentHandler implements RequestHandler {
                 property = "\"name\"";
                 direction = "\"ASC\"";
                 speechText = "Es wird nun nach dem Namen in aufsteigender Richtung sortiert.";
-            } if(input.matches(intentName("SortByPriceASCIntent"))) {
+            } 
+            if(input.matches(intentName("SortByPriceASCIntent"))) {
                 property = "\"price\"";
                 direction = "\"ASC\"";
                 speechText = "Es wird nun nach dem Preis in aufsteigender Richtung sortiert.";
@@ -137,7 +155,7 @@ public class MenuIntentHandler implements RequestHandler {
             }
 
 
-            payload = "{\"categories\":[" + dish_category + "],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":" + property + ",\"direction\":" + direction + "}]},\"maxPrice\":null,\"minLikes\":null}";
+            payload = "{\"categories\":[" + dish_category + "],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":" + property + ",\"direction\":" + direction + "}]},\"maxPrice\":" + priceLimit + ",\"minLikes\":null}";
                 
 
 
