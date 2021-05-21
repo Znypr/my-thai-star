@@ -76,7 +76,7 @@
           "samples": []
         },
         {
-          "name": "MenueIntent",
+          "name": "MenuIntent",
           "slots": [],
           "samples": [
             "Kannst du mir sagen was auf der Karte steht",
@@ -274,15 +274,15 @@
             }
           ],
           "samples": [
-            "Sortier die Speisekarte {direction}",
-            "Sortier die Speisekarte {direction} nach {property}",
-            "Sortier die Speisekarte nach {property}",
+            "Sortiere die Speisekarte {direction}",
+            "Sortiere die Speisekarte {direction} nach {property}",
+            "Sortiere die Speisekarte nach {property}",
             "Speisekarte nach {property}",
             "Speisekarte {direction} nach {property}",
-            "Sortier das Menü {direction} nach {property}",
-            "Sortier das Menü {direction}",
-            "Sortier das Menü nach {property}",
-            "Sortier das Menü"
+            "Sortiere das Menü {direction} nach {property}",
+            "Sortiere das Menü {direction}",
+            "Sortiere das Menü nach {property}",
+            "Sortiere das Menü"
           ]
         },
         {
@@ -301,6 +301,23 @@
             "ändere die sortierreihenfolge zu {direction}",
             "ändere die sortierreihenfolge",
             "sortier {direction}"
+          ]
+        },
+        {
+          "name": "SearchIntent",
+          "slots": [
+            {
+              "name": "keyword",
+              "type": "AMAZON.SearchQuery",
+              "samples": [
+                  "{keyword}"
+              ]
+            }
+          ],
+          "samples": [
+              "suche nach {keyword}",
+              "gibt es {keyword}",
+              "suche {keyword}"
           ]
         }
       ],

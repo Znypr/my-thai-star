@@ -59,6 +59,8 @@ public class MenuIntentHandler implements RequestHandler {
         || input.matches(intentName("DessertIntent"))
         || input.matches(intentName("NoodleIntent"))
         || input.matches(intentName("SortIntent"))
+        || input.matches(intentName("SearchIntent"))
+        || input.matches(intentName("MaxPriceIntent"))
         || input.matches(intentName("ChangeDirectionIntent"));
         // || input.matches(intentName("FavoritIntent"));
     }
@@ -82,7 +84,24 @@ public class MenuIntentHandler implements RequestHandler {
             String property = "\"price\"";
             String direction = "\"DESC\"";
             String priceLimit = null;
+            String keyword = "";
 
+
+            // Search Menu
+            if (input.matches(intentName("SearchIntent"))) {
+                Request request = input.getRequestEnvelope().getRequest();
+                IntentRequest intentRequest = (IntentRequest) request;
+                Intent intent = intentRequest.getIntent();
+
+                Map<String, Slot> slotMap = intent.getSlots();
+                if (slotMap.size() != 1) {
+                    throw new AlexaException();
+                }
+                Slot search = slotMap.get("keyword");
+                keyword = search.getValue();
+
+                speechText = "Es wird nach " + keyword + " gesucht. ";
+            }
 
  
             // Filter Menu
@@ -118,6 +137,8 @@ public class MenuIntentHandler implements RequestHandler {
                 }
                 Slot maxPrice = slotMap.get("maxPrice");
                 priceLimit = maxPrice.getValue();
+
+                speechText = "Der Preis wurde auf " + priceLimit + " Euro eingeschraenkt. ";
             }
 
 
@@ -141,8 +162,10 @@ public class MenuIntentHandler implements RequestHandler {
 
                 if(property_slot.getValue().toLowerCase().equals("name")){
                     property = "\"name\"";
+                    speechText = "Die Sortierung erfolgt nun nach Name. ";
                 }else if(property_slot.getValue().toLowerCase().equals("likes")){
                     property = "\"description\"";
+                    speechText = "Die Sortierung erfolgt nun nach Anzahl von Likes. ";
                 }
             }
             if(input.matches(intentName("ChangeDirectionIntent"))) {
@@ -162,7 +185,7 @@ public class MenuIntentHandler implements RequestHandler {
             // if (input.matches(intentName("FavoritIntent")))
             //     dish_category = "{\"id\":2},";
 
-            payload = "{\"categories\":[" + dish_category + "],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":" + property + ",\"direction\":" + direction + "}]},\"maxPrice\":" + priceLimit + ",\"minLikes\":null}";
+            payload = "{\"categories\":[" + dish_category + "],\"searchBy\":\"" + keyword + "\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":" + property + ",\"direction\":" + direction + "}]},\"maxPrice\":" + priceLimit + ",\"minLikes\":null}";
                 
 
 
@@ -174,13 +197,12 @@ public class MenuIntentHandler implements RequestHandler {
                 response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/dishmanagement/v1/dish/search");
                 resp = gson.fromJson(response, ga.codehub.entity.menu.Response.class);
             } catch (Exception ex) {
-                speechText = "Der MyThaiStar-Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben ." + ex.toString();
+                speechText = "Der MyThaiStar-Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben. " + ex.toString();
                 throw new AlexaException();
 
             }
 
-
-            speechText += "Es gibt : " + resp.toString();
+            speechText += "Es gibt: " + resp.toString();
 
         } catch (AlexaException e) {
             e.printStackTrace();
@@ -188,7 +210,9 @@ public class MenuIntentHandler implements RequestHandler {
         return input.getResponseBuilder()
                 .withSpeech(speechText)
                 .withSimpleCard("MyThaiStar", speechText)
+                .withReprompt(speechText)
                 .build();
+                
     }
 
 }
