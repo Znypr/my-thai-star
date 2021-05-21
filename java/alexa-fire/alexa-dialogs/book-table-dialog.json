@@ -215,6 +215,62 @@
           ]
         },
         {
+          "name": "SortByNameDESCIntent",
+          "slots": [],
+          "samples": [
+            "Speisen nach Namen rückwärts",
+            "sortier nach Name rückwärts",
+            "sortier alphabetisch rückwärts",
+            "Speisekarte nach Name rückwärts"
+          ]
+        },
+        {
+          "name": "SortByPriceDESCIntent",
+          "slots": [],
+          "samples": [
+            "Speisen nach Preis rückwärts",
+            "sortier nach Preis rückwärts",
+            "Speisekarte nach Preis rückwärts"
+          ]
+        },
+        {
+          "name": "SortByLikesDESCIntent",
+          "slots": [],
+          "samples": [
+            "Speisen nach Likes rückwärts",
+            "sortier nach Likes rückwärts",
+            "Speisekarte nach Likes rückwärts"
+          ]
+        },
+        {
+          "name": "SortByNameASCIntent",
+          "slots": [],
+          "samples": [
+            "Speisen nach Namen",
+            "sortier nach Name",
+            "sortier alphabetisch",
+            "Speisekarte nach Name"
+          ]
+        },
+        {
+          "name": "SortByPriceASCIntent",
+          "slots": [],
+          "samples": [
+            "Speisen nach Preis",
+            "sortier nach Preis",
+            "Speisekarte nach Preis"
+          ]
+        },
+        {
+          "name": "SortByLikesASCIntent",
+          "slots": [],
+          "samples": [
+            "Speisen nach Likes",
+            "sortier nach Likes",
+            "Speisekarte nach Likes"
+          ]
+        },
+        {
           "name": "FavoritIntent",
           "slots": [],
           "samples": [
@@ -233,7 +289,6 @@
             "Was sind meine Lieblingsmahlzeiten"
           ]
         }
-        
       ],
       "types": []
     },

@@ -57,7 +57,13 @@ public class MenuIntentHandler implements RequestHandler {
         || input.matches(intentName("VegetarianIntent"))
         || input.matches(intentName("StarterIntent"))
         || input.matches(intentName("DessertIntent"))
-        || input.matches(intentName("NoodleIntent"));
+        || input.matches(intentName("NoodleIntent"))
+        || input.matches(intentName("SortByNameDESCIntent"))
+        || input.matches(intentName("SortByPriceDESCIntent"))
+        || input.matches(intentName("SortByLikesDESCIntent"))
+        || input.matches(intentName("SortByNameASCIntent"))
+        || input.matches(intentName("SortByPriceASCIntent"))
+        || input.matches(intentName("SortByLikesASCIntent"));
         // || input.matches(intentName("FavoritIntent"));
     }
 
@@ -77,6 +83,8 @@ public class MenuIntentHandler implements RequestHandler {
 */
             String payload = "";
             String dish_category = "";
+            String property = "";
+            String direction = "\"DESC\"";
 
             if (input.matches(intentName("MenueIntent")))
                 dish_category = "";
@@ -85,7 +93,7 @@ public class MenuIntentHandler implements RequestHandler {
             if (input.matches(intentName("DrinkIntent")))
                 dish_category = "{\"id\":8}";
             if (input.matches(intentName("CurryIntent")))
-                dish_category = "{\"id\":5}";    
+                dish_category = "{\"id\":5}";
             if (input.matches(intentName("VeganIntent")))
                 dish_category = "{\"id\":6}";
             if (input.matches(intentName("RiceIntent")))
@@ -93,15 +101,32 @@ public class MenuIntentHandler implements RequestHandler {
             if (input.matches(intentName("VegetarianIntent")))
                 dish_category = "{\"id\":7}";
             if (input.matches(intentName("StarterIntent")))
-                dish_category = "{\"id\":1}";    
+                dish_category = "{\"id\":1}";
             if (input.matches(intentName("DessertIntent")))
                 dish_category = "{\"id\":2}";
             if (input.matches(intentName("NoodleIntent")))
                 dish_category = "{\"id\":3}";
+            if(input.matches(intentName("SortByNameDESCIntent")))
+                property = "\"name\"";
+            if(input.matches(intentName("SortByPriceDESCIntent")))
+                property = "\"price\"";
+            if(input.matches(intentName("SortByLikesDESCIntent")))
+                property = "\"description\"";
+            if(input.matches(intentName("SortByNameASCIntent"))) {
+                property = "\"name\"";
+                direction = "\"ASC\"";
+            } if(input.matches(intentName("SortByPriceASCIntent"))) {
+                property = "\"price\"";
+                direction = "\"ASC\"";
+            }
+            if(input.matches(intentName("SortByLikesASCIntent"))) {
+                property = "\"description\"";
+                direction = "\"ASC\"";
+            }
             // if (input.matches(intentName("FavoritIntent")))
             //     dish_category = "{\"id\":2},";
 
-            payload = "{\"categories\":[" + dish_category + "],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
+            payload = "{\"categories\":[" + dish_category + "],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":" + property + ",\"direction\":" + direction + "}]},\"maxPrice\":null,\"minLikes\":null}";
                 
 
 
