@@ -11,7 +11,7 @@
      the specific language governing permissions and limitations under the License.
 */
 
-package ga.codehub.alexa.handlers;
+package main.java.ga.codehub.alexa.handlers;
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
@@ -27,7 +27,7 @@ import java.util.Optional;
 import static com.amazon.ask.request.Predicates.intentName;
 import static ga.codehub.alexa.MyThaiStartStreamHandler.BASE_URL;
 
-public class MenuIntentHandler implements RequestHandler {
+public class SortMenuHandler implements RequestHandler {
 
     public static void main(String[] args) {
         BasicOperations bo = new BasicOperations();
@@ -48,18 +48,10 @@ public class MenuIntentHandler implements RequestHandler {
 
     @Override
     public boolean canHandle(HandlerInput input) {
-        return input.matches(intentName("MenueIntent")) 
-        || input.matches(intentName("FoodIntent"))
-        || input.matches(intentName("DrinkIntent"))
-        || input.matches(intentName("CurryIntent"))
-        || input.matches(intentName("VeganIntent"))
-        || input.matches(intentName("RiceIntent"))
-        || input.matches(intentName("VegetarianIntent"))
-        || input.matches(intentName("StarterIntent"))
-        || input.matches(intentName("DessertIntent"))
-        || input.matches(intentName("NoodleIntent"))
-        || input.matches(intentName("SortIntent"));
-        // || input.matches(intentName("FavoritIntent"));
+        return input.matches(intentName("SortAscendIntent")) 
+        || input.matches(intentName("SortDescendIntent"))
+        // || input.matches(intentName("FilterLikesIntent"))
+        || input.matches(intentName("FilterPriceIntent"));
     }
 
 
@@ -77,34 +69,26 @@ public class MenuIntentHandler implements RequestHandler {
             Intent intent = intentRequest.getIntent();
 */
             String payload = "";
-            String dish_category = "";
+            String sortProperty = "";
+            String sortDirection = "";
 
- 
-            // Filter Menu
-            if (input.matches(intentName("MenueIntent")))
-                dish_category = "";
-            if (input.matches(intentName("FoodIntent")))
-                dish_category = "{\"id\":0}";
-            if (input.matches(intentName("DrinkIntent")))
-                dish_category = "{\"id\":8}";
-            if (input.matches(intentName("CurryIntent")))
-                dish_category = "{\"id\":5}";    
-            if (input.matches(intentName("VeganIntent")))
-                dish_category = "{\"id\":6}";
-            if (input.matches(intentName("RiceIntent")))
-                dish_category = "{\"id\":4}";
-            if (input.matches(intentName("VegetarianIntent")))
-                dish_category = "{\"id\":7}";
-            if (input.matches(intentName("StarterIntent")))
-                dish_category = "{\"id\":1}";    
-            if (input.matches(intentName("DessertIntent")))
-                dish_category = "{\"id\":2}";
-            if (input.matches(intentName("NoodleIntent")))
-                dish_category = "{\"id\":3}";
-            // if (input.matches(intentName("FavoritIntent")))
-            //     dish_category = "{\"id\":2},";
+            // Sort by Property
+            if (input.matches(intentName("FilterPriceIntent")))
+                sortProperty = "\"property\":\"price\",";
+            // if (input.matches(intentName("FilterLikesIntent")))
+            //     sortProperty = "{\"property\":\"likes\"}";
 
-            payload = "{\"categories\":[" + dish_category + "],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
+            // Sort Direction
+            if (input.matches(intentName("SortAscendIntent")))
+                sortDirection = "{\"direction\":\"ASC\"}";
+                speechText = "Die Sortierrichtung wurde auf aufsteigend geändert.";
+
+            if (input.matches(intentName("SortDescendIntent")))
+                sortDirection = "{\"direction\":\"DESC\"}";   
+                speechText = "Die Sortierrichtung wurde auf absteigend geändert.";
+
+
+            payload = "{\"categories\":[],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{" + sortProperty + sortDirection + "}]},\"maxPrice\":null,\"minLikes\":null}";
                 
 
 
@@ -121,8 +105,6 @@ public class MenuIntentHandler implements RequestHandler {
 
             }
 
-
-            speechText = "Es gibt : " + resp.toString();
 
         } catch (AlexaException e) {
             e.printStackTrace();
