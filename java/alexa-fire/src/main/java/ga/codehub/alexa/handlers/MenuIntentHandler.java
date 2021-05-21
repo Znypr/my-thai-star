@@ -61,7 +61,8 @@ public class MenuIntentHandler implements RequestHandler {
         || input.matches(intentName("SortIntent"))
         || input.matches(intentName("SearchIntent"))
         || input.matches(intentName("MaxPriceIntent"))
-        || input.matches(intentName("ChangeDirectionIntent"));
+        || input.matches(intentName("ChangeDirectionIntent"))
+        || input.matches(intentName("MaxPriceIntent"));
         // || input.matches(intentName("FavoritIntent"));
     }
 
@@ -141,7 +142,6 @@ public class MenuIntentHandler implements RequestHandler {
                 speechText = "Der Preis wurde auf " + priceLimit + " Euro eingeschraenkt. ";
             }
 
-
             // Sort Menu    
             if(input.matches(intentName("SortIntent"))) {
                 Request request = input.getRequestEnvelope().getRequest();
@@ -166,6 +166,8 @@ public class MenuIntentHandler implements RequestHandler {
                 }else if(property_slot.getValue().toLowerCase().equals("likes")){
                     property = "\"description\"";
                     speechText = "Die Sortierung erfolgt nun nach Anzahl von Likes. ";
+                }else if(property_slot.getValue().toLowerCase().equals("preis")){
+                    speechText = "Die Sortierung erfolgt nun nach Anzahl von Likes. ";
                 }
             }
             if(input.matches(intentName("ChangeDirectionIntent"))) {
@@ -178,8 +180,11 @@ public class MenuIntentHandler implements RequestHandler {
                     throw new AlexaException();
                 }
                 Slot direction_slot = slotMap.get("direction");
-                if(direction_slot.getValue().equals("aufsteigend")){
+                if(direction_slot.getValue().toLowerCase().equals("aufsteigend")){
                     direction = "\"ASC\"";
+                    speechText = "Die Sortierung erfolgt nun aufsteigend. ";
+                } else if(direction_slot.getValue().toLowerCase().equals("absteigend")){
+                    speechText = "Die Sortierung erfolgt nun absteigend. ";
                 }
             }
             // if (input.matches(intentName("FavoritIntent")))
@@ -195,14 +200,17 @@ public class MenuIntentHandler implements RequestHandler {
             ga.codehub.entity.menu.Response resp;
             try {
                 response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/dishmanagement/v1/dish/search");
-                resp = gson.fromJson(response, ga.codehub.entity.menu.Response.class);
+                if (!response.equals("no match")){
+                    resp = gson.fromJson(response, ga.codehub.entity.menu.Response.class);
+                    speechText += "Es gibt: " + resp.toString();
+                } else {
+                    speechText = "Die Anfrage führte zu keinen Ergebnissen. Bitte versuchen Sie es eine andere Anfrage.";
+                }
             } catch (Exception ex) {
                 speechText = "Der MyThaiStar-Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben. " + ex.toString();
                 throw new AlexaException();
-
             }
 
-            speechText += "Es gibt: " + resp.toString();
 
         } catch (AlexaException e) {
             e.printStackTrace();

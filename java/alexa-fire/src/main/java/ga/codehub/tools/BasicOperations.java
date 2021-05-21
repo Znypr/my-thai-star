@@ -124,6 +124,9 @@ public class BasicOperations {
         StringEntity entity = new StringEntity(json_payload, ContentType.APPLICATION_JSON);
         httpPost.setEntity(entity);
         HttpResponse httpResponse = http.execute(httpPost);
+        if(httpResponse.getEntity() == null){
+            return "no match";
+        }
 
         String return_string = InputToString(httpResponse.getEntity().getContent());
 
