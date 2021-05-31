@@ -11,7 +11,7 @@
      the specific language governing permissions and limitations under the License.
 */
 
-package ga.codehub.alexa.handlers;
+package main.java.ga.codehub.alexa.handlers;
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
@@ -32,12 +32,12 @@ import java.util.Optional;
 import static com.amazon.ask.request.Predicates.intentName;
 import static ga.codehub.alexa.MyThaiStarStreamHandler.BASE_URL;
 
-public class BookingIntentHandler implements RequestHandler {
+public class OrderIntentHandler implements RequestHandler {
 
 
     @Override
     public boolean canHandle(HandlerInput input) {
-        return input.matches(intentName("BookingIntent"));
+        return input.matches(intentName("OrderIntent"));
     }
 
 
@@ -46,11 +46,11 @@ public class BookingIntentHandler implements RequestHandler {
 
         String speechText = "";
         String name;
-        String userEmail;
+
         try {
             try {
                 name = input.getServiceClientFactory().getUpsService().getProfileName();
-                userEmail = input.getServiceClientFactory().getUpsService().getProfileEmail();
+                // userEmail = input.getServiceClientFactory().getUpsService().getProfileEmail();
             } catch (NullPointerException nullp) {
                 speechText = "Deine Alexa braucht zusätzliche Berechtigungen !";
                 throw new AlexaException();
@@ -61,57 +61,29 @@ public class BookingIntentHandler implements RequestHandler {
             Intent intent = intentRequest.getIntent();
 
             Map<String, Slot> slotMap = intent.getSlots();
-            if (slotMap.size() != 3) {
+            if (slotMap.size() != 1) {
                 throw new AlexaException();
             }
-            Slot personCount = slotMap.get("count");
-            Slot time = slotMap.get("time");
-            Slot date = slotMap.get("date");
+            Slot item = slotMap.get("item");
 
-            String date_time;
-            try {
-                date_time = RestDateManager.getDate(date.getValue() + " " + time.getValue());
-            } catch (ParseException ex) {
-                speechText = "Da ist was mit der Zeit schiefgelaufen! ";
-                throw new AlexaException();
-            }
+         
             ga.codehub.entity.booking.Request myApiRequest = new ga.codehub.entity.booking.Request();
             myApiRequest.booking = new Booking();
-            myApiRequest.booking.email = userEmail;
-            myApiRequest.booking.assistants = personCount.getValue();
-            myApiRequest.booking.bookingDate = date_time;
+          
             myApiRequest.booking.name = name;
 
-            int guest_check_int = Integer.parseInt(myApiRequest.booking.assistants);
-
-
-            if (guest_check_int > 8 || guest_check_int < 1) {
-                speechText = "Es können maximal acht Gäste und mindestens ein Gast an einem Tisch sitzen. ";
-                throw new AlexaException();
-            }
             BasicOperations bo = new BasicOperations();
             Gson gson = new Gson();
             String payload = gson.toJson(myApiRequest);
             try {
-                bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/bookingmanagement/v1/booking");
+                bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/ordermanagement/v1/order");
             } catch (Exception ex) {
                 speechText = "Der MyThaiStar-Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben. ";
                 throw new AlexaException();
             }
-
+            
             speechText = "Ok. ";
-            
-            // speechText = "Ich habe leider Ihre Bestätigung nicht verstanden. ";
 
-            // if (intent.getConfirmationStatus() == "CONFIRMED") {
-            //     speechText = "Cool, wir sehen uns dann! ";
-            // }
-
-            // if (intent.getConfirmationStatus() == "DENIED") {
-            //     speechText = "Sie können erneut versuchen einen Tisch zu buchen. ";
-            // }
-
-            
 
         } catch (AlexaException e) {
             e.printStackTrace();
@@ -119,7 +91,7 @@ public class BookingIntentHandler implements RequestHandler {
         return input.getResponseBuilder()
                 .withSpeech(speechText)
                 .withSimpleCard("My-Thai-Star", speechText)
-                // .withReprompt(speechText)
+                .withReprompt(speechText)
                 .build();
     }
 
