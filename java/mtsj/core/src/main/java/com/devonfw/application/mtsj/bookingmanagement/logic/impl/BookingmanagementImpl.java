@@ -432,9 +432,9 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
           .append("\n");
       invitedMailContent.append("Booking Date: ").append(booking.getBookingDate()).append("\n");
 
-      String linkAccept = getClientUrl() + "/booking/acceptInvite/" + guest.getGuestToken();
+      String linkAccept = getClientUrl() + "/invitedguest/accept/" + guest.getGuestToken();
 
-      String linkDecline = getClientUrl() + "/booking/rejectInvite/" + guest.getGuestToken();
+      String linkDecline = getClientUrl() + "/invitedguest/decline/" + guest.getGuestToken();
 
       invitedMailContent.append("To accept: ").append(linkAccept).append("\n");
       invitedMailContent.append("To decline: ").append(linkDecline).append("\n");

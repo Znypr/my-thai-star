@@ -3077,8 +3077,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 var emailConfirmationsRoutes = [
-    { path: 'booking/acceptInvite/:token', component: __WEBPACK_IMPORTED_MODULE_2__email_confirmations_component__["a" /* EmailConfirmationsComponent */] },
-    { path: 'booking/rejectInvite/:token', component: __WEBPACK_IMPORTED_MODULE_2__email_confirmations_component__["a" /* EmailConfirmationsComponent */] },
+    { path: 'invitedguest/accept/:token', component: __WEBPACK_IMPORTED_MODULE_2__email_confirmations_component__["a" /* EmailConfirmationsComponent */] },
+    { path: 'invitedguest/decline/:token', component: __WEBPACK_IMPORTED_MODULE_2__email_confirmations_component__["a" /* EmailConfirmationsComponent */] },
     { path: 'booking/cancel/:token', component: __WEBPACK_IMPORTED_MODULE_2__email_confirmations_component__["a" /* EmailConfirmationsComponent */] },
     { path: 'booking/cancelOrder/:token', component: __WEBPACK_IMPORTED_MODULE_2__email_confirmations_component__["a" /* EmailConfirmationsComponent */] },
 ];
@@ -3166,14 +3166,14 @@ var EmailConfirmationsComponent = (function () {
             _this.route.url
                 .subscribe(function (data) {
                 switch (data[1].path) {
-                    case 'acceptInvite':
+                    case 'accept':
                         _this.emailService.sendAcceptInvitation(token).subscribe(function (res) {
                             _this.snackBarService.openSnack('Invitation succesfully accepted', 10000, 'green');
                         }, function (error) {
                             _this.snackBarService.openSnack('An error has ocurred, please try again later', 10000, 'red');
                         });
                         break;
-                    case 'rejectInvite':
+                    case 'decline':
                         _this.emailService.sendRejectInvitation(token).subscribe(function (res) {
                             _this.snackBarService.openSnack('Invitation succesfully rejected', 10000, 'red');
                         }, function (error) {

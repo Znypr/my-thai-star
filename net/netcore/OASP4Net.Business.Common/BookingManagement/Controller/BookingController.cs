@@ -52,9 +52,9 @@ namespace OASP4Net.Business.Common.BookingManagement.Controller
 
 
                 Console.WriteLine($"http://localhost:8081/mythaistar/services/rest/bookingmanagement/v1/invitedguest/accept/{booking.BookingToken}");
-                Console.WriteLine($"http://localhost:8081/mythaistar/services/rest/bookingmanagement/v1/invitedguest/cancel/{booking.BookingToken}");
+                Console.WriteLine($"http://localhost:8081/mythaistar/services/rest/bookingmanagement/v1/invitedguest/decline/{booking.BookingToken}");
                 Console.WriteLine($"http://localhost:8081/mythaistar/services/rest/Bookingmanagement/v1/booking/cancel/{booking.BookingToken}");
-                Console.WriteLine($"http://localhost:8081/mythaistar/services/rest/Bookingmanagement/v1/booking/accept/{booking.BookingToken}");
+                Console.WriteLine($"http://localhost:8081/mythaistar/services/rest/Bookingmanagement/v1/pt/{booking.BookingToken}");
 
                 var serializerSettings = new JsonSerializerSettings
                 {

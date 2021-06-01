@@ -5,11 +5,11 @@ import { EmailConfirmationsComponent } from './container/email-confirmations/ema
 
 const emailConfirmationsRoutes: Routes = [
   {
-    path: 'booking/acceptInvite/:token',
+    path: 'invitedguest/accept/:token',
     component: EmailConfirmationsComponent,
   },
   {
-    path: 'booking/rejectInvite/:token',
+    path: 'invitedguest/decline/:token',
     component: EmailConfirmationsComponent,
   },
   { path: 'booking/cancel/:token', component: EmailConfirmationsComponent },

@@ -35,7 +35,7 @@ class ActivatedMockStubs {
     paramMap: of(
       convertToParamMap({
         token: '1234',
-        action: 'acceptInvite',
+        action: 'accept',
       }),
     ),
   };
@@ -44,7 +44,7 @@ class ActivatedMockStubs {
     paramMap: of(
       convertToParamMap({
         token: '1234',
-        action: 'rejectInvite',
+        action: 'decline',
       }),
     ),
   };

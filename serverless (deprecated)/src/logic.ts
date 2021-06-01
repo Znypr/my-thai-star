@@ -252,9 +252,9 @@ export async function createBooking(reserv: types.BookingPostView,
   Guest Buttons:
     Accept:
  ` +
-                        inv.map((elem) => '      ' + serverConfig.frontendURL + '/booking/acceptInvite/' + elem.guestToken + '\n') +
+                        inv.map((elem) => '      ' + serverConfig.frontendURL + '/invitedguest/accept/' + elem.guestToken + '\n') +
                         '    Cancel: \n ' +
-                        inv.map((elem) => '      ' + serverConfig.frontendURL + '/booking/rejectInvite/' + elem.guestToken + '\n'));
+                        inv.map((elem) => '      ' + serverConfig.frontendURL + '/invitedguest/decline/' + elem.guestToken + '\n'));
                 }
             }
         } catch (error) {

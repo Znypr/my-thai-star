@@ -42,7 +42,7 @@ export class EmailConfirmationsComponent implements OnInit {
       this.token = params.get('token');
       this.action = params.get('action');
       switch (this.action) {
-        case 'acceptInvite':
+        case 'accept':
           this.emailService.sendAcceptInvitation(this.token).subscribe(
             (res: InvitationResponse) => {
               this.snackBarService.openSnack(
@@ -56,7 +56,7 @@ export class EmailConfirmationsComponent implements OnInit {
             },
           );
           break;
-        case 'rejectInvite':
+        case 'decline':
           this.emailService.sendRejectInvitation(this.token).subscribe(
             (res: InvitationResponse) => {
               this.snackBarService.openSnack(
