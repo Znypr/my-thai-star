@@ -18,7 +18,6 @@ import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.*;
 import com.google.gson.Gson;
 import ga.codehub.alexa.Exceptions.AlexaException;
-import ga.codehub.entity.booking.Booking;
 import ga.codehub.tools.BasicOperations;
 
 import java.util.Map;
@@ -207,10 +206,10 @@ public class MenuIntentHandler implements RequestHandler {
                     resp = gson.fromJson(response, ga.codehub.entity.menu.Response.class);
 
                     if (input.matches(intentName("DescriptionIntent"))) {
-                        speechText += "Beschreibung von " + resp.toString() + ": " + resp.content[0].dish.description;
+                        speechText += "Beschreibung von " + resp.toStringName() + ": " + resp.toStringDescription();
                     }
                     else {
-                        speechText += "Es gibt: " + resp.toString();
+                        speechText += "Es gibt: " + resp.toStringNames();
                     }
 
                 } else {
