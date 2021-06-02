@@ -319,6 +319,24 @@
               "gibt es {keyword}",
               "suche {keyword}"
           ]
+        },
+        {
+            "name": "DescriptionIntent",
+            "slots": [
+                {
+                    "name": "dish",
+                    "type": "AMAZON.SearchQuery",
+                    "samples": [
+                        "{dish}",
+                        "von {dish}"
+                    ]
+                }
+            ],
+            "samples": [
+                "Beschreibung von {dish}",
+                "Beschreibung",
+                "Lies mir die Beschreibung vor"
+            ]
         }
       ],
       "types": [

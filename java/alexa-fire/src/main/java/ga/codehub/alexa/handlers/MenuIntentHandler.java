@@ -49,6 +49,7 @@ public class MenuIntentHandler implements RequestHandler {
     @Override
     public boolean canHandle(HandlerInput input) {
         return input.matches(intentName("MenuIntent")) 
+        
         || input.matches(intentName("FoodIntent"))
         || input.matches(intentName("DrinkIntent"))
         || input.matches(intentName("CurryIntent"))
@@ -58,10 +59,11 @@ public class MenuIntentHandler implements RequestHandler {
         || input.matches(intentName("StarterIntent"))
         || input.matches(intentName("DessertIntent"))
         || input.matches(intentName("NoodleIntent"))
+
         || input.matches(intentName("SortIntent"))
         || input.matches(intentName("SearchIntent"))
-        || input.matches(intentName("MaxPriceIntent"))
         || input.matches(intentName("ChangeDirectionIntent"))
+        || input.matches(intentName("DescriptionIntent"))
         || input.matches(intentName("MaxPriceIntent"));
         // || input.matches(intentName("FavoritIntent"));
     }
@@ -202,7 +204,13 @@ public class MenuIntentHandler implements RequestHandler {
                 response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/dishmanagement/v1/dish/search");
                 if (!response.equals("no match")){
                     resp = gson.fromJson(response, ga.codehub.entity.menu.Response.class);
-                    speechText += "Es gibt: " + resp.toString();
+                    
+                    if(input.matches(intentName("DescriptionIntent"))){
+                        speechText += "Beschreibung von " + resp.toString() + ": " + resp.content[0].dish.description;
+                    }else {
+                        speechText += "Es gibt: " + resp.toString();  
+                    }
+                    
                 } else {
                     speechText = "Die Anfrage führte zu keinen Ergebnissen. Bitte versuchen Sie es eine andere Anfrage.";
                 }
