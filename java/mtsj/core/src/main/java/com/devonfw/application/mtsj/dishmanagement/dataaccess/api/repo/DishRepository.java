@@ -35,8 +35,6 @@ public interface DishRepository extends DefaultRepository<DishEntity> {
       query.where(Alias.$(alias.getPrice()).lt(price));
     }
 
-    System.out.println("!!!!!!!!!!!!!!!!! " + " !!!!!");
-
     return QueryUtil.get().findPaginated(criteria.getPageable(), query, false);
   }
 }
