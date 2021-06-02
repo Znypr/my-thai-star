@@ -30,7 +30,7 @@ public class HelpIntentHandler implements RequestHandler {
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
-        String speechText = "Sie können die Speisekarte vorlesen lassen, nach Kategorien suchen oder einen Tisch buchen. ";
+        String speechText = "Sie koennen die Speisekarte vorlesen lassen, nach Kategorien suchen oder einen Tisch buchen. ";
         return input.getResponseBuilder()
                 .withSpeech(speechText)
                 .withSimpleCard("HelloWorld", speechText)

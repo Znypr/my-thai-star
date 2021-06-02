@@ -86,7 +86,7 @@ public class BookingIntentHandler implements RequestHandler {
 
 
             if (guest_check_int > 8 || guest_check_int < 1) {
-                speechText = "Es können maximal acht Gäste und mindestens ein Gast an einem Tisch sitzen.";
+                speechText = "Es koennen maximal acht Gaeste und mindestens ein Gast an einem Tisch sitzen.";
                 throw new AlexaException();
             }
             BasicOperations bo = new BasicOperations();
