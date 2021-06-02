@@ -327,12 +327,26 @@
                             "name": "dish",
                             "type": "AMAZON.SearchQuery",
                             "samples": [
+                                "über {dish}",
+                                "zu {dish}",
                                 "{dish}",
                                 "von {dish}"
                             ]
                         }
                     ],
                     "samples": [
+                        "erzähle mehr",
+                        "erzähle mehr zu {dish}",
+                        "erzähle mir mehr zu {dish}",
+                        "erzähle mir mehr",
+                        "beschreibung {dish}",
+                        "lies beschreibung vor",
+                        "lese mir die beschreibung von {dish} vor",
+                        "was genau ist {dish}",
+                        "{dish} beschreibung",
+                        "Was ist in {dish}",
+                        "Beschreibe {dish}",
+                        "Was ist {dish}",
                         "Beschreibung von {dish}",
                         "Beschreibung",
                         "Lies mir die Beschreibung vor"
@@ -539,7 +553,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Welches Gericht?"
+                        "value": "Zu welchem Gericht möchten Sie eine Beschreibung?"
                     }
                 ]
             }
