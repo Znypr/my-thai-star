@@ -10,7 +10,6 @@ import com.devonfw.module.jpa.dataaccess.api.QueryUtil;
 import com.devonfw.module.jpa.dataaccess.api.data.DefaultRepository;
 import com.querydsl.core.alias.Alias;
 import com.querydsl.jpa.impl.JPAQuery;
-
 /**
  * {@link DefaultRepository} for {@link DishEntity}.
  */
@@ -26,14 +25,17 @@ public interface DishRepository extends DefaultRepository<DishEntity> {
     JPAQuery<DishEntity> query = newDslQuery(alias);
 
     String searchBy = criteria.getSearchBy();
+    
     if (searchBy != null) {
-      query.where(Alias.$(alias.getName()).contains(searchBy).or(Alias.$(alias.getDescription()).contains(searchBy)));
+      query.where(Alias.$(alias.getName()).containsIgnoreCase(searchBy).or(Alias.$(alias.getDescription()).containsIgnoreCase(searchBy)));
     }
 
     BigDecimal price = criteria.getMaxPrice();
     if (price != null) {
       query.where(Alias.$(alias.getPrice()).lt(price));
     }
+
+    System.out.println("!!!!!!!!!!!!!!!!! " + " !!!!!");
 
     return QueryUtil.get().findPaginated(criteria.getPageable(), query, false);
   }
