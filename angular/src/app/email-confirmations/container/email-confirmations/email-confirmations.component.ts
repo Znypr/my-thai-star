@@ -25,13 +25,14 @@ export class EmailConfirmationsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
     let errorString: string;
     let errorUrlString: string;
     let emailConfirmationStrings: any;
     forkJoin([
       this.translocoService.translate('alerts.genericError'),
       this.translocoService.translate('alerts.urlError'),
-      this.translocoService.translate('alerts.email confirmations'),
+      this.translocoService.translate('alerts.emailConfirmations'),
     ]).subscribe((translation: any) => {
       errorString = translation[0];
       errorUrlString = translation[1];
@@ -41,6 +42,7 @@ export class EmailConfirmationsComponent implements OnInit {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.token = params.get('token');
       this.action = params.get('action');
+
       switch (this.action) {
         case 'acceptInvite':
           this.emailService.sendAcceptInvitation(this.token).subscribe(
@@ -98,12 +100,15 @@ export class EmailConfirmationsComponent implements OnInit {
             },
           );
           break;
+        case 'test':
+          break;
         default:
           this.snackBarService.openSnack(errorUrlString, 10000, 'black');
           break;
       }
     });
     // Navigate to home
-    fromRoot.go({ path: ['/restaurant'] });
+    fromRoot.go({ path: ['/restaurant']});
   }
+  
 }
