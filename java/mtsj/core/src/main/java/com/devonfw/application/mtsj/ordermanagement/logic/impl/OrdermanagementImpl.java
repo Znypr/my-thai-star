@@ -293,7 +293,8 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     // initialize, validate orderEntity here if necessary
     orderEntity = getValidatedOrder(orderEntity.getBooking().getBookingToken(), orderEntity);
     orderEntity.setOrderLines(orderLineEntities);
-    orderEntity.setOrderStatus(order.getOrderStatus());
+    orderEntity.setPaid(false);
+    orderEntity.setOrderStatus("open");
     OrderEntity resultOrderEntity = getOrderDao().save(orderEntity);
     LOG.debug("Order with id '{}' has been created.", resultOrderEntity.getId());
 

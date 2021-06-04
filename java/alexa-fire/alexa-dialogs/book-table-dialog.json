@@ -20,7 +20,7 @@
                     "slots": [
                         {
                             "name": "count",
-                            "type": "AMAZON.FOUR_DIGIT_NUMBER",
+                            "type": "AMAZON.NUMBER",
                             "samples": [
                                 "{count}"
                             ]
@@ -351,6 +351,39 @@
                         "Beschreibung",
                         "Lies mir die Beschreibung vor"
                     ]
+                },
+                {
+                    "name": "OrderIntent",
+                    "slots": [
+                        {
+                            "name": "item",
+                            "type": "AMAZON.SearchQuery",
+                            "samples": [
+                                "{item}"
+                            ]
+                        },
+                        {
+                            "name": "count",
+                            "type": "AMAZON.NUMBER",
+                            "samples": [
+                                "bitte {count} mal",
+                                "{count} bitte",
+                                "{count} mal",
+                                "{count}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "bitte {item} bestellen",
+                        "bitte {item} in warenkorb",
+                        "bitte {item} in den warenkorb",
+                        "bitte {item} kaufen",
+                        "{item} kaufen",
+                        "{item} in warenkorb",
+                        "{item} bestellen",
+                        "setze {item} in den warenkorb",
+                        "Ich möchte gerne {item} bestellen"
+                    ]
                 }
             ],
             "types": [
@@ -400,7 +433,7 @@
                     "slots": [
                         {
                             "name": "count",
-                            "type": "AMAZON.FOUR_DIGIT_NUMBER",
+                            "type": "AMAZON.NUMBER",
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
@@ -481,6 +514,38 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "OrderIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "item",
+                            "type": "AMAZON.SearchQuery",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.382605869067.730385150306"
+                            }
+                        },
+                        {
+                            "name": "count",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.382605869067.983405264827"
+                            },
+                            "validations": [
+                                {
+                                    "type": "isGreaterThanOrEqualTo",
+                                    "prompt": "Slot.Validation.1225253013133.684351103968.803465206105",
+                                    "value": "1"
+                                }
+                            ]
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "ALWAYS"
@@ -491,7 +556,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Mit wievielen Leuten möchtest du kommen ?"
+                        "value": "Mit wievielen Leuten moechtest du kommen ?"
                     }
                 ]
             },
@@ -554,6 +619,42 @@
                     {
                         "type": "PlainText",
                         "value": "Zu welchem Gericht möchten Sie eine Beschreibung?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Intent.382605869067",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Sie haben {count} mal {item} bestellt. Stimmt das?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.382605869067.730385150306",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Bitte geben Sie an was sie bestellen moechten. "
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.382605869067.983405264827",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Wie oft wollen Sie {item} bestellen?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.1225253013133.684351103968.803465206105",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Bitte geben Sie eine gültige Anzahl an."
                     }
                 ]
             }
