@@ -13,10 +13,14 @@
 
 package ga.codehub.alexa.handlers;
 
+import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.*;
 import com.google.gson.Gson;
+
+import org.apache.http.HttpResponse;
+
 import ga.codehub.RestDateManager;
 import ga.codehub.alexa.Exceptions.AlexaException;
 import ga.codehub.entity.booking.Booking;
@@ -34,7 +38,6 @@ import static ga.codehub.alexa.MyThaiStarStreamHandler.BASE_URL;
 
 public class BookingIntentHandler implements RequestHandler {
 
-
     @Override
     public boolean canHandle(HandlerInput input) {
         return input.matches(intentName("BookingIntent"));
@@ -43,6 +46,9 @@ public class BookingIntentHandler implements RequestHandler {
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
+
+        AttributesManager attributesManager = input.getAttributesManager();
+        Map<String, Object> attributes = attributesManager.getSessionAttributes();
 
         String speechText = "";
         String name;
@@ -85,15 +91,20 @@ public class BookingIntentHandler implements RequestHandler {
             BasicOperations bo = new BasicOperations();
             Gson gson = new Gson();
             String payload = gson.toJson(myApiRequest);
+            String response;
+            ga.codehub.entity.booking.Booking resp;
             try {
-                bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/bookingmanagement/v1/booking");
+                response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/bookingmanagement/v1/booking");
             } catch (Exception ex) {
                 speechText = "Der MyThaiStar-Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben";
                 throw new AlexaException();
-
             }
 
-            speechText = "Cool wir sehen uns dann !";
+            resp = gson.fromJson(response, ga.codehub.entity.booking.Booking.class);
+            attributes.put("bookingToken", resp.bookingToken);
+            attributesManager.setSessionAttributes(attributes);
+
+            speechText = "Cool wir sehen uns dann! ";
 
         } catch (AlexaException e) {
             e.printStackTrace();

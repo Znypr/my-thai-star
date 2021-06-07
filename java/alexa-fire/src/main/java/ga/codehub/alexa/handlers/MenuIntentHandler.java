@@ -37,7 +37,6 @@ public class MenuIntentHandler implements RequestHandler {
         try {
             response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/dishmanagement/v1/dish/search");
             resp = gson.fromJson(response, ga.codehub.entity.menu.Response.class);
-            System.out.println(response);
         } catch (Exception ex) {
         }
     }

@@ -371,16 +371,17 @@
                                 "{amount} mal",
                                 "{amount}"
                             ]
-                        },
-                        {
-                            "name": "bookingToken",
-                            "type": "AMAZON.SearchQuery",
-                            "samples": [
-                                "{bookingToken}"
-                            ]
                         }
                     ],
                     "samples": [
+                        "ein möchte gerne eine bestellung aufnehmen",
+                        "ich möchte gerne eine bestellung tätigen",
+                        "eine bestellung tätigen",
+                        "bestellung aufnehmen",
+                        "bestellung tätigen",
+                        "bestellen",
+                        "bestellen bitte",
+                        "Eine Bestellung aufnehmen",
                         "bitte {item} bestellen",
                         "bitte {item} in warenkorb",
                         "bitte {item} in den warenkorb",
@@ -390,6 +391,36 @@
                         "{item} bestellen",
                         "setze {item} in den warenkorb",
                         "Ich möchte gerne {item} bestellen"
+                    ]
+                },
+                {
+                    "name": "FinishOrderIntent",
+                    "slots": [],
+                    "samples": [
+                        "Nein"
+                    ]
+                },
+                {
+                    "name": "AddOrderIntent",
+                    "slots": [
+                        {
+                            "name": "item",
+                            "type": "AMAZON.SearchQuery",
+                            "samples": [
+                                "{item}"
+                            ]
+                        },
+                        {
+                            "name": "amount",
+                            "type": "AMAZON.NUMBER",
+                            "samples": [
+                                "{amount}  mal",
+                                "{amount}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "Ja"
                     ]
                 }
             ],
@@ -563,15 +594,44 @@
                                     "value": "1"
                                 }
                             ]
-                        },
+                        }
+                    ]
+                },
+                {
+                    "name": "FinishOrderIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": []
+                },
+                {
+                    "name": "AddOrderIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
                         {
-                            "name": "bookingToken",
+                            "name": "item",
                             "type": "AMAZON.SearchQuery",
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
-                                "elicitation": "Elicit.Slot.936867067055.512254290994"
+                                "elicitation": "Elicit.Slot.882094195472.435909990664"
                             }
+                        },
+                        {
+                            "name": "amount",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.882094195472.1588592965702"
+                            },
+                            "validations": [
+                                {
+                                    "type": "isGreaterThanOrEqualTo",
+                                    "prompt": "Slot.Validation.882094195472.1588592965702.633965388687",
+                                    "value": "1"
+                                }
+                            ]
                         }
                     ]
                 }
@@ -664,7 +724,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Bitte geben Sie an was sie bestellen moechten. "
+                        "value": "Bitte geben Sie an was sie bestellen möchten. "
                     }
                 ]
             },
@@ -687,15 +747,6 @@
                 ]
             },
             {
-                "id": "Elicit.Slot.936867067055.512254290994",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Booking Token?"
-                    }
-                ]
-            },
-            {
                 "id": "Slot.Validation.360857703564.462585299979.1231487673451",
                 "variations": [
                     {
@@ -710,6 +761,42 @@
                     {
                         "type": "PlainText",
                         "value": "Es duerfen nur maximal acht Personen an einem Tisch sitzen. "
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.1161897389958.1301118163168.330751598349",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Bitte geben Sie eine gültige Zahl ein."
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.882094195472.435909990664",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Was möchten Sie noch zusätzlich bestellen?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.882094195472.1588592965702.633965388687",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Bitte geben Sie eine gültige Anzahl an."
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.882094195472.1588592965702",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Wie oft möchten Sie {item} bestellen?"
                     }
                 ]
             }
