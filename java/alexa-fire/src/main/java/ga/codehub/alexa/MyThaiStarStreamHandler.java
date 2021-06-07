@@ -18,9 +18,9 @@ import com.amazon.ask.SkillStreamHandler;
 import com.amazon.ask.Skills;
 import ga.codehub.alexa.handlers.*;
 
-public class MyThaiStartStreamHandler extends SkillStreamHandler {
+public class MyThaiStarStreamHandler extends SkillStreamHandler {
 
-    public static final String BASE_URL = "https://c19f6a734ce9.ngrok.io";
+    public static final String BASE_URL = "http://32617c97f670.ngrok.io";
 
 
     private static Skill getSkill() {
@@ -34,11 +34,11 @@ public class MyThaiStartStreamHandler extends SkillStreamHandler {
                         new SessionEndedRequestHandler(),
                         new FallbackIntentHandler())
                 // Add your skill id below
-                .withSkillId("amzn1.ask.skill.c3ce8e9c-81f3-4a53-bf3d-53db70026366")
+                .withSkillId("amzn1.ask.skill.b849ee87-c5b0-4a88-ba30-5b823f89ddea")
                 .build();
     }
 
-    public MyThaiStartStreamHandler() {
+    public MyThaiStarStreamHandler() {
         super(getSkill());
     }
 

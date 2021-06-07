@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static com.amazon.ask.request.Predicates.intentName;
-import static ga.codehub.alexa.MyThaiStartStreamHandler.BASE_URL;
+import static ga.codehub.alexa.MyThaiStarStreamHandler.BASE_URL;
 
 public class MenueIntentHandler implements RequestHandler {
 
