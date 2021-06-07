@@ -1,4 +1,4 @@
-package main.java.ga.codehub.alexa.handlers;
+package ga.codehub.alexa.handlers;
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
@@ -42,19 +42,21 @@ public class OrderIntentHandler implements RequestHandler {
             Intent intent = intentRequest.getIntent();
 
             Map<String, Slot> slotMap = intent.getSlots();
-            if (slotMap.size() != 2) {
+            if (slotMap.size() != 3) {
                 throw new AlexaException();
             }
             Slot amount_s = slotMap.get("amount");
             Slot item_s = slotMap.get("item");
             // Slot extras_s = slotMap.get("extra");
+            Slot token = slotMap.get("bookingToken");
 
             amount = amount_s.getValue();
             item = item_s.getValue();
             // extras = extras_s.getValue();
+            bookingToken = token.getValue();
 
             dishID = getDishIDbyName(item);
-            System.out.println(":::::::::::::::::"+ dishID +"::::::::::::");
+            System.out.println(":::::::::::::::::"+ bookingToken +"::::::::::::");
 
             if (dishID.equals("-1")) {
                 speechText = "Die Anfrage fuehrte zu keinen Ergebnissen. Bitte versuchen Sie es eine andere Anfrage. ";  

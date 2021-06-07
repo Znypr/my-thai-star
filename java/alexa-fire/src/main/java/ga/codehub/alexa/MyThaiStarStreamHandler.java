@@ -17,12 +17,12 @@ import com.amazon.ask.Skill;
 import com.amazon.ask.SkillStreamHandler;
 import com.amazon.ask.Skills;
 import ga.codehub.alexa.handlers.*;
-import main.java.ga.codehub.alexa.handlers.OrderIntentHandler;
+import ga.codehub.alexa.handlers.OrderIntentHandler;
 
 public class MyThaiStarStreamHandler extends SkillStreamHandler {
 
     // public static final String BASE_URL = "https://91b34a21c698.ngrok.io"; // Rebecca
-    public static final String BASE_URL = "http://5cc52a527695.ngrok.io"; // Candra
+    public static final String BASE_URL = "http://32617c97f670.ngrok.io"; // Candra
 
 
     private static Skill getSkill() {

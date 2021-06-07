@@ -61,11 +61,11 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private translocoService: TranslocoService,
     private waiterCockpitService: WaiterCockpitService,
-    @Inject(MAT_DIALOG_DATA) dialogData: any,
     private configService: ConfigService,
+    @Inject(MAT_DIALOG_DATA) dialogData: any,
   ) {
-    this.data = dialogData;
     this.pageSizes = this.configService.getValues().pageSizes;
+    this.data = dialogData;
   }
 
   ngOnInit(): void {
@@ -188,7 +188,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   checkValidStatusTransition(orderStatus: string, element: any): boolean {
     if(element.order.orderStatus == "delivered" && orderStatus == "open") return true;
     if(element.order.orderStatus == "preparing" && orderStatus == "open") return true;
-    else false;
+    else return false;
   }
   
 

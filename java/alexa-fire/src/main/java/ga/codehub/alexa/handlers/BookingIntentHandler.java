@@ -82,13 +82,6 @@ public class BookingIntentHandler implements RequestHandler {
             myApiRequest.booking.bookingDate = date_time;
             myApiRequest.booking.name = name;
 
-            int guest_check_int = Integer.parseInt(myApiRequest.booking.assistants);
-
-
-            if (guest_check_int > 8 || guest_check_int < 1) {
-                speechText = "Es koennen maximal acht Gaeste und mindestens ein Gast an einem Tisch sitzen.";
-                throw new AlexaException();
-            }
             BasicOperations bo = new BasicOperations();
             Gson gson = new Gson();
             String payload = gson.toJson(myApiRequest);

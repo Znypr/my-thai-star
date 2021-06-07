@@ -363,13 +363,20 @@
                             ]
                         },
                         {
-                            "name": "count",
+                            "name": "amount",
                             "type": "AMAZON.NUMBER",
                             "samples": [
-                                "bitte {count} mal",
-                                "{count} bitte",
-                                "{count} mal",
-                                "{count}"
+                                "bitte {amount} mal",
+                                "{amount} bitte",
+                                "{amount} mal",
+                                "{amount}"
+                            ]
+                        },
+                        {
+                            "name": "bookingToken",
+                            "type": "AMAZON.SearchQuery",
+                            "samples": [
+                                "{bookingToken}"
                             ]
                         }
                     ],
@@ -438,7 +445,19 @@
                             "elicitationRequired": true,
                             "prompts": {
                                 "elicitation": "Elicit.Slot.638601641517.1343819274126"
-                            }
+                            },
+                            "validations": [
+                                {
+                                    "type": "isGreaterThan",
+                                    "prompt": "Slot.Validation.360857703564.462585299979.1231487673451",
+                                    "value": "0"
+                                },
+                                {
+                                    "type": "isLessThan",
+                                    "prompt": "Slot.Validation.360857703564.462585299979.1213859191672",
+                                    "value": "9"
+                                }
+                            ]
                         },
                         {
                             "name": "time",
@@ -530,7 +549,7 @@
                             }
                         },
                         {
-                            "name": "count",
+                            "name": "amount",
                             "type": "AMAZON.NUMBER",
                             "confirmationRequired": false,
                             "elicitationRequired": true,
@@ -544,6 +563,15 @@
                                     "value": "1"
                                 }
                             ]
+                        },
+                        {
+                            "name": "bookingToken",
+                            "type": "AMAZON.SearchQuery",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.936867067055.512254290994"
+                            }
                         }
                     ]
                 }
@@ -655,6 +683,33 @@
                     {
                         "type": "PlainText",
                         "value": "Bitte geben Sie eine gültige Anzahl an."
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.936867067055.512254290994",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Booking Token?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.360857703564.462585299979.1231487673451",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Sie muessen mindestens eine Person angeben. "
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.360857703564.462585299979.1213859191672",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Es duerfen nur maximal acht Personen an einem Tisch sitzen. "
                     }
                 ]
             }
