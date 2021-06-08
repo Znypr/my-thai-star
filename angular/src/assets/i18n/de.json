@@ -24,7 +24,7 @@
     "accessError": "Zugang verweigert, bitte erst einloggen",
     "genericError": "Ein Fehler ist aufgetreten, bitte versuche es später noch einmal",
     "urlError": "Url nicht gefunden, bitte versuche es noch einmal",
-    "email confirmations": {
+    "emailConfirmations": {
       "invitationAccept": "Einladung erfolgreich angenommen",
       "invitationReject": "Einladung erfolgreich abgelehnt",
       "bookingCancel": "Buchung erfolgreich abgebrochen",

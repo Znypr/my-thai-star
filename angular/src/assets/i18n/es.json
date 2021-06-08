@@ -23,7 +23,7 @@
     "accessError": "Acceso prohibido, por favor identifíquese primero",
     "genericError": "Ha ocurrido un error, por favor vuelva a intentarlo más tarde",
     "urlError": "Url no encontrada, por favor vuelva a intentarlo",
-    "email confirmations": {
+    "emailConfirmations": {
       "invitationAccept": "Invitación aceptada satisfactoriamente",
       "invitationReject": "Invitación cancelada satisfactoriamente",
       "bookingCancel": "Reserva cancelada satisfactoriamente",

@@ -362,7 +362,9 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   public InvitedGuestEto acceptInvite(String guestToken) {
 
     Objects.requireNonNull(guestToken);
+    // invited is null
     InvitedGuestEto invited = findInvitedGuestByToken(guestToken);
+
     invited.setAccepted(true);
     BookingCto booking = findBooking(invited.getBookingId());
     sendConfirmationAcceptedInviteToGuest(booking, invited);

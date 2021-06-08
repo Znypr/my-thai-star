@@ -23,7 +23,7 @@
     "accessError": "Odmowa dostepu, zaloguj sie",
     "genericError": "Wystapil blad, spróbuj ponownie",
     "urlError": "Strona nieznaleziona, spróbuj ponownie",
-    "email confirmations": {
+    "emailConfirmations": {
       "invitationAccept": "Zaproszenie przyjete",
       "invitationReject": "Zaproszenie odrzucone",
       "bookingCancel": "Rezerwacja anulowana",
