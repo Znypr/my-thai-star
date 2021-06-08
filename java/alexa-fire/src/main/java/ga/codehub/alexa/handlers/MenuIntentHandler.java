@@ -68,6 +68,7 @@ public class MenuIntentHandler implements RequestHandler {
              * intentRequest = (IntentRequest) request; Intent intent =
              * intentRequest.getIntent();
              */
+            
             String payload = "";
             String dish_category = "";
             String property = "\"price\"";
@@ -154,7 +155,7 @@ public class MenuIntentHandler implements RequestHandler {
                     property = "\"description\"";
                     speechText = "Die Sortierung erfolgt nun nach Anzahl von Likes. ";
                 } else if (property_slot.getValue().toLowerCase().equals("preis")) {
-                    speechText = "Die Sortierung erfolgt nun nach Anzahl von Likes. ";
+                    speechText = "Die Sortierung erfolgt nun nach Preis. ";
                 }
             }
             if (input.matches(intentName("ChangeDirectionIntent"))) {
@@ -188,7 +189,8 @@ public class MenuIntentHandler implements RequestHandler {
                     throw new AlexaException();
                 }
                 Slot dish = slotMap.get("dish");
-                keyword = dish.getValue().toLowerCase();
+                keyword = dish.getValue();
+
             }
 
             payload = "{\"categories\":[" + dish_category + "],\"searchBy\":\"" + keyword
@@ -204,15 +206,15 @@ public class MenuIntentHandler implements RequestHandler {
                 if (!response.equals("no match")) {
                     resp = gson.fromJson(response, ga.codehub.entity.menu.Response.class);
 
-                    if (input.matches(intentName("DescriptionIntent"))) {
-                        speechText += "Beschreibung von " + resp.toStringName() + ": " + resp.toStringDescription();
+                    if (input.matches(intentName("DescriptionIntent")) && resp.content.length == 1) {
+                        speechText += "Beschreibung von " + resp.toStringName() + " : " + resp.toStringDescription() + " ";
                     }
                     else {
                         speechText += "Es gibt: " + resp.toStringNames();
                     }
 
                 } else {
-                    speechText = "Die Anfrage führte zu keinen Ergebnissen. Bitte versuchen Sie es eine andere Anfrage.";
+                    speechText = "Die Anfrage führte zu keinen Ergebnissen. Bitte versuchen Sie eine andere Anfrage.";
                 }
             } catch (Exception ex) {
                 speechText = "Der MyThaiStar-Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben. "
@@ -223,8 +225,11 @@ public class MenuIntentHandler implements RequestHandler {
         } catch (AlexaException e) {
             e.printStackTrace();
         }
-        return input.getResponseBuilder().withSpeech(speechText).withSimpleCard("MyThaiStar", speechText)
-                .withReprompt(speechText).build();
+        return input.getResponseBuilder()
+        .withSpeech(speechText)
+        // .withSimpleCard("MyThaiStar", speechText)
+        .withReprompt(speechText)
+        .build();
 
     }
 

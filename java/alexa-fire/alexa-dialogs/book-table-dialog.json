@@ -22,6 +22,11 @@
                             "name": "count",
                             "type": "AMAZON.NUMBER",
                             "samples": [
+                                "mit {count} leuten",
+                                "mit {count} personen",
+                                "mit {count}",
+                                "{count} leute",
+                                "{count} personen",
                                 "{count}"
                             ]
                         },
@@ -79,6 +84,7 @@
                     "name": "MenuIntent",
                     "slots": [],
                     "samples": [
+                        "was ist auf der speisekarte",
                         "Kannst du mir sagen was auf der Karte steht",
                         "Was steht auf der Karte",
                         "Dürfte ich Einsicht in die Speisekarte erlangen",
@@ -315,6 +321,7 @@
                         }
                     ],
                     "samples": [
+                        "suche starten",
                         "suche nach {keyword}",
                         "gibt es {keyword}",
                         "suche {keyword}"
@@ -349,6 +356,7 @@
                         "Was ist {dish}",
                         "Beschreibung von {dish}",
                         "Beschreibung",
+                        "Beschreibung von",
                         "Lies mir die Beschreibung vor"
                     ]
                 },
@@ -635,6 +643,22 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "name": "SearchIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "keyword",
+                            "type": "AMAZON.SearchQuery",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.90704962275.1107328270087"
+                            }
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "ALWAYS"
@@ -645,7 +669,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Mit wievielen Leuten moechtest du kommen ?"
+                        "value": "Mit wie vielen Leuten moechtest du kommen?"
                     }
                 ]
             },
@@ -798,6 +822,15 @@
                     {
                         "type": "PlainText",
                         "value": "Wie oft möchten Sie {item} bestellen?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.90704962275.1107328270087",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Was wollen Sie suchen?"
                     }
                 ]
             }
