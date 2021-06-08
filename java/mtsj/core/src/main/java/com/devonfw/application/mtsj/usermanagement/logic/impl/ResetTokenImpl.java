@@ -13,7 +13,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.devonfw.application.mtsj.mailservice.logic.api.Mail;
-import com.devonfw.application.mtsj.usermanagement.common.api.to.ResetTokenEto;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.UserEntity;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRepository;
 import com.devonfw.application.mtsj.usermanagement.dataaccess.api.repo.UserRoleRepository;
@@ -105,9 +104,8 @@ public class ResetTokenImpl implements ResetToken {
   }
 
   @Override
-  public ResetTokenEto getResetTokenByToken(String token) {
+  public Long getResetTokenByToken(String token) {
 
-    LOG.error("HAHA");
     // TODO Auto-generated method stub
     return null;
   }

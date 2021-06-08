@@ -10,6 +10,7 @@ import { AdminCockpitService } from '../services/admin-cockpit.service';
 export class ResetPasswordCockpitComponent implements OnInit {
   hide = true;
   token: String;
+  userId: number;
   isValid= false;
   resetTokenEntity: any;
 
@@ -19,37 +20,28 @@ export class ResetPasswordCockpitComponent implements OnInit {
    private adminCockpitService: AdminCockpitService
   ) { }
 
-  // changePassword(userId: number) {
-  //   let path = this.changePasswordRestPath;
-  //   this.adminCockpitService.restServiceRoot$.pipe(
-  //     exhaustMap((restServiceRoot) =>
-  //       this.http.post(`${restServiceRoot}${path}`, {})
-  // }
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(
       (params) => {
         this.token = params.get('token');
-        console.log("Token: ", params);
+        this.userId = Number(params.get('id'));
       }
     );
   }
 
   getTokenByToken(token: String) {
-    this.adminCockpitService.getTokenByToken(token).subscribe(
-      (data: any) => {
-        if (!data) {
-          this.resetTokenEntity = [];
-        } else {
-          this.resetTokenEntity = data;
-        }
-      }
-    );
-    console.log("token: " ,this.resetTokenEntity.id);
+    // let id;
+    // this.adminCockpitService.getUserIdByToken(token).subscribe(
+    //   (data: any) => {
+    //     id= data;
+    //   }
+    // );
+    // console.log(id);
   }
 
   onButtonClick(token: String){
-    this.adminCockpitService.getTokenByToken(token).subscribe(
+    this.adminCockpitService.getUserIdByToken(token).subscribe(
       (data: any) => {
         if (!data) {
           this.resetTokenEntity = [];
@@ -58,6 +50,20 @@ export class ResetPasswordCockpitComponent implements OnInit {
         }
     });
     // console.log(this.entity.content);
+  }
+
+  changePassword(event: any){
+    const info = [
+      event.target.Password.value,
+      event.target.confirmPassword.value,
+    ];
+    if(info[0]==info[1]){
+      this.adminCockpitService.changePassword(this.userId,info[0],this.token).subscribe(
+        () => this.adminCockpitService.snackBar("Passwort wurde geändert","verstanden")
+      );
+    } else {
+      this.adminCockpitService.snackBar("Fragen Sie einen neuen Rücksetzlink an", "verstanden");
+    }
   }
 
     // this.route.snapshot.paramMap.get('token');

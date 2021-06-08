@@ -81,10 +81,11 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   // }
 
   onButtonClick(token: String){
-    this.adminCockpitService.getTokenByToken(token).subscribe(
+    this.adminCockpitService.getUserIdByToken(token).subscribe(
       (data: any) => {
         if (!data) {
           this.resetTokenEntity = [];
+          alert('Hallo');
         } else {
           this.resetTokenEntity = data;
         }
@@ -93,12 +94,8 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   }
 
   funk(){
-    console.log(this.resetTokenEntity.token);
+    console.log(this.resetTokenEntity);
     return true;
-  }
-
-  changePassword(password: String){
-
   }
 
 

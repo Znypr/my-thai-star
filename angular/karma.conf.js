@@ -58,10 +58,10 @@ module.exports = function (config) {
         included: false,
         watched: false
       },
-      
+
     ],
     preprocessors: {
-      
+
     },
     mime: {
       'text/x-typescript': ['ts', 'tsx']
@@ -83,10 +83,10 @@ module.exports = function (config) {
     browsers: [
       'Chrome',
       'ChromeHeadless',
-      'Firefox',
-      'FirefoxDeveloper',
-      'FirefoxHeadless',
-      'FirefoxDeveloperHeadless'
+      // 'Firefox',
+      // 'FirefoxDeveloper',
+      // 'FirefoxHeadless',
+      // 'FirefoxDeveloperHeadless'
     ]
     /*    autoWatch: true,
     singleRun: false
