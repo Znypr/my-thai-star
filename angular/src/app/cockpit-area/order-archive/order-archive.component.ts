@@ -1,23 +1,21 @@
-import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { Sort } from '@angular/material/sort';
-import { TranslocoService } from '@ngneat/transloco';
+import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {Sort} from '@angular/material/sort';
+import {TranslocoService} from '@ngneat/transloco';
 import * as moment from 'moment';
-import { Subscription } from 'rxjs';
-import { ConfigService } from '../../core/config/config.service';
-import {
-  FilterCockpit,
-  Pageable,
-} from '../../shared/backend-models/interfaces';
-import { OrderListView } from '../../shared/view-models/interfaces';
-import { WaiterCockpitService } from '../services/waiter-cockpit.service';
-import { ArchiveDialogComponent } from './archive-dialog/archive-dialog.component';
+import {Subscription} from 'rxjs';
+import {ConfigService} from '../../core/config/config.service';
+import {FilterCockpit, Pageable,} from '../../shared/backend-models/interfaces';
+import {OrderListView} from '../../shared/view-models/interfaces';
+import {WaiterCockpitService} from '../services/waiter-cockpit.service';
+import {ArchiveDialogComponent} from './archive-dialog/archive-dialog.component';
+
 @Component({
   selector: 'app-cockpit-order-archive',
   templateUrl: './order-archive.component.html',
   styleUrls: ['./order-archive.component.scss'],
-  //uses order-cockpit scss, it should allways look the same!
+  // uses order-cockpit scss, it should allways look the same!
 })
 export class OrderArchiveComponent implements OnInit, OnDestroy {
   private translocoSubscription = Subscription.EMPTY;
@@ -30,7 +28,7 @@ export class OrderArchiveComponent implements OnInit, OnDestroy {
 
   pageSize = 8;
 
-  @ViewChild('pagingBar', { static: true }) pagingBar: MatPaginator;
+  @ViewChild('pagingBar', {static: true}) pagingBar: MatPaginator;
 
   orders: OrderListView[] = [];
   totalOrders: number;
@@ -73,6 +71,10 @@ export class OrderArchiveComponent implements OnInit, OnDestroy {
       this.setOrderStatus(event);
       moment.locale(this.translocoService.getActiveLang());
     });
+
+    setInterval(() => {
+      this.applyFilters(); // api call
+    }, 10000);
   }
 
   setOrderStatus(lang: string): void {
@@ -80,7 +82,7 @@ export class OrderArchiveComponent implements OnInit, OnDestroy {
       .selectTranslateObject('cockpit.order-archive.orderStatus', {}, lang)
       .subscribe((cockpitOrders) => {
         this.columnss = [
-          { name: 'preparing', label: cockpitOrders.open },
+          {name: 'preparing', label: cockpitOrders.open},
           {
             name: 'cancelled',
             label: cockpitOrders.cancelled,
@@ -94,10 +96,10 @@ export class OrderArchiveComponent implements OnInit, OnDestroy {
       .selectTranslateObject('cockpit.table', {}, lang)
       .subscribe((cockpitTable) => {
         this.columns = [
-          { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
-          { name: 'booking.email', label: cockpitTable.emailH },
-          { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
-          { name: 'orderStatus', label: cockpitTable.orderStatusH },
+          {name: 'booking.bookingDate', label: cockpitTable.reservationDateH},
+          {name: 'booking.email', label: cockpitTable.emailH},
+          {name: 'booking.bookingToken', label: cockpitTable.bookingTokenH},
+          {name: 'orderStatus', label: cockpitTable.orderStatusH},
         ];
       });
   }
@@ -154,25 +156,26 @@ export class OrderArchiveComponent implements OnInit, OnDestroy {
   }
 
   onChange(orderStatus: string, element: any): void {
-    element.order.orderStatus = orderStatus;    
+    element.order.orderStatus = orderStatus;
     this.waiterCockpitService
       .updateOrderStatus(element.order.id, orderStatus)
       .subscribe((data: any) => {
-      this.applyFilters();
-    });
+        this.applyFilters();
+      });
   }
 
   disableCurrentStatusOption(orderStatus: string, element: any) {
-    if(orderStatus == element.order.orderStatus) return true;
+    if (orderStatus == element.order.orderStatus) return true;
     else return false;
   }
 
   checkIfCancelled(element: any) {
-    if(element.order.orderStatus == "cancelled") return true;
+    if (element.order.orderStatus == "cancelled") return true;
     else return false;
   }
 
   ngOnDestroy(): void {
     this.translocoSubscription.unsubscribe();
   }
+
 }
