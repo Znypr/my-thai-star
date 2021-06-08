@@ -22,16 +22,6 @@ import static ga.codehub.alexa.MyThaiStarStreamHandler.BASE_URL;
 
 public class OrderDialogIntentHandler implements RequestHandler {
 
-    public static void main(String[] args) {
-        
-        ArrayList<String> b = new ArrayList<String>();
-        b.add("{\"orderLine\":{\"dishId\":6,\"amount\":3,\"comment\":\"\"},\"extras\":[]}");
-        b.add("{\"orderLine\":{\"dishId\":2,\"amount\":3,\"comment\":\"\"},\"extras\":[]}");
-        String a = "{\"booking\":{\"bookingToken\":\"CB_20210607_240ea23eb7ec3e61001a7c96b4f6da7e\"},\"orderLines\":[";
-        String d = "]}";
-
-        buildPayLoad(b,a,d);
-    }
     
     @Override
     public boolean canHandle(HandlerInput input) {
@@ -40,8 +30,6 @@ public class OrderDialogIntentHandler implements RequestHandler {
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
-
-
         AttributesManager attributesManager = input.getAttributesManager();
         Map<String, Object> attributes = attributesManager.getSessionAttributes();
 
@@ -50,10 +38,10 @@ public class OrderDialogIntentHandler implements RequestHandler {
         try {
             BasicOperations bo = new BasicOperations();
 
-            String payload_beginning = (String) attributes.get("beginning");
-            String payload_ending = (String) attributes.get("ending");
-            ArrayList<String> orderlines = (ArrayList<String>) attributes.get("orderlines");
-            String payload = buildPayLoad(orderlines, payload_beginning, payload_ending);
+               String payload_beginning = (String) attributes.get("beginning");
+               String payload_ending = (String) attributes.get("ending");
+               ArrayList<String> orderlines = (ArrayList<String>) attributes.get("orderLines");
+               String payload = buildPayLoad(orderlines, payload_beginning, payload_ending);
 
             try {
                 bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/ordermanagement/v1/order");     
@@ -68,7 +56,7 @@ public class OrderDialogIntentHandler implements RequestHandler {
     
         return input.getResponseBuilder()
             .withSpeech(speechText)
-            .withSimpleCard("HelloWorld", speechText)
+            .withSimpleCard("MyThaiStar", speechText)
             .withReprompt(speechText)
             .build();
     }
