@@ -23,7 +23,7 @@
     "accessError": "Доступ запрещен, сначала войдите в систему",
     "genericError": "Произошла ошибка, повторите попытку позже",
     "urlError": "Страница не найдена, пожалуйста попробуйте еще раз",
-    "email confirmations": {
+    "emailConfirmations": {
       "invitationAccept": "Приглашение успешно принято",
       "invitationReject": "Приглашение успешно отклонено",
       "bookingCancel": "Бронирование успешно отменено",

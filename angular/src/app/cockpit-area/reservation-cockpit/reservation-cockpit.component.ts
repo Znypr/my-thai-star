@@ -55,11 +55,17 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    this.applyFilters();
+
     this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders(event);
       moment.locale(this.translocoService.getActiveLang());
     });
-    this.applyFilters();
+
+    setInterval(() => {
+      this.applyFilters(); // api call
+    }, 10000);
   }
 
   setTableHeaders(lang: string): void {

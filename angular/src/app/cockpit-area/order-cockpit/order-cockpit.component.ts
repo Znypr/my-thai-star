@@ -75,6 +75,10 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       this.setOrderStatus(event);
       moment.locale(this.translocoService.getActiveLang());
     });
+
+    setInterval(() => {
+      this.applyFilters(); // api call
+    }, 10000);
   }
 
   setOrderStatus(lang: string): void {
@@ -190,7 +194,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     if(element.order.orderStatus == "preparing" && orderStatus == "open") return true;
     else return false;
   }
-  
+
 
   ngOnDestroy(): void {
     this.translocoSubscription.unsubscribe();
