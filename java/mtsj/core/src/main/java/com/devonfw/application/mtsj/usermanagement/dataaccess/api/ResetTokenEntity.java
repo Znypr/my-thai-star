@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.devonfw.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
-import com.devonfw.application.mtsj.usermanagement.common.api.to.ResetTokenEto;
 import com.devonfw.application.mtsj.usermanagement.logic.api.ResetToken;
 
 /**
@@ -75,7 +74,7 @@ public class ResetTokenEntity extends ApplicationPersistenceEntity implements Re
   }
 
   /**
-   * @return flag
+   * @return flag true, if used before
    */
   public boolean isFlag() {
 
@@ -98,7 +97,7 @@ public class ResetTokenEntity extends ApplicationPersistenceEntity implements Re
   }
 
   @Override
-  public ResetTokenEto getResetTokenByToken(String token) {
+  public Long getResetTokenByToken(String token) {
 
     // TODO Auto-generated method stub
     return null;

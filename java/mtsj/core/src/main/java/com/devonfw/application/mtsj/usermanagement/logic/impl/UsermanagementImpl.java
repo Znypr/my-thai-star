@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -82,11 +83,15 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
   }
 
   @Override
-  public ResetTokenEto getResetTokenByToken(String token) {
+  public Long getResetTokenByToken(String token) {
 
     LOG.debug("Get User with token {} from database.", token);
-    LOG.error("ResetDAO: " + getResetDao().find((long) 0).toString());
-    return getBeanMapper().map(getResetDao().find((long) 0), ResetTokenEto.class);
+
+    LOG.debug("Get Token with token {} from database");
+    ResetTokenEntity resetToken = getBeanMapper().map(getResetDao().findByToken(token), ResetTokenEntity.class);
+
+    return resetToken.getIdUser();
+
     // ResetTokenEto tokenTo = getBeanMapper().map(getResetDao().find((long) 0), ResetTokenEto.class);
     // LOG.error("tokenTo: " + tokenTo.getIdUser() + "/n " + tokenTo.getToken());
     // return tokenTo;
@@ -127,7 +132,14 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
       sendResetEmailToUser(user, token);
 
       ResetTokenEntity resetTokenEntity = new ResetTokenEntity();
-      resetTokenEntity.setExpires(new Date());
+
+      Calendar calendar = Calendar.getInstance();
+      calendar.setTime(new Date());
+      calendar.add(Calendar.HOUR_OF_DAY, 1);
+
+      System.err.println("Date: " + calendar.getTime());
+
+      resetTokenEntity.setExpires(calendar.getTime());
       resetTokenEntity.setFlag(false);
       resetTokenEntity.setIdUser(id);
       resetTokenEntity.setToken(token);
@@ -151,10 +163,10 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
       StringBuilder resetMailContent = new StringBuilder();
       resetMailContent.append("MY THAI STAR").append("\n");
       resetMailContent.append("Hi ").append(user.getEmail()).append("\n");
-      resetMailContent.append("You have requested a password reset");
+      resetMailContent.append("You have requested a password reset").append("\n");
 
       // TODO akkus <RestPath needs to be implemented and added here>
-      String linkReset = getClientUrl() + "/resetPassword/?token=" + token;
+      String linkReset = getClientUrl() + "/resetPassword?token=" + token + "&id=" + user.getId();
 
       resetMailContent.append("To reset: ").append(linkReset).append("\n");
 
@@ -171,6 +183,47 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
 
     LOG.debug("Get User with id {} from database.", id);
     return getBeanMapper().map(getUserDao().find(id), UserEto.class);
+  }
+
+  @Override
+  public UserEto changePassword(UserEto user) {
+
+    Objects.requireNonNull(user, "user");
+
+    LOG.error("password Änderung wurde angefragt");
+
+    // LOG.debug("Get Token with token {} from database");
+    // ResetTokenEntity resetToken = getBeanMapper().map(getResetDao().findByToken(user.getToken()),
+    // ResetTokenEntity.class);
+    //
+    // LOG.debug("Get User with id {} from database.", user.getId());
+    // UserEntity userToChangePassword = getBeanMapper().map(getUserDao().find(user.getUserId()), UserEntity.class);
+
+    LOG.debug("Get Token with token {} from database");
+    ResetTokenEntity resetToken = getResetDao().findByToken(user.getToken());
+
+    LOG.debug("Get User with id {} from database.", user.getId());
+    UserEntity userToChangePassword = getUserDao().find(resetToken.getIdUser());
+
+    // token is valid
+    if (resetToken.getExpires().after(new Date()) == true && resetToken.isFlag() == false) {
+      // set token to used
+      resetToken.setFlag(true);
+      getResetDao().save(resetToken);
+      getBeanMapper().map(resetToken, ResetTokenEto.class);
+
+      LOG.debug("And exchange the old password with a new (and encrypted) one");
+      WebSecurityBeansConfig webSecurityBeansConfig = new WebSecurityBeansConfig();
+      userToChangePassword.setPassword(webSecurityBeansConfig.passwordEncoder().encode(user.getPassword()));
+
+      UserEntity resultEntity = getUserDao().save(userToChangePassword);
+      LOG.debug("User with id '{}' has been modified.", resultEntity.getId());
+      return getBeanMapper().map(resultEntity, UserEto.class);
+    }
+    // token is not valid
+    LOG.debug("Token is not valid");
+    return null;
+
   }
 
   @Override

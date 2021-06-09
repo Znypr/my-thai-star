@@ -35,6 +35,14 @@ public interface Usermanagement {
   // public ResetTokenEntity getResetTokenByToken(String token);
 
   /**
+   * Changes the password of a user
+   *
+   * @param user with idUser and new password
+   * @return
+   */
+  public UserEto changePassword(UserEto user);
+
+  /**
    * @param token ResetToken
    * @return id of User
    */

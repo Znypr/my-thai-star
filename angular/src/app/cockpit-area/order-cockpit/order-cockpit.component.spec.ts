@@ -1,4 +1,4 @@
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog,MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { State } from '../../store';
 import { ConfigService } from '../../core/config/config.service';
@@ -27,7 +27,7 @@ import { ascSortOrder } from '../../../in-memory-test-data/db-order-asc-sort';
 import { orderData } from '../../../in-memory-test-data/db-order';
 
 const mockDialog = {
-  open: jasmine.createSpy('open').and.returnValue({
+  open: jasmine.createSpy('dialog.open').and.returnValue({
     afterClosed: () => of(true),
   }),
 };
@@ -58,13 +58,16 @@ class TestBedSetUp {
     return TestBed.configureTestingModule({
       declarations: [OrderCockpitComponent],
       providers: [
-        { provide: MatDialog, useValue: mockDialog },
+        { provide: MatDialog, useValue:mockDialog },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: WaiterCockpitService, useValue: waiterCockpitStub },
         TranslocoService,
         ConfigService,
         provideMockStore({ initialState }),
       ],
       imports: [
+        MatDialogModule,
+
         BrowserAnimationsModule,
         ReactiveFormsModule,
         getTranslocoModule(),
