@@ -1,9 +1,9 @@
-package ga.codehub.entity.menue;
+package ga.codehub.entity.menu;
 
-public class Extras {
+public class Categories {
     public String modificationCounter;
     public String id;
     public String name;
     public String description;
-    public String price;
+    public String showOrder;
 }

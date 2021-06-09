@@ -1,4 +1,4 @@
-package ga.codehub.entity.menue;
+package ga.codehub.entity.menu;
 
 public class Content {
     public Dish dish;

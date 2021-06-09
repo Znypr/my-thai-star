@@ -360,7 +360,6 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 
   @Override
   public InvitedGuestEto acceptInvite(String guestToken) {
-
     Objects.requireNonNull(guestToken);
     InvitedGuestEto invited = findInvitedGuestByToken(guestToken);
     invited.setAccepted(true);
