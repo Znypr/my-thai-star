@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule, MemoizedSelector } from '@ngrx/store';
 import { AuthService } from '../../core/authentication/auth.service';
 import { CoreModule } from '../../core/core.module';
+import { AdminCockpitComponent } from '../../cockpit-area/admin-cockpit/admin-cockpit.component';
 import * as fromRoot from '../../store/reducers';
 import { UserAreaService } from './user-area.service';
 import { getTranslocoModule } from '../../transloco-testing.module';
@@ -62,7 +63,7 @@ describe('UserAreaService', () => {
         UserAreaService,
         AuthService,
         { provide: SnackService, useValue: snackServiceStub },
-        { provode: SnackBarService, useValue: snackBarServiceStub },
+        { provide: SnackBarService, useValue: snackBarServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
         provideMockStore(),
       ],
@@ -70,7 +71,8 @@ describe('UserAreaService', () => {
         CoreModule,
         HttpClientTestingModule,
         getTranslocoModule(),
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([
+    { path: 'admin', component: AdminCockpitComponent}]),
       ],
     }).compileComponents();
     httpTestingController = TestBed.inject(HttpTestingController);
@@ -91,6 +93,34 @@ describe('UserAreaService', () => {
   it('should create', () => {
     expect(userAreaService).toBeTruthy();
   });
+  // Test C10
+  it('should call login service to login as admin', () => {
+    userAreaService
+      .login('admin', 'waiter')
+      .subscribe((response: HttpResponse<any>) => {
+        expect(response.status).toBe(200);
+        expect(response.body).toBe('Success');
+      });
+    const req = httpTestingController.expectOne(config.restPathRoot + 'login');
+    expect(req.request.method).toEqual('POST');
+    req.flush('Success');
+  });
+  //Test C10
+  it('should call login service to login as waiter and switch unsuccessfully to admin-cockpit', () => {
+    userAreaService
+      .login('waiter', 'waiter')
+      .subscribe((response: HttpResponse<any>) => {
+        expect(response.status).toBe(200);
+        expect(response.body).toBe('Success');
+      });
+    const req = httpTestingController.expectOne(config.restPathRoot + 'login');
+    expect(req.request.method).toEqual('POST');
+    req.flush('Success');
+    userAreaService.router.navigateByUrl('/admin');
+
+    expect(snackService).toHaveBeenCalled();
+  });
+
 
   it('should call login service to login the application', () => {
     userAreaService

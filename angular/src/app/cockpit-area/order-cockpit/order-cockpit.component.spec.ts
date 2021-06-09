@@ -10,6 +10,7 @@ import {
   ComponentFixture,
   async,
   fakeAsync,
+  flush,
   tick,
 } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
@@ -67,7 +68,6 @@ class TestBedSetUp {
       ],
       imports: [
         MatDialogModule,
-
         BrowserAnimationsModule,
         ReactiveFormsModule,
         getTranslocoModule(),
@@ -77,7 +77,7 @@ class TestBedSetUp {
   }
 }
 
-describe('OrderCockpitComponent', () => {
+fdescribe('OrderCockpitComponent', () => {
   let component: OrderCockpitComponent;
   let fixture: ComponentFixture<OrderCockpitComponent>;
   let store: Store<State>;
@@ -87,6 +87,7 @@ describe('OrderCockpitComponent', () => {
   let translocoService: TranslocoService;
   let configService: ConfigService;
   let el: DebugElement;
+  let overlay: HTMLElement;
 
   beforeEach(async(() => {
     initialState = { config };
@@ -136,7 +137,7 @@ describe('OrderCockpitComponent', () => {
 
   it('should open OrderDialogComponent dialog on click of row', fakeAsync(() => {
     fixture.detectChanges();
-    const clearFilter = el.queryAll(By.css('.mat-row'));
+    const clearFilter = el.queryAll(By.css('#Booking'));
     click(clearFilter[0]);
     tick();
     expect(dialog.open).toHaveBeenCalled();
@@ -150,6 +151,53 @@ describe('OrderCockpitComponent', () => {
     expect(component.orders).toEqual(orderData.content);
     expect(component.totalOrders).toBe(8);
   }));
+
+  it('should filter the order table on click of submit', fakeAsync(() => {
+    fixture.detectChanges();
+    const submit = el.query(By.css('.orderApplyFilters'));
+    click(submit);
+    tick();
+    expect(component.orders).toEqual(orderData.content);
+    expect(component.totalOrders).toBe(8);
+  }));
+
+  // //C47
+  // fit('should change status preparing in cancelled', fakeAsync(() => {
+  //   fixture.detectChanges();
+  //   const clearFilter = el.queryAll(By.css('#optionForStatus'));
+  //   click(clearFilter[0]);
+  //   tick();
+  //   expect(dialog.open).toHaveBeenCalled();
+  // }));
+
+  //C50
+  it('should change status open in prepairing', fakeAsync(() => {
+    fixture.detectChanges();
+    spyOn(component, 'onChange');
+    const row = el.query(By.css('#selectStatus')).nativeElement;
+    row.click();
+    fixture.detectChanges();
+    const selectOptions = el.queryAll(By.css('#optionForStatus'));
+    selectOptions[1].nativeElement.click();
+    fixture.detectChanges();
+    expect(component.onChange).toHaveBeenCalled();
+    flush();
+  }));
+
+//   it('should be able to get the value text from a select (classic test)', () => {
+//   fixture.detectChanges();
+//   const compiledDom = fixture.debugElement.nativeElement;
+//   const select = compiledDom.querySelector('#selectStatus');
+//   select.click();
+//   fixture.detectChanges();
+//   const optionSelectList: NodeListOf<HTMLElement> = overlay.querySelectorAll('#optionForStatus');
+//
+//   optionSelectList[1].click();
+//   fixture.detectChanges();
+//
+//   expect(select.textContent).toEqual('preparing');
+// });
+
 });
 
 describe('TestingOrderCockpitComponentWithSortOrderData', () => {

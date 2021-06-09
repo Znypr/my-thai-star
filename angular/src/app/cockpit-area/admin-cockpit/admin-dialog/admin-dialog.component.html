@@ -22,11 +22,11 @@
    </table>
 </div>
 <div class="actionButtons" >
-  <button mat-button mat-dialog-close (click)="deleteUser(data.id)">Löschen</button>
-  <button mat-button (click)="sendPasswordResetMail(data.id)">Rücksetzlink schicken</button>
+  <button id="deleteButton" mat-button mat-dialog-close (click)="deleteUser(data.id)">Löschen</button>
+  <button id="resetButton" mat-button (click)="sendPasswordResetMail(data.id)">Rücksetzlink schicken</button>
 </div>
 <div class="align-right actionButtons">
-  <button mat-button mat-dialog-close color="accent">{{'buttons.close' | transloco | uppercase}}</button>
+  <button id="closeButton" mat-button mat-dialog-close color="accent">{{'buttons.close' | transloco | uppercase}}</button>
 </div>
 <div>
 </div>
