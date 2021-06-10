@@ -12,6 +12,7 @@ import {
 } from '../../shared/backend-models/interfaces';
 import { OrderListView } from '../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
+import { OrderChangeDialogComponent } from './order-change-dialog/order-change-dialog.component';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 
 @Component({
@@ -45,6 +46,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     'booking.bookingToken',
     'paid',
     'orderStatus',
+    'orderEdit',
   ];
 
   pageSizes: number[];
@@ -107,6 +109,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
           { name: 'paid', label: cockpitTable.paidH },
           { name: 'orderStatus', label: cockpitTable.orderStatusH },
+          { name: 'orderEdit', label: cockpitTable.orderEditH },
         ];
       });
   }
@@ -162,6 +165,13 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     });
   }
 
+  editOrder(selection: OrderListView): void {
+    this.dialog.open(OrderChangeDialogComponent, {
+      width: '80%',
+      data: selection,
+    });
+  }
+
   updatePaid(paid: any, element: any): void {
     element.order.paid = paid.checked;
     this.waiterCockpitService
@@ -182,6 +192,11 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
 
   disableOption(orderStatus: string, element: any) : boolean {
     return this.disableCurrentStatusOption(orderStatus, element) || this.checkValidStatusTransition(orderStatus, element);
+  }
+
+  checkIfOpen(element: any) : boolean {
+    if(element.order.orderStatus == "open") return false;
+    else return true;
   }
 
    disableCurrentStatusOption(orderStatus: string, element: any): boolean {

@@ -13,7 +13,10 @@
     "clearFilters": "Clear Filters",
     "applyFilters": "Apply Filters",
     "removeComment": "Remove Comment",
-    "addComment": "Add comment"
+    "addComment": "Add comment",
+    "edit": "Edit",
+    "reset": "Reset",
+    "delete": "Delete"
   },
   "table": {
     "rowsPage": "Rows per page",
@@ -44,8 +47,14 @@
     },
     "paid": {
       "paidSuccess": "Payment successful registered",
-      "unpaidSuccess": "Payment successful removed",
+      "unpaidSuccess": "Payment successfully removed",
       "paidFail": "Payment failed"
+    },
+    "orderChange": {
+      "reset": "Change of order was successful",
+      "applySuccess": "Change of order was successfully applied",
+      "applyFail": "Change of order failed",
+      "deleteOrderline": "Orderline successfully removed"
     }
   },
   "formFields": {
@@ -198,7 +207,8 @@
         "commentsH": "Comments",
         "extrasH": "Extra",
         "quantityH": "Quantity",
-        "priceH": "Price"
+        "priceH": "Price",
+        "orderlineDeleteH": "Delete"
       },
       "orderStatus": {
         "open": "Open",
@@ -224,7 +234,8 @@
       "paidH": "Paid",
       "ownerH": "Owner",
       "tableH": "Table",
-      "creationDateH": "Creation date"
+      "creationDateH": "Creation date",
+      "orderEditH": "Edit"
     }
   }
 }

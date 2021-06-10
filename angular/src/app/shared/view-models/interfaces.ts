@@ -112,6 +112,7 @@ export interface OrderListView {
   orderLines: OrderView[];
   booking: BookingView;
   orderStatus: string;
+  paid: Boolean;
 }
 
 export interface OrderDishListView {

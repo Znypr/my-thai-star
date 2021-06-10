@@ -1,7 +1,7 @@
 {
   "buttons": {
     "cancel": "Abbrechen",
-    "apply": "Bestätigen",
+    "apply": "Anwenden",
     "close": "Schließen",
     "send": "Senden",
     "login": "Anmelden",
@@ -13,7 +13,10 @@
     "clearFilters": "Filter zurücksetzen",
     "applyFilters": "Filter anwenden",
     "removeComment": "Kommentar entfernen",
-    "addComment": "Kommentar hinzufügen"
+    "addComment": "Kommentar hinzufügen",
+    "edit": "Bearbeiten",
+    "reset": "Zurücksetzen",
+    "delete": "Löschen"
   },
   "table": {
     "rowsPage": "Zeilen pro Seite",
@@ -46,6 +49,12 @@
       "paidSuccess": "Bezahlung erfolgreich eingetragen",
       "unpaidSuccess": "Bezahlung erfolgreich entfernt",
       "paidFail": "Bezahlung fehlgeschlagen"
+    },
+    "orderChange": {
+      "reset": "Bestellungsänderung wurde zurückgesetzt",
+      "applySuccess": "Bestellung wurde erfolgreich verändert",
+      "applyFail": "Bestellung konnte nicht verändert werden",
+      "deleteOrderline": "Artikel wurde Bestellung entfernt"
     }
   },
   "formFields": {
@@ -198,7 +207,8 @@
         "commentsH": "Kommentare",
         "extrasH": "Extra",
         "quantityH": "Anzahl",
-        "priceH": "Preis"
+        "priceH": "Preis",
+        "orderlineDeleteH": "Löschen"
       },
       "orderStatus": {
         "open": "Offen",
@@ -224,7 +234,8 @@
       "paidH": "Bezahlt",
       "ownerH": "Eigentümer",
       "tableH": "Tisch",
-      "creationDateH": "Erstelldatum"
+      "creationDateH": "Erstelldatum",
+      "orderEditH": "Bearbeiten"
     }
   }
 }
