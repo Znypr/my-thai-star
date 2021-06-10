@@ -37,12 +37,10 @@ public class OrderDialogIntentHandler implements RequestHandler {
 
         try {
             BasicOperations bo = new BasicOperations();
-
-               String payload_beginning = (String) attributes.get("beginning");
-               String payload_ending = (String) attributes.get("ending");
-               ArrayList<String> orderlines = (ArrayList<String>) attributes.get("orderLines");
-               String payload = buildPayLoad(orderlines, payload_beginning, payload_ending);
-
+            String payload_beginning = (String) attributes.get("beginning");
+            String payload_ending = (String) attributes.get("ending");
+            ArrayList<String> orderlines = (ArrayList<String>) attributes.get("orderLines");
+            String payload = buildPayLoad(orderlines, payload_beginning, payload_ending);
             try {
                 bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/ordermanagement/v1/order");     
                 speechText = "Vielen Dank für Ihre Bestellung. ";

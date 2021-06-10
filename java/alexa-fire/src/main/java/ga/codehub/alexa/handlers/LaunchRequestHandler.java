@@ -33,7 +33,7 @@ public class LaunchRequestHandler implements RequestHandler {
     @Override
     public Optional<Response> handle(HandlerInput input) {
 
-        String speechText = "Willkommen bei My-Thai-Star, du kannst einen Tisch reservieren oder dir unsere Karte zeigen lassen!";
+        String speechText = "Willkommen bei My-Thai-Star, du kannst einen Tisch reservieren, eine Bestellung tätigen oder dir unsere Karte zeigen lassen!";
 
         ArrayList<String> permission = new ArrayList<>();
 
