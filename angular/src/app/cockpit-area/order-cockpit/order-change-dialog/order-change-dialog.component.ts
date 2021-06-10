@@ -8,6 +8,7 @@ import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { getSelectors } from '@ngrx/router-store';
 import { Booking } from 'app/book-table/models/booking.model';
+import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
 
 @Component({
   selector: 'app-cockpit-order-dialog',
@@ -51,6 +52,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     private translocoService: TranslocoService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
     private configService: ConfigService,
+    private snackbarServive: SnackBarService,
   ) {
     this.data = dialogData;
     this.pageSizes = this.configService.getValues().pageSizesDialog;
@@ -106,6 +108,40 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     newData = newData.slice(this.fromRow, this.currentPage * this.pageSize);
     setTimeout(() => (this.filteredData = newData));
   }
+
+  checkInvalidDelete(element: any) : boolean {
+    console.log(element.length);
+    if(element.length > 1) return false;
+    else return true;
+  }
+
+  reset() {
+
+    this.snackbarServive.openSnack(this.translocoService.translate('alerts.orderChange.reset'), 2000, "green");
+    this.ngOnInit();
+  }
+
+  apply() {
+     
+    //TODO
+    // #1 post new order object to database
+    
+    //if (success)
+    this.snackbarServive.openSnack(this.translocoService.translate('alerts.orderChange.applySuccess'), 2000, "green");
+    //else
+    this.snackbarServive.openSnack(this.translocoService.translate('alerts.orderChange.applyFail'), 2000, "red");
+    this.ngOnDestroy();
+  }
+
+  deleteOrderline(element: any) : void {
+    //TODO
+    // #1 delete front end orderline
+    // #2 remove orderline from order object
+
+    this.snackbarServive.openSnack(this.translocoService.translate('alerts.orderChange.deleteOrderline'), 2000, "green");
+  }
+
+
 
   onChange(orderStatus: string): void {
     console.log('Status: ', orderStatus);
