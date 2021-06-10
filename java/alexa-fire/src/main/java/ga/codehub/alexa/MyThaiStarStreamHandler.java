@@ -20,8 +20,8 @@ import ga.codehub.alexa.handlers.*;
 
 public class MyThaiStarStreamHandler extends SkillStreamHandler {
 
-    // public static final String BASE_URL = "https://91b34a21c698.ngrok.io"; // Rebecca
-    public static final String BASE_URL = "http://fb6c3671b0bc.ngrok.io"; // Candra
+    public static final String BASE_URL = "https://8ea0c4506021.ngrok.io"; // Rebecca
+    // public static final String BASE_URL = "http://fb6c3671b0bc.ngrok.io"; // Candra
 
     private static Skill getSkill() {
         return Skills.standard()
@@ -34,11 +34,12 @@ public class MyThaiStarStreamHandler extends SkillStreamHandler {
                     new SessionEndedRequestHandler(), 
                     new OrderIntentHandler(), 
                     new OrderDialogIntentHandler(),
+                    new InhouseOrderIntentHandler(),
                     new FallbackIntentHandler())
                 // Add your skill id below
-                // .withSkillId("amzn1.ask.skill.f5fa69a6-0822-4a5f-b959-ad2893865a9e") //
-                // Rebecca
-                .withSkillId("amzn1.ask.skill.b849ee87-c5b0-4a88-ba30-5b823f89ddea") // Candra
+                // .withSkillId("amzn1.ask.skill.f5fa69a6-0822-4a5f-b959-ad2893865a9e") //Rebecca at home
+                // .withSkillId("amzn1.ask.skill.b849ee87-c5b0-4a88-ba30-5b823f89ddea") // Candra
+                .withSkillId("amzn1.ask.skill.7d4334f3-c8eb-4fe3-9542-2ebb07ad96e1") //Rebecca inhouse
                 .build();
     }
 
