@@ -7,12 +7,7 @@
     <!-- Reservation Date Column -->
     <ng-container matColumnDef="bookingDate">
       <th mat-header-cell *matHeaderCellDef> {{columnst[0].label}} </th>
-      <!-- <td mat-cell *matCellDef="let element" class="bookingDateData"> {{element.bookingDate|amFromUnix|amDateFormat:'lll'}} </td> -->
-      <td mat-cell *matCellDef="let element" class="bookingDateData">
-        <mat-form-field color="accent">
-          <input matInput [placeholder]="element.bookingDate|amFromUnix|amDateFormat:'lll'" name="extras">
-        </mat-form-field>
-      </td>
+      <td mat-cell *matCellDef="let element" class="bookingDateData"> {{element.bookingDate|amFromUnix|amDateFormat:'lll'}} </td>
     </ng-container>
     <!-- Creation Date Column -->
     <ng-container matColumnDef="creationDate">
@@ -47,30 +42,42 @@
     <ng-container matColumnDef="dish.name">
       <th mat-header-cell *matHeaderCellDef> {{columnso[0].label}} </th>
       <td mat-cell *matCellDef="let element" class="dishNameData">
-        <mat-form-field color="accent">
-          <input matInput [placeholder]="element.dish.name" name="extras">
+        <mat-form-field [floatLabel]="'never'">
+          <mat-label>{{element.dish.name}}</mat-label>
+          <mat-select >
+            <mat-option *ngFor="let orderline of filteredData">
+              {{orderline.dish.name}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </td>
     </ng-container>
+
     <!-- Comments Column -->
     <ng-container matColumnDef="orderLine.comment">
       <th mat-header-cell *matHeaderCellDef class="commentHeader"> {{columnso[1].label}} </th>
       <td mat-cell *matCellDef="let element" class="commentData">
         <mat-form-field color="accent">
-          <input matInput [placeholder]="element.orderLine.comment" name="extras">
-        </mat-form-field>
+          <input matInput [value]="removeField(element,'comment')" name="extras">
+        </mat-form-field><button mat-icon-button (click)="removeComment = true"  color="warn" aria-label="Example icon button with a home icon">
+          <mat-icon>delete</mat-icon>
+        </button>
       </td>
     </ng-container>
+
     <!-- Extra Column -->
     <ng-container matColumnDef="extras">
       <th mat-header-cell *matHeaderCellDef class="extrasHeader"> {{columnso[2].label}} </th>   
       <td mat-cell *matCellDef="let element" class="extrasData">
-        <mat-form-field color="accent">
-          <input matInput [placeholder]="element.extras" name="extras">
-        </mat-form-field>
+      <mat-form-field color="accent">
+        <input matInput [value]="removeField(element, 'extra')" name="extras">
+      </mat-form-field><button mat-icon-button (click)="removeExtra = true" color="warn"
+        aria-label="Example icon button with a home icon">
+        <mat-icon>delete</mat-icon>
+      </button>
       </td>
-      
     </ng-container>
+
     <!-- Quantity Column -->
     <ng-container matColumnDef="orderLine.amount">
       <th mat-header-cell *matHeaderCellDef class="amountHeader"> {{columnso[3].label}} </th>
@@ -85,7 +92,7 @@
     <ng-container matColumnDef="orderlineDelete">
       <th mat-header-cell *matHeaderCellDef> {{columnso[4].label}} </th>
       <td mat-cell *matCellDef="let element; let row">
-        <button mat-button color="accent" [disabled]="checkInvalidDelete(element)" (click)="deleteOrderLine(row)">{{'buttons.delete' | transloco | uppercase}}</button>
+        <button mat-button color="warn" (click)="deleteOrderline(element)" [disabled]="isLastOrderline()">{{'buttons.delete' | transloco | uppercase}}</button>
       </td>
     </ng-container>
     
@@ -100,7 +107,7 @@
 </mat-paginator>
 
 <div class="align-right actionButtons"> 
+  <button mat-button (click)="reset()" color="warn">{{'buttons.reset' | transloco | uppercase}}</button>
   <button mat-button mat-dialog-close color="accent">{{'buttons.cancel' | transloco | uppercase}}</button>
-  <button mat-button (click)="reset()" color="accent">{{'buttons.reset' | transloco | uppercase}}</button>
-  <button mat-button mat-dialog-close color="accent">{{'buttons.apply' | transloco | uppercase}}</button>
+  <button mat-button (click)="apply()" mat-dialog-close color="accent">{{'buttons.apply' | transloco | uppercase}}</button>
 </div>

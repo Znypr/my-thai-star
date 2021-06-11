@@ -36,6 +36,8 @@ export class WaiterCockpitService {
     'ordermanagement/v1/order/changeState';
   private readonly getOrderPaidUpdateRestPath: string =
     'ordermanagement/v1/order/paid';
+  private readonly getOrderUpdateRestPath: string =
+    'ordermanagement/v1/order/change';
 
   private readonly restServiceRoot$: Observable<string> = this.config.getRestServiceRoot();
   private translocoSubscription = Subscription.EMPTY;
@@ -107,6 +109,20 @@ export class WaiterCockpitService {
       ),
     );
   }
+
+  changeOrder(orderID: any, order: any): Observable<OrderListView[]> {
+
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.post<OrderListView[]>(
+          `${restServiceRoot}${this.getOrderUpdateRestPath}`,
+          // `${restServiceRoot}${this.getOrderRestPath}${orderID}`,
+          { id: orderID, order: order },
+        ),
+      ),
+    );
+  }
+
 
   getReservations(
     pageable: Pageable,

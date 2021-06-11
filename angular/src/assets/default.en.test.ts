@@ -52,10 +52,11 @@ export const DefaultENTest = {
       paidFail: 'Payment failed',
     },
     orderChange: {
-      reset: 'Change of order was successful',
+      reset: 'Reset was successful',
       applySuccess: 'Change of order was successfully applied',
       applyFail: 'Change of order failed',
-      deleteOrderline: 'Orderline successfully removed'
+      deleteOrderlineSuccess: 'Orderline successfully removed',
+      deleteOrderlineFail: 'Last orderline can\'t be removed',
     }
   },
   formFields: {

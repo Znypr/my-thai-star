@@ -259,6 +259,50 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
+  public boolean changeOrder(Long orderId, OrderCto cto) {
+
+    OrderEntity order = getOrderDao().find(orderId);
+
+    // process old orderlines
+    List<OrderLineEntity> orderLines = getOrderLineDao().findOrderLines(order.getId());
+
+    for (OrderLineEntity orderLine : orderLines) {
+      getOrderLineDao().deleteById(orderLine.getId());
+    }
+
+    // create new orderline entity
+    List<OrderLineCto> linesCto = cto.getOrderLines();
+    List<OrderLineEntity> orderLineEntities = new ArrayList<>();
+    for (OrderLineCto lineCto : linesCto) {
+      OrderLineEntity orderLineEntity = getBeanMapper().map(lineCto, OrderLineEntity.class);
+      orderLineEntity.setExtras(getBeanMapper().mapList(lineCto.getExtras(), IngredientEntity.class));
+      orderLineEntity.setDishId(lineCto.getOrderLine().getDishId());
+      orderLineEntity.setAmount(lineCto.getOrderLine().getAmount());
+      orderLineEntity.setComment(lineCto.getOrderLine().getComment());
+      orderLineEntities.add(orderLineEntity);
+    }
+
+    OrderEntity orderEntity = getBeanMapper().map(order, OrderEntity.class);
+    // String token = orderEntity.getBooking().getBookingToken();
+    // initialize, validate orderEntity here if necessary
+    orderEntity = getValidatedOrder(orderEntity.getBooking().getBookingToken(), orderEntity);
+    orderEntity.setOrderLines(orderLineEntities);
+    OrderEntity resultOrderEntity = getOrderDao().find(orderId);
+    //LOG.debug("Order with id '{}' has been created.", resultOrderEntity.getId());
+
+    for (OrderLineEntity orderLineEntity : orderLineEntities) {
+      orderLineEntity.setOrderId(resultOrderEntity.getId());
+      OrderLineEntity resultOrderLine = getOrderLineDao().save(orderLineEntity);
+      LOG.info("OrderLine with id '{}' has been created.", resultOrderLine.getId());
+    }
+
+    //sendOrderConfirmationEmail(token, resultOrderEntity);
+
+    return true;
+  }
+
+
+  @Override
   public boolean deleteOrder(Long orderId) {
 
     OrderEntity order = getOrderDao().find(orderId);

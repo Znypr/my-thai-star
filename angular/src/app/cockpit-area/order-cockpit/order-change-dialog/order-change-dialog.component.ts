@@ -3,12 +3,15 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { PageEvent } from '@angular/material/paginator';
 import { ConfigService } from '../../../core/config/config.service';
-import { BookingView, OrderView } from '../../../shared/view-models/interfaces';
+import { BookingView, ExtraView, OrderView } from '../../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { getSelectors } from '@ngrx/router-store';
 import { Booking } from 'app/book-table/models/booking.model';
 import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { updateOrder } from 'app/sidenav/store';
+
 
 @Component({
   selector: 'app-cockpit-order-dialog',
@@ -20,7 +23,6 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   private currentPage = 1;
 
   pageSize = 4;
-
   columnss: any[];
 
   data: any;
@@ -31,7 +33,11 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     'creationDate',
     'name',
     'email',
+    'tableId',
   ];
+
+  removeComment : boolean;
+  removeExtra : boolean;
 
   datao: OrderView[] = [];
   columnso: any[];
@@ -62,7 +68,8 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders(event);
     });
-
+    this.removeComment = false;
+    this.removeExtra = false;
     this.totalPrice = this.waiterCockpitService.getTotalPrice(
       this.data.orderLines,
     );
@@ -80,6 +87,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
           { name: 'creationDate', label: cockpitTable.creationDateH },
           { name: 'name', label: cockpitTable.ownerH },
           { name: 'email', label: cockpitTable.emailH },
+          { name: 'tableId', label: cockpitTable.tableH },
         ];
       });
 
@@ -95,6 +103,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
         ];
       });
   }
+
 
   page(pagingEvent: PageEvent): void {
     this.currentPage = pagingEvent.pageIndex + 1;
@@ -126,11 +135,13 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     //TODO
     // #1 post new order object to database
     
-    //if (success)
-    this.snackbarServive.openSnack(this.translocoService.translate('alerts.orderChange.applySuccess'), 2000, "green");
-    //else
-    this.snackbarServive.openSnack(this.translocoService.translate('alerts.orderChange.applyFail'), 2000, "red");
-    this.ngOnDestroy();
+    if (this.waiterCockpitService
+      .changeOrder(this.data.order.id, this.data.order))
+      this.snackbarServive.openSnack(this.translocoService.translate('alerts.orderChange.applySuccess'), 2000, "green");
+    else 
+      this.snackbarServive.openSnack(this.translocoService.translate('alerts.orderChange.applyFail'), 2000, "red");
+
+    console.log(this.data.order.id);
   }
 
   deleteOrderline(element: any) : void {
@@ -138,13 +149,47 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     // #1 delete front end orderline
     // #2 remove orderline from order object
 
-    this.snackbarServive.openSnack(this.translocoService.translate('alerts.orderChange.deleteOrderline'), 2000, "green");
+    // #1
+    if(this.filteredData.length > 1) {
+      let orderlines: OrderView[] = [];
+      
+      for(let orderline of this.filteredData) {
+        if(orderline != element) 
+          orderlines.push(orderline);
+      }
+      this.datao = orderlines;
+      this.filter();
+      
+      this.snackbarServive.openSnack(this.translocoService.translate('alerts.orderChange.deleteOrderlineSuccess'), 2000, "green");
+    } else {
+      this.snackbarServive.openSnack(this.translocoService.translate('alerts.orderChange.deleteOrderlineFail'), 2000, "red");
+    }
+    // #2
+   
   }
 
+  isLastOrderline() : boolean {
+    if(this.filteredData.length > 1)
+      return false;
+    else 
+      return true;
+  }
 
+  removeField(element: any, type: String) : String {
+    if(type == "comment") {
+      if(this.removeComment == true)
+        return "";
+      else 
+        return element.orderLine.comment; 
+    } else {
+      if(this.removeExtra == true)
+        return "";
+        else 
+        return element.extras; 
+    }
+  }
 
   onChange(orderStatus: string): void {
-    console.log('Status: ', orderStatus);
     this.data.order.orderStatus = orderStatus;
     this.ngOnInit();
     this.waiterCockpitService

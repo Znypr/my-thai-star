@@ -54,7 +54,8 @@
       "reset": "Bestellungsänderung wurde zurückgesetzt",
       "applySuccess": "Bestellung wurde erfolgreich verändert",
       "applyFail": "Bestellung konnte nicht verändert werden",
-      "deleteOrderline": "Artikel wurde Bestellung entfernt"
+      "deleteOrderlineSuccess": "Artikel wurde Bestellung entfernt",
+      "deleteOrderlineFail": "Letzte Bestellung kann nicht entfernt werden"
     }
   },
   "formFields": {

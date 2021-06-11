@@ -61,6 +61,12 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
   }
 
   @Override
+  public boolean changeOrder(long id, OrderCto order) {
+
+    return this.ordermanagement.changeOrder(id, order);
+  }
+
+  @Override
   public Page<OrderCto> findOrdersByPost(OrderSearchCriteriaTo searchCriteriaTo) {
 
     return this.ordermanagement.findOrdersByPost(searchCriteriaTo);
