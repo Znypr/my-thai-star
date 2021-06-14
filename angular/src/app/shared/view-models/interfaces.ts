@@ -57,7 +57,7 @@ export interface OrderDishView {
   };
 }
 
-export interface OrderView {
+export interface  OrderView {
   dish: {
     id: number;
     name: string;
