@@ -43,7 +43,7 @@ public interface UsermanagementRestService {
    */
   @GET
   @Path("/resetPassword/{id}/")
-  public void resetPassword(@PathParam("id") long id);
+  public boolean resetPassword(@PathParam("id") long id);
 
   /**
    * @author akkus Delegates to {@link UsermanagementImpl#getResetTokenByToken}.
@@ -53,6 +53,15 @@ public interface UsermanagementRestService {
   @GET
   @Path("/token/{token}/")
   public ResetToken getResetTokenByToken(@PathParam("token") String token);
+
+  /**
+   * @author akkus Delegates to {@link UsermanagementImpl#changePassword}.
+   *
+   * @param id ID of the {@link User} to change the password
+   */
+  @POST
+  @Path("/changePassword/")
+  public UserEto changePassword(UserEto user);
 
   /**
    * Delegates to {@link Usermanagement#saveUser}.

@@ -1,4 +1,4 @@
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog,MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { State } from '../../store';
 import { ConfigService } from '../../core/config/config.service';
@@ -10,7 +10,8 @@ import {
   ComponentFixture,
   async,
   fakeAsync,
-  tick,
+  flush,
+  tick
 } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslocoService } from '@ngneat/transloco';
@@ -27,7 +28,7 @@ import { ascSortOrder } from '../../../in-memory-test-data/db-order-asc-sort';
 import { orderData } from '../../../in-memory-test-data/db-order';
 
 const mockDialog = {
-  open: jasmine.createSpy('open').and.returnValue({
+  open: jasmine.createSpy('dialog.open').and.returnValue({
     afterClosed: () => of(true),
   }),
 };
@@ -59,12 +60,15 @@ class TestBedSetUp {
       declarations: [OrderCockpitComponent],
       providers: [
         { provide: MatDialog, useValue: mockDialog },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: WaiterCockpitService, useValue: waiterCockpitStub },
         TranslocoService,
         ConfigService,
         provideMockStore({ initialState }),
       ],
       imports: [
+        MatDialogModule,
+
         BrowserAnimationsModule,
         ReactiveFormsModule,
         getTranslocoModule(),
@@ -122,7 +126,7 @@ describe('OrderCockpitComponent', () => {
     expect(component.totalOrders).toBe(8);
   });
 
-  it('should clear form and reset', fakeAsync(() => {
+  fit('should clear form and reset', fakeAsync(() => {
     const clearFilter = el.query(By.css('.orderClearFilters'));
     click(clearFilter);
     fixture.detectChanges();
@@ -147,6 +151,21 @@ describe('OrderCockpitComponent', () => {
     expect(component.orders).toEqual(orderData.content);
     expect(component.totalOrders).toBe(8);
   }));
+
+  //C50
+it('should change status open in prepairing', fakeAsync(() => {
+  fixture.detectChanges();
+  spyOn(component, 'onChange');
+  const row = el.query(By.css('#selectStatus')).nativeElement;
+  row.click();
+  fixture.detectChanges();
+  const selectOptions = el.queryAll(By.css('#optionForStatus'));
+  selectOptions[1].nativeElement.click();
+  fixture.detectChanges();
+  expect(component.onChange).toHaveBeenCalled();
+  flush();
+}));
+
 });
 
 describe('TestingOrderCockpitComponentWithSortOrderData', () => {

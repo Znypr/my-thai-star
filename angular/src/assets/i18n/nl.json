@@ -23,7 +23,7 @@
     "accessError": "Geen toegang. U dient in te loggen",
     "genericError": "Er heeft zich een fout voorgedaan. Probeer het later nog een keer",
     "urlError": "Url niet gevonden, probeer het nog een keer",
-    "email confirmations": {
+    "emailConfirmations": {
       "invitationAccept": "Uitnodiging geaccepteerd",
       "invitationReject": "Uitnodiging geweigerd",
       "bookingCancel": "Boeking geannuleerd",

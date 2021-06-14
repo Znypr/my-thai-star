@@ -189,6 +189,10 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   /**
+   * TODO use getBeanMapper after cto has been build completely What's the difference between this method and save
+   * orders?
+   *
+   *
    * @param ctos
    * @param order
    */
@@ -212,35 +216,35 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     ctos.add(cto);
   }
 
-    /**
-     * @param order
-     */
-    @Override
-    public OrderCto updateOrderStatus(OrderEto order) {
+  /**
+   * @param order
+   */
+  @Override
+  public OrderCto updateOrderStatus(OrderEto order) {
 
-      System.out.println(order);
-      OrderEntity orderEntity = getOrderDao().find(order.getId());
-      orderEntity.setOrderStatus(order.getOrderStatus());
-      OrderEntity resultEntity = getOrderDao().save(orderEntity);
-      LOG.debug("Order with id '{}' has been modified.", resultEntity.getId());
-      return getBeanMapper().map(resultEntity, OrderCto.class);
+    System.out.println(order);
+    OrderEntity orderEntity = getOrderDao().find(order.getId());
+    orderEntity.setOrderStatus(order.getOrderStatus());
+    OrderEntity resultEntity = getOrderDao().save(orderEntity);
+    LOG.debug("Order with id '{}' has been modified.", resultEntity.getId());
+    return getBeanMapper().map(resultEntity, OrderCto.class);
 
-    }
+  }
 
-        /**
-     * @param order
-     */
-    @Override
-    public OrderCto updatePaid(OrderEto order) {
+  /**
+   * @param order
+   */
+  @Override
+  public OrderCto updatePaid(OrderEto order) {
 
-      System.out.println(order);
-      OrderEntity orderEntity = getOrderDao().find(order.getId());
-      orderEntity.setPaid(order.getPaid());
-      OrderEntity resultEntity = getOrderDao().save(orderEntity);
-      LOG.debug("Order with id '{}' has been modified.", resultEntity.getId());
-      return getBeanMapper().map(resultEntity, OrderCto.class);
+    System.out.println(order);
+    OrderEntity orderEntity = getOrderDao().find(order.getId());
+    orderEntity.setPaid(order.getPaid());
+    OrderEntity resultEntity = getOrderDao().save(orderEntity);
+    LOG.debug("Order with id '{}' has been modified.", resultEntity.getId());
+    return getBeanMapper().map(resultEntity, OrderCto.class);
 
-    }
+  }
 
   @Override
   public List<OrderCto> findOrders(Long idBooking) {
@@ -293,7 +297,8 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     // initialize, validate orderEntity here if necessary
     orderEntity = getValidatedOrder(orderEntity.getBooking().getBookingToken(), orderEntity);
     orderEntity.setOrderLines(orderLineEntities);
-    orderEntity.setOrderStatus(order.getOrderStatus());
+    orderEntity.setPaid(false);
+    orderEntity.setOrderStatus("open");
     OrderEntity resultOrderEntity = getOrderDao().save(orderEntity);
     LOG.debug("Order with id '{}' has been created.", resultOrderEntity.getId());
 

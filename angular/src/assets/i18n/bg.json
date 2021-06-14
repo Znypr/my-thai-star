@@ -23,7 +23,7 @@
     "accessError": "Достъп отказан, моля първо влез с потребителско име и парола",
     "genericError": "Грешка, моля опитай по-късно",
     "urlError": "Не е намерен Url, моля опитай отново",
-    "email confirmations": {
+    "emailConfirmations": {
       "invitationAccept": "Поканата е приета усрешно",
       "invitationReject": " Поканата е отхвърлена усрешно ",
       "bookingCancel": " Резервацията е отменена усрешно ",

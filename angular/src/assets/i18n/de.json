@@ -1,5 +1,6 @@
 {
   "buttons": {
+    "createUser": "Neuen Nutzer anlegen",
     "cancel": "Abbrechen",
     "apply": "Bestätigen",
     "close": "Schließen",
@@ -24,7 +25,7 @@
     "accessError": "Zugang verweigert, bitte erst einloggen",
     "genericError": "Ein Fehler ist aufgetreten, bitte versuche es später noch einmal",
     "urlError": "Url nicht gefunden, bitte versuche es noch einmal",
-    "email confirmations": {
+    "emailConfirmations": {
       "invitationAccept": "Einladung erfolgreich angenommen",
       "invitationReject": "Einladung erfolgreich abgelehnt",
       "bookingCancel": "Buchung erfolgreich abgebrochen",
@@ -92,6 +93,7 @@
     }
   },
   "main": {
+    "users": "Benutzer",
     "home": "Startseite",
     "menu": "Menü",
     "book": "Tisch buchen",
@@ -173,6 +175,7 @@
     }
   },
   "cockpit": {
+    "createUser": "Nutzer anlegen",
     "filter": "Filter",
     "order-archive": {
       "title": "Bestellungs Archiv",

@@ -23,7 +23,7 @@
     "accessError": "L'accès interdit, veuillez d'abord vous identifier",
     "genericError": "Une erreur s'est produite, veuillez réessayer plus tard",
     "urlError": "Url introuvable, veuillez réessayer",
-    "email confirmations": {
+    "emailConfirmations": {
       "invitationAccept": "Invitation acceptée avec succès",
       "invitationReject": "Invitation annulée avec succès",
       "bookingCancel": "Réservation annulée avec succès",

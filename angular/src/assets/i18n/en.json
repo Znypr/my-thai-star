@@ -1,5 +1,6 @@
 {
   "buttons": {
+    "createUser": "Create new user",
     "cancel": "Cancel",
     "apply": "Apply",
     "close": "Close",
@@ -24,7 +25,7 @@
     "accessError": "Access denied, please log in first",
     "genericError": "An error has ocurred, please try again later",
     "urlError": "Url not found, please try again",
-    "email confirmations": {
+    "emailConfirmations": {
       "invitationAccept": "Invitation succesfully accepted",
       "invitationReject": "Invitation succesfully rejected",
       "bookingCancel": "Booking succesfully cancelled",
@@ -92,6 +93,7 @@
     }
   },
   "main": {
+    "users": "Users",
     "home": "Home",
     "menu": "Menu",
     "book": "Book table",
@@ -173,6 +175,7 @@
     }
   },
   "cockpit": {
+    "createUser": "Create user",
     "filter": "Filter",
     "order-archive": {
       "title": "Order Archive",

@@ -81,10 +81,11 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   // }
 
   onButtonClick(token: String){
-    this.adminCockpitService.getTokenByToken(token).subscribe(
+    this.adminCockpitService.getUserIdByToken(token).subscribe(
       (data: any) => {
         if (!data) {
           this.resetTokenEntity = [];
+          alert('Hallo');
         } else {
           this.resetTokenEntity = data;
         }
@@ -93,12 +94,8 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   }
 
   funk(){
-    console.log(this.resetTokenEntity.token);
+    console.log(this.resetTokenEntity);
     return true;
-  }
-
-  changePassword(password: String){
-
   }
 
 
@@ -123,14 +120,6 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
     });
   }
 
-  // sendPasswordResetMail(){
-  //   this.adminCockpitService.sendPasswordResetLink(0).subscribe(
-  //     (res) => {
-  //       alert("hallo");
-  //     });
-  // }
-
-  // tslint:disable-next-line:typedef
   getUserInput(event: any) {
     const info = [
       event.target.Username.value,
@@ -138,10 +127,19 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
       event.target.Role.value,
       event.target.Password.value
     ];
-    const responseOfCreation = this.adminCockpitService.addUser(info[0], info[1], info[2], info[3]).subscribe(res => {
-      this.applyFilters();
-    });
+
+    if(event.target.Username.value != null && event.target.Email.value != null && event.target.Role.value != null && event.target.Password.value != null){
+      const responseOfCreation = this.adminCockpitService.addUser(info[0], info[1], info[2], info[3]).subscribe(res => {
+        this.applyFilters();
+      },
+        err =>
+        {
+          this.adminCockpitService.snackBar("E-Mail oder Nutzername schon vergeben", "Ok");
+        });
+
     return responseOfCreation;
+  }
+    return null;
   }
 
   clearFilters(filters: any): void {

@@ -30,6 +30,8 @@ export class AdminCockpitService {
     'usermanagement/v1/user';
   private readonly resetPasswordMailRestPath: string =
     'usermanagement/v1/resetPassword';
+  private readonly changePasswordRestPath: string =
+    'usermanagement/v1/changePassword';
   private readonly tokenRestPath: string =
     'usermanagement/v1/token';
 
@@ -77,7 +79,7 @@ export class AdminCockpitService {
   }
 
 
-  getTokenByToken(token: String): Observable<{}> {
+  getUserIdByToken(token: String): Observable<{}> {
     let path = this.tokenRestPath;
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
@@ -115,6 +117,25 @@ export class AdminCockpitService {
         }),
       ),
     );
+  }
+
+  changePassword(idUser: number, password: String, token: String){
+    let path = this.changePasswordRestPath;
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.post(`${restServiceRoot}${path}`,
+          {
+          userId: idUser,
+          password: password,
+          token: token
+          }
+        ),
+      ),
+    );
+  }
+
+  snackBar(msg: string, res: string){
+    this._snackBar.open(msg, res);
   }
 
   // reloads the page

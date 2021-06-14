@@ -25,28 +25,21 @@ export class EmailConfirmationsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let errorString: string;
-    let errorUrlString: string;
-    let emailConfirmationStrings: any;
-    forkJoin([
-      this.translocoService.translate('alerts.genericError'),
-      this.translocoService.translate('alerts.urlError'),
-      this.translocoService.translate('alerts.email confirmations'),
-    ]).subscribe((translation: any) => {
-      errorString = translation[0];
-      errorUrlString = translation[1];
-      emailConfirmationStrings = translation[2];
-    });
+
+    const errorString = this.translocoService.translate('alerts.genericError');
+    const errorUrlString = this.translocoService.translate('alerts.urlError');
+
 
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.token = params.get('token');
       this.action = params.get('action');
+
       switch (this.action) {
         case 'acceptInvite':
           this.emailService.sendAcceptInvitation(this.token).subscribe(
             (res: InvitationResponse) => {
               this.snackBarService.openSnack(
-                emailConfirmationStrings.invitationAccept,
+                this.translocoService.translate('alerts.emailConfirmations.invitationAccept'),
                 10000,
                 'green',
               );
@@ -60,7 +53,7 @@ export class EmailConfirmationsComponent implements OnInit {
           this.emailService.sendRejectInvitation(this.token).subscribe(
             (res: InvitationResponse) => {
               this.snackBarService.openSnack(
-                emailConfirmationStrings.invitationReject,
+                this.translocoService.translate('alerts.emailConfirmations.invitationReject'),
                 10000,
                 'red',
               );
@@ -74,7 +67,7 @@ export class EmailConfirmationsComponent implements OnInit {
           this.emailService.sendCancelBooking(this.token).subscribe(
             (res: InvitationResponse) => {
               this.snackBarService.openSnack(
-                emailConfirmationStrings.bookingCancel,
+                this.translocoService.translate('alerts.emailConfirmations.bookingCancel'),
                 10000,
                 'green',
               );
@@ -88,7 +81,7 @@ export class EmailConfirmationsComponent implements OnInit {
           this.emailService.sendCancelOrder(this.token).subscribe(
             (res: boolean) => {
               this.snackBarService.openSnack(
-                emailConfirmationStrings.orderCancel,
+                this.translocoService.translate('alerts.emailConfirmations.orderCancel'),
                 10000,
                 'green',
               );
@@ -98,12 +91,13 @@ export class EmailConfirmationsComponent implements OnInit {
             },
           );
           break;
+        case 'test':
+          break;
         default:
           this.snackBarService.openSnack(errorUrlString, 10000, 'black');
           break;
       }
     });
-    // Navigate to home
-    fromRoot.go({ path: ['/restaurant'] });
+    this.router.navigate(['/restaurant']);
   }
 }

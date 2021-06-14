@@ -33,6 +33,8 @@ CREATE TABLE User (
   email VARCHAR (120) NULL,
   idRole BIGINT NOT NULL,
   CONSTRAINT PK_User PRIMARY KEY(id),
+  UNIQUE KEY user_name (username),
+  UNIQUE KEY user_email (email),
   CONSTRAINT PK_User_idRole FOREIGN KEY(idRole) REFERENCES UserRole(id) NOCHECK
 );
 

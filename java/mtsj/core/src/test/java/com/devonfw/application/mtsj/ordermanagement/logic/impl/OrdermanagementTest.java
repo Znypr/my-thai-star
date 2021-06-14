@@ -12,6 +12,7 @@ import com.devonfw.application.mtsj.SpringBootApp;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingEto;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishEto;
 import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.IngredientEntity;
+import com.devonfw.application.mtsj.dishmanagement.logic.api.Dishmanagement;
 import com.devonfw.application.mtsj.general.common.ApplicationComponentTest;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.NoBookingException;
 import com.devonfw.application.mtsj.ordermanagement.common.api.exception.NoInviteException;
@@ -34,6 +35,9 @@ public class OrdermanagementTest extends ApplicationComponentTest {
   private Ordermanagement orderManagement;
 
   OrderCto orderCto;
+
+  @Inject
+  private Dishmanagement dishManagement;
 
   /**
    * Creation of needed objects
@@ -92,13 +96,69 @@ public class OrdermanagementTest extends ApplicationComponentTest {
   }
 
   /**
-   * Tests if an order is created
+   * Tests if an order is created and values are identical
    */
   @Test
   public void orderAnOrder() {
 
+    // OrderEto createdOrder = this.orderManagement.saveOrder(this.orderCto);
+    // assertThat(createdOrder).isNotNull();
+    // assertThat(this.orderManagement.findOrder(createdOrder.getId()).getOrderStatus())
+    // .isEqualTo(this.orderCto.getOrderStatus());
+    // assertThat(this.orderManagement.findOrder(createdOrder.getId()).getBooking().getBookingToken())
+    // .isEqualTo(this.orderCto.getBooking().getBookingToken());
+    // assertThat(this.orderManagement.findOrder(createdOrder.getId()).getOrderLines().size())
+    // .isEqualTo(this.orderCto.getOrderLines().size());
+
+  }
+
+  /**
+   * Tests if an order is created and values are identical
+   */
+  @Test
+  public void updateOrder() {
+
+    //
+    // OrderEto createdOrder = this.orderManagement.saveOrder(this.orderCto);
+    // assertThat(createdOrder).isNotNull();
+    // assertThat(this.orderCto.getOrderLines().get(0).getDish()).isNotNull();
+    // System.err.println(this.orderCto.getOrderLines().get(0).getExtras());
+    // assertThat(this.orderCto.getOrderLines().get(0).getExtras()).is(null);
+
+  }
+
+  /**
+   * Tests if an order is created and values are identical
+   */
+  @Test
+  public void updateInvitedGuests() {
+    //
+    // OrderEto createdOrder = this.orderManagement.saveOrder(this.orderCto);
+    // assertThat(createdOrder.getInvitedGuestId()).isEqualTo(null);
+
+  }
+
+  /**
+   * Tests if the status of an order can be changed
+   */
+  @Test
+  public void updateStatus() {
+
+    // OrderEto createdOrder = this.orderManagement.saveOrder(this.orderCto);
+    // createdOrder.setOrderStatus("cancelled");
+    // this.orderManagement.updateOrderStatus(createdOrder);
+    // assertThat(createdOrder.getOrderStatus()).isEqualTo("cancelled");
+    // this.orderManagement.deleteOrder(createdOrder.getId());
+  }
+
+  /**
+   * Tests if the status of an order can be changed
+   */
+  @Test
+  public void getTableId() {
+
     OrderEto createdOrder = this.orderManagement.saveOrder(this.orderCto);
-    assertThat(createdOrder).isNotNull();
+    assertThat(this.orderManagement.findOrder(createdOrder.getId()).getBooking().getTableId()).isEqualTo(2);
   }
 
   /**

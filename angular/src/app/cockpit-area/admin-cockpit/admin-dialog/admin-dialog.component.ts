@@ -26,6 +26,7 @@ export class AdminDialogComponent implements OnInit {
     'user.id',
     'user.username',
     'user.email',
+    'user.idRole'
   ];
 
   // datao: UserView[] = [];
