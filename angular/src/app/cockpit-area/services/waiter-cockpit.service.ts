@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { FilterSearchComponent } from 'app/menu/components/menu-filters/filter-search/filter-search.component';
 import {
   BookingInfo,
+  Filter,
   FilterCockpit,
   OrderLineInfo,
   Pageable,
@@ -15,10 +16,12 @@ import { ConfigService } from '../../core/config/config.service';
 import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
 import {
   BookingResponse,
+  OrderDishResponse,
   OrderListView,
   OrderResponse,
   OrderView,
   OrderViewResult,
+  PlateView,
 } from '../../shared/view-models/interfaces';
 import { PriceCalculatorService } from '../../sidenav/services/price-calculator.service';
 import { TranslocoService } from '@ngneat/transloco';
@@ -38,8 +41,10 @@ export class WaiterCockpitService {
     'ordermanagement/v1/order/paid';
   private readonly getOrderUpdateRestPath: string =
     'ordermanagement/v1/order/change';
+  private readonly getDishRestPath: string = 'dishmanagement/v1/dish/search';
 
-  private readonly restServiceRoot$: Observable<string> = this.config.getRestServiceRoot();
+  private readonly restServiceRoot$: Observable<string> =
+    this.config.getRestServiceRoot();
   private translocoSubscription = Subscription.EMPTY;
 
   constructor(
@@ -73,6 +78,27 @@ export class WaiterCockpitService {
     );
   }
 
+  getDishes(): Observable<OrderDishResponse[]> {
+    let path = this.getDishRestPath;
+
+    let filter: Filter = {
+      isFav: false,
+      searchBy: '',
+      maxPrice: null,
+      minLikes: null,
+      categories: [],
+    };
+
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.post<OrderDishResponse[]>(
+          `${restServiceRoot}${path}`,
+          filter,
+        ),
+      ),
+    );
+  }
+
   updateOrderStatus(orderID: any, status: any): Observable<OrderListView[]> {
     this.translocoSubscription = this.translocoService
       .selectTranslate('alerts.orderStatus.statusSuccess')
@@ -89,8 +115,7 @@ export class WaiterCockpitService {
   }
 
   updatePaid(orderID: any, paid: any): Observable<OrderListView[]> {
-
-    if(paid) {
+    if (paid) {
       this.translocoSubscription = this.translocoService
         .selectTranslate('alerts.paid.paidSuccess')
         .subscribe((alert) => this.snackBar.openSnack(alert, 4000, 'green'));
@@ -111,7 +136,6 @@ export class WaiterCockpitService {
   }
 
   changeOrder(orderID: any, order: any): Observable<OrderListView[]> {
-
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
         this.http.post<OrderListView[]>(
@@ -122,7 +146,6 @@ export class WaiterCockpitService {
       ),
     );
   }
-
 
   getReservations(
     pageable: Pageable,

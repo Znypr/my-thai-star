@@ -57,8 +57,8 @@ export const DefaultENTest = {
       applySuccess: 'Change of order was successfully applied',
       applyFail: 'Change of order failed',
       deleteOrderlineSuccess: 'Orderline successfully removed',
-      deleteOrderlineFail: 'Last orderline can\'t be removed',
-    }
+      deleteOrderlineFail: "Last orderline can't be removed",
+    },
   },
   formFields: {
     username: 'Username',
@@ -218,6 +218,7 @@ export const DefaultENTest = {
         extrasH: 'Extra',
         quantityH: 'Quantity',
         priceH: 'Price',
+        dishSelection: 'Select dish',
       },
       orderStatus: {
         open: 'Open',
@@ -244,7 +245,6 @@ export const DefaultENTest = {
       ownerH: 'Owner',
       tableH: 'Table',
       creationDateH: 'Creation date',
-
     },
   },
 };

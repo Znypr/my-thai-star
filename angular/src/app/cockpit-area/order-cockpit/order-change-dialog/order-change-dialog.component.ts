@@ -3,16 +3,16 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { PageEvent } from '@angular/material/paginator';
 import { ConfigService } from '../../../core/config/config.service';
-import { BookingView, ExtraView, OrderListView, OrderView } from '../../../shared/view-models/interfaces';
+import { BookingView, ExtraView, OrderListView, OrderView, PlateView } from '../../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { getSelectors } from '@ngrx/router-store';
 import { Booking } from 'app/book-table/models/booking.model';
 import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import { updateOrder } from 'app/sidenav/store';
-import { OrderLineInfo } from 'app/shared/backend-models/interfaces';
+import { Filter, OrderLineInfo, Pageable } from 'app/shared/backend-models/interfaces';
 import { MenuService } from 'app/menu/services/menu.service';
+import { FormControl } from '@angular/forms';
 
 
 @Component({
@@ -27,6 +27,8 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   pageSize = 4;
   columnss: any[];
 
+  test = new FormControl;
+
   data: any;
   datat: BookingView[] = [];
   columnst: any[];
@@ -37,6 +39,12 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     'email',
     'tableId',
   ];
+
+  menu: any;
+
+  tempMenu = [
+    {id:0,label:"Corn"},
+    {id:1, label: "Shrimp"}];
 
   removeComment : boolean;
 
@@ -49,7 +57,6 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     'extras',
     'orderLine.amount',
     'orderlineDelete',
-
   ];
 
   pageSizes: number[];
@@ -79,6 +86,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     );
     this.datao = this.waiterCockpitService.orderComposer(this.data.orderLines);
     this.datat.push(this.data.booking);
+    this.getDishes();
     this.filter();
   }
 
@@ -105,16 +113,6 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
           { name: 'orderLine.amount', label: cockpitDialogTable.quantityH },
         ];
       });
-
-      this.translocoService
-      .selectTranslateObject('buttons', {}, lang)
-      .subscribe((button) => {
-        this.columnsb = [
-          { name: 'orderlineDelete', label: button.delete },
-          // { name: 'orderlineAdd', label: button.add },
-          
-        ];
-      });
   }
 
 
@@ -129,6 +127,27 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     let newData: any[] = this.datao;
     newData = newData.slice(this.fromRow, this.currentPage * this.pageSize);
     setTimeout(() => (this.filteredData = newData));
+  }
+
+  getDishes() : void {
+    
+    // let dishId: number;
+    // let dishLabel: string;
+
+    // let dishes = this.waiterCockpitService
+    //   .getDishes()
+    //   .subscribe((data: any) => {
+        
+    //     this.menu = [];
+    //     for (let entry of data.content) {
+    //         this.menu.push(entry);
+    //         console.log(entry);
+    //     }
+    //   });
+    
+
+    // console.log(this.menu);
+    
   }
 
   checkInvalidDelete(element: any) : boolean {
@@ -158,11 +177,14 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
 
   
 
-  addOrderline(dish: string) : void {
+  addOrderline() : void {
     // this.menuService.getDishes(null);
 
+    //dish = getDishById(this.test.value)
+    //name: dish.name, price: dish.price
+
     let orderline: OrderView = {
-      dish: {id:10, name:dish, price: 13},
+      dish: {id:this.test.value, name: this.test. , price: 13},
       orderLine: {amount:1, comment:""},
       extras:[]
     }
@@ -222,12 +244,9 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
       return true;
   }
 
-  removeField(element: any) : String {
+  removeField(element: any) : void {
    
-    if(this.removeComment == true)
-      return "";
-    else 
-      return element.orderLine.comment; 
+    element.orderLine.comment = "";
   }
 
   onChange(orderStatus: string): void {

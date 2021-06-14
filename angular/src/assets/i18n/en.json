@@ -209,7 +209,8 @@
         "commentsH": "Comments",
         "extrasH": "Extra",
         "quantityH": "Quantity",
-        "priceH": "Price"
+        "priceH": "Price",
+        "dishSelection":"Select dish"
       },
       "orderStatus": {
         "open": "Open",

@@ -52,10 +52,10 @@
       "paidFail": "Bezahlung fehlgeschlagen"
     },
     "orderChange": {
-      "reset": "Bestellungsänderung wurde zurückgesetzt",
-      "applySuccess": "Bestellung wurde erfolgreich verändert",
-      "applyFail": "Bestellung konnte nicht verändert werden",
-      "deleteOrderlineSuccess": "Artikel wurde Bestellung entfernt",
+      "reset": "Bestellungsänderungen wurden zurückgesetzt",
+      "applySuccess": "Bestellung wurde erfolgreich angepasst",
+      "applyFail": "Bestellung konnte nicht angepasst werden",
+      "deleteOrderlineSuccess": "Artikel wurde aus Bestellung entfernt",
       "deleteOrderlineFail": "Letzte Bestellung kann nicht entfernt werden"
     }
   },
@@ -209,7 +209,8 @@
         "commentsH": "Kommentare",
         "extrasH": "Extra",
         "quantityH": "Anzahl",
-        "priceH": "Preis"
+        "priceH": "Preis",
+        "dishSelection":"Gerichtewahl"
       },
       "orderStatus": {
         "open": "Offen",
