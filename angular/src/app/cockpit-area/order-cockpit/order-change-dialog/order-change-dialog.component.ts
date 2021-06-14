@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { PageEvent } from '@angular/material/paginator';
 import { ConfigService } from '../../../core/config/config.service';
-import { BookingView, ExtraView, OrderView } from '../../../shared/view-models/interfaces';
+import { BookingView, ExtraView, OrderListView, OrderView } from '../../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { getSelectors } from '@ngrx/router-store';
@@ -11,6 +11,8 @@ import { Booking } from 'app/book-table/models/booking.model';
 import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { updateOrder } from 'app/sidenav/store';
+import { OrderLineInfo } from 'app/shared/backend-models/interfaces';
+import { MenuService } from 'app/menu/services/menu.service';
 
 
 @Component({
@@ -37,16 +39,17 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   ];
 
   removeComment : boolean;
-  removeExtra : boolean;
 
   datao: OrderView[] = [];
   columnso: any[];
+  columnsb: any[];
   displayedColumnsO: string[] = [
     'dish.name',
     'orderLine.comment',
     'extras',
     'orderLine.amount',
-    'orderlineDelete'
+    'orderlineDelete',
+
   ];
 
   pageSizes: number[];
@@ -59,6 +62,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) dialogData: any,
     private configService: ConfigService,
     private snackbarServive: SnackBarService,
+    private menuService: MenuService,
   ) {
     this.data = dialogData;
     this.pageSizes = this.configService.getValues().pageSizesDialog;
@@ -69,7 +73,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
       this.setTableHeaders(event);
     });
     this.removeComment = false;
-    this.removeExtra = false;
+    
     this.totalPrice = this.waiterCockpitService.getTotalPrice(
       this.data.orderLines,
     );
@@ -99,7 +103,16 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
           { name: 'orderLine.comment', label: cockpitDialogTable.commentsH },
           { name: 'extras', label: cockpitDialogTable.extrasH },
           { name: 'orderLine.amount', label: cockpitDialogTable.quantityH },
-          { name: 'orderlineDelete', label: cockpitDialogTable.orderlineDeleteH },
+        ];
+      });
+
+      this.translocoService
+      .selectTranslateObject('buttons', {}, lang)
+      .subscribe((button) => {
+        this.columnsb = [
+          { name: 'orderlineDelete', label: button.delete },
+          // { name: 'orderlineAdd', label: button.add },
+          
         ];
       });
   }
@@ -125,7 +138,6 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   }
 
   reset() {
-
     this.snackbarServive.openSnack(this.translocoService.translate('alerts.orderChange.reset'), 2000, "green");
     this.ngOnInit();
   }
@@ -143,6 +155,22 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
 
     console.log(this.data.order.id);
   }
+
+  
+
+  addOrderline(dish: string) : void {
+    // this.menuService.getDishes(null);
+
+    let orderline: OrderView = {
+      dish: {id:10, name:dish, price: 13},
+      orderLine: {amount:1, comment:""},
+      extras:[]
+    }
+
+    this.datao.push(orderline);
+    this.filter();
+  }
+  
 
   deleteOrderline(element: any) : void {
     //TODO
@@ -168,6 +196,25 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
    
   }
 
+  extraSelected(element: any, extra: String) : boolean {
+
+    if(extra == "tofu") {
+      for(let extra of element.extras) {
+        if(extra == "tofu")
+          return true;
+      }
+      return false;
+    }
+
+    if(extra == "curry") {
+      for(let extra of element.extras) {
+        if(extra == "curry")
+          return true;
+      }
+      return false;
+    }
+  }
+
   isLastOrderline() : boolean {
     if(this.filteredData.length > 1)
       return false;
@@ -175,18 +222,12 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
       return true;
   }
 
-  removeField(element: any, type: String) : String {
-    if(type == "comment") {
-      if(this.removeComment == true)
-        return "";
-      else 
-        return element.orderLine.comment; 
-    } else {
-      if(this.removeExtra == true)
-        return "";
-        else 
-        return element.extras; 
-    }
+  removeField(element: any) : String {
+   
+    if(this.removeComment == true)
+      return "";
+    else 
+      return element.orderLine.comment; 
   }
 
   onChange(orderStatus: string): void {

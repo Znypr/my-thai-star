@@ -17,6 +17,7 @@ export const DefaultENTest = {
     edit: 'Edit',
     reset: 'Reset',
     delete: 'Delete',
+    add: 'Add',
   },
   table: {
     rowsPage: 'Rows per page',
@@ -217,7 +218,6 @@ export const DefaultENTest = {
         extrasH: 'Extra',
         quantityH: 'Quantity',
         priceH: 'Price',
-        orderlineDelteH: 'Delete',
       },
       orderStatus: {
         open: 'Open',
@@ -244,7 +244,7 @@ export const DefaultENTest = {
       ownerH: 'Owner',
       tableH: 'Table',
       creationDateH: 'Creation date',
-      orderEditH: 'Edit',
+
     },
   },
 };

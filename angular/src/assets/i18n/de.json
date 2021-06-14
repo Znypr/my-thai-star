@@ -16,7 +16,8 @@
     "addComment": "Kommentar hinzufügen",
     "edit": "Bearbeiten",
     "reset": "Zurücksetzen",
-    "delete": "Löschen"
+    "delete": "Löschen",
+    "add": "Hinzufügen"
   },
   "table": {
     "rowsPage": "Zeilen pro Seite",
@@ -208,8 +209,7 @@
         "commentsH": "Kommentare",
         "extrasH": "Extra",
         "quantityH": "Anzahl",
-        "priceH": "Preis",
-        "orderlineDeleteH": "Löschen"
+        "priceH": "Preis"
       },
       "orderStatus": {
         "open": "Offen",
@@ -235,8 +235,8 @@
       "paidH": "Bezahlt",
       "ownerH": "Eigentümer",
       "tableH": "Tisch",
-      "creationDateH": "Erstelldatum",
-      "orderEditH": "Bearbeiten"
+      "creationDateH": "Erstelldatum"
+
     }
   }
 }

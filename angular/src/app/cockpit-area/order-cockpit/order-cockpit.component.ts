@@ -38,6 +38,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
 
   data: any;
   columns: any[];
+  columnsb: any[];
   columnss: any[];
 
   displayedColumns: string[] = [
@@ -109,7 +110,14 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
           { name: 'paid', label: cockpitTable.paidH },
           { name: 'orderStatus', label: cockpitTable.orderStatusH },
-          { name: 'orderEdit', label: cockpitTable.orderEditH },
+        ];
+      });
+
+       this.translocoSubscription = this.translocoService
+      .selectTranslateObject('buttons', {}, lang)
+      .subscribe((button) => {
+        this.columnsb = [
+          { name: 'orderEdit', label: button.edit },
         ];
       });
   }

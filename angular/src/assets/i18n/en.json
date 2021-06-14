@@ -16,7 +16,8 @@
     "addComment": "Add comment",
     "edit": "Edit",
     "reset": "Reset",
-    "delete": "Delete"
+    "delete": "Delete",
+    "add": "Add"
   },
   "table": {
     "rowsPage": "Rows per page",
@@ -208,8 +209,7 @@
         "commentsH": "Comments",
         "extrasH": "Extra",
         "quantityH": "Quantity",
-        "priceH": "Price",
-        "orderlineDeleteH": "Delete"
+        "priceH": "Price"
       },
       "orderStatus": {
         "open": "Open",
@@ -235,8 +235,7 @@
       "paidH": "Paid",
       "ownerH": "Owner",
       "tableH": "Table",
-      "creationDateH": "Creation date",
-      "orderEditH": "Edit"
+      "creationDateH": "Creation date"
     }
   }
 }
