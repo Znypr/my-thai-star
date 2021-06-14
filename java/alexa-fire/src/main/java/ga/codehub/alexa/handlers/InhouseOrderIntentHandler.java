@@ -33,8 +33,8 @@ public class InhouseOrderIntentHandler implements RequestHandler {
         Map<String, Object> attributes = attributesManager.getSessionAttributes();
 
         // Booking
-        String name = "Hahn";
-        String userEmail = "rebella.rubine@gmail.com";
+        String name = "";
+        String userEmail = "";
         String personCount = "";
         String bookingToken = "";
 
@@ -48,13 +48,13 @@ public class InhouseOrderIntentHandler implements RequestHandler {
 
 
         try {
-            /*try {
+            try {
                 name = input.getServiceClientFactory().getUpsService().getProfileName();
                 userEmail = input.getServiceClientFactory().getUpsService().getProfileEmail();
             } catch (NullPointerException nullp) {
                 speechText = "Deine Alexa braucht zusätzliche Berechtigungen !";
                 throw new AlexaException();
-            }*/
+            }
 
             Request request = input.getRequestEnvelope().getRequest();
             IntentRequest intentRequest = (IntentRequest) request;
@@ -114,6 +114,7 @@ public class InhouseOrderIntentHandler implements RequestHandler {
 
                 } else {
                     ArrayList<String> orderlines;
+                    ArrayList<String> shoppingcart;
                     if (!attributes.containsKey("orderLines")) {
                         Slot personCount_s = slotMap.get("personCount");
                         personCount = personCount_s.getValue();
@@ -148,6 +149,9 @@ public class InhouseOrderIntentHandler implements RequestHandler {
                         orderlines = new ArrayList<String>();
                         attributes.put("orderLines", orderlines);
 
+                        shoppingcart = new ArrayList<String>();
+                        attributes.put("shoppingcart", shoppingcart);
+
                         String payload_beginning = "{\"booking\":{\"bookingToken\":\"" + bookingToken + "\"},\"orderLines\":[";
                         String payload_ending = "]}";
 
@@ -156,9 +160,11 @@ public class InhouseOrderIntentHandler implements RequestHandler {
 
                     } else {
                         orderlines = (ArrayList<String>) attributes.get("orderLines");
+                        shoppingcart = (ArrayList<String>) attributes.get("shoppingcart");
                     }
 
                     orderlines.add("{\"orderLine\":{\"dishId\":" + dishID + ",\"amount\":" + amount + ",\"comment\":\"\"},\"extras\":[" + extrasIds + "]}");
+                    shoppingcart.add(dish + ";" + amount + ";" + extras);
                     speechText = "Das Gericht wurde in den Warenkorb gelegt. Antworten Sie mit Weiteres Gericht hinzufuegen, wenn Sie ein weiteres Gericht hinzufuegen wollen und mit Bestellung absenden, um die Bestellung zu beenden.";
                 }
             }

@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "mythaistar extern",
+            "invocationName": "mythaistar inhouse",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
@@ -361,8 +361,15 @@
                     ]
                 },
                 {
-                    "name": "OrderIntent",
+                    "name": "InhouseOrderIntent",
                     "slots": [
+                        {
+                            "name": "personCount",
+                            "type": "AMAZON.NUMBER",
+                            "samples": [
+                                "{personCount}"
+                            ]
+                        },
                         {
                             "name": "dish",
                             "type": "DISH",
@@ -384,11 +391,11 @@
                             "name": "extras",
                             "type": "EXTRAS",
                             "samples": [
-                                "Ja {extras}",
-                                "Ja extra {extras}",
-                                "Nein {extras} extra",
+                                "{extras}",
                                 "Nein {extras}",
-                                "{extras}"
+                                "Nein {extras} extra",
+                                "Ja extra {extras}",
+                                "Ja {extras}"
                             ]
                         }
                     ],
@@ -425,12 +432,12 @@
                     "name": "FinishOrderIntent",
                     "slots": [],
                     "samples": [
-                        "Bestellung beenden",
-                        "Nein"
+                        "Bestellung absenden",
+                        "Bestellung beenden"
                     ]
                 },
                 {
-                    "name": "AddOrderIntent",
+                    "name": "InhouseAddOrderIntent",
                     "slots": [
                         {
                             "name": "dish",
@@ -451,11 +458,11 @@
                             "name": "extras",
                             "type": "EXTRAS",
                             "samples": [
-                                "Nein {extras}",
-                                "Nein {extras} extra",
-                                "Ja extra {extras}",
+                                "{extras}",
                                 "Ja {extras}",
-                                "{extras}"
+                                "Ja extra {extras}",
+                                "Nein {extras} extra",
+                                "Nein {extras}"
                             ]
                         }
                     ],
@@ -467,7 +474,7 @@
                     "name": "ShoppingCartIntent",
                     "slots": [],
                     "samples": [
-                        "Was ist in meinem Warenkorb",
+                        "Was liegt in meinem Warenkorb",
                         "Warenkorb"
                     ]
                 }
@@ -513,22 +520,7 @@
                     "values": [
                         {
                             "name": {
-                                "value": "curry"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "tofu"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "tofu und curry"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "curry und tofu"
+                                "value": "nichts"
                             }
                         },
                         {
@@ -538,7 +530,22 @@
                         },
                         {
                             "name": {
-                                "value": "nichts"
+                                "value": "curry und tofu"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "tofu und curry"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "tofu"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "curry"
                             }
                         }
                     ]
@@ -548,37 +555,7 @@
                     "values": [
                         {
                             "name": {
-                                "value": "thai green chicken curry"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "thai spicy basil fried rice"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "thai peanut beef"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "thai thighs fish/prawns"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "thai thighs fish"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "thai thighs prawns"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "garlic paradise salad"
+                                "value": "beer"
                             }
                         },
                         {
@@ -588,7 +565,37 @@
                         },
                         {
                             "name": {
-                                "value": "beer"
+                                "value": "garlic paradise salad"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "thai thighs prawns"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "thai thighs fish"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "thai thighs fish/prawns"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "thai peanut beef"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "thai spicy basil fried rice"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "thai green chicken curry"
                             }
                         }
                     ]
@@ -699,12 +706,21 @@
                     ]
                 },
                 {
-                    "name": "OrderIntent",
+                    "name": "InhouseOrderIntent",
                     "confirmationRequired": true,
                     "prompts": {
-                        "confirmation": "Confirm.Intent.106121358168"
+                        "confirmation": "Confirm.Intent.1022729880227"
                     },
                     "slots": [
+                        {
+                            "name": "personCount",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.203293420325.1408036804779"
+                            }
+                        },
                         {
                             "name": "dish",
                             "type": "DISH",
@@ -736,8 +752,14 @@
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
-                                "elicitation": "Elicit.Slot.106121358168.180357509052"
-                            }
+                                "elicitation": "Elicit.Slot.423780607981.1388586273407"
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.1231033728737.157759813505.584164566777"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -748,10 +770,10 @@
                     "slots": []
                 },
                 {
-                    "name": "AddOrderIntent",
+                    "name": "InhouseAddOrderIntent",
                     "confirmationRequired": true,
                     "prompts": {
-                        "confirmation": "Confirm.Intent.1283972123237"
+                        "confirmation": "Confirm.Intent.726226696195"
                     },
                     "slots": [
                         {
@@ -785,8 +807,14 @@
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
-                                "elicitation": "Elicit.Slot.1283972123237.1267269640812"
-                            }
+                                "elicitation": "Elicit.Slot.797222888860.1103454340361"
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.1471300670329.364783117251.1091322208765"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -981,7 +1009,16 @@
                 ]
             },
             {
-                "id": "Elicit.Slot.106121358168.180357509052",
+                "id": "Elicit.Slot.203293420325.1408036804779",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Wie viele Personen sitzen an diesem Tisch?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.423780607981.1388586273407",
                 "variations": [
                     {
                         "type": "PlainText",
@@ -990,16 +1027,16 @@
                 ]
             },
             {
-                "id": "Confirm.Intent.1283972123237",
+                "id": "Confirm.Intent.423780607981",
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Es wird {amount} {dish} mit {extras} extra zum Warenkorb hinzugefügt, korrekt?"
+                        "value": "Sie fügen {amount} mal {dish} mit {extras} extra zu ihrer Bestellung hinzu, korrekt?"
                     }
                 ]
             },
             {
-                "id": "Elicit.Slot.1283972123237.1267269640812",
+                "id": "Elicit.Slot.797222888860.1103454340361",
                 "variations": [
                     {
                         "type": "PlainText",
@@ -1008,11 +1045,38 @@
                 ]
             },
             {
-                "id": "Confirm.Intent.106121358168",
+                "id": "Confirm.Intent.1022729880227",
                 "variations": [
                     {
                         "type": "PlainText",
                         "value": "Es wird {amount} {dish} mit {extras} extra zum Warenkorb hinzugefügt, korrekt?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Intent.726226696195",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Es wird {amount} {dish} mit {extras} extra zum Warenkorb hinzugefügt, korrekt?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.1471300670329.364783117251.1091322208765",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Bitte versuchen Sie es nochmal, ihr gewünschtes Extra hinzuzufügen."
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.1231033728737.157759813505.584164566777",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Bitte versuchen Sie es nochmal, ihr gewünschtes Extra hinzuzufügen."
                     }
                 ]
             }

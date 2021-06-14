@@ -105,9 +105,14 @@ public class OrderIntentHandler implements RequestHandler {
 
                     } else {
                         ArrayList<String> orderlines;
+                        ArrayList<String> shoppingcart;
                         if (!attributes.containsKey("orderLines")) {
+
                             orderlines = new ArrayList<String>();
                             attributes.put("orderLines", orderlines);
+
+                            shoppingcart = new ArrayList<String>();
+                            attributes.put("shoppingcart", shoppingcart);
 
                             String payload_beginning = "{\"booking\":{\"bookingToken\":\"" + bookingToken + "\"},\"orderLines\":[";
                             String payload_ending = "]}";
@@ -117,10 +122,12 @@ public class OrderIntentHandler implements RequestHandler {
 
                         } else {
                             orderlines = (ArrayList<String>)attributes.get("orderLines");
+                            shoppingcart = (ArrayList<String>) attributes.get("shoppingcart");
                         }
 
 
                         orderlines.add("{\"orderLine\":{\"dishId\":" + dishID + ",\"amount\":" + amount + ",\"comment\":\"\"},\"extras\":[" + extrasIds + "]}");
+                        shoppingcart.add(dish + ";" + amount + ";" + extras);
                         speechText = "Das Gericht wurde in den Warenkorb gelegt. Antworten Sie mit Weiteres Gericht hinzufuegen, wenn Sie ein weiteres Gericht hinzufuegen wollen und mit Bestellung absenden, um die Bestellung zu beenden.";
                     }
                 }
