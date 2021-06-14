@@ -63,21 +63,15 @@ public class MenuIntentHandler implements RequestHandler {
         String speechText = "";
 
         try {
-            /*
-             * Request request = input.getRequestEnvelope().getRequest(); IntentRequest
-             * intentRequest = (IntentRequest) request; Intent intent =
-             * intentRequest.getIntent();
-             */
-            
             String payload = "";
             String dish_category = "";
             String property = "\"price\"";
             String direction = "\"DESC\"";
             String priceLimit = null;
             String keyword = "";
+            String extras = "";
 
             // Search Menu
-
             if (input.matches(intentName("SearchIntent"))) {
                 Request request = input.getRequestEnvelope().getRequest();
                 IntentRequest intentRequest = (IntentRequest) request;
@@ -96,22 +90,31 @@ public class MenuIntentHandler implements RequestHandler {
             // Filter Menu
             if (input.matches(intentName("MenuIntent")))
                 dish_category = "";
+
             if (input.matches(intentName("FoodIntent")))
                 dish_category = "{\"id\":0}";
+
             if (input.matches(intentName("DrinkIntent")))
                 dish_category = "{\"id\":8}";
+
             if (input.matches(intentName("CurryIntent")))
                 dish_category = "{\"id\":5}";
+
             if (input.matches(intentName("VeganIntent")))
                 dish_category = "{\"id\":6}";
+
             if (input.matches(intentName("RiceIntent")))
                 dish_category = "{\"id\":4}";
+
             if (input.matches(intentName("VegetarianIntent")))
                 dish_category = "{\"id\":7}";
+
             if (input.matches(intentName("StarterIntent")))
                 dish_category = "{\"id\":1}";
+
             if (input.matches(intentName("DessertIntent")))
                 dish_category = "{\"id\":2}";
+
             if (input.matches(intentName("NoodleIntent")))
                 dish_category = "{\"id\":3}";
 
@@ -142,6 +145,7 @@ public class MenuIntentHandler implements RequestHandler {
                 }
                 Slot direction_slot = slotMap.get("direction");
                 Slot property_slot = slotMap.get("property");
+
                 if (direction_slot.getValue() != null) {
                     if (direction_slot.getValue().equals("aufsteigend")) {
                         direction = "\"ASC\"";
@@ -151,9 +155,11 @@ public class MenuIntentHandler implements RequestHandler {
                 if (property_slot.getValue().toLowerCase().equals("name")) {
                     property = "\"name\"";
                     speechText = "Die Sortierung erfolgt nun nach Name. ";
+
                 } else if (property_slot.getValue().toLowerCase().equals("likes")) {
                     property = "\"description\"";
                     speechText = "Die Sortierung erfolgt nun nach Anzahl von Likes. ";
+
                 } else if (property_slot.getValue().toLowerCase().equals("preis")) {
                     speechText = "Die Sortierung erfolgt nun nach Preis. ";
                 }
@@ -164,19 +170,21 @@ public class MenuIntentHandler implements RequestHandler {
                 Intent intent = intentRequest.getIntent();
 
                 Map<String, Slot> slotMap = intent.getSlots();
+
                 if (slotMap.size() != 1) {
                     throw new AlexaException();
                 }
+
                 Slot direction_slot = slotMap.get("direction");
+
                 if (direction_slot.getValue().toLowerCase().equals("aufsteigend")) {
                     direction = "\"ASC\"";
                     speechText = "Die Sortierung erfolgt nun aufsteigend. ";
+
                 } else if (direction_slot.getValue().toLowerCase().equals("absteigend")) {
                     speechText = "Die Sortierung erfolgt nun absteigend. ";
                 }
             }
-            // if (input.matches(intentName("FavoritIntent")))
-            // dish_category = "{\"id\":2},";
 
             // Read Description
             if (input.matches(intentName("DescriptionIntent"))) {
@@ -185,12 +193,28 @@ public class MenuIntentHandler implements RequestHandler {
                 Intent intent = intentRequest.getIntent();
 
                 Map<String, Slot> slotMap = intent.getSlots();
+
                 if (slotMap.size() != 1) {
                     throw new AlexaException();
                 }
+
                 Slot dish = slotMap.get("dish");
                 keyword = dish.getValue();
+                Boolean tofu = (keyword.equals("thai green chicken curry") || keyword.equals("thai spicy basil fried rice") || keyword.equals("thai peanut beef"));
+                Boolean curry = (keyword.equals("thai green chicken curry") || keyword.equals("thai spicy basil fried rice") || keyword.equals("thai thighs fish/prawns") || keyword.equals("garlic paradise salad"));
 
+                if(tofu) {
+                    extras = " Tofu Option verfügbar.";
+
+                }else if(curry) {
+                    extras = " Extra Curry Option verfügbar";
+
+                }else if(tofu && curry){
+                    extras = " Extra Curry und Tofu Optionen verfügbar";
+
+                }else {
+                    extras = " Keine weiteren Bestelloptionen verfügbar.";
+                }
             }
 
             payload = "{\"categories\":[" + dish_category + "],\"searchBy\":\"" + keyword
@@ -201,21 +225,24 @@ public class MenuIntentHandler implements RequestHandler {
             Gson gson = new Gson();
             String response;
             ga.codehub.entity.menu.Response resp;
+
             try {
                 response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/dishmanagement/v1/dish/search");
+
                 if (!response.equals("no match")) {
                     resp = gson.fromJson(response, ga.codehub.entity.menu.Response.class);
 
                     if (input.matches(intentName("DescriptionIntent")) && resp.content.length == 1) {
-                        speechText += "Beschreibung von " + resp.toStringName() + " : " + resp.toStringDescription() + " ";
-                    }
-                    else {
+                        speechText += "Beschreibung von " + resp.toStringName() + " : " + resp.toStringDescription() + " " + extras ;
+
+                    } else {
                         speechText += "Es gibt: " + resp.toStringNames();
                     }
 
                 } else {
                     speechText = "Die Anfrage führte zu keinen Ergebnissen. Bitte versuchen Sie eine andere Anfrage.";
                 }
+
             } catch (Exception ex) {
                 speechText = "Der MyThaiStar-Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben. "
                         + ex.toString();
@@ -225,6 +252,7 @@ public class MenuIntentHandler implements RequestHandler {
         } catch (AlexaException e) {
             e.printStackTrace();
         }
+
         return input.getResponseBuilder()
         .withSpeech(speechText)
         // .withSimpleCard("MyThaiStar", speechText)
