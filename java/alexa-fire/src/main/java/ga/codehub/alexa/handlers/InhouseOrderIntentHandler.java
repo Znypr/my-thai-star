@@ -6,8 +6,11 @@ import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.*;
 import com.google.gson.Gson;
 import ga.codehub.alexa.Exceptions.AlexaException;
+import ga.codehub.entity.booking.Booking;
 import ga.codehub.tools.BasicOperations;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
@@ -20,7 +23,7 @@ public class InhouseOrderIntentHandler implements RequestHandler {
 
     @Override
     public boolean canHandle(HandlerInput input) {
-        return input.matches(intentName("OrderIntent")) || input.matches(intentName("AddOrderIntent"));
+        return input.matches(intentName("InhouseOrderIntent")) || input.matches(intentName("InhouseAddOrderIntent"));
     }
 
     @Override
@@ -30,46 +33,118 @@ public class InhouseOrderIntentHandler implements RequestHandler {
         Map<String, Object> attributes = attributesManager.getSessionAttributes();
 
         // Booking
+        String name = "Hahn";
+        String userEmail = "rebella.rubine@gmail.com";
+        String personCount = "";
         String bookingToken = "";
 
         // Order
-        String item = "";
-        String comment = "";
-        String extras = "";
+        String dish = "";
+        //String comment = "";
+        String extrasIds = "";
         String amount = "";
         Integer dishID = -1;
+        String extras = "";
 
-        if (attributes.containsKey("bookingToken")) {
 
-            bookingToken = attributes.get("bookingToken").toString();
+        try {
+            /*try {
+                name = input.getServiceClientFactory().getUpsService().getProfileName();
+                userEmail = input.getServiceClientFactory().getUpsService().getProfileEmail();
+            } catch (NullPointerException nullp) {
+                speechText = "Deine Alexa braucht zusätzliche Berechtigungen !";
+                throw new AlexaException();
+            }*/
 
-            try {
+            Request request = input.getRequestEnvelope().getRequest();
+            IntentRequest intentRequest = (IntentRequest) request;
+            Intent intent = intentRequest.getIntent();
 
-                Request request = input.getRequestEnvelope().getRequest();
-                IntentRequest intentRequest = (IntentRequest) request;
-                Intent intent = intentRequest.getIntent();
-
+            if(intent.getConfirmationStatus().toString().equals("DENIED")){
+                /*attributes.put("cancledSlots", intent.getSlots());
+                attributesManager.setSessionAttributes(attributes);*/
+                speechText = "Die Bestellung wurde abgebrochen. Um die Bestellung neu zu starten, sagen Sie bitte Bestellung tätigen.";
+            }else{
                 Map<String, Slot> slotMap = intent.getSlots();
-                if (slotMap.size() != 2) {
+                if ((slotMap.size() != 4)&&(slotMap.size() != 3)) {
                     throw new AlexaException();
                 }
                 Slot amount_s = slotMap.get("amount");
-                Slot item_s = slotMap.get("item");
-                // Slot extras_s = slotMap.get("extra");
+                Slot dish_s = slotMap.get("dish");
+                Slot extras_s = slotMap.get("extras");
 
                 amount = amount_s.getValue();
-                item = item_s.getValue();
-                // extras = extras_s.getValue();
+                dish = dish_s.getValue();
+                extras = extras_s.getValue();
+                Boolean tofu = (dish.equals("thai green chicken curry") || dish.equals("thai spicy basil fried rice") || dish.equals("thai peanut beef"));
+                Boolean curry = (dish.equals("thai green chicken curry") || dish.equals("thai spicy basil fried rice") || dish.equals("thai thighs fish/prawns") || dish.equals("garlic paradise salad"));
 
-                dishID = getDishIDbyName(item);
+                switch (extras) {
+                    case "tofu":
+                        if(tofu){
+                            extrasIds = "{\"id\":0}";
+                        }else {
+                            extrasIds = "";
+                        }
+                        break;
+                    case "curry":
+                        if(curry){
+                            extrasIds = "{\"id\":1}";
+                        }else {
+                            extrasIds = "";
+                        }
+                        break;
+                    case "tofu und curry":
+                    case "curry und tofu":
+                        if(tofu && curry){
+                            extrasIds = "{\"id\":0},{\"id\":1}";
+                        }else {
+                            extrasIds = "";
+                        }
+                        break;
+                    default:
+                        extrasIds = "";
+                        break;
+                }
+
+                dishID = getDishIDbyName(dish);
 
                 if (dishID == -1) {
                     speechText = "Die Anfrage fuehrte zu keinen Ergebnissen. Bitte versuchen Sie es eine andere Anfrage. ";
+
                 } else {
-
                     ArrayList<String> orderlines;
-
                     if (!attributes.containsKey("orderLines")) {
+                        Slot personCount_s = slotMap.get("personCount");
+                        personCount = personCount_s.getValue();
+
+                        ga.codehub.entity.booking.Request myApiRequest = new ga.codehub.entity.booking.Request();
+                        myApiRequest.booking = new Booking();
+                        myApiRequest.booking.email = userEmail;
+                        myApiRequest.booking.assistants = personCount;
+                        Instant time = Instant.now().plus(2, ChronoUnit.MINUTES);
+                        myApiRequest.booking.bookingDate = time.toString();
+                        myApiRequest.booking.name = name;
+
+                        BasicOperations bo = new BasicOperations();
+                        Gson gson = new Gson();
+                        String payload = gson.toJson(myApiRequest);
+                        String response;
+                        ga.codehub.entity.booking.Booking resp;
+
+                        try {
+                            response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/bookingmanagement/v1/booking");
+
+                        } catch (Exception ex) {
+                            speechText = "Der MyThaiStar-Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben";
+                            throw new AlexaException();
+                        }
+
+                        resp = gson.fromJson(response, ga.codehub.entity.booking.Booking.class);
+                        bookingToken = resp.bookingToken;
+                        attributes.put("bookingToken", resp.bookingToken);
+                        attributesManager.setSessionAttributes(attributes);
+
                         orderlines = new ArrayList<String>();
                         attributes.put("orderLines", orderlines);
 
@@ -83,54 +158,23 @@ public class InhouseOrderIntentHandler implements RequestHandler {
                         orderlines = (ArrayList<String>) attributes.get("orderLines");
                     }
 
-
-                    orderlines.add("{\"orderLine\":{\"dishId\":" + dishID + ",\"amount\":" + amount + ",\"comment\":\"\"},\"extras\":[]}");
-                    speechText = "Möchten Sie noch weitere Dinge bestellen? ";
-
-                    // BasicOperations bo = new BasicOperations();
-                    // Gson gson = new Gson();
-                    // String response;
-                    // ga.codehub.entity.menu.Response resp;
-
-                    // try {
-                    //     response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/ordermanagement/v1/order");
-                    //     resp = gson.fromJson(response, ga.codehub.entity.menu.Response.class);
-                    //     speechText = "Sie haben erfolgreich " + amount + " mal " + item + " bestellt. ";
-
-                    // } catch (Exception ex) {
-                    //     speechText = "Der MyThaiStar-Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben. "
-                    //             + ex.toString();
-                    //     throw new AlexaException();
-                    // }
+                    orderlines.add("{\"orderLine\":{\"dishId\":" + dishID + ",\"amount\":" + amount + ",\"comment\":\"\"},\"extras\":[" + extrasIds + "]}");
+                    speechText = "Das Gericht wurde in den Warenkorb gelegt. Antworten Sie mit Weiteres Gericht hinzufuegen, wenn Sie ein weiteres Gericht hinzufuegen wollen und mit Bestellung absenden, um die Bestellung zu beenden.";
                 }
-
-            } catch (AlexaException e) {
-                e.printStackTrace();
             }
 
-            return input.getResponseBuilder()
-                    .withSpeech(speechText)
-                    .withSimpleCard("MyThaiStar", speechText)
-                    .withReprompt("Möchten Sie noch weitere Dinge bestellen?")
-                    .build();
-
-
-        } else {
-            // The user must have invoked this intent before they order.
-            // Trigger the BookingIntent.
-
-            // Create the intent.
-            Intent intent = Intent.builder()
-                    .withName("BookingIntent")
-                    .build();
-
-            return input.getResponseBuilder()
-                    .withSpeech("Sie müssen zunächst einen Tisch buchen um Bestellungen zu tätigen. ")
-                    .build();
+        } catch (AlexaException e) {
+            speechText = "Ein Fehler ist aufgetreten...";
+            e.printStackTrace();
         }
+
+        return input.getResponseBuilder()
+                .withSpeech(speechText)
+                .withSimpleCard("MyThaiStar", speechText)
+                .build();
     }
 
-    private Integer getDishIDbyName (String DishName) {
+    private Integer getDishIDbyName(String DishName) {
 
         String payload = "";
         Integer dishID = -1;
@@ -161,7 +205,7 @@ public class InhouseOrderIntentHandler implements RequestHandler {
                         + ex.toString();
                 throw new AlexaException();
             }
-        } catch(AlexaException e) {
+        } catch (AlexaException e) {
             e.printStackTrace();
         }
 
