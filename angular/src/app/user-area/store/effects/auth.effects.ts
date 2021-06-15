@@ -199,7 +199,7 @@ export class AuthEffects {
         ofType(authActions.loginFail),
         map((errorData) => errorData.error),
         tap((error) => {
-          this.snackBar.openSnack(error.message, 4000, 'red');
+          this.snackBar.openSnack(  this.translocoService.translate('alerts.authAlerts.loginFail'), 4000, 'red');
         }),
       ),
     { dispatch: false },

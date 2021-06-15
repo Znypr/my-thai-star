@@ -34,6 +34,7 @@
     "passwordError": "Die Passwörter stimmen nicht überein",
     "authAlerts": {
       "loginSuccess": "Anmeldung erfolgreich",
+      "loginFail": "Login fehlgeschlagen",
       "registerSuccess": "Registrierung erfolgreich",
       "registerFail": "Registrierung fehlgeschlagen, Benutzername bereits in Verwendung",
       "logoutSuccess": "Abmeldung erfolgreich, komme bald wieder!"

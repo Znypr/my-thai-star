@@ -137,8 +137,6 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
       calendar.setTime(new Date());
       calendar.add(Calendar.HOUR_OF_DAY, 1);
 
-      System.err.println("Date: " + calendar.getTime());
-
       resetTokenEntity.setExpires(calendar.getTime());
       resetTokenEntity.setFlag(false);
       resetTokenEntity.setIdUser(id);
@@ -157,24 +155,28 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
    *
    * @param user identifies the user
    */
-  private void sendResetEmailToUser(UserEntity user, String token) {
+  private boolean sendResetEmailToUser(UserEntity user, String token) {
 
+    LOG.debug("userid: " + user.getId() + "\nuserEmail: " + user.getEmail() + "\ntoken: " + token);
     try {
       StringBuilder resetMailContent = new StringBuilder();
+
       resetMailContent.append("MY THAI STAR").append("\n");
       resetMailContent.append("Hi ").append(user.getEmail()).append("\n");
       resetMailContent.append("You have requested a password reset").append("\n");
 
       // TODO akkus <RestPath needs to be implemented and added here>
-      String linkReset = getClientUrl() + "/resetPassword?token=" + token + "&id=" + user.getId();
-
+      String linkReset = "http://localhost:" + this.clientPort + "/resetPassword?token=" + token;
       resetMailContent.append("To reset: ").append(linkReset).append("\n");
 
-      LOG.error("Die Emailadresse lautet: " + user.getEmail());
       this.mailService.sendMail(user.getEmail(), "Password Reset", resetMailContent.toString());
+      LOG.debug("Email to {} has been sent", user.getEmail());
     } catch (Exception e) {
+      System.err.println(e.getMessage());
       LOG.error("Email not sent. {}", e.getMessage());
+      return false;
     }
+    return true;
 
   }
 
@@ -190,7 +192,7 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
 
     Objects.requireNonNull(user, "user");
 
-    LOG.error("password Änderung wurde angefragt");
+    LOG.debug("password Änderung wurde angefragt");
 
     // LOG.debug("Get Token with token {} from database");
     // ResetTokenEntity resetToken = getBeanMapper().map(getResetDao().findByToken(user.getToken()),

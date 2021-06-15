@@ -34,6 +34,7 @@
     "passwordError": "Password Mismatch",
     "authAlerts": {
       "loginSuccess": "Login successful",
+      "loginFail": "Login failed",
       "registerSuccess": "Register successful",
       "registerFail": "Register failed, username already in use",
       "logoutSuccess": "Log out successful, come back soon!"

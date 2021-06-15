@@ -15,11 +15,14 @@
 </mat-expansion-panel-header>
   <mat-form-field appearance="fill">
     <mat-label>Username</mat-label>
-    <input id="Username" matInput placeholder="Username">
+    <input id="Username" matInput placeholder="Username" [formControl]="username">
+    <mat-error>
+      Please enter a username
+    </mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Email</mat-label>
-    <input id="Email" type="email" name="email" matInput placeholder="user@mail.com" ngModel [email]="true">
+    <input id="Email" type="email" name="email" matInput placeholder="user@mail.com" ngModel  [formControl]="email">
     <mat-error id="EmailError">
       Please enter a valid email address
     </mat-error>
@@ -51,10 +54,13 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Enter your password</mat-label>
-    <input id="Password" matInput [type]="hide ? 'password' : 'text'" placeholder="I<3MOM">
+    <input [formControl]="password" id="Password" matInput [type]="hide ? 'password' : 'text'" placeholder="I<3MOM">
     <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     </button>
+    <mat-error>
+      Please enter a password
+    </mat-error>
   </mat-form-field>
 
   <button id="submitButton" mat-button type="submit"> Neuen Nutzer anlegen </button>

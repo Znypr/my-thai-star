@@ -1,0 +1,32 @@
+<p>Folgender Benutzer: {{data.username}}</p>
+<mat-divider></mat-divider>
+<div class="tableContainer">
+   <table mat-table [dataSource]="datat">
+     <ng-container matColumnDef="user.id">
+       <th mat-header-cell *matHeaderCellDef> ID</th>
+       <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+     </ng-container>
+
+     <ng-container matColumnDef="user.username">
+       <th mat-header-cell *matHeaderCellDef> Name</th>
+       <td mat-cell *matCellDef="let element" > {{element.username}} </td>
+     </ng-container>
+
+     <ng-container matColumnDef="user.email">
+       <th mat-header-cell *matHeaderCellDef> Email </th>
+       <td mat-cell *matCellDef="let element" > {{element.email}} </td>
+     </ng-container>
+
+     <tr mat-header-row *matHeaderRowDef="displayedColumnsT"></tr>
+     <tr mat-row *matRowDef="let row; columns: displayedColumnsT;"></tr>
+   </table>
+</div>
+<div class="actionButtons" >
+  <button id="deleteButton" mat-button mat-dialog-close (click)="deleteUser(data.id)">Löschen</button>
+  <button id="resetButton" mat-button (click)="sendPasswordResetMail(data.id)">Rücksetzlink schicken</button>
+</div>
+<div class="align-right actionButtons">
+  <button id="closeButton" mat-button mat-dialog-close color="accent">{{'buttons.close' | transloco | uppercase}}</button>
+</div>
+<div>
+</div>
