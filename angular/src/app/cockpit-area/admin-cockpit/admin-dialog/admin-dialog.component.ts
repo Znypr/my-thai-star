@@ -62,7 +62,7 @@ export class AdminDialogComponent implements OnInit {
   sendPasswordResetMail(userId: number){
     this.adminCockpitService.sendPasswordResetMail(userId).subscribe(
       (res) => {
-        alert("Die Email wird verarbeitet und in Kürze versendet");
+        alert("Die Anfrage wird verarbeitet und die Email in Kürze versendet");
       });
   }
 
