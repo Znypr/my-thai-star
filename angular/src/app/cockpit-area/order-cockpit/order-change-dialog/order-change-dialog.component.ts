@@ -32,7 +32,14 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   pageSize = 4;
   columnss: any[];
 
-  test = new FormControl;
+  orderlineInput = new FormControl();
+  test = new FormControl();
+
+  testDishes = [
+    { id: 0, name: 'Corn' },
+    { id: 1, name: 'Water' },
+    { id: 2, name: 'Pepper' },
+  ];
 
   dishes$: Observable<DishView[]> = this.store.select(fromMenu.getDishes);
 
@@ -47,14 +54,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     'tableId',
   ];
 
-  @Input() dish: DishView;
-  menu: any;
-
-  tempMenu = [
-    {id:0,label:"Corn"},
-    {id:1, label: "Shrimp"}];
-
-  removeComment : boolean;
+  removeComment: boolean;
 
   datao: OrderView[] = [];
   columnso: any[];
@@ -69,8 +69,8 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
 
   pageSizes: number[];
   filteredData: OrderView[] = this.datao;
+  newOrderLines: OrderView[];
   totalPrice: number;
-  
 
   constructor(
     private store: Store<fromApp.State>,
@@ -86,19 +86,20 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log(this.data.orderLines);
+
     this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders(event);
     });
     this.removeComment = false;
-    
+
     this.totalPrice = this.waiterCockpitService.getTotalPrice(
       this.data.orderLines,
     );
     this.datao = this.waiterCockpitService.orderComposer(this.data.orderLines);
+    this.newOrderLines = this.datao;
     this.datat.push(this.data.booking);
-    this.getDishes();
     this.filter();
-  
   }
 
   setTableHeaders(lang: string): void {
@@ -126,7 +127,6 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
       });
   }
 
-
   page(pagingEvent: PageEvent): void {
     this.currentPage = pagingEvent.pageIndex + 1;
     this.pageSize = pagingEvent.pageSize;
@@ -138,135 +138,173 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     let newData: any[] = this.datao;
     newData = newData.slice(this.fromRow, this.currentPage * this.pageSize);
     setTimeout(() => (this.filteredData = newData));
+
   }
 
-  print(dish: any) : void {
-    console.log(dish);
-  }
-
-  getDishes() : void {
-    
+  getDishes(): void {
     // let dishId: number;
     // let dishLabel: string;
-
     // let dishes = this.waiterCockpitService
     //   .getDishes()
     //   .subscribe((data: any) => {
-        
     //     this.menu = [];
     //     for (let entry of data.content) {
     //         this.menu.push(entry);
     //         console.log(entry);
     //     }
     //   });
-    
-
     // console.log(this.menu);
-    
   }
 
-  checkInvalidDelete(element: any) : boolean {
+  checkInvalidDelete(element: any): boolean {
     console.log(element.length);
-    if(element.length > 1) return false;
+    if (element.length > 1) return false;
     else return true;
   }
 
   reset() {
-    this.snackbarServive.openSnack(this.translocoService.translate('alerts.orderChange.reset'), 2000, "green");
+    this.snackbarServive.openSnack(
+      this.translocoService.translate('alerts.orderChange.reset'),
+      2000,
+      'green',
+    );
     this.ngOnInit();
   }
 
   apply() {
-     
     //TODO
     // #1 post new order object to database
-    
-    if (this.waiterCockpitService
-      .changeOrder(this.data.order.id, this.data.order))
-      this.snackbarServive.openSnack(this.translocoService.translate('alerts.orderChange.applySuccess'), 2000, "green");
-    else 
-      this.snackbarServive.openSnack(this.translocoService.translate('alerts.orderChange.applyFail'), 2000, "red");
 
-    // console.log(this.data.order.id);
+    if (this.waiterCockpitService.changeOrder(this.data.order.id, this.data))
+      this.snackbarServive.openSnack(
+        this.translocoService.translate('alerts.orderChange.applySuccess'),
+        2000,
+        'green',
+      );
+    else
+      this.snackbarServive.openSnack(
+        this.translocoService.translate('alerts.orderChange.applyFail'),
+        2000,
+        'red',
+      );
+
+    console.log(this.data);
   }
 
-  showdishes() {
-    console.log(this.dish);
-    for(let dish in this.dish) {
-      console.log(dish);
-    }
-  }
-
-  addOrderline() : void {
+  addOrderline(): void {
     // this.menuService.getDishes(null);
 
     //dish = getDishById(this.test.value)
     //name: dish.name, price: dish.price
 
+    // let orderline: OrderView = {
+    //   dish: { id: this.orderlineInput.value, name: 'test', price: 13 },
+    //   orderLine: { amount: 1, comment: '' },
+    //   extras: [],
+    // };
+
     let orderline: OrderView = {
-      dish: {id:this.test.value, name: 'test' , price: 13},
-      orderLine: {amount:1, comment:""},
-      extras:[]
-    }
+      dish: { id: 0, name: this.test.value, price: 13 },
+      orderLine: { amount: 1, comment: '' },
+      extras: [],
+    };
 
-    this.datao.push(orderline);
+    this.newOrderLines.push(orderline);
+    this.datao = this.waiterCockpitService.orderComposer(this.newOrderLines);
     this.filter();
-  }
-  
 
-  deleteOrderline(element: any) : void {
+    console.log(this.datao);
+  }
+
+  deleteOrderline(element: any): void {
     //TODO
     // #1 delete front end orderline
     // #2 remove orderline from order object
 
     // #1
-    if(this.filteredData.length > 1) {
+    if (this.filteredData.length > 1) {
       let orderlines: OrderView[] = [];
-      
-      for(let orderline of this.filteredData) {
-        if(orderline != element) 
-          orderlines.push(orderline);
+
+      for (let orderline of this.datao) {
+        if (orderline != element) orderlines.push(orderline);
       }
-      this.datao = orderlines;
+      this.newOrderLines = orderlines;
+      this.datao = this.waiterCockpitService.orderComposer(this.newOrderLines);
       this.filter();
-      
-      this.snackbarServive.openSnack(this.translocoService.translate('alerts.orderChange.deleteOrderlineSuccess'), 2000, "green");
+
+      this.snackbarServive.openSnack(
+        this.translocoService.translate(
+          'alerts.orderChange.deleteOrderlineSuccess',
+        ),
+        2000,
+        'green',
+      );
     } else {
-      this.snackbarServive.openSnack(this.translocoService.translate('alerts.orderChange.deleteOrderlineFail'), 2000, "red");
+      this.snackbarServive.openSnack(
+        this.translocoService.translate(
+          'alerts.orderChange.deleteOrderlineFail',
+        ),
+        2000,
+        'red',
+      );
     }
     // #2
-   
+
+    console.log(this.data);
   }
 
-  extraSelected(element: any, extra: String) : boolean {
+  addExtra(element: any, extra: String): void {
+    console.log(element);
 
-    if(extra == "tofu") {
-      for(let extra of element.extras) {
-        if(extra == "tofu")
-          return true;
-      }
-      return false;
+    if (extra == 'tofu') {
+      if (element.extras == 'Extra curry') element.extras = 'Tofu, Extra curry';
+      if (element.extras == '') element.extras = 'Tofu';
     }
 
-    if(extra == "curry") {
-      for(let extra of element.extras) {
-        if(extra == "curry")
-          return true;
-      }
-      return false;
+    if (extra == 'curry') {
+      if (element.extras == 'Tofu') element.extras = 'Tofu, Extra curry';
+      if (element.extras == '') element.extras = 'Extra curry';
     }
   }
 
-  isLastOrderline() : boolean {
-    if(this.filteredData.length > 1)
-      return false;
-    else 
-      return true;
+  removeExtra(element: any, extra: String): void {
+    console.log(element);
+
+    if (extra == 'tofu') {
+      if (element.extras == 'Tofu') element.extras = '';
+      if (element.extras == 'Tofu, Extra curry') element.extras = 'Extra curry';
+    }
+
+    if (extra == 'curry') {
+      if (element.extras == 'Extra curry') element.extras = '';
+      if (element.extras == 'Tofu, Extra Curry') element.extras = 'Tofu';
+    }
   }
 
-  removeField(element: any) : void {
-   
-    element.orderLine.comment = "";
+  extraSelected(element: any, extra: String): boolean {
+    if (extra == 'tofu') {
+      if (element.extras == 'Tofu' || element.extras == 'Tofu, Extra curry')
+        return true;
+      return false;
+    }
+
+    if (extra == 'curry') {
+      if (
+        element.extras == 'Extra curry' ||
+        element.extras == 'Tofu, Extra curry'
+      )
+        return true;
+      return false;
+    }
+  }
+
+  isLastOrderline(): boolean {
+    if (this.filteredData.length > 1) return false;
+    else return true;
+  }
+
+  removeField(element: any): void {
+    element.orderLine.comment = '';
   }
 
   onChange(orderStatus: string): void {
@@ -276,8 +314,6 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
       .updateOrderStatus(this.data.order.id, orderStatus)
       .subscribe();
   }
-
-
 
   ngOnDestroy(): void {}
 }

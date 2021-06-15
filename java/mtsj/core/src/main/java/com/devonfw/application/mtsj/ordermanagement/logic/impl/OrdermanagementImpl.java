@@ -281,17 +281,11 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       orderLineEntity.setComment(lineCto.getOrderLine().getComment());
       orderLineEntities.add(orderLineEntity);
     }
-
-    OrderEntity orderEntity = getBeanMapper().map(order, OrderEntity.class);
-    // String token = orderEntity.getBooking().getBookingToken();
-    // initialize, validate orderEntity here if necessary
-    orderEntity = getValidatedOrder(orderEntity.getBooking().getBookingToken(), orderEntity);
-    orderEntity.setOrderLines(orderLineEntities);
-    OrderEntity resultOrderEntity = getOrderDao().find(orderId);
-    //LOG.debug("Order with id '{}' has been created.", resultOrderEntity.getId());
-
+    // set relation
+    order.setOrderLines(orderLineEntities);
+    
     for (OrderLineEntity orderLineEntity : orderLineEntities) {
-      orderLineEntity.setOrderId(resultOrderEntity.getId());
+      orderLineEntity.setOrderId(order.getId());
       OrderLineEntity resultOrderLine = getOrderLineDao().save(orderLineEntity);
       LOG.info("OrderLine with id '{}' has been created.", resultOrderLine.getId());
     }

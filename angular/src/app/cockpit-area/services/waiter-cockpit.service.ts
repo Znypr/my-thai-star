@@ -41,7 +41,8 @@ export class WaiterCockpitService {
     'ordermanagement/v1/order/paid';
   private readonly getOrderUpdateRestPath: string =
     'ordermanagement/v1/order/change';
-  private readonly getDishRestPath: string = 'dishmanagement/v1/dish/search';
+  private readonly getDishRestPath: string = 
+    'dishmanagement/v1/dish/search';
 
   private readonly restServiceRoot$: Observable<string> =
     this.config.getRestServiceRoot();
@@ -81,19 +82,13 @@ export class WaiterCockpitService {
   getDishes(): Observable<OrderDishResponse[]> {
     let path = this.getDishRestPath;
 
-    let filter: Filter = {
-      isFav: false,
-      searchBy: '',
-      maxPrice: null,
-      minLikes: null,
-      categories: [],
-    };
+    let payload = "{\"categories\":[],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
 
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
         this.http.post<OrderDishResponse[]>(
           `${restServiceRoot}${path}`,
-          filter,
+          payload,
         ),
       ),
     );
@@ -140,7 +135,6 @@ export class WaiterCockpitService {
       exhaustMap((restServiceRoot) =>
         this.http.post<OrderListView[]>(
           `${restServiceRoot}${this.getOrderUpdateRestPath}`,
-          // `${restServiceRoot}${this.getOrderRestPath}${orderID}`,
           { id: orderID, order: order },
         ),
       ),
