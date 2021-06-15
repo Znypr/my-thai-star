@@ -1,9 +1,9 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { PageEvent } from '@angular/material/paginator';
 import { ConfigService } from '../../../core/config/config.service';
-import { BookingView, ExtraView, OrderListView, OrderView, PlateView } from '../../../shared/view-models/interfaces';
+import { BookingView, DishView, ExtraView, OrderListView, OrderView, PlateView } from '../../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { getSelectors } from '@ngrx/router-store';
@@ -12,7 +12,12 @@ import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { Filter, OrderLineInfo, Pageable } from 'app/shared/backend-models/interfaces';
 import { MenuService } from 'app/menu/services/menu.service';
+
 import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import * as fromMenu from '../../../menu/store';
+import * as fromApp from '../../../store';
 
 
 @Component({
@@ -29,6 +34,8 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
 
   test = new FormControl;
 
+  dishes$: Observable<DishView[]> = this.store.select(fromMenu.getDishes);
+
   data: any;
   datat: BookingView[] = [];
   columnst: any[];
@@ -40,6 +47,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     'tableId',
   ];
 
+  @Input() dish: DishView;
   menu: any;
 
   tempMenu = [
@@ -62,8 +70,10 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   pageSizes: number[];
   filteredData: OrderView[] = this.datao;
   totalPrice: number;
+  
 
   constructor(
+    private store: Store<fromApp.State>,
     private waiterCockpitService: WaiterCockpitService,
     private translocoService: TranslocoService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
@@ -88,6 +98,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     this.datat.push(this.data.booking);
     this.getDishes();
     this.filter();
+  
   }
 
   setTableHeaders(lang: string): void {
@@ -127,6 +138,10 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     let newData: any[] = this.datao;
     newData = newData.slice(this.fromRow, this.currentPage * this.pageSize);
     setTimeout(() => (this.filteredData = newData));
+  }
+
+  print(dish: any) : void {
+    console.log(dish);
   }
 
   getDishes() : void {
@@ -172,10 +187,15 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     else 
       this.snackbarServive.openSnack(this.translocoService.translate('alerts.orderChange.applyFail'), 2000, "red");
 
-    console.log(this.data.order.id);
+    // console.log(this.data.order.id);
   }
 
-  
+  showdishes() {
+    console.log(this.dish);
+    for(let dish in this.dish) {
+      console.log(dish);
+    }
+  }
 
   addOrderline() : void {
     // this.menuService.getDishes(null);
@@ -184,7 +204,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     //name: dish.name, price: dish.price
 
     let orderline: OrderView = {
-      dish: {id:this.test.value, name: this.test. , price: 13},
+      dish: {id:this.test.value, name: 'test' , price: 13},
       orderLine: {amount:1, comment:""},
       extras:[]
     }
@@ -256,6 +276,8 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
       .updateOrderStatus(this.data.order.id, orderStatus)
       .subscribe();
   }
+
+
 
   ngOnDestroy(): void {}
 }

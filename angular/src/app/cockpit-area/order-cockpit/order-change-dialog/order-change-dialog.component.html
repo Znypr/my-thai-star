@@ -58,8 +58,8 @@
     <ng-container matColumnDef="extras">
       <th mat-header-cell *matHeaderCellDef class="extrasHeader"> {{columnso[2].label}} </th>   
       <td mat-cell *matCellDef="let element" class="extrasData">
-        <mat-checkbox [checked]="extraSelected(element, 'tofu')" (change)="updateExtra(element, 'tofu')">Extra Tofu</mat-checkbox>
-        <mat-checkbox [checked]="extraSelected(element, 'curry')" (change)="updateExtra(element, 'curry')">Extra Curry</mat-checkbox>
+        <div><mat-checkbox [checked]="extraSelected(element, 'tofu')" (change)="updateExtra(element, 'tofu')">Extra Tofu</mat-checkbox></div>
+        <div><mat-checkbox [checked]="extraSelected(element, 'curry')" (change)="updateExtra(element, 'curry')">Extra Curry</mat-checkbox></div>
       </td>
     </ng-container>
 
@@ -88,14 +88,14 @@
 
 <div>
   <mat-form-field [floatLabel]="'never'">
-    <mat-select [formControl]="test" placeholder="{{'cockpit.orders.dialogTable.dishSelection' | transloco }}">
-      <mat-option *ngFor="let entry of tempMenu" [value]="entry.id">
-        {{entry.label}}
+    <mat-select *ngIf="dishes$ | async as dishes" [formControl]="test" placeholder="{{'cockpit.orders.dialogTable.dishSelection' | transloco }}">
+      <mat-option *ngFor="let entry of dishes" [dish]="entry">
+        {{entry.dish.name}}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <button mat-button color="accent" (click)="addOrderline()">{{'buttons.add'
+  <button mat-button color="accent" (click)="addOrderline(); showdishes()">{{'buttons.add'
     | transloco | uppercase}}</button>
 </div>
 
