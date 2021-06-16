@@ -274,7 +274,7 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
 
         for (BookingEntity booking:user.getBookings()) {
             for (OrderEntity order:booking.getOrders()) {
-                if(!((order.getOrderStatus().equals("delivered")&& order.getPaid()) || order.getOrderStatus().equals("cancelled"))){
+                if(!((order.getOrderStatus().equals("delivered")&& order.getPaid()) || order.getOrderStatus().equals("cancelled") && !order.getPaid())){
                     hasOpenOrders = true;
                 }
             }
