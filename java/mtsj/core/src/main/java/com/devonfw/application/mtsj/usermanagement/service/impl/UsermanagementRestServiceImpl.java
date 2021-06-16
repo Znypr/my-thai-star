@@ -1,8 +1,16 @@
 package com.devonfw.application.mtsj.usermanagement.service.impl;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Context;
 
+import com.devonfw.application.mtsj.general.common.api.constants.Roles;
+import com.devonfw.application.mtsj.general.common.base.BaseUserDetails;
+import com.devonfw.application.mtsj.general.service.impl.rest.SecurityRestServiceImpl;
+import org.apache.http.impl.client.BasicAuthCache;
 import org.springframework.data.domain.Page;
 
 import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
@@ -13,6 +21,12 @@ import com.devonfw.application.mtsj.usermanagement.common.api.to.UserSearchCrite
 import com.devonfw.application.mtsj.usermanagement.logic.api.ResetToken;
 import com.devonfw.application.mtsj.usermanagement.logic.api.Usermanagement;
 import com.devonfw.application.mtsj.usermanagement.rest.api.UsermanagementRestService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.net.Authenticator;
 
 /**
  * The service implementation for REST calls in order to execute the logic of component {@link Usermanagement}.
@@ -20,106 +34,104 @@ import com.devonfw.application.mtsj.usermanagement.rest.api.UsermanagementRestSe
 @Named("UsermanagementRestService")
 public class UsermanagementRestServiceImpl implements UsermanagementRestService {
 
-  @Inject
-  private Usermanagement usermanagement;
+    @Inject
+    private Usermanagement usermanagement;
 
-  @Inject
-  private ResetToken resetToken;
+    @Inject
+    private ResetToken resetToken;
 
-  @Override
-  public UserEto getUser(long id) {
+    @Override
+    public UserEto getUser(long id) {
 
-    return this.usermanagement.findUser(id);
-  }
+        return this.usermanagement.findUser(id);
+    }
 
-  @Override
-  public UserQrCodeTo getUserQrCode(String username) {
+    @Override
+    public UserQrCodeTo getUserQrCode(String username) {
 
-    return this.usermanagement.generateUserQrCode(username);
-  }
+        return this.usermanagement.generateUserQrCode(username);
+    }
 
-  @Override
-  public UserEto saveUser(UserEto user) {
+    @Override
+    public UserEto saveUser(UserEto user) {
+        return this.usermanagement.saveUser(user);
+    }
 
-    return this.usermanagement.saveUser(user);
-  }
+    @Override
+    public UserEto getUserStatus(String username) {
 
-  @Override
-  public UserEto getUserStatus(String username) {
+        return this.usermanagement.getUserStatus(username);
+    }
 
-    return this.usermanagement.getUserStatus(username);
-  }
+    @Override
+    public UserEto saveUserTwoFactor(UserEto user) {
 
-  @Override
-  public UserEto saveUserTwoFactor(UserEto user) {
+        return this.usermanagement.saveUserTwoFactor(user);
+    }
 
-    return this.usermanagement.saveUserTwoFactor(user);
-  }
+    @Override
+    public void deleteUser(long id) {
+        this.usermanagement.deleteUser(id);
+    }
 
-  @Override
-  public void deleteUser(long id) {
+    @Override
+    public Page<UserEto> findUsersByPost(UserSearchCriteriaTo searchCriteriaTo) {
 
-    this.usermanagement.deleteUser(id);
-  }
+        return this.usermanagement.findUserEtos(searchCriteriaTo);
+    }
 
-  @Override
-  public Page<UserEto> findUsersByPost(UserSearchCriteriaTo searchCriteriaTo) {
+    @Override
+    public UserRoleEto getUserRole(long id) {
 
-    return this.usermanagement.findUserEtos(searchCriteriaTo);
-  }
+        return this.usermanagement.findUserRole(id);
+    }
 
-  @Override
-  public UserRoleEto getUserRole(long id) {
+    @Override
+    public UserRoleEto saveUserRole(UserRoleEto userrole) {
 
-    return this.usermanagement.findUserRole(id);
-  }
+        return this.usermanagement.saveUserRole(userrole);
+    }
 
-  @Override
-  public UserRoleEto saveUserRole(UserRoleEto userrole) {
+    @Override
+    public void deleteUserRole(long id) {
 
-    return this.usermanagement.saveUserRole(userrole);
-  }
+        this.usermanagement.deleteUserRole(id);
+    }
 
-  @Override
-  public void deleteUserRole(long id) {
+    @Override
+    public Page<UserRoleEto> findUserRolesByPost(UserRoleSearchCriteriaTo searchCriteriaTo) {
 
-    this.usermanagement.deleteUserRole(id);
-  }
+        return this.usermanagement.findUserRoleEtos(searchCriteriaTo);
+    }
 
-  @Override
-  public Page<UserRoleEto> findUserRolesByPost(UserRoleSearchCriteriaTo searchCriteriaTo) {
+    @Override
+    public void resetPassword(long id) {
 
-    return this.usermanagement.findUserRoleEtos(searchCriteriaTo);
-  }
+        this.usermanagement.resetPassword(id);
 
-  @Override
-  public void resetPassword(long id) {
+    }
 
-    this.usermanagement.resetPassword(id);
+    @Override
+    public Long getUserIdByToken(String token) {
 
-  }
+        return this.resetToken.getResetTokenByToken(token);
 
-  @Override
-  public Long getUserIdByToken(String token) {
+    }
 
-    return this.resetToken.getResetTokenByToken(token);
+    @Override
+    public UserEto changePassword(UserEto user) {
 
-  }
+        return this.usermanagement.changePassword(user);
 
-  @Override
-  public UserEto changePassword(UserEto user) {
+        // this.usermanagement.findUser(id).setPassword(null);
 
-    return this.usermanagement.changePassword(user);
+    }
 
-    // this.usermanagement.findUser(id).setPassword(null);
-
-  }
-
-  // @Override
-  // public ResetTokenEto getIdUserByResetToken(String token) {
-  //
-  // return this.usermanagement.getIdUserByResetToken(token);
-  //
-  // }
+    // @Override
+    // public ResetTokenEto getIdUserByResetToken(String token) {
+    //
+    // return this.usermanagement.getIdUserByResetToken(token);
+    //
+    // }
 
 }
