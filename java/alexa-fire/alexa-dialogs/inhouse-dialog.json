@@ -477,6 +477,54 @@
                         "Was liegt in meinem Warenkorb",
                         "Warenkorb"
                     ]
+                },
+                {
+                    "name": "InformationIntent",
+                    "slots": [],
+                    "samples": [
+                        "info zu my thai star",
+                        "info zu mythaistar",
+                        "infos zu my thai star",
+                        "infos zu mythaistar",
+                        "informationen zu mythaistar",
+                        "informationen zu my thai star",
+                        "info",
+                        "infos",
+                        "informationen",
+                        "was ist das",
+                        "my thai star",
+                        "Was ist my thai star"
+                    ]
+                },
+                {
+                    "name": "OpeningHoursIntent",
+                    "slots": [],
+                    "samples": [
+                        "wann habt ihr geöffnet",
+                        "Öffnungszeiten"
+                    ]
+                },
+                {
+                    "name": "AdressIntent",
+                    "slots": [],
+                    "samples": [
+                        "Ort",
+                        "Wo ist das Restaurant",
+                        "Wo",
+                        "Adresse",
+                        "Was ist die Adresse des Restaurants",
+                        "Was ist die Adresse"
+                    ]
+                },
+                {
+                    "name": "PaymentIntent",
+                    "slots": [],
+                    "samples": [
+                        "Wie kann ich bezahlen",
+                        "Zahlungsmöglichkeiten",
+                        "Bezahlungsmöglichkeiten",
+                        "Mit was kann man bei euch bezahlen"
+                    ]
                 }
             ],
             "types": [
