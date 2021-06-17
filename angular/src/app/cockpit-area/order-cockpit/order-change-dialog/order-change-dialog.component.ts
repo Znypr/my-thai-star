@@ -18,6 +18,7 @@ import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import * as fromMenu from '../../../menu/store';
 import * as fromApp from '../../../store';
+import { keyframes } from '@angular/animations';
 
 
 @Component({
@@ -96,7 +97,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     this.totalPrice = this.waiterCockpitService.getTotalPrice(
       this.data.orderLines,
     );
-    this.datao = this.waiterCockpitService.orderComposer(this.data.orderLines);
+    this.datao = this.waiterCockpitService.orderComposerChange(this.data.orderLines);
     this.newOrderLines = this.datao;
     this.datat.push(this.data.booking);
     this.filter();
@@ -210,10 +211,10 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     };
 
     this.newOrderLines.push(orderline);
-    this.datao = this.waiterCockpitService.orderComposer(this.newOrderLines);
+    this.datao = this.waiterCockpitService.orderComposerChange(this.newOrderLines);
     this.filter();
 
-    console.log(this.datao);
+    console.log(this.data.orderLines);
   }
 
   deleteOrderline(element: any): void {
@@ -229,7 +230,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
         if (orderline != element) orderlines.push(orderline);
       }
       this.newOrderLines = orderlines;
-      this.datao = this.waiterCockpitService.orderComposer(this.newOrderLines);
+      this.datao = this.waiterCockpitService.orderComposerChange(this.newOrderLines);
       this.filter();
 
       this.snackbarServive.openSnack(
@@ -250,50 +251,75 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     }
     // #2
 
-    console.log(this.data);
+    console.log(this.data.orderLines);
   }
 
+  handleExtra(element: any, checked: boolean, extra: String) : void {
+    console.log(checked);
+    if(checked) this.addExtra(element, extra);
+    else this.removeExtra(element, extra);
+  }
   addExtra(element: any, extra: String): void {
-    console.log(element);
+    
+    console.log('add: ', element);
+    
+    let newExtra : ExtraView;
 
     if (extra == 'tofu') {
-      if (element.extras == 'Extra curry') element.extras = 'Tofu, Extra curry';
-      if (element.extras == '') element.extras = 'Tofu';
+      newExtra = {
+        name: 'Tofu',
+        id: 0,
+        price: 1
+      }
+    }
+      
+    if (extra == 'curry') {
+        newExtra = {
+          name: 'Extra curry',
+          id: 1,
+          price: 1,
+        };
     }
 
-    if (extra == 'curry') {
-      if (element.extras == 'Tofu') element.extras = 'Tofu, Extra curry';
-      if (element.extras == '') element.extras = 'Extra curry';
-    }
+    if (element.extras.length < 2 && newExtra != undefined) {
+      element.extras.push(newExtra);
+    } 
+
+    console.log(newExtra);
   }
 
   removeExtra(element: any, extra: String): void {
-    console.log(element);
+    
+    console.log('remove: ', element);
 
-    if (extra == 'tofu') {
-      if (element.extras == 'Tofu') element.extras = '';
-      if (element.extras == 'Tofu, Extra curry') element.extras = 'Extra curry';
+    let int: number = 0;
+    let newExtras : ExtraView[] = [];
+
+    for(let extra of element.extras) {
+      if(extra.name == 'Tofu' && extra != 'tofu' || extra.name == 'Extra curry' && extra != 'curry') {
+        newExtras.push(extra);
+      } 
     }
 
-    if (extra == 'curry') {
-      if (element.extras == 'Extra curry') element.extras = '';
-      if (element.extras == 'Tofu, Extra Curry') element.extras = 'Tofu';
-    }
+    element.extras = newExtras;
+    
+    console.log(newExtras);
   }
 
   extraSelected(element: any, extra: String): boolean {
     if (extra == 'tofu') {
-      if (element.extras == 'Tofu' || element.extras == 'Tofu, Extra curry')
-        return true;
+      for(let extra of element.extras) {
+        if(extra.name == 'Tofu') return true;
+      }
+        
       return false;
     }
 
     if (extra == 'curry') {
-      if (
-        element.extras == 'Extra curry' ||
-        element.extras == 'Tofu, Extra curry'
-      )
-        return true;
+      for (let extra of element.extras) {
+        if (extra.name == 'Extra curry') return true;
+      }
+
       return false;
     }
   }

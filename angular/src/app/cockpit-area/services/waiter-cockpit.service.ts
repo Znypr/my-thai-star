@@ -41,8 +41,7 @@ export class WaiterCockpitService {
     'ordermanagement/v1/order/paid';
   private readonly getOrderUpdateRestPath: string =
     'ordermanagement/v1/order/change';
-  private readonly getDishRestPath: string = 
-    'dishmanagement/v1/dish/search';
+  private readonly getDishRestPath: string = 'dishmanagement/v1/dish/search';
 
   private readonly restServiceRoot$: Observable<string> =
     this.config.getRestServiceRoot();
@@ -82,7 +81,8 @@ export class WaiterCockpitService {
   getDishes(): Observable<OrderDishResponse[]> {
     let path = this.getDishRestPath;
 
-    let payload = "{\"categories\":[],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
+    let payload =
+      '{"categories":[],"searchBy":"","pageable":{"pageSize":8,"pageNumber":0,"sort":[{"property":"price","direction":"DESC"}]},"maxPrice":null,"minLikes":null}';
 
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
@@ -164,6 +164,11 @@ export class WaiterCockpitService {
       o.dish.price = this.priceCalculator.getPrice(o);
       o.extras = map(o.extras, 'name').join(', ');
     });
+    return orders;
+  }
+
+  orderComposerChange(orderList: OrderView[]): OrderView[] {
+    const orders: OrderView[] = cloneDeep(orderList);
     return orders;
   }
 
