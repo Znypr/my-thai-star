@@ -1,5 +1,7 @@
 package com.devonfw.application.mtsj.ordermanagement.service.api.rest;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -57,7 +59,7 @@ public interface OrdermanagementRestService {
    */
   @POST
   @Path("/order/change/{id}")
-  public boolean changeOrder(@PathParam("id") long id, OrderCto cto);
+  public boolean changeOrder(@PathParam("id") long id, List<OrderLineCto> cto);
 
 
     /**

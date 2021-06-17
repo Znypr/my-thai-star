@@ -16,6 +16,8 @@ import { ConfigService } from '../../core/config/config.service';
 import { SnackBarService } from '../../core/snack-bar/snack-bar.service';
 import {
   BookingResponse,
+  DishResponse,
+  DishView,
   OrderDishResponse,
   OrderListView,
   OrderResponse,
@@ -26,6 +28,7 @@ import {
 import { PriceCalculatorService } from '../../sidenav/services/price-calculator.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { Subscription } from 'rxjs';
+
 
 @Injectable()
 export class WaiterCockpitService {
@@ -41,7 +44,8 @@ export class WaiterCockpitService {
     'ordermanagement/v1/order/paid';
   private readonly getOrderUpdateRestPath: string =
     'ordermanagement/v1/order/change';
-  private readonly getDishRestPath: string = 'dishmanagement/v1/dish/search';
+  private readonly getDishesRestPath: string = 'dishmanagement/v1/dish/search';
+  private readonly getDishRestPath: string = 'dishmanagement/v1/dish';
 
   private readonly restServiceRoot$: Observable<string> =
     this.config.getRestServiceRoot();
@@ -78,21 +82,55 @@ export class WaiterCockpitService {
     );
   }
 
-  getDishes(): Observable<OrderDishResponse[]> {
-    let path = this.getDishRestPath;
+  // getDishes(): Observable<OrderDishResponse[]> {
+  //   let path = this.getDishesRestPath;
 
-    let payload =
-      '{"categories":[],"searchBy":"","pageable":{"pageSize":8,"pageNumber":0,"sort":[{"property":"price","direction":"DESC"}]},"maxPrice":null,"minLikes":null}';
+  //   let payload =
+  //     '{"categories":[],"searchBy":"","pageable":{"pageSize":8,"pageNumber":0,"sort":[{"property":"price","direction":"DESC"}]},"maxPrice":null,"minLikes":null}';
 
-    return this.restServiceRoot$.pipe(
-      exhaustMap((restServiceRoot) =>
-        this.http.post<OrderDishResponse[]>(
-          `${restServiceRoot}${path}`,
-          payload,
-        ),
-      ),
-    );
-  }
+  //   return this.restServiceRoot$.pipe(
+  //     exhaustMap((restServiceRoot) =>
+  //       this.http.post<OrderDishResponse[]>(
+  //         `${restServiceRoot}${path}`,
+  //         payload,
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // getDish(name: string): Observable<OrderDishResponse[]> {
+
+  //   // let path = this.getDishRestPath;
+
+  //   // return this.restServiceRoot$.pipe(
+  //   //   exhaustMap((restServiceRoot) =>
+  //   //     this.http.post<DishResponse>(`${restServiceRoot}${path}`, dishId),
+  //   //   ),
+  //   // );
+
+  //   /////////////////////////////////////////////
+
+  //   // let path = this.getDishesRestPath;
+
+  //   // let payload =
+  //   //   '{"categories":[],"searchBy":"';
+
+  //   // payload += name;
+  //   // payload += '","pageable":{"pageSize":8,"pageNumber":0,"sort":[{"property":"price","direction":"DESC"}]},"maxPrice":null,"minLikes":null}';
+
+  //   // console.log(payload);
+      
+      
+
+  //   // return this.restServiceRoot$.pipe(
+  //   //   exhaustMap((restServiceRoot) =>
+  //   //     this.http.post<OrderDishResponse[]>(
+  //   //       `${restServiceRoot}${path}`,
+  //   //       payload,
+  //   //     ),
+  //   //   ),
+  //   // );
+  // }
 
   updateOrderStatus(orderID: any, status: any): Observable<OrderListView[]> {
     this.translocoSubscription = this.translocoService
@@ -135,7 +173,7 @@ export class WaiterCockpitService {
       exhaustMap((restServiceRoot) =>
         this.http.post<OrderListView[]>(
           `${restServiceRoot}${this.getOrderUpdateRestPath}`,
-          { id: orderID, order: order },
+          { id: orderID, orderlines: order },
         ),
       ),
     );

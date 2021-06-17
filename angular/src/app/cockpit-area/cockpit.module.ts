@@ -25,8 +25,6 @@ import { AdminCockpitComponent } from './admin-cockpit/admin-cockpit.component';
 import { AdminDialogComponent } from './admin-cockpit/admin-dialog/admin-dialog.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ResetPasswordCockpitComponent } from './reset-password-cockpit/reset-password-cockpit.component';
-import { StoreModule } from '@ngrx/store';
-import { effects, reducers } from '../store';
 
 @NgModule({
   imports: [

@@ -48,7 +48,7 @@ public interface Ordermanagement {
    * @param id The id 'id' of the Order.
    * @return The {@link OrderCto} with id 'id'
    */
-  boolean changeOrder(Long id, OrderCto cto);
+  boolean changeOrder(Long id, List<OrderLineCto> cto);
 
   /**
    * Returns a paginated list of Orders matching the search criteria. Needs Authorization.

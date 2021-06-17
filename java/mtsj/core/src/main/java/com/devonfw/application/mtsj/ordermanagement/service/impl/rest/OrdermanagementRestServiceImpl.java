@@ -1,5 +1,7 @@
 package com.devonfw.application.mtsj.ordermanagement.service.impl.rest;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -61,7 +63,7 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
   }
 
   @Override
-  public boolean changeOrder(long id, OrderCto order) {
+  public boolean changeOrder(long id, List<OrderLineCto> order) {
 
     return this.ordermanagement.changeOrder(id, order);
   }

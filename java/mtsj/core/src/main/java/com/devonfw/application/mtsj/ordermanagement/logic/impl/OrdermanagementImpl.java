@@ -259,7 +259,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
-  public boolean changeOrder(Long orderId, OrderCto cto) {
+  public boolean changeOrder(Long orderId, List<OrderLineCto> orderlines) {
 
     OrderEntity order = getOrderDao().find(orderId);
 
@@ -271,7 +271,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     }
 
     // create new orderline entity
-    List<OrderLineCto> linesCto = cto.getOrderLines();
+    List<OrderLineCto> linesCto = orderlines;
     List<OrderLineEntity> orderLineEntities = new ArrayList<>();
     for (OrderLineCto lineCto : linesCto) {
       OrderLineEntity orderLineEntity = getBeanMapper().map(lineCto, OrderLineEntity.class);

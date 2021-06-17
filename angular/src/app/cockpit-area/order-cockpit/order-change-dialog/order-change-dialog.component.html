@@ -48,7 +48,7 @@
     <ng-container matColumnDef="orderLine.comment">
       <th mat-header-cell *matHeaderCellDef class="commentHeader"> {{columnso[1].label}} </th>
       <td mat-cell *matCellDef="let element" class="commentData">
-        <mat-form-field color="accent">
+        <mat-form-field color="accent" [floatLabel]="'never'">
           <input matInput (click)="removeField(element)" (input)="changeComment(element, $event.target.value)" name="extras">{{element.orderLine.comment}}
         </mat-form-field>
       </td>
@@ -58,8 +58,8 @@
     <ng-container matColumnDef="extras">
       <th mat-header-cell *matHeaderCellDef class="extrasHeader"> {{columnso[2].label}} </th>   
       <td mat-cell *matCellDef="let element" class="extrasData">
-        <div><mat-checkbox [checked]="extraSelected(element, 'tofu')" (change)="handleExtra(element, $event.checked, 'tofu')">Extra Tofu</mat-checkbox></div>
-        <div><mat-checkbox [checked]="extraSelected(element, 'curry')" (change)="handleExtra(element, $event.checked , 'curry')">Extra Curry</mat-checkbox></div>
+        <div><mat-checkbox [hidden]="isDrink(element)" [checked]="extraSelected(element, 'tofu')" (change)="handleExtra(element, $event.checked, 'tofu')">Extra Tofu</mat-checkbox></div>
+        <div><mat-checkbox [hidden]="isDrink(element)" [checked]="extraSelected(element, 'curry')" (change)="handleExtra(element, $event.checked , 'curry')">Extra Curry</mat-checkbox></div>
       </td>
     </ng-container>
 
@@ -71,17 +71,23 @@
           <input matInput [placeholder]="element.orderLine.amount" name="amount">
         </mat-form-field> -->
         <div>
+          <button mat-button color="accent" (click)="changeQuantity(element, 'decrement')" [disabled]="validateQuantity(element, 'decrement')"><b>-</b></button>
           {{element.orderLine.amount}}
           <button mat-button color="accent" (click)="changeQuantity(element, 'increment')" [disabled]="validateQuantity(element, 'increment')"><b>+</b></button>
-          <button mat-button color="accent" (click)="changeQuantity(element, 'decrement')" [disabled]="validateQuantity(element, 'decrement')"><b>-</b></button>
         </div>
       </td>
     </ng-container>
 
+    <!-- Price Column -->
+    <ng-container matColumnDef="dish.price">
+      <th mat-header-cell *matHeaderCellDef class="priceHeader"> {{columnso[4].label}} </th>
+      <td mat-cell *matCellDef="let element" class="priceData"> {{getDishPrice(element)}} </td>
+    </ng-container>
+
     <!-- Delete Column -->
     <ng-container matColumnDef="orderlineDelete">
-      <th mat-header-cell *matHeaderCellDef> {{'buttons.delete' | transloco | uppercase}} </th>
-      <td mat-cell *matCellDef="let element; let row">
+      <th mat-header-cell *matHeaderCellDef class="delteHeader"> {{'buttons.delete' | transloco | uppercase}} </th>
+      <td mat-cell *matCellDef="let element; let row" class="deleteData">
         <button mat-button color="warn" (click)="deleteOrderline(element)" [disabled]="isLastOrderline()">{{'buttons.delete' | transloco | uppercase}}</button>
       </td>
     </ng-container>
@@ -92,24 +98,33 @@
 </div>
 
 <div>
-  <!-- <mat-form-field [floatLabel]="'never'">
-    <mat-select *ngIf="dishes$ | async as dishes" [formControl]="orderlineInput" placeholder="{{'cockpit.orders.dialogTable.dishSelection' | transloco }}">
-      <mat-option *ngFor="let entry of dishes" [value]="entry.dish.name" >
+  <mat-form-field>
+    <mat-select *ngIf="dishes$ | async as dishes" [formControl]="dishSelect" placeholder="{{'cockpit.orders.dialogTable.dishSelection' | transloco }}">
+      <mat-option *ngFor="let entry of dishes" [value]="entry.dish.id" >
         {{entry.dish.name}}
       </mat-option>
     </mat-select>
-  </mat-form-field> -->
-  <mat-form-field [floatLabel]="'never'">
+  </mat-form-field>
+  <!-- <mat-form-field [floatLabel]="'never'">
     <mat-select [formControl]="test"
       placeholder="{{'cockpit.orders.dialogTable.dishSelection' | transloco }}">
-      <mat-option *ngFor="let entry of testDishes" [value]="entry.name">
+      <mat-option *ngFor="let entry of Dishes" [value]="entry.name">
         {{entry.name}}
       </mat-option>
     </mat-select>
-  </mat-form-field>
+  </mat-form-field> -->
 
   <button mat-button color="accent" (click)="addOrderline()">{{'buttons.add'
     | transloco | uppercase}}</button>
+
+</div>
+
+<mat-divider></mat-divider>
+
+
+<div class="totalRow">
+  <h4>{{'formFields.total' | transloco}}</h4>
+  <h4>{{getPrice() | number : '2.2-2'}}</h4>
 </div>
 
 
