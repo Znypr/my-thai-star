@@ -87,7 +87,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log(this.data.orderLines);
+   
 
     this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders(event);
@@ -100,7 +100,9 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     this.datao = this.waiterCockpitService.orderComposerChange(this.data.orderLines);
     this.newOrderLines = this.datao;
     this.datat.push(this.data.booking);
-    this.filter();
+    this.filter(); 
+    
+    console.log(this.datao);
   }
 
   setTableHeaders(lang: string): void {
@@ -173,6 +175,9 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   }
 
   apply() {
+
+    console.log(this.datao);
+
     //TODO
     // #1 post new order object to database
 
@@ -188,8 +193,6 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
         2000,
         'red',
       );
-
-    console.log(this.data);
   }
 
   addOrderline(): void {
@@ -204,9 +207,10 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     //   extras: [],
     // };
 
-    let orderline: OrderView = {
-      dish: { id: 0, name: this.test.value, price: 13 },
+    let orderline: any = {
       orderLine: { amount: 1, comment: '' },
+      order: null,
+      dish: { id: 0, name: this.test.value, price: 13 },
       extras: [],
     };
 
@@ -214,7 +218,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     this.datao = this.waiterCockpitService.orderComposerChange(this.newOrderLines);
     this.filter();
 
-    console.log(this.data.orderLines);
+    console.log(this.datao);
   }
 
   deleteOrderline(element: any): void {
@@ -224,7 +228,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
 
     // #1
     if (this.filteredData.length > 1) {
-      let orderlines: OrderView[] = [];
+      let orderlines: any[] = [];
 
       for (let orderline of this.datao) {
         if (orderline != element) orderlines.push(orderline);
@@ -251,59 +255,63 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     }
     // #2
 
-    console.log(this.data.orderLines);
+    console.log(this.datao);
   }
 
   handleExtra(element: any, checked: boolean, extra: String) : void {
-    console.log(checked);
+    console.log(extra, " checked: ", checked);
     if(checked) this.addExtra(element, extra);
     else this.removeExtra(element, extra);
   }
+
   addExtra(element: any, extra: String): void {
     
-    console.log('add: ', element);
+    console.log('pre add: ', this.datao);
     
-    let newExtra : ExtraView;
+    let newExtra : any;
 
     if (extra == 'tofu') {
       newExtra = {
-        name: 'Tofu',
-        id: 0,
+        modificationCounter: 1,
+         id: 0,
+        name: "Tofu", 
+        description: "Also known as bean curd, is a food made by coagula…sing the resulting curds into soft white blocks. ", 
         price: 1
       }
     }
       
     if (extra == 'curry') {
         newExtra = {
-          name: 'Extra curry',
+          modificationCounter: 1, 
           id: 1,
-          price: 1,
-        };
+          name: "Extra curry", 
+          description: "The common feature is the use of complex combinati…s, usually including fresh or dried hot chillies.", 
+          price: 1
+        }
     }
 
     if (element.extras.length < 2 && newExtra != undefined) {
       element.extras.push(newExtra);
     } 
-
-    console.log(newExtra);
+    console.log('post add: ', this.datao);
   }
 
   removeExtra(element: any, extra: String): void {
     
-    console.log('remove: ', element);
+    console.log('pre remove: ', this.datao);
 
     let int: number = 0;
-    let newExtras : ExtraView[] = [];
+    let newExtras : any[] = [];
 
-    for(let extra of element.extras) {
-      if(extra.name == 'Tofu' && extra != 'tofu' || extra.name == 'Extra curry' && extra != 'curry') {
-        newExtras.push(extra);
+    for(let entry of element.extras) {
+      if(entry.name == 'Tofu' && extra != 'tofu' || entry.name == 'Extra curry' && extra != 'curry') {
+        newExtras.push(entry);
       } 
     }
 
     element.extras = newExtras;
     
-    console.log(newExtras);
+    console.log('post remove: ', this.datao);
   }
 
   extraSelected(element: any, extra: String): boolean {
@@ -329,16 +337,40 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     else return true;
   }
 
-  removeField(element: any): void {
-    element.orderLine.comment = '';
+  validateQuantity(element: any, type: String) : boolean {
+    if(type == 'increment')
+      return element.orderLine.amount >= 10;
+    
+    if(type == 'decrement')
+      return element.orderLine.amount <= 1;
   }
 
-  onChange(orderStatus: string): void {
-    this.data.order.orderStatus = orderStatus;
-    this.ngOnInit();
-    this.waiterCockpitService
-      .updateOrderStatus(this.data.order.id, orderStatus)
-      .subscribe();
+  changeQuantity(element: any, type: String) : void {
+
+    console.log("pre change: ", this.datao);
+
+    if(type == "increment") {
+      element.orderLine.amount++;
+    }
+
+    if(type == "decrement") {
+      element.orderLine.amount--;
+    }
+
+    // update datao
+    // this.filter();
+
+    console.log("post change: ", this.datao);
+  }
+
+  changeComment(element: any, comment: String) : void {
+    
+    element.orderLine.comment = comment;
+    console.log("post comment: ", this.datao[0].orderLine.comment);
+  }
+
+  removeField(element: any): void {
+    element.orderLine.comment = '';
   }
 
   ngOnDestroy(): void {}
