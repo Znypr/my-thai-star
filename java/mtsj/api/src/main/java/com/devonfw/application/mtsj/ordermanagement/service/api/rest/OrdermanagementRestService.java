@@ -59,7 +59,7 @@ public interface OrdermanagementRestService {
    */
   @POST
   @Path("/order/change/{id}")
-  public boolean changeOrder(@PathParam("id") long id, List<OrderLineCto> cto);
+  public OrderEto changeOrder(OrderCto order);
 
 
     /**

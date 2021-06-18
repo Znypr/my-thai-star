@@ -13,6 +13,7 @@ import {
 } from '../../shared/backend-models/interfaces';
 import { AdminDialogComponent } from './admin-dialog/admin-dialog.component';
 import * as config from '../../config'
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -61,10 +62,12 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   };
 
   constructor(
+    title: Title,
     private dialog: MatDialog,
     private adminCockpitService: AdminCockpitService,
     private configService: ConfigService,
   ) {
+    title.setTitle('Admin Area');
     this.pageSizes = this.configService.getValues().pageSizes;
   }
 

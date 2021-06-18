@@ -25,6 +25,8 @@ import { AdminCockpitComponent } from './admin-cockpit/admin-cockpit.component';
 import { AdminDialogComponent } from './admin-cockpit/admin-dialog/admin-dialog.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ResetPasswordCockpitComponent } from './reset-password-cockpit/reset-password-cockpit.component';
+import { MenuService } from 'app/menu/services/menu.service';
+import { MenuComponent } from 'app/menu/container/menu.component';
 
 @NgModule({
   imports: [

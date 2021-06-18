@@ -259,11 +259,15 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   }
 
   @Override
-  public boolean changeOrder(Long orderId, List<OrderLineCto> orderlines) {
+  public OrderEto changeOrder(OrderCto cto) {
 
-    OrderEntity order = getOrderDao().find(orderId);
+    for(int i=0; i<100; i++) {
+      LOG.info(":::::::::::::::::::::::::::::::::::::::::::::::::::::");
+      System.out.println("::::::::::::::::::::::::::::::::::::::::::");
+    }
 
-    // process old orderlines
+    // Process old orderlines
+    OrderEntity order = getOrderDao().find(cto.getOrder().getId());
     List<OrderLineEntity> orderLines = getOrderLineDao().findOrderLines(order.getId());
 
     for (OrderLineEntity orderLine : orderLines) {
@@ -271,9 +275,9 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     }
 
     // create new orderline entity
-    List<OrderLineCto> linesCto = orderlines;
+      // List<OrderLineCto> linesCto = orderlines;
     List<OrderLineEntity> orderLineEntities = new ArrayList<>();
-    for (OrderLineCto lineCto : linesCto) {
+    for (OrderLineCto lineCto : cto.getOrderLines()) {
       OrderLineEntity orderLineEntity = getBeanMapper().map(lineCto, OrderLineEntity.class);
       orderLineEntity.setExtras(getBeanMapper().mapList(lineCto.getExtras(), IngredientEntity.class));
       orderLineEntity.setDishId(lineCto.getOrderLine().getDishId());
@@ -281,18 +285,22 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       orderLineEntity.setComment(lineCto.getOrderLine().getComment());
       orderLineEntities.add(orderLineEntity);
     }
-    // set relation
-    order.setOrderLines(orderLineEntities);
     
+    String token = order.getBooking().getBookingToken();
+    order.setOrderLines(orderLineEntities);
+    OrderEntity resultOrderEntity = getOrderDao().save(order);
+    LOG.debug("Order with id '{}' has been updated.", resultOrderEntity.getId());
+
+    // set relation
     for (OrderLineEntity orderLineEntity : orderLineEntities) {
       orderLineEntity.setOrderId(order.getId());
       OrderLineEntity resultOrderLine = getOrderLineDao().save(orderLineEntity);
       LOG.info("OrderLine with id '{}' has been created.", resultOrderLine.getId());
     }
 
-    //sendOrderConfirmationEmail(token, resultOrderEntity);
+    sendOrderConfirmationEmail(token, resultOrderEntity);
 
-    return true;
+    return getBeanMapper().map(order, OrderEto.class);
   }
 
 

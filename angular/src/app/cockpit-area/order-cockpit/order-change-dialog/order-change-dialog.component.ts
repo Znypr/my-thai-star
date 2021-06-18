@@ -1,22 +1,23 @@
-import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-// import { MatSelectModule } from '@angular/material/select';
 import { PageEvent } from '@angular/material/paginator';
 import { ConfigService } from '../../../core/config/config.service';
-import { BookingView, DishResponse, DishView, ExtraView, OrderDishResponse, OrderListView, OrderView, PlateView } from '../../../shared/view-models/interfaces';
+import { BookingView, DishView, OrderView, PlateView } from '../../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 import { TranslocoService } from '@ngneat/transloco';
-// import { getSelectors } from '@ngrx/router-store';
-// import { Booking } from 'app/book-table/models/booking.model';
 import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
-// import { Filter, OrderLineInfo, Pageable } from 'app/shared/backend-models/interfaces';
-// import { MenuService } from 'app/menu/services/menu.service';
 
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { select, Store } from '@ngrx/store';
 import * as fromMenu from '../../../menu/store';
 import * as fromApp from '../../../store';
+
+import { map } from 'rxjs/operators';
+import { SortDirection } from 'app/menu/components/menu-filters/filter-sort/filter-sort.component';
+import { FilterFormData } from 'app/menu/components/menu-filters/menu-filters.component';
+import { Pageable } from 'app/shared/backend-models/interfaces';
+import { Store } from '@ngrx/store';
+import { MenuService } from 'app/menu/services/menu.service';
 
 
 @Component({
@@ -34,8 +35,9 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
 
   dishSelect = new FormControl;
 
-  dishes$: Observable<DishView[]> = this.store.select(fromMenu.getDishes);
-  dishes: DishView[];
+  dishes$: Observable<DishView[]>;
+  dishes: any;
+  newDishes: any;
 
   removeComment: boolean;
 
@@ -69,6 +71,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   totalPrice: number;
 
   constructor(
+    private menuService: MenuService,
     private store: Store<fromApp.State>,
     private waiterCockpitService: WaiterCockpitService,
     private translocoService: TranslocoService,
@@ -82,9 +85,10 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.store.select(fromMenu.getDishes).subscribe((res: DishView[]) => {
-      this.dishes = res;
-    });
+    this.dishes$ = this.store.select(fromMenu.getDishes);
+    this.store
+      .select(fromMenu.getDishes)
+      .subscribe((menu) => (this.dishes = menu));
 
 
     this.translocoService.langChanges$.subscribe((event: any) => {
@@ -102,8 +106,48 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     this.datat.push(this.data.booking);
     this.filter();
 
-    console.log("Datao: ", this.datao);
+    console.log(this.datao);
+
+    // this.getMenu({
+    //   searchBy: '{"categories":[],"searchBy":"","pageable":{"pageSize":8,"pageNumber":0,"sort":[{"property":"price","direction":"DESC"}]},"maxPrice":null,"minLikes":null}',
+    //   maxPrice: null,
+    //   minLikes: null,
+    //   categories: {
+    //     mainDishes: false,
+    //     starters: false,
+    //     desserts: false,
+    //     noodle: false,
+    //     rice: false,
+    //     curry: false,
+    //     vegan: false,
+    //     vegetarian: false,
+    //     favourites: false,
+    //   },
+    //   sort: {
+    //     property: undefined,
+    //     direction: SortDirection.DESC,
+    //   }
+    // });
   }
+
+  // getMenu(filters: FilterFormData) : void {
+  //   const pageable: Pageable = {
+  //     pageSize: 8,
+  //     pageNumber: 0
+  //   };
+  //   this.menuService
+  //     .getDishes(this.menuService.composeFilters(pageable, filters))
+  //     .pipe(
+  //       map((res: any) => {
+  //         return res.content.map((item) => item.dish);
+  //       }),
+  //     )
+  //     .subscribe((menu) => {
+  //       this.newDishes = menu;
+  //     });
+  //     console.log("New Dishes: ", this.newDishes);
+  //   }
+  
 
   getPrice(): number {
     this.totalPrice = this.waiterCockpitService.getTotalPrice(this.datao);
@@ -172,19 +216,20 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   apply() {
 
     this.data.orderLines = this.datao;
+    this.waiterCockpitService.changeOrder(this.data.order.id, this.datao).subscribe();
 
-    if (this.waiterCockpitService.changeOrder(this.data.order.id, this.data.orderLines))
-      this.snackbarServive.openSnack(
-        this.translocoService.translate('alerts.orderChange.applySuccess'),
-        2000,
-        'green',
-      );
-    else
-      this.snackbarServive.openSnack(
-        this.translocoService.translate('alerts.orderChange.applyFail'),
-        2000,
-        'red',
-      );
+    // if (success)
+    //   this.snackbarServive.openSnack(
+    //     this.translocoService.translate('alerts.orderChange.applySuccess'),
+    //     2000,
+    //     'green',
+    //   );
+    // else
+    //   this.snackbarServive.openSnack(
+    //     this.translocoService.translate('alerts.orderChange.applyFail'),
+    //     2000,
+    //     'red',
+    //   );
     this.filter();
     console.log(this.datao);
     
@@ -338,10 +383,8 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
         || element.dish.name == "Beer";
   }
 
-  validateQuantity(element: any, type: String): boolean {
-    if (type == 'increment') return element.orderLine.amount >= 10;
-
-    if (type == 'decrement') return element.orderLine.amount <= 1;
+  validateQuantity(element: any): boolean {
+    return element.orderLine.amount <= 1;
   }
 
   changeQuantity(element: any, type: String): void {

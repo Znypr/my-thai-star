@@ -71,9 +71,9 @@
           <input matInput [placeholder]="element.orderLine.amount" name="amount">
         </mat-form-field> -->
         <div>
-          <button mat-button color="accent" (click)="changeQuantity(element, 'decrement')" [disabled]="validateQuantity(element, 'decrement')"><b>-</b></button>
+          <button mat-button color="accent" (click)="changeQuantity(element, 'decrement')" [disabled]="validateQuantity(element)"><b>-</b></button>
           {{element.orderLine.amount}}
-          <button mat-button color="accent" (click)="changeQuantity(element, 'increment')" [disabled]="validateQuantity(element, 'increment')"><b>+</b></button>
+          <button mat-button color="accent" (click)="changeQuantity(element, 'increment')"><b>+</b></button>
         </div>
       </td>
     </ng-container>

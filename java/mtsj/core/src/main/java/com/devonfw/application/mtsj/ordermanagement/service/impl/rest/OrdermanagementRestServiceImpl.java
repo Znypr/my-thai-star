@@ -63,9 +63,9 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
   }
 
   @Override
-  public boolean changeOrder(long id, List<OrderLineCto> order) {
+  public OrderEto changeOrder(OrderCto order) {
 
-    return this.ordermanagement.changeOrder(id, order);
+    return this.ordermanagement.changeOrder(order);
   }
 
   @Override

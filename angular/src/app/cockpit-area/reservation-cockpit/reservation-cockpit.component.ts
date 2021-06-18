@@ -13,6 +13,7 @@ import * as moment from 'moment';
 import { ConfigService } from '../../core/config/config.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { Subscription } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-cockpit-reservation-cockpit',
@@ -46,11 +47,13 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
   };
 
   constructor(
+    title: Title,
     private waiterCockpitService: WaiterCockpitService,
     private translocoService: TranslocoService,
     private dialog: MatDialog,
     private configService: ConfigService,
   ) {
+    title.setTitle('Reservations');
     this.pageSizes = this.configService.getValues().pageSizes;
   }
 

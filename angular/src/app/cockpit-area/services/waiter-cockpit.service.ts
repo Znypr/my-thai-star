@@ -82,56 +82,6 @@ export class WaiterCockpitService {
     );
   }
 
-  // getDishes(): Observable<OrderDishResponse[]> {
-  //   let path = this.getDishesRestPath;
-
-  //   let payload =
-  //     '{"categories":[],"searchBy":"","pageable":{"pageSize":8,"pageNumber":0,"sort":[{"property":"price","direction":"DESC"}]},"maxPrice":null,"minLikes":null}';
-
-  //   return this.restServiceRoot$.pipe(
-  //     exhaustMap((restServiceRoot) =>
-  //       this.http.post<OrderDishResponse[]>(
-  //         `${restServiceRoot}${path}`,
-  //         payload,
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // getDish(name: string): Observable<OrderDishResponse[]> {
-
-  //   // let path = this.getDishRestPath;
-
-  //   // return this.restServiceRoot$.pipe(
-  //   //   exhaustMap((restServiceRoot) =>
-  //   //     this.http.post<DishResponse>(`${restServiceRoot}${path}`, dishId),
-  //   //   ),
-  //   // );
-
-  //   /////////////////////////////////////////////
-
-  //   // let path = this.getDishesRestPath;
-
-  //   // let payload =
-  //   //   '{"categories":[],"searchBy":"';
-
-  //   // payload += name;
-  //   // payload += '","pageable":{"pageSize":8,"pageNumber":0,"sort":[{"property":"price","direction":"DESC"}]},"maxPrice":null,"minLikes":null}';
-
-  //   // console.log(payload);
-      
-      
-
-  //   // return this.restServiceRoot$.pipe(
-  //   //   exhaustMap((restServiceRoot) =>
-  //   //     this.http.post<OrderDishResponse[]>(
-  //   //       `${restServiceRoot}${path}`,
-  //   //       payload,
-  //   //     ),
-  //   //   ),
-  //   // );
-  // }
-
   updateOrderStatus(orderID: any, status: any): Observable<OrderListView[]> {
     this.translocoSubscription = this.translocoService
       .selectTranslate('alerts.orderStatus.statusSuccess')
@@ -168,12 +118,11 @@ export class WaiterCockpitService {
     );
   }
 
-  changeOrder(orderID: any, order: any): Observable<OrderListView[]> {
+  changeOrder(orderID: any, orderlines: any): Observable<OrderListView[]> {
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
         this.http.post<OrderListView[]>(
-          `${restServiceRoot}${this.getOrderUpdateRestPath}`,
-          { id: orderID, orderlines: order },
+          `${restServiceRoot}${this.getOrderUpdateRestPath}`, { id: orderID, orderLines: orderlines},
         ),
       ),
     );
