@@ -53,7 +53,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   ];
 
 
-  datao: OrderView[] = [];
+  datao: any[] = [];
   columnso: any[];
   columnsb: any[];
   displayedColumnsO: string[] = [
@@ -66,8 +66,8 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   ];
 
   pageSizes: number[];
-  filteredData: OrderView[] = this.datao;
-  newOrderLines: OrderView[];
+  filteredData: any[] = this.datao;
+  newOrderLines: any[];
   totalPrice: number;
 
   constructor(
@@ -106,7 +106,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     this.datat.push(this.data.booking);
     this.filter();
 
-    console.log(this.datao);
+    console.log('init: ', this.datao);
 
     // this.getMenu({
     //   searchBy: '{"categories":[],"searchBy":"","pageable":{"pageSize":8,"pageNumber":0,"sort":[{"property":"price","direction":"DESC"}]},"maxPrice":null,"minLikes":null}',
@@ -215,8 +215,12 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
 
   apply() {
 
-    this.data.orderLines = this.datao;
-    this.waiterCockpitService.changeOrder(this.data.order.id, this.datao).subscribe();
+    console.log('apply: ', this.datao);
+
+    // this.waiterCockpitService.deleteOrder(this.datao[0].orderLine.orderId).subscribe();
+    // this.waiterCockpitService.saveOrder(this.datao).subscribe();
+
+    this.waiterCockpitService.changeOrder(this.datao).subscribe();
 
     // if (success)
     //   this.snackbarServive.openSnack(
@@ -231,7 +235,6 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     //     'red',
     //   );
     this.filter();
-    console.log(this.datao);
     
   }
 

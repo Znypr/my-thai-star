@@ -52,13 +52,13 @@ public interface OrdermanagementRestService {
   public OrderEto saveOrder(OrderCto cto);
 
   /**
-   * Delegates to {@link Ordermanagement#updateOrder}.
+   * Delegates to {@link Ordermanagement#changeOrder}.
    *
-   * @param id the ID of the {@link OrderEto}, {@link OrderCto} to be saved
+   * @param {@link OrderCto} to be updatesd
    * @return the recently updated {@link OrderEto}
    */
   @POST
-  @Path("/order/change/{id}")
+  @Path("/order/change/")
   public OrderEto changeOrder(OrderCto order);
 
 
@@ -88,7 +88,7 @@ public interface OrdermanagementRestService {
    *
    * @param id ID of the {@link OrderEto} to be deleted
    */
-  @DELETE
+  @GET
   @Path("/order/{id}/")
   public boolean deleteOrder(@PathParam("id") long id);
 

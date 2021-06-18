@@ -44,8 +44,7 @@ export class WaiterCockpitService {
     'ordermanagement/v1/order/paid';
   private readonly getOrderUpdateRestPath: string =
     'ordermanagement/v1/order/change';
-  private readonly getDishesRestPath: string = 'dishmanagement/v1/dish/search';
-  private readonly getDishRestPath: string = 'dishmanagement/v1/dish';
+  private readonly getOrderRestPath: string = 'ordermanagement/v1/order';
 
   private readonly restServiceRoot$: Observable<string> =
     this.config.getRestServiceRoot();
@@ -118,11 +117,33 @@ export class WaiterCockpitService {
     );
   }
 
-  changeOrder(orderID: any, orderlines: any): Observable<OrderListView[]> {
+  changeOrder(order: any): Observable<OrderListView> {
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
-        this.http.post<OrderListView[]>(
-          `${restServiceRoot}${this.getOrderUpdateRestPath}`, { id: orderID, orderLines: orderlines},
+        this.http.post<OrderListView>(
+          `${restServiceRoot}${this.getOrderUpdateRestPath}`,
+          order,
+        ),
+      ),
+    );
+  }
+
+  deleteOrder(orderID: number): Observable<boolean> {
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.get<boolean>(
+          `${restServiceRoot}${this.getOrderRestPath}` + orderID,
+        ),
+      ),
+    );
+  }
+
+  saveOrder(order: any): Observable<OrderListView> {
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.post<OrderListView>(
+          `${restServiceRoot}${this.getOrderRestPath}`,
+          order,
         ),
       ),
     );

@@ -261,17 +261,19 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   @Override
   public OrderEto changeOrder(OrderCto cto) {
 
-    for(int i=0; i<100; i++) {
-      LOG.info(":::::::::::::::::::::::::::::::::::::::::::::::::::::");
-      System.out.println("::::::::::::::::::::::::::::::::::::::::::");
+    for (int i = 0; i < 100; i++) {
+      System.out.println("Order::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+      System.out.println("change::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
     }
 
     // Process old orderlines
     OrderEntity order = getOrderDao().find(cto.getOrder().getId());
     List<OrderLineEntity> orderLines = getOrderLineDao().findOrderLines(order.getId());
+    // List<OrderLineEntity> SavedOrderLines = getOrderLineDao().findOrderLines(order.getId());
 
     for (OrderLineEntity orderLine : orderLines) {
       getOrderLineDao().deleteById(orderLine.getId());
+      LOG.debug("Orderline with id '{}' has been deleted.", orderLine.getId());
     }
 
     // create new orderline entity
@@ -286,7 +288,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       orderLineEntities.add(orderLineEntity);
     }
     
-    String token = order.getBooking().getBookingToken();
+    // String token = order.getBooking().getBookingToken();
     order.setOrderLines(orderLineEntities);
     OrderEntity resultOrderEntity = getOrderDao().save(order);
     LOG.debug("Order with id '{}' has been updated.", resultOrderEntity.getId());
@@ -298,7 +300,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       LOG.info("OrderLine with id '{}' has been created.", resultOrderLine.getId());
     }
 
-    sendOrderConfirmationEmail(token, resultOrderEntity);
+    // sendOrderConfirmationEmail(token, resultOrderEntity);
 
     return getBeanMapper().map(order, OrderEto.class);
   }
@@ -306,6 +308,11 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
 
   @Override
   public boolean deleteOrder(Long orderId) {
+
+    for (int i = 0; i < 100; i++) {
+      System.out.println("Order::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+      System.out.println("delete::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+    }
 
     OrderEntity order = getOrderDao().find(orderId);
 
@@ -325,6 +332,11 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
 
   @Override
   public OrderEto saveOrder(OrderCto order) {
+
+    for (int i = 0; i < 100; i++) {
+      System.out.println("Order::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+      System.out.println("save::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+    }
 
     Objects.requireNonNull(order, "order");
     List<OrderLineCto> linesCto = order.getOrderLines();
