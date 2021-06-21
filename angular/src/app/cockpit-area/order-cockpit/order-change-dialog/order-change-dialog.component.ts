@@ -18,7 +18,7 @@ import { FilterFormData } from 'app/menu/components/menu-filters/menu-filters.co
 import {OrderListInfo, Pageable} from 'app/shared/backend-models/interfaces';
 import { Store } from '@ngrx/store';
 import { MenuService } from 'app/menu/services/menu.service';
-import * as fromOrder from "../../../sidenav/store/selectors/order.selectors";
+import * as fromOrder from '../../../sidenav/store/selectors/order.selectors';
 
 
 @Component({
@@ -164,8 +164,8 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   }
 
   checkInvalidDelete(element: any): boolean {
-    if (element.length > 1) return false;
-    else return true;
+    if (element.length > 1) { return false; }
+    else { return true; }
   }
 
   reset() {
@@ -186,18 +186,28 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
 
   }
 
+  getLoadedOrderLineByID(orderLineId: number) : any{
+    for(const en of this.data.orderLines){
+      if(orderLineId == en.id){
+        return en;
+      }
+    }
+    return null;
+  }
+
   getDishById(dishId: number): PlateView {
 
     let newDish: PlateView;
 
-    for (let entry of this.dishes) {
+    for (const entry of this.dishes) {
+      // tslint:disable-next-line:triple-equals
       if (entry.dish.id == dishId) {
         newDish = {
           id: entry.dish.id,
           name: entry.dish.name,
           description: entry.dish.description,
           price: entry.dish.price,
-        }
+        };
 
       }
     }
@@ -206,35 +216,39 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
 
   addOrderline(): void {
 
-    let dish = this.getDishById(this.dishSelect.value);
+    const dish = this.getDishById(this.dishSelect.value);
 
-    let orderline: any = {
+    const orderline: any = {
       orderLine: {amount: 1, comment: ''},
       order: null,
-      dish: dish,
+      dish,
       extras: [],
     };
 
     this.newOrderLines.push(orderline);
+    this.updateOrderlines();
+  }
+
+  updateOrderlines(): void{
     this.datao = this.waiterCockpitService.orderComposerChange(
       this.newOrderLines,
     );
+    this.data.orderLines = this.datao;
     this.filter();
+
   }
 
   deleteOrderline(element: any): void {
 
     if (this.filteredData.length > 1) {
-      let orderlines: any[] = [];
+      const orderlines: any[] = [];
 
-      for (let orderline of this.datao) {
-        if (orderline != element) orderlines.push(orderline);
+      for (const orderline of this.datao) {
+        if (orderline != element) { orderlines.push(orderline); }
       }
       this.newOrderLines = orderlines;
-      this.datao = this.waiterCockpitService.orderComposerChange(
-        this.newOrderLines,
-      );
-      this.filter();
+      this.updateOrderlines();
+
 
       this.snackbarServive.openSnack(
         this.translocoService.translate(
@@ -255,10 +269,11 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   }
 
   handleExtra(element: any, checked: boolean, extra: String): void {
-    if (checked) this.addExtra(element, extra);
-    else this.removeExtra(element, extra);
+    if (checked) { this.addExtra(element, extra); }
+    else { this.removeExtra(element, extra); }
   }
 
+  // tslint:disable-next-line:ban-types
   addExtra(element: any, extra: String): void {
 
     let newExtra: any;
@@ -288,14 +303,15 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     if (element.extras.length < 2 && newExtra != undefined) {
       element.extras.push(newExtra);
     }
+    this.getLoadedOrderLineByID(element.id).extras = element.extras;
   }
 
   removeExtra(element: any, extra: String): void {
 
-    let int: number = 0;
-    let newExtras: any[] = [];
+    const int = 0;
+    const newExtras: any[] = [];
 
-    for (let entry of element.extras) {
+    for (const entry of element.extras) {
       if (
         (entry.name == 'Tofu' && extra != 'tofu') ||
         (entry.name == 'Extra curry' && extra != 'curry')
@@ -304,34 +320,32 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
       }
     }
     element.extras = newExtras;
+    this.getLoadedOrderLineByID(element.id).extras = element.extras;
   }
 
   extraSelected(element: any, extra: String): boolean {
     if (extra == 'tofu') {
-      for (let extra of element.extras) {
-        if (extra.name == 'Tofu') return true;
+      for (const extra of element.extras) {
+        if (extra.name == 'Tofu') { return true; }
       }
-
       return false;
     }
-
     if (extra == 'curry') {
-      for (let extra of element.extras) {
-        if (extra.name == 'Extra curry') return true;
+      for (const extra of element.extras) {
+        if (extra.name == 'Extra curry') { return true; }
       }
-
       return false;
     }
   }
 
   isLastOrderline(): boolean {
-    if (this.filteredData.length > 1) return false;
-    else return true;
+    if (this.filteredData.length > 1) { return false; }
+    else { return true; }
   }
 
   isDrink(element: any): boolean {
-    return element.dish.name == "Tea"
-      || element.dish.name == "Beer";
+    return element.dish.name == 'Tea'
+      || element.dish.name == 'Beer';
   }
 
   validateQuantity(element: any): boolean {
@@ -339,7 +353,6 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   }
 
   changeQuantity(element: any, type: String): void {
-
     if (type == 'increment') {
       element.orderLine.amount++;
     }

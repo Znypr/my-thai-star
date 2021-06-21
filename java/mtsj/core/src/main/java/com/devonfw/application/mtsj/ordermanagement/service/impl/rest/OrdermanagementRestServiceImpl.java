@@ -45,8 +45,6 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
 
   @Override
   public OrderEto saveOrder(OrderCto order) {
-
-    System.out.println(order);
     return this.ordermanagement.saveOrder(order);
   }
 
