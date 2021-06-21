@@ -27,21 +27,16 @@ import { MenuService } from 'app/menu/services/menu.service';
 })
 
 export class OrderChangeDialogComponent implements OnInit, OnDestroy {
+  // Pageinator
   private fromRow = 0;
   private currentPage = 1;
 
   pageSize = 4;
   columnss: any[];
 
-  dishSelect = new FormControl;
-
-  dishes$: Observable<DishView[]>;
-  dishes: any;
-  newDishes: any;
-
-  removeComment: boolean;
-
   data: any;
+
+  // Booking
   datat: BookingView[] = [];
   columnst: any[];
   displayedColumnsT: string[] = [
@@ -51,8 +46,8 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     'email',
     'tableId',
   ];
-
-
+  
+  // Order
   datao: any[] = [];
   columnso: any[];
   columnsb: any[];
@@ -64,11 +59,19 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     'dish.price',
     'orderlineDelete',
   ];
-
+  
   pageSizes: number[];
   filteredData: any[] = this.datao;
   newOrderLines: any[];
   totalPrice: number;
+  
+  dishSelect = new FormControl;
+  dishes$: Observable<DishView[]>;
+  dishes: any;
+  newDishes: any;
+  
+  removeComment: boolean;
+
 
   constructor(
     private menuService: MenuService,
@@ -130,7 +133,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     // });
   }
 
-  // getMenu(filters: FilterFormData) : void {
+  getMenu(filters: FilterFormData) : void {
   //   const pageable: Pageable = {
   //     pageSize: 8,
   //     pageNumber: 0
@@ -146,7 +149,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   //       this.newDishes = menu;
   //     });
   //     console.log("New Dishes: ", this.newDishes);
-  //   }
+  }
   
 
   getPrice(): number {
