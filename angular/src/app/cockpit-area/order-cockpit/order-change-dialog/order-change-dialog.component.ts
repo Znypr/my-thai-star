@@ -2,7 +2,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ConfigService } from '../../../core/config/config.service';
-import { BookingView, DishView, OrderView, PlateView } from '../../../shared/view-models/interfaces';
+import {BookingView, DishView, OrderView, PlateView, SaveOrderResponse} from '../../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
@@ -12,12 +12,13 @@ import { Observable } from 'rxjs';
 import * as fromMenu from '../../../menu/store';
 import * as fromApp from '../../../store';
 
-import { map } from 'rxjs/operators';
+import {exhaustMap, map} from 'rxjs/operators';
 import { SortDirection } from 'app/menu/components/menu-filters/filter-sort/filter-sort.component';
 import { FilterFormData } from 'app/menu/components/menu-filters/menu-filters.component';
-import { Pageable } from 'app/shared/backend-models/interfaces';
+import {OrderListInfo, Pageable} from 'app/shared/backend-models/interfaces';
 import { Store } from '@ngrx/store';
 import { MenuService } from 'app/menu/services/menu.service';
+import * as fromOrder from "../../../sidenav/store/selectors/order.selectors";
 
 
 @Component({
@@ -46,7 +47,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     'email',
     'tableId',
   ];
-  
+
   // OrderView
   datao: OrderView[] = [];
   columnso: any[];
@@ -58,17 +59,17 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     'dish.price',
     'orderlineDelete',
   ];
-  
+
   pageSizes: number[];
   filteredData: OrderView[] = this.datao;
   newOrderLines: OrderView[];
   totalPrice: number;
-  
+
   dishSelect = new FormControl;
   dishes$: Observable<DishView[]>;
   dishes: any;
   newDishes: any;
-  
+
   removeComment: boolean;
 
 
@@ -82,6 +83,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     private snackbarServive: SnackBarService,
   ) {
     this.data = dialogData;
+    console.log(dialogData);
     this.pageSizes = this.configService.getValues().pageSizesDialog;
   }
 
@@ -127,11 +129,11 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
       .selectTranslateObject('cockpit.table', {}, lang)
       .subscribe((cockpitTable) => {
         this.columnst = [
-          { name: 'bookingDate', label: cockpitTable.reservationDateH },
-          { name: 'creationDate', label: cockpitTable.creationDateH },
-          { name: 'name', label: cockpitTable.ownerH },
-          { name: 'email', label: cockpitTable.emailH },
-          { name: 'tableId', label: cockpitTable.tableH },
+          {name: 'bookingDate', label: cockpitTable.reservationDateH},
+          {name: 'creationDate', label: cockpitTable.creationDateH},
+          {name: 'name', label: cockpitTable.ownerH},
+          {name: 'email', label: cockpitTable.emailH},
+          {name: 'tableId', label: cockpitTable.tableH},
         ];
       });
 
@@ -139,11 +141,11 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
       .selectTranslateObject('cockpit.orders.dialogTable', {}, lang)
       .subscribe((cockpitDialogTable) => {
         this.columnso = [
-          { name: 'dish.name', label: cockpitDialogTable.dishH },
-          { name: 'orderLine.comment', label: cockpitDialogTable.commentsH },
-          { name: 'extras', label: cockpitDialogTable.extrasH },
-          { name: 'orderLine.amount', label: cockpitDialogTable.quantityH },
-          { name: 'dish.price', label: cockpitDialogTable.priceH },
+          {name: 'dish.name', label: cockpitDialogTable.dishH},
+          {name: 'orderLine.comment', label: cockpitDialogTable.commentsH},
+          {name: 'extras', label: cockpitDialogTable.extrasH},
+          {name: 'orderLine.amount', label: cockpitDialogTable.quantityH},
+          {name: 'dish.price', label: cockpitDialogTable.priceH},
         ];
       });
   }
@@ -175,56 +177,41 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     this.ngOnInit();
   }
 
+  // tslint:disable-next-line:typedef
   apply() {
 
     console.log('apply: ', this.datao);
-    
-    this.waiterCockpitService.changeOrder(this.datao).subscribe();
 
-    // this.waiterCockpitService.deleteOrder(this.datao[0].orderLine.orderId).subscribe();
-    // this.waiterCockpitService.saveOrder(this.datao).subscribe();
+    this.waiterCockpitService.saveOrder(this.datao);
 
-
-    // if (success)
-    //   this.snackbarServive.openSnack(
-    //     this.translocoService.translate('alerts.orderChange.applySuccess'),
-    //     2000,
-    //     'green',
-    //   );
-    // else
-    //   this.snackbarServive.openSnack(
-    //     this.translocoService.translate('alerts.orderChange.applyFail'),
-    //     2000,
-    //     'red',
-    //   );
     this.filter();
-    
+
   }
 
-  getDishById(dishId: number) : PlateView {
+  getDishById(dishId: number): PlateView {
 
     let newDish: PlateView;
 
-    for(let entry of this.dishes) {
-      if(entry.dish.id == dishId) {
+    for (let entry of this.dishes) {
+      if (entry.dish.id == dishId) {
         newDish = {
           id: entry.dish.id,
-         name: entry.dish.name,
-         description: entry.dish.description,
-         price: entry.dish.price,
+          name: entry.dish.name,
+          description: entry.dish.description,
+          price: entry.dish.price,
         }
-        
-      } 
+
+      }
     }
     return newDish;
   }
 
   addOrderline(): void {
-  
+
     let dish = this.getDishById(this.dishSelect.value);
 
     let orderline: any = {
-      orderLine: { amount: 1, comment: '' },
+      orderLine: {amount: 1, comment: ''},
       order: null,
       dish: dish,
       extras: [],
@@ -344,9 +331,9 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     else return true;
   }
 
-  isDrink(element: any) : boolean {
-    return element.dish.name == "Tea" 
-        || element.dish.name == "Beer";
+  isDrink(element: any): boolean {
+    return element.dish.name == "Tea"
+      || element.dish.name == "Beer";
   }
 
   validateQuantity(element: any): boolean {
@@ -372,5 +359,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     element.orderLine.comment = '';
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+  }
+
 }
