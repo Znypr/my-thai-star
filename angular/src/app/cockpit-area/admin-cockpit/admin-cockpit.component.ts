@@ -13,6 +13,12 @@ import {
 } from '../../shared/backend-models/interfaces';
 import { AdminDialogComponent } from './admin-dialog/admin-dialog.component';
 import * as config from '../../config'
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 
 @Component({
@@ -24,6 +30,8 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   // private translocoSubscription = Subscription.EMPTY;
   hide = true;
   config = config.config;
+  form: any;
+  REGEXP_EMAIL = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
   private pageable: Pageable = {
     pageSize: 8,
@@ -52,6 +60,13 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
 
   pageSizes: number[];
 
+  // userInfo: any = {
+  //   username: '',
+  //   email: '',
+  //   role: 0,
+  //   password: ''
+  // };
+
 
   filters: FilterAdminCockpit = {
     id: undefined,
@@ -62,7 +77,7 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialog: MatDialog,
-    private adminCockpitService: AdminCockpitService,
+    public adminCockpitService: AdminCockpitService,
     private configService: ConfigService,
   ) {
     this.pageSizes = this.configService.getValues().pageSizes;
@@ -127,6 +142,18 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   //     });
   // }
 
+  email= new FormControl('',[
+      Validators.required,
+      Validators.pattern(this.REGEXP_EMAIL),
+    ]);
+
+    username= new FormControl('',[
+        Validators.required
+      ]);
+      password = new FormControl('',[
+          Validators.required
+        ]);
+
   // tslint:disable-next-line:typedef
   getUserInput(event: any) {
     const info = [
@@ -135,11 +162,19 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
       event.target.Role.value,
       event.target.Password.value
     ];
-    const responseOfCreation = this.adminCockpitService.addUser(info[0], info[1], info[2], info[3]).subscribe(res => {
-      this.applyFilters();
-    });
-    return responseOfCreation;
+      if(this.username.valid && this.email.valid && this.password.valid){
+        const responseOfCreation = this.adminCockpitService.addUser(info[0], info[1], info[2], info[3]).subscribe(res => {
+          this.applyFilters();
+        });
+        this.email.reset();
+        this.username.reset();
+        this.password.reset();
+
+        return responseOfCreation;
+      }
+      this.adminCockpitService.snackBar("Alle Felder müssen ausgefüllt sein", "verstanden")
   }
+
 
   clearFilters(filters: any): void {
     filters.reset();
@@ -166,6 +201,38 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.applyFilters();
   }
+    // const userInf= this.userInfo;
+
+  //   event.target.Username.value,
+  //   event.target.Email.value,
+  //   event.target.Role.value,
+  //   event.target.Password.value
+  //
+  //   this.form = new FormGroup({
+  //     username: new FormControl(userInf.name, Validators.required),
+  //     email: new FormControl(userInf.email, [
+  //       Validators.required,
+  //       Validators.pattern(this.REGEXP_EMAIL),
+  //     ]),
+  //     role: new FormControl(userInf.role, Validators.required),
+  //     password: new FormControl(userInf.password, Validators.required)
+  //   });
+  // }
+  //
+  // get username(): AbstractControl {
+  //   return this.form.get('username');
+  // }
+  // get email(): AbstractControl {
+  //   return this.form.get('email');
+  // }
+  // get role(): AbstractControl {
+  //   return this.form.get('role');
+  // }
+  // get password(): AbstractControl {
+  //   return this.form.get('password');
+  // }
+  //
+
 
   ngOnDestroy() {
   }

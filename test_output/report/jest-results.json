@@ -1,0 +1,78 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 1,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 0,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 1,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1623856274716,
+  "success": false,
+  "testResults": [
+    {
+      "failureMessage": "\u001b[1m\u001b[31m  \u001b[1m● \u001b[1mbook-table-dialog › Launch the skill › LaunchRequest\u001b[39m\u001b[22m\n\n    Cannot find module 'C:\\projects\\my-project\\workspaces\\main\\my-thai-star\\index.js' from 'ModuleInvoker.js'\n\u001b[2m\u001b[22m\n\u001b[2m      Timestamp:\u001b[22m\n\u001b[2m      \t2021-06-16T17:11:19.888\u001b[22m\n",
+      "leaks": false,
+      "memoryUsage": 0,
+      "numFailingTests": 1,
+      "numPassingTests": 0,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "sourceMaps": {},
+      "testFilePath": "C:\\projects\\my-project\\workspaces\\main\\my-thai-star\\bespoken_test\\MyThaiStarStreamHandler.test.yml",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "book-table-dialog",
+            "Launch the skill"
+          ],
+          "duration": 4,
+          "failureMessages": [
+            "Cannot find module 'C:\\projects\\my-project\\workspaces\\main\\my-thai-star\\index.js' from 'ModuleInvoker.js'\nTimestamp:\n\t2021-06-16T17:11:19.888"
+          ],
+          "location": {
+            "column": 0,
+            "line": 0
+          },
+          "numPassingAsserts": 0,
+          "status": "failed",
+          "title": "LaunchRequest"
+        }
+      ],
+      "perfStats": {
+        "end": 1623856279909,
+        "start": 1623856276955
+      }
+    }
+  ],
+  "wasInterrupted": false
+}
