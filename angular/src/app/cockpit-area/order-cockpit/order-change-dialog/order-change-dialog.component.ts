@@ -27,7 +27,7 @@ import { MenuService } from 'app/menu/services/menu.service';
 })
 
 export class OrderChangeDialogComponent implements OnInit, OnDestroy {
-  // Pageinator
+  // Pageable
   private fromRow = 0;
   private currentPage = 1;
 
@@ -47,10 +47,9 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     'tableId',
   ];
   
-  // Order
-  datao: any[] = [];
+  // OrderView
+  datao: OrderView[] = [];
   columnso: any[];
-  columnsb: any[];
   displayedColumnsO: string[] = [
     'dish.name',
     'orderLine.comment',
@@ -61,8 +60,8 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   ];
   
   pageSizes: number[];
-  filteredData: any[] = this.datao;
-  newOrderLines: any[];
+  filteredData: OrderView[] = this.datao;
+  newOrderLines: OrderView[];
   totalPrice: number;
   
   dishSelect = new FormControl;
@@ -74,7 +73,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private menuService: MenuService,
+    // private menuService: MenuService,
     private store: Store<fromApp.State>,
     private waiterCockpitService: WaiterCockpitService,
     private translocoService: TranslocoService,
@@ -110,47 +109,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     this.filter();
 
     console.log('init: ', this.datao);
-
-    // this.getMenu({
-    //   searchBy: '{"categories":[],"searchBy":"","pageable":{"pageSize":8,"pageNumber":0,"sort":[{"property":"price","direction":"DESC"}]},"maxPrice":null,"minLikes":null}',
-    //   maxPrice: null,
-    //   minLikes: null,
-    //   categories: {
-    //     mainDishes: false,
-    //     starters: false,
-    //     desserts: false,
-    //     noodle: false,
-    //     rice: false,
-    //     curry: false,
-    //     vegan: false,
-    //     vegetarian: false,
-    //     favourites: false,
-    //   },
-    //   sort: {
-    //     property: undefined,
-    //     direction: SortDirection.DESC,
-    //   }
-    // });
   }
-
-  getMenu(filters: FilterFormData) : void {
-  //   const pageable: Pageable = {
-  //     pageSize: 8,
-  //     pageNumber: 0
-  //   };
-  //   this.menuService
-  //     .getDishes(this.menuService.composeFilters(pageable, filters))
-  //     .pipe(
-  //       map((res: any) => {
-  //         return res.content.map((item) => item.dish);
-  //       }),
-  //     )
-  //     .subscribe((menu) => {
-  //       this.newDishes = menu;
-  //     });
-  //     console.log("New Dishes: ", this.newDishes);
-  }
-  
 
   getPrice(): number {
     this.totalPrice = this.waiterCockpitService.getTotalPrice(this.datao);
@@ -219,11 +178,12 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   apply() {
 
     console.log('apply: ', this.datao);
+    
+    this.waiterCockpitService.changeOrder(this.datao).subscribe();
 
     // this.waiterCockpitService.deleteOrder(this.datao[0].orderLine.orderId).subscribe();
     // this.waiterCockpitService.saveOrder(this.datao).subscribe();
 
-    this.waiterCockpitService.changeOrder(this.datao).subscribe();
 
     // if (success)
     //   this.snackbarServive.openSnack(

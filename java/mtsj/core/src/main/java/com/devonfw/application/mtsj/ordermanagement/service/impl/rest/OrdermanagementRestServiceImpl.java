@@ -65,12 +65,6 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
   @Override
   public OrderEto changeOrder(OrderCto order) {
 
-    for (int i = 0; i < 100; i++) {
-      System.out.println("REST::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
-      System.out.println("SERVICE::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
-      System.out.println("IMPL::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
-    }
-
     return this.ordermanagement.changeOrder(order);
   }
 

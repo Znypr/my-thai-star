@@ -66,10 +66,6 @@ export interface  OrderView {
   orderLine: {
     amount: number;
     comment: string;
-    // orderId: number;
-    // dishId: number;
-    // id: number;
-    // modificationCounter: number;
   };
   extras: ExtraView[];
 }
