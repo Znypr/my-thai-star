@@ -180,9 +180,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line:typedef
   apply() {
 
-    console.log('apply: ', this.datao);
-
-    this.waiterCockpitService.saveOrder(this.datao);
+    this.waiterCockpitService.saveOrder(this.data).subscribe();
 
     this.filter();
 

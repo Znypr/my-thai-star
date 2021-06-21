@@ -444,7 +444,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       }
       List<OrderCto> currentOrders = getBookingOrders(booking.getBooking().getId());
       if (!currentOrders.isEmpty()) {
-        throw new OrderAlreadyExistException();
+        //throw new OrderAlreadyExistException();
       }
       orderEntity.setBookingId(booking.getBooking().getId());
 
