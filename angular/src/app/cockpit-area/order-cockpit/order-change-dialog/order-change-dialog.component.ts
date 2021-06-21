@@ -179,8 +179,17 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
 
   // tslint:disable-next-line:typedef
   apply() {
-
+    
+    console.log("preapply data:",this.data);
+     console.log("preapply datao:",this.datao);
     this.waiterCockpitService.saveOrder(this.data).subscribe();
+
+    this.datao = this.waiterCockpitService.orderComposerChange(
+      this.data.orderLines,
+    );
+    this.newOrderLines = this.datao;
+
+    console.log(this.datao);
 
     this.filter();
 
@@ -217,8 +226,10 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
 
     this.newOrderLines.push(orderline);
     this.datao = this.waiterCockpitService.orderComposerChange(
-      this.newOrderLines,
+      this.newOrderLines
     );
+
+    console.log("add:",this.datao);
     this.filter();
   }
 
@@ -230,9 +241,9 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
       for (let orderline of this.datao) {
         if (orderline != element) orderlines.push(orderline);
       }
-      this.newOrderLines = orderlines;
+      
       this.datao = this.waiterCockpitService.orderComposerChange(
-        this.newOrderLines,
+        orderlines
       );
       this.filter();
 
@@ -252,6 +263,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
         'red',
       );
     }
+    console.log("remove:",this.datao);
   }
 
   handleExtra(element: any, checked: boolean, extra: String): void {
