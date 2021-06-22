@@ -20,6 +20,10 @@ public class OrderEto extends AbstractEto implements Order {
 
   private Boolean paid;
 
+
+
+  
+
   /**
    * @return bookingToken
    */

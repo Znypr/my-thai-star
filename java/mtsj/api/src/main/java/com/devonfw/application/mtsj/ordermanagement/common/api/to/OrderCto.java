@@ -11,19 +11,21 @@ import com.devonfw.module.basic.common.api.to.AbstractCto;
  */
 public class OrderCto extends AbstractCto {
 
+
   private static final long serialVersionUID = 1L;
 
-  private OrderEto order;
-
   private BookingEto booking;
-
-  private InvitedGuestEto invitedGuest;
-
-  private List<OrderLineCto> orderLines;
-
   private BookingEto host;
 
+  private OrderEto order;
+  private List<OrderLineCto> orderLines;
+  
+  private InvitedGuestEto invitedGuest;
+
   private String orderStatus;
+
+
+
 
   public String getOrderStatus() {
 

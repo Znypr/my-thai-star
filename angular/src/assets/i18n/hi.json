@@ -23,7 +23,7 @@
     "accessError": "प्रवेश से वंचित, पहले प्रवेश करें",
     "genericError": "एक त्रुटि आ रही है, कृपया बाद में फिर से प्रयास करें",
     "urlError": "यूआरएल नहीं मिला, कृपया पुनः प्रयास करें",
-    "email confirmations": {
+    "emailConfirmations": {
       "invitationAccept": "निमंत्रण स्वीकार कर लिया",
       "invitationReject": "निमंत्रण सफलतापूर्वक खारिज कर दिया",
       "bookingCancel": "बुकिंग सफलतापूर्वक रद्द कर दी गई",

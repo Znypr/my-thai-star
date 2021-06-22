@@ -12,6 +12,10 @@ public class TableEto extends AbstractEto implements Table {
 
   private Integer seatsNumber;
 
+  private String tableName;
+  private String alexaId;
+
+
   @Override
   public Integer getSeatsNumber() {
 
@@ -23,6 +27,7 @@ public class TableEto extends AbstractEto implements Table {
 
     this.seatsNumber = seatsNumber;
   }
+
 
   @Override
   public int hashCode() {
@@ -56,5 +61,26 @@ public class TableEto extends AbstractEto implements Table {
     }
     return true;
   }
+
+  @Override
+  public String getTableName() {
+    return this.tableName;
+  }
+
+  @Override
+  public String getAlexaID() {
+    return this.alexaId;
+  }
+
+  @Override
+  public void setTableName(String name) {
+    this.tableName = name;
+  }
+
+  @Override
+  public void setAlexaID(String id) {
+    this.alexaId = id;
+  }
+
 
 }

@@ -13,6 +13,12 @@ import {
 } from '../../shared/backend-models/interfaces';
 import { AdminDialogComponent } from './admin-dialog/admin-dialog.component';
 import * as config from '../../config'
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 
 @Component({
@@ -24,6 +30,8 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   // private translocoSubscription = Subscription.EMPTY;
   hide = true;
   config = config.config;
+  form: any;
+  REGEXP_EMAIL = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
   private pageable: Pageable = {
     pageSize: 8,
@@ -53,6 +61,7 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   pageSizes: number[];
 
 
+
   filters: FilterAdminCockpit = {
     id: undefined,
     username: undefined,
@@ -62,7 +71,7 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialog: MatDialog,
-    private adminCockpitService: AdminCockpitService,
+    public adminCockpitService: AdminCockpitService,
     private configService: ConfigService,
   ) {
     this.pageSizes = this.configService.getValues().pageSizes;
@@ -79,12 +88,25 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   //       ];
   //     });
   // }
+  email = new FormControl('',[
+    Validators.required,
+    Validators.pattern(this.REGEXP_EMAIL),
+  ]);
+
+  username = new FormControl('',[
+    Validators.required
+  ]);
+  password = new FormControl('',[
+    Validators.required
+  ]);
+
 
   onButtonClick(token: String){
-    this.adminCockpitService.getTokenByToken(token).subscribe(
+    this.adminCockpitService.getUserIdByToken(token).subscribe(
       (data: any) => {
         if (!data) {
           this.resetTokenEntity = [];
+          alert('Hallo');
         } else {
           this.resetTokenEntity = data;
         }
@@ -93,12 +115,8 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   }
 
   funk(){
-    console.log(this.resetTokenEntity.token);
+    console.log(this.resetTokenEntity);
     return true;
-  }
-
-  changePassword(password: String){
-
   }
 
 
@@ -143,6 +161,7 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
     });
     return responseOfCreation;
   }
+
 
   clearFilters(filters: any): void {
     filters.reset();

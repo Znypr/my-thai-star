@@ -5,4 +5,5 @@ public class Booking {
     public String name;
     public String email;
     public String assistants;
+    public String bookingToken;
 }

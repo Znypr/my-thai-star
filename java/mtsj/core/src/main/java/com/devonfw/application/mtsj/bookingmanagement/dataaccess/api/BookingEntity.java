@@ -52,6 +52,8 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
 
   private List<OrderEntity> orders;
 
+  private boolean needHelp = false;
+
   @Min(value = 1, message = "Assistants must be greater than 0")
   @Digits(integer = 2, fraction = 0)
   private Integer assistants;
@@ -389,6 +391,16 @@ public class BookingEntity extends ApplicationPersistenceEntity implements Booki
       userEntity.setId(userId);
       this.user = userEntity;
     }
+  }
+
+  @Override
+  public void setNeedHelp(boolean help) {
+    this.needHelp = help;
+  }
+
+  @Override
+  public boolean getNeedHelp() {
+    return this.needHelp;
   }
 
 }

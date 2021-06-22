@@ -1,5 +1,7 @@
 package com.devonfw.application.mtsj.ordermanagement.service.api.rest;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -49,6 +51,16 @@ public interface OrdermanagementRestService {
   @Path("/order/")
   public OrderEto saveOrder(OrderCto cto);
 
+  /**
+   * Delegates to {@link Ordermanagement#changeOrder}.
+   *
+   * @param {@link OrderCto} to be updatesd
+   * @return the recently updated {@link OrderEto}
+   */
+  @POST
+  @Path("/order/change/")
+  public OrderEto changeOrder(OrderCto order);
+
 
     /**
      * Delegates to {@link Ordermanagement#updateOrderStatus}.
@@ -76,7 +88,7 @@ public interface OrdermanagementRestService {
    *
    * @param id ID of the {@link OrderEto} to be deleted
    */
-  @DELETE
+  @GET
   @Path("/order/{id}/")
   public boolean deleteOrder(@PathParam("id") long id);
 

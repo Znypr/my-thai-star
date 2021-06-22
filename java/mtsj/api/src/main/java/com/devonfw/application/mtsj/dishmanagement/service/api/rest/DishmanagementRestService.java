@@ -74,7 +74,7 @@ public interface DishmanagementRestService {
    * @param id the ID of the {@link DishEto}
    * @return the {@link DishEto}
    */
-  @GET
+  @POST
   @Path("/dish/{id}/")
   public DishCto getDish(@PathParam("id") long id);
 

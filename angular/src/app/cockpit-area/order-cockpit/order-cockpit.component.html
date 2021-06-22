@@ -74,11 +74,19 @@
             <mat-form-field [floatLabel]="'never'">
               <mat-label>{{element.order.orderStatus}}</mat-label>
               <mat-select (selectionChange)="onChange($event.value, element)" >
-                <mat-option *ngFor="let status of columnss"  [value]="status.name" [disabled]="disableOption(status.name, element)">
+                <mat-option *ngFor="let status of columnss" [value]="status.name" [disabled]="disableOption(status.name, element)">
                   {{status.label}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
+          </td>
+        </ng-container>
+
+        <!-- Edit Column -->
+        <ng-container matColumnDef="orderEdit">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columnsb[0].label}} </th>
+          <td mat-cell *matCellDef="let element; let row">
+          <button mat-button color="accent" [disabled]="checkIfOpen(element)" (click)="editOrder(row)">{{'buttons.edit' | transloco | uppercase}}</button>
           </td>
         </ng-container>
 

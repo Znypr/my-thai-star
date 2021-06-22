@@ -300,6 +300,14 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
+  public void setHelp(String bookingToken, boolean help) {
+    BookingEntity booking = getBookingDao().findBookingByToken(bookingToken);
+    booking.setNeedHelp(help);
+  getBookingDao().save(booking);
+  }
+
+
+  @Override
   public InvitedGuestEto saveInvitedGuest(InvitedGuestEto invitedGuest) {
 
     Objects.requireNonNull(invitedGuest, "invitedGuest");
@@ -360,9 +368,10 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
 
   @Override
   public InvitedGuestEto acceptInvite(String guestToken) {
-
     Objects.requireNonNull(guestToken);
+    // invited is null
     InvitedGuestEto invited = findInvitedGuestByToken(guestToken);
+
     invited.setAccepted(true);
     BookingCto booking = findBooking(invited.getBookingId());
     sendConfirmationAcceptedInviteToGuest(booking, invited);

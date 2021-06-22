@@ -10,6 +10,8 @@ CREATE TABLE "Table" (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   seatsNumber INTEGER NOT NULL,
+  tableName VARCHAR (255) NULL,
+  alexaId VARCHAR (255) NULL,
   CONSTRAINT PK_Table PRIMARY KEY(id)
 );
 
@@ -26,14 +28,18 @@ CREATE TABLE UserRole (
 CREATE TABLE User (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
-  username VARCHAR (255) NULL,
+  username VARCHAR (255) NOT NULL,
   password VARCHAR (255) NULL,
   secret VARCHAR (255) NULL,
   twoFactorStatus BOOLEAN NULL DEFAULT ((0)),
-  email VARCHAR (120) NULL,
+  email VARCHAR (120) NOT NULL,
   idRole BIGINT NOT NULL,
   CONSTRAINT PK_User PRIMARY KEY(id),
-  CONSTRAINT PK_User_idRole FOREIGN KEY(idRole) REFERENCES UserRole(id) NOCHECK
+	UNIQUE KEY user_name (username) NOCHECK,
+	UNIQUE KEY user_email (email) NOCHECK,
+-- constraint uq1 unique key (username) NOCHECK,
+-- constraint uq2 unique key (email) NOCHECK,
+  CONSTRAINT FK_User_idRole FOREIGN KEY(idRole) REFERENCES UserRole(id) NOCHECK
 );
 
 -- *** ResetToken ***
@@ -65,6 +71,7 @@ CREATE TABLE Booking (
   idTable BIGINT,
   idOrder BIGINT,
   assistants INTEGER,
+  needHelp BOOLEAN NOT NULL DEFAULT ((0)) ,
   CONSTRAINT PK_Booking PRIMARY KEY(id),
   CONSTRAINT FK_Booking_idUser FOREIGN KEY(idUser) REFERENCES User(id) NOCHECK,
   CONSTRAINT FK_Booking_idTable FOREIGN KEY(idTable) REFERENCES "Table"(id) NOCHECK

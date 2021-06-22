@@ -10,6 +10,10 @@ public class UserEto extends AbstractEto implements User {
 
   private static final long serialVersionUID = 1L;
 
+  private Long userId;
+
+  private String token;
+
   private String username;
 
   private String email;
@@ -142,5 +146,37 @@ public class UserEto extends AbstractEto implements User {
     }
 
     return true;
+  }
+
+  /**
+   * @return userId
+   */
+  public Long getUserId() {
+
+    return this.userId;
+  }
+
+  /**
+   * @param userId new value of {@link #getuserId}.
+   */
+  public void setUserId(Long userId) {
+
+    this.userId = userId;
+  }
+
+  /**
+   * @return token
+   */
+  public String getToken() {
+
+    return this.token;
+  }
+
+  /**
+   * @param token new value of {@link #gettoken}.
+   */
+  public void setToken(String token) {
+
+    this.token = token;
   }
 }

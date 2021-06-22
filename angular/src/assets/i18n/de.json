@@ -13,7 +13,10 @@
     "clearFilters": "Filter zurücksetzen",
     "applyFilters": "Filter anwenden",
     "removeComment": "Kommentar entfernen",
-    "addComment": "Kommentar hinzufügen"
+    "addComment": "Kommentar hinzufügen",
+    "add": "Hinzufügen",
+    "delete": "Entfernen",
+     "reset": "Zurücksetzen"
   },
   "table": {
     "rowsPage": "Zeilen pro Seite",
@@ -46,6 +49,10 @@
       "paidSuccess": "Bezahlung erfolgreich eingetragen",
       "unpaidSuccess": "Bezahlung erfolgreich entfernt",
       "paidFail": "Bezahlung fehlgeschlagen"
+    },
+    "table": {
+      "deleteSuccess": "Tisch erfolgreich entfernt",
+      "deleteFail": "Tisch konnte nicht entfernt werden"
     }
   },
   "formFields": {
@@ -65,7 +72,9 @@
     "comment": "Kommentar",
     "total": "Gesamt",
     "referenceNumber": "Referenznummer",
-    "orderStatus": "Status"
+    "orderStatus": "Status",
+    "tableName": "Tisch Name",
+    "alexaId": "Alexa ID"
   },
   "bookTable": {
     "title": "Du kannst deine Freunde zum Mittagessen einladen oder einen Tisch buchen",
@@ -98,6 +107,7 @@
     "orders": "Bestellungen",
     "reservations": "Reservierungen",
     "archive": "Archiv",
+    "tables": "Tische",
     "userActions": {
       "user": "Benutzer",
       "pairing": "Zwei-Faktor-Authentifizierung einstellen",
@@ -174,6 +184,7 @@
   },
   "cockpit": {
     "filter": "Filter",
+    "addTable":"Tisch hinzufügen",
     "order-archive": {
       "title": "Bestellungs Archiv",
       "dialogTitle": "BESTELLDETAILS - REFERENZNUMMER",
@@ -185,7 +196,7 @@
         "priceH": "Preis"
       },
       "orderStatus": {
-        "open": "Wieder Öffnen",
+        "open": "Wiederöffnen",
         "paid": "Bezahlt",
         "cancelled": "Storniert"
       }
@@ -216,6 +227,13 @@
         "assistantsH": "Teilnehmer"
       }
     },
+    "tables": {
+      "title": "Tisch Übersicht",
+      "alexaSelect": "Alexa Auswahl",
+      "idH": "Tisch ID",
+      "nameH": "Tisch Name",
+      "alexaDeviceH":"Alexa Gerät"
+    },
     "table": {
       "reservationDateH": "Reservierungsdatum",
       "emailH": "Email",
@@ -224,7 +242,8 @@
       "paidH": "Bezahlt",
       "ownerH": "Eigentümer",
       "tableH": "Tisch",
-      "creationDateH": "Erstelldatum"
+      "creationDateH": "Erstelldatum",
+      "tableSelect": "Tisch Auswahl"
     }
   }
 }

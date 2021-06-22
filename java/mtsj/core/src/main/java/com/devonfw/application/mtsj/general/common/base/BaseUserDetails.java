@@ -21,6 +21,7 @@ public class BaseUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
+
         List<GrantedAuthority> authorities = new ArrayList<>();
         String userRole = StringUtils.capitalize(userEntity.getUserRole().getName());
         authorities.add(new SimpleGrantedAuthority("ROLE_" + userRole));

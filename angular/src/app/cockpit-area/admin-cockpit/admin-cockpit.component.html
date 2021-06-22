@@ -8,21 +8,36 @@
   </mat-expansion-panel>
 </div> -->
 
-<form (ngSubmit)="getUserInput($event);">
+<form class="form" (ngSubmit)="getUserInput($event);">
+  <mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>Nutzer anlegen</mat-panel-title>
+</mat-expansion-panel-header>
   <mat-form-field appearance="fill">
     <mat-label>Username</mat-label>
-    <input id="Username" matInput placeholder="Username">
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Email</mat-label>
-    <input id="Email" type="email" name="email" matInput placeholder="user@mail.com" ngModel [email]="true">
+    <input id="Username" matInput placeholder="Username" [formControl]="username">
     <mat-error>
-      Please enter a valid email address
+      Please enter a username
     </mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input id="Email" type="email" name="email" matInput placeholder="user@mail.com"  [formControl]="email">
+    <mat-error id="EmailError">
+      Please enter a valid email address
+    </mat-error>
+  </mat-form-field>
+  <!-- <mat-form-field appearance="fill">
     <mat-label>Role</mat-label>
     <input id="Role" type="number" min="0" max="3" matInput placeholder="0-3">
+  </mat-form-field> -->
+  <mat-form-field appearance="fill">
+    <mat-label>Role</mat-label>
+    <select matNativeControl id="Role">
+      <option *ngFor="let element of config.roles" [value]="element.permission">
+        {{element.name}}
+      </option>
+    </select>
   </mat-form-field>
   <!-- <mat-form-field appearance="fill">
   <mat-label>Role</mat-label>
@@ -39,14 +54,17 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Enter your password</mat-label>
-    <input id="Password" matInput [type]="hide ? 'password' : 'text'" placeholder="I<3MOM">
+    <input [formControl]="password" id="Password" matInput [type]="hide ? 'password' : 'text'" placeholder="I<3MOM">
     <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     </button>
+    <mat-error>
+      Please enter a password
+    </mat-error>
   </mat-form-field>
 
-  <button mat-button type="submit"> Neuen Nutzer anlegen </button>
-
+  <button id="submitButton" mat-button type="submit"> Neuen Nutzer anlegen </button>
+  </mat-expansion-panel>
 </form>
 
 <div class="tableContainer">
@@ -55,7 +73,7 @@
     <!-- id Column -->
     <ng-container matColumnDef="user.id">
       <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      <td id="User" mat-cell *matCellDef="let element"> {{element.id}} </td>
     </ng-container>
 
     <!-- username Column -->
@@ -71,9 +89,27 @@
     </ng-container>
 
     <!-- role Column -->
-    <ng-container matColumnDef="user.idRole">
+    <!-- <ng-container matColumnDef="user.idRole">
       <th mat-header-cell *matHeaderCellDef> Role </th>
       <td mat-cell *matCellDef="let element"> {{ element.userRoleId }} </td>
+    </ng-container> -->
+    <ng-container matColumnDef="user.idRole">
+      <th mat-header-cell *matHeaderCellDef> Role </th>
+      <!-- <td mat-cell *matCellDef="let element">
+        <span *ngIf="element.userRoleId === 0"> CUSTOMER</span>
+        <span *ngIf="element.userRoleId === 1"> WAITER</span>
+        <span *ngIf="element.userRoleId === 2"> MANAGER</span>
+        <span *ngIf="element.userRoleId === 3"> ADMIN</span>
+      </td> -->
+
+      <td mat-cell *matCellDef="let user">
+        <div *ngFor="let element of config.roles">
+          <span *ngIf="user.userRoleId === element.permission">  {{element.name}} </span>
+        </div>
+      </td>
+
+       <!-- <td mat-cell *ngFor="let element of config.roles"> {{element.name}}
+       </td> -->
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -84,8 +120,14 @@
 <mat-paginator #pagingBar [length]="totalUsers" [pageSize]="pageSize" [pageSizeOptions]="pageSizes" [showFirstLastButtons]="true" (page)="page($event)">
 </mat-paginator>
 
-  <button mat-button type="button" (click)="onButtonClick('RT_20210517_74da0febeb981971f39e7620d6e03eb5')"> get Token </button>
-  <button mat-button type="button" (click)="funk()"> log Token </button>
+  <!-- <button mat-button type="button" (click)="changePassword()"> log Token </button> -->
+
+  <!-- <button mat-button type="button" (click)="onButtonClick('RT_20210517_74da0febeb981971f39e7620d6e03eb5')"> onButtonClick </button>
+
+  <button mat-button type="button" (click)="funk()"> funk </button> -->
+
+  <!-- <button mat-button type="button" (click)="onButtonClick('RT_20210517_74da0febeb981971f39e7620d6e03eb5')"> get Token </button>
+  <button mat-button type="button" (click)="funk()"> log Token </button> -->
 <!-- <mat-expansion-panel-header>
     <mat-panel-title>{{ 'cockpit.filter' | transloco }}</mat-panel-title>
 </mat-expansion-panel-header>

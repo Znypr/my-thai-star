@@ -48,6 +48,8 @@ public class BookingEto extends AbstractEto implements Booking {
 
   private Long userId;
 
+  private boolean needHelp = false;
+
   @Override
   public String getName() {
 
@@ -313,4 +315,14 @@ public class BookingEto extends AbstractEto implements Booking {
     this.userId = userId;
   }
 
+
+  @Override
+  public void setNeedHelp(boolean help) {
+    this.needHelp = help;
+  }
+
+  @Override
+  public boolean getNeedHelp() {
+    return this.needHelp;
+  }
 }

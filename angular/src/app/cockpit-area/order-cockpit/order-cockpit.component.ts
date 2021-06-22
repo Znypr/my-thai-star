@@ -2,6 +2,7 @@ import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
+import { Title } from '@angular/platform-browser';
 import { TranslocoService } from '@ngneat/transloco';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
@@ -12,6 +13,7 @@ import {
 } from '../../shared/backend-models/interfaces';
 import { OrderListView } from '../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
+import { OrderChangeDialogComponent } from './order-change-dialog/order-change-dialog.component';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 
 @Component({
@@ -37,6 +39,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
 
   data: any;
   columns: any[];
+  columnsb: any[];
   columnss: any[];
 
   displayedColumns: string[] = [
@@ -45,6 +48,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     'booking.bookingToken',
     'paid',
     'orderStatus',
+    'orderEdit',
   ];
 
   pageSizes: number[];
@@ -58,14 +62,16 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   };
 
   constructor(
+    title: Title,
     private dialog: MatDialog,
     private translocoService: TranslocoService,
     private waiterCockpitService: WaiterCockpitService,
-    @Inject(MAT_DIALOG_DATA) dialogData: any,
     private configService: ConfigService,
+    @Inject(MAT_DIALOG_DATA) dialogData: any,
   ) {
-    this.data = dialogData;
+    title.setTitle('Orders');
     this.pageSizes = this.configService.getValues().pageSizes;
+    this.data = dialogData;
   }
 
   ngOnInit(): void {
@@ -75,6 +81,10 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       this.setOrderStatus(event);
       moment.locale(this.translocoService.getActiveLang());
     });
+
+    // setInterval(() => {
+    //   this.applyFilters(); // api call
+    // }, 10000);
   }
 
   setOrderStatus(lang: string): void {
@@ -103,6 +113,14 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
           { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
           { name: 'paid', label: cockpitTable.paidH },
           { name: 'orderStatus', label: cockpitTable.orderStatusH },
+        ];
+      });
+
+       this.translocoSubscription = this.translocoService
+      .selectTranslateObject('buttons', {}, lang)
+      .subscribe((button) => {
+        this.columnsb = [
+          { name: 'orderEdit', label: button.edit },
         ];
       });
   }
@@ -158,6 +176,13 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     });
   }
 
+  editOrder(selection: OrderListView): void {
+    this.dialog.open(OrderChangeDialogComponent, {
+      width: '80%',
+      data: selection,
+    });
+  }
+
   updatePaid(paid: any, element: any): void {
     element.order.paid = paid.checked;
     this.waiterCockpitService
@@ -180,6 +205,11 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     return this.disableCurrentStatusOption(orderStatus, element) || this.checkValidStatusTransition(orderStatus, element);
   }
 
+  checkIfOpen(element: any) : boolean {
+    if(element.order.orderStatus == "open") return false;
+    else return true;
+  }
+
    disableCurrentStatusOption(orderStatus: string, element: any): boolean {
     if(orderStatus == element.order.orderStatus) return true;
     else return false;
@@ -188,9 +218,9 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   checkValidStatusTransition(orderStatus: string, element: any): boolean {
     if(element.order.orderStatus == "delivered" && orderStatus == "open") return true;
     if(element.order.orderStatus == "preparing" && orderStatus == "open") return true;
-    else false;
+    else return false;
   }
-  
+
 
   ngOnDestroy(): void {
     this.translocoSubscription.unsubscribe();
