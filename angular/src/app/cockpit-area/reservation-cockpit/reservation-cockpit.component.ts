@@ -61,7 +61,6 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
     private translocoService: TranslocoService,
     private dialog: MatDialog,
     private configService: ConfigService,
-    title: Title
   ) {
     title.setTitle('Reservations');
     this.pageSizes = this.configService.getValues().pageSizes;

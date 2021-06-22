@@ -61,6 +61,7 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   pageSizes: number[];
 
 
+
   filters: FilterAdminCockpit = {
     id: undefined,
     username: undefined,
@@ -87,6 +88,18 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   //       ];
   //     });
   // }
+  email = new FormControl('',[
+    Validators.required,
+    Validators.pattern(this.REGEXP_EMAIL),
+  ]);
+
+  username = new FormControl('',[
+    Validators.required
+  ]);
+  password = new FormControl('',[
+    Validators.required
+  ]);
+
 
   onButtonClick(token: String){
     this.adminCockpitService.getUserIdByToken(token).subscribe(

@@ -172,16 +172,6 @@ export class WaiterCockpitService {
     );
   }
 
-  getTables(filters: any) : Observable<Table[]> {
-    return this.restServiceRoot$.pipe(
-      exhaustMap((restServiceRoot) =>
-        this.http.post<Table[]>(
-          `${restServiceRoot}${this.getTableRestPath}`,
-          filters,
-        ),
-      ),
-    );
-  }
 
   orderComposer(orderList: OrderView[]): OrderView[] {
     const orders: OrderView[] = cloneDeep(orderList);
