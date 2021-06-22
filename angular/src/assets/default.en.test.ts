@@ -14,6 +14,9 @@ export const DefaultENTest = {
     applyFilters: 'Apply Filters',
     removeComment: 'Remove Comment',
     addComment: 'Add comment',
+    add: 'Add',
+    delete: 'Delete',
+    reset: 'Reset'
   },
   table: {
     rowsPage: 'Rows per page',
@@ -48,6 +51,10 @@ export const DefaultENTest = {
       unpaidSuccess: 'Payment successful removed',
       paidFail: 'Payment failed',
     },
+    table: {
+      deleteSuccess: 'Table removed successfully',
+      deleteFail: 'Table couln\'t be removed'
+    }
   },
   formFields: {
     username: 'Username',
@@ -67,6 +74,8 @@ export const DefaultENTest = {
     total: 'Total',
     referenceNumber: 'Reference number',
     orderStatus: 'Status',
+    tableName: 'Table Name',
+    alexaId: 'Alexa ID'
   },
   bookTable: {
     title: 'You can invite your friends to lunch or book a table',
@@ -183,6 +192,7 @@ export const DefaultENTest = {
   },
   cockpit: {
     filter: 'Filter',
+    addTable: 'Add Table',
     'order-archive': {
       title: 'Order Archive',
       dialogTitle: 'ORDER DETAILS - REFERENCE NUMBER',

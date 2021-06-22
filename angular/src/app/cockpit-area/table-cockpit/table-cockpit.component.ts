@@ -32,22 +32,22 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
 
   @ViewChild('pagingBar', { static: true }) pagingBar: MatPaginator;
 
+  alexaId: any = "321321321";
   bookings: ReservationView[] = [];
   tables: ReservationView[] = [];
   totalReservations: number;
 
   columns: any[];
-  displayedColumns: string[] = ['id', 'name', 'alexaDevice'];
+  displayedColumns: string[] = ['id', 'name', 'alexaDevice', 'delete'];
 
   pageSizes: number[];
 
   selected = new FormControl("selected");
 
 
-  filters: FilterCockpit = {
-    bookingDate: undefined,
-    email: undefined,
-    bookingToken: undefined,
+  filters: any = {
+    name: undefined,
+    alexaId: undefined
   };
 
   constructor(
@@ -89,29 +89,16 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
 
   applyFilters(): void {
     this.waiterCockpitService
-      .getReservations(this.pageable, this.sorting, this.filters)
+      .getTables(this.pageable, this.sorting, this.filters)
       .subscribe((data: any) => {
         if (!data) {
           this.bookings = [];
-          // this.tables = [];
         } else {
           this.bookings = data.content;
-          
-          // for(let booking of data.content) {
-          //   let add: boolean = true;
-          //   for(let table of this.tables) {
-          //     if(booking.booking.tableId == table.booking.tableId) add = false;
-          //   }
-          //   if(add) this.tables.push(booking);
-          // }
-          // console.log(this.tables);
         } 
         
         this.totalReservations = data.totalElements;
       });
-      
-
-
   }
 
   clearFilters(filters: any): void {
@@ -144,6 +131,19 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
   onChange(alexaId: any) : void {
 
     console.log(alexaId);
+  }
+
+  removeTable(table: any) : void {
+
+    // TODO
+    //delete table from database
+
+    if(successful)
+    this.snackbar.openSnack(
+            this.translocoService.translate('alert.dialog.deleteTableSuccess'),
+            4000,
+            'green',
+          );
   }
 
   ngOnDestroy(): void {
