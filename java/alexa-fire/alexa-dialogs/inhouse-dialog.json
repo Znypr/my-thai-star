@@ -525,6 +525,16 @@
                         "Bezahlungsmöglichkeiten",
                         "Mit was kann man bei euch bezahlen"
                     ]
+                },
+                {
+                    "name": "AskForHelpIntent",
+                    "slots": [],
+                    "samples": [
+                        "Kellner rufen",
+                        "Kellner",
+                        "Sos",
+                        "Ich brauch Hilfe"
+                    ]
                 }
             ],
             "types": [
