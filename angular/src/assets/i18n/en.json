@@ -14,10 +14,9 @@
     "applyFilters": "Apply Filters",
     "removeComment": "Remove Comment",
     "addComment": "Add comment",
-    "edit": "Edit",
-    "reset": "Reset",
+    "add": "Add",
     "delete": "Delete",
-    "add": "Add"
+    "reset": "Reset"
   },
   "table": {
     "rowsPage": "Rows per page",
@@ -28,7 +27,7 @@
     "accessError": "Access denied, please log in first",
     "genericError": "An error has ocurred, please try again later",
     "urlError": "Url not found, please try again",
-    "emailConfirmations": {
+    "email confirmations": {
       "invitationAccept": "Invitation succesfully accepted",
       "invitationReject": "Invitation succesfully rejected",
       "bookingCancel": "Booking succesfully cancelled",
@@ -48,15 +47,12 @@
     },
     "paid": {
       "paidSuccess": "Payment successful registered",
-      "unpaidSuccess": "Payment successfully removed",
+      "unpaidSuccess": "Payment successful removed",
       "paidFail": "Payment failed"
     },
-    "orderChange": {
-      "reset": "Reset was successful",
-      "applySuccess": "Change of order was successfully applied",
-      "applyFail": "Change of order failed",
-      "deleteOrderlineSuccess": "Orderline successfully removed",
-      "deleteOrderlineFail": "Last orderline can't be removed"
+    "table": {
+      "deleteSuccess": "Table removed successfully",
+      "deleteFail": "Table couln't be removed"
     }
   },
   "formFields": {
@@ -76,7 +72,9 @@
     "comment": "Comment",
     "total": "Total",
     "referenceNumber": "Reference number",
-    "orderStatus": "Status"
+    "orderStatus": "Status", 
+    "tableName": "Table Name",
+    "alexaId": "Alexa ID"
   },
   "bookTable": {
     "title": "You can invite your friends to lunch or book a table",
@@ -186,6 +184,7 @@
   },
   "cockpit": {
     "filter": "Filter",
+    "addTable":"Add Table",
     "order-archive": {
       "title": "Order Archive",
       "dialogTitle": "ORDER DETAILS - REFERENCE NUMBER",
@@ -210,8 +209,7 @@
         "commentsH": "Comments",
         "extrasH": "Extra",
         "quantityH": "Quantity",
-        "priceH": "Price",
-        "dishSelection":"Select dish"
+        "priceH": "Price"
       },
       "orderStatus": {
         "open": "Open",

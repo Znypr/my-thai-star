@@ -32,22 +32,22 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
 
   @ViewChild('pagingBar', { static: true }) pagingBar: MatPaginator;
 
+  alexaId: any = "321321321";
   bookings: ReservationView[] = [];
   tables: ReservationView[] = [];
   totalReservations: number;
 
   columns: any[];
-  displayedColumns: string[] = ['id', 'name', 'alexaDevice'];
+  displayedColumns: string[] = ['id', 'name', 'alexaDevice', 'delete'];
 
   pageSizes: number[];
 
   selected = new FormControl("selected");
 
 
-  filters: FilterCockpit = {
-    bookingDate: undefined,
-    email: undefined,
-    bookingToken: undefined,
+  filters: any = {
+    name: undefined,
+    alexaId: undefined
   };
 
   constructor(
@@ -93,10 +93,10 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
       .subscribe((data: any) => {
         if (!data) {
           this.bookings = [];
-          // this.tables = [];
         } else {
           this.bookings = data.content;
-        }
+        } 
+        
         this.totalReservations = data.totalElements;
       });
   }
@@ -131,6 +131,19 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
   onChange(alexaId: any) : void {
 
     console.log(alexaId);
+  }
+
+  removeTable(table: any) : void {
+
+    // TODO
+    //delete table from database
+
+    if(successful)
+    this.snackbar.openSnack(
+            this.translocoService.translate('alert.dialog.deleteTableSuccess'),
+            4000,
+            'green',
+          );
   }
 
   ngOnDestroy(): void {

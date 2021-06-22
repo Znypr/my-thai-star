@@ -14,10 +14,9 @@ export const DefaultENTest = {
     applyFilters: 'Apply Filters',
     removeComment: 'Remove Comment',
     addComment: 'Add comment',
-    edit: 'Edit',
-    reset: 'Reset',
-    delete: 'Delete',
     add: 'Add',
+    delete: 'Delete',
+    reset: 'Reset'
   },
   table: {
     rowsPage: 'Rows per page',
@@ -28,7 +27,7 @@ export const DefaultENTest = {
     accessError: 'Access denied, please log in first',
     genericError: 'An error has ocurred, please try again later',
     urlError: 'Url not found, please try again',
-    emailConfirmations: {
+    'email confirmations': {
       invitationAccept: 'Invitation succesfully accepted',
       invitationReject: 'Invitation succesfully rejected',
       bookingCancel: 'Booking succesfully cancelled',
@@ -52,13 +51,10 @@ export const DefaultENTest = {
       unpaidSuccess: 'Payment successful removed',
       paidFail: 'Payment failed',
     },
-    orderChange: {
-      reset: 'Reset was successful',
-      applySuccess: 'Change of order was successfully applied',
-      applyFail: 'Change of order failed',
-      deleteOrderlineSuccess: 'Orderline successfully removed',
-      deleteOrderlineFail: "Last orderline can't be removed",
-    },
+    table: {
+      deleteSuccess: 'Table removed successfully',
+      deleteFail: 'Table couln\'t be removed'
+    }
   },
   formFields: {
     username: 'Username',
@@ -78,6 +74,8 @@ export const DefaultENTest = {
     total: 'Total',
     referenceNumber: 'Reference number',
     orderStatus: 'Status',
+    tableName: 'Table Name',
+    alexaId: 'Alexa ID'
   },
   bookTable: {
     title: 'You can invite your friends to lunch or book a table',
@@ -194,6 +192,7 @@ export const DefaultENTest = {
   },
   cockpit: {
     filter: 'Filter',
+    addTable: 'Add Table',
     'order-archive': {
       title: 'Order Archive',
       dialogTitle: 'ORDER DETAILS - REFERENCE NUMBER',
@@ -219,7 +218,6 @@ export const DefaultENTest = {
         extrasH: 'Extra',
         quantityH: 'Quantity',
         priceH: 'Price',
-        dishSelection: 'Select dish',
       },
       orderStatus: {
         open: 'Open',

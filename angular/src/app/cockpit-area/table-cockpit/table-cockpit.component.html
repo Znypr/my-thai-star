@@ -1,42 +1,39 @@
-<!-- <form (ngSubmit)="filter()" #filterForm="ngForm">
+<form (ngSubmit)="applyFilters()" #filterForm="ngForm">
     <div>
-        <mat-expansion-panel data-name="reservationFilter">
+        <mat-expansion-panel data-name="orderFilter">
             <mat-expansion-panel-header>
-                <mat-panel-title>{{ 'cockpit.filter' | transloco }}</mat-panel-title>
+                <mat-panel-title>{{ 'cockpit.addTable' | transloco }}</mat-panel-title>
             </mat-expansion-panel-header>
             <div class="formRow">
                 <div class="formMobileRow">
-                    <mat-form-field color="accent" class="searchBy">
-                        <input matInput [placeholder]="'formFields.email' | transloco" [(ngModel)]="filters.email"
-                            name="email">
+                    <mat-form-field class="searchBy">
+                        <input matInput [placeholder]="'formFields.name' | transloco" [(ngModel)]="filters.name"
+                            name="name">
                     </mat-form-field>
-                    <mat-form-field color="accent" class="searchBy">
-                        <input matInput [placeholder]="'formFields.referenceNumber' | transloco"
-                            [(ngModel)]="filters.bookingToken" name="bookingToken">
+                    <mat-form-field class="searchBy">
+                        <input matInput [placeholder]="'formFields.alexaId' | transloco"
+                            [(ngModel)]="filters.alexaId" name="alexaId">
                     </mat-form-field>
                 </div>
                 <div class="formDesktopRow">
-                    <mat-form-field color="accent" class="searchBy">
-                        <input matInput [placeholder]="'formFields.email' | transloco" [(ngModel)]="filters.email"
-                            name="email">
+                    <mat-form-field class="searchBy">
+                        <input matInput [placeholder]="'formFields.name' | transloco" [(ngModel)]="filters.name" name="name">
                     </mat-form-field>
-                    <mat-form-field color="accent" class="searchBy">
-                        <input matInput [placeholder]="'formFields.referenceNumber' | transloco"
-                            [(ngModel)]="filters.bookingToken" name="bookingToken">
+                    <mat-form-field class="searchBy">
+                        <input matInput [placeholder]="'formFields.alexaId' | transloco" [(ngModel)]="filters.alexaId" name="alexaId">
                     </mat-form-field>
                 </div>
             </div>
             <div class="align-right">
-                <button class="reservationsClearFilters" name="reservationsClearFilters" mat-button type="button"
-                    (click)="clearFilters(filterForm)">{{'buttons.clearFilters' | transloco}}</button>
-                <button class="reservationApplyFilters" name="reservationApplyFilters" mat-button type="submit"
-                    color="accent">{{'buttons.applyFilters' | transloco}}</button>
+                <button name="orderClearFilters" mat-button type="button"
+                    (click)="clearFilters(filterForm)">{{'buttons.reset' | transloco}}</button>
+                <button  name="orderApplyFilters" mat-button type="submit"
+                    color="accent">{{'buttons.add' | transloco}}</button>
             </div>
         </mat-expansion-panel>
     </div>
 </form>
-<mat-progress-bar *ngIf="!reservations" color="accent" mode="indeterminate">
-</mat-progress-bar> -->
+
 <mat-card>
     <mat-card-title>{{'cockpit.tables.title' | transloco}}</mat-card-title>
     <mat-divider></mat-divider>
@@ -54,17 +51,20 @@
             <!-- Email Column -->
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[1].label}} </th>
-                <td mat-cell *matCellDef="let element">{{element.tableName}} </td>
+                <td mat-cell *matCellDef="let element"> {{'cockpit.table.tableH' | transloco}} {{element.tableName}} </td>
             </ng-container>
 
             <!-- Alexa ID Column -->
             <ng-container matColumnDef="alexaDevice">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[2].label}} </th>
-                <td mat-cell *matCellDef="let element">
-                    <mat-form-field [floatLabel]="'never'">
-                        <mat-label>{{columns[3].label}}</mat-label><td mat-cell *matCellDef="let element">{{element.tableName}} </td>
+                <td mat-cell *matCellDef="let element"> {{alexaId}}</td>
+            </ng-container>
 
-                    </mat-form-field>
+            <!-- Delete Column -->
+            <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'buttons.delete' | transloco}} </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-button color="warn" (click)="removeTable(element)">{{'buttons.delete' | transloco }}</button>
                 </td>
             </ng-container>
 

@@ -14,10 +14,9 @@
     "applyFilters": "Filter anwenden",
     "removeComment": "Kommentar entfernen",
     "addComment": "Kommentar hinzufügen",
-    "edit": "Bearbeiten",
-    "reset": "Zurücksetzen",
-    "delete": "Löschen",
-    "add": "Hinzufügen"
+    "add": "Hinzufügen",
+    "delete": "Entfernen",
+     "reset": "Zurücksetzen"
   },
   "table": {
     "rowsPage": "Zeilen pro Seite",
@@ -28,7 +27,7 @@
     "accessError": "Zugang verweigert, bitte erst einloggen",
     "genericError": "Ein Fehler ist aufgetreten, bitte versuche es später noch einmal",
     "urlError": "Url nicht gefunden, bitte versuche es noch einmal",
-    "emailConfirmations": {
+    "email confirmations": {
       "invitationAccept": "Einladung erfolgreich angenommen",
       "invitationReject": "Einladung erfolgreich abgelehnt",
       "bookingCancel": "Buchung erfolgreich abgebrochen",
@@ -51,12 +50,9 @@
       "unpaidSuccess": "Bezahlung erfolgreich entfernt",
       "paidFail": "Bezahlung fehlgeschlagen"
     },
-    "orderChange": {
-      "reset": "Bestellungsänderungen wurden zurückgesetzt",
-      "applySuccess": "Bestellung wurde erfolgreich angepasst",
-      "applyFail": "Bestellung konnte nicht angepasst werden",
-      "deleteOrderlineSuccess": "Artikel wurde aus Bestellung entfernt",
-      "deleteOrderlineFail": "Letzte Bestellung kann nicht entfernt werden"
+    "table": {
+      "deleteSuccess": "Tisch erfolgreich entfernt",
+      "deleteFail": "Tisch konnte nicht entfernt werden"
     }
   },
   "formFields": {
@@ -76,7 +72,9 @@
     "comment": "Kommentar",
     "total": "Gesamt",
     "referenceNumber": "Referenznummer",
-    "orderStatus": "Status"
+    "orderStatus": "Status",
+    "tableName": "Tisch Name",
+    "alexaId": "Alexa ID"
   },
   "bookTable": {
     "title": "Du kannst deine Freunde zum Mittagessen einladen oder einen Tisch buchen",
@@ -109,6 +107,7 @@
     "orders": "Bestellungen",
     "reservations": "Reservierungen",
     "archive": "Archiv",
+    "tables": "Tische",
     "userActions": {
       "user": "Benutzer",
       "pairing": "Zwei-Faktor-Authentifizierung einstellen",
@@ -185,6 +184,7 @@
   },
   "cockpit": {
     "filter": "Filter",
+    "addTable":"Tisch hinzufügen",
     "order-archive": {
       "title": "Bestellungs Archiv",
       "dialogTitle": "BESTELLDETAILS - REFERENZNUMMER",
@@ -196,7 +196,7 @@
         "priceH": "Preis"
       },
       "orderStatus": {
-        "open": "Wieder Öffnen",
+        "open": "Wiederöffnen",
         "paid": "Bezahlt",
         "cancelled": "Storniert"
       }
@@ -209,8 +209,7 @@
         "commentsH": "Kommentare",
         "extrasH": "Extra",
         "quantityH": "Anzahl",
-        "priceH": "Preis",
-        "dishSelection":"Gerichtewahl"
+        "priceH": "Preis"
       },
       "orderStatus": {
         "open": "Offen",
@@ -243,8 +242,8 @@
       "paidH": "Bezahlt",
       "ownerH": "Eigentümer",
       "tableH": "Tisch",
-      "creationDateH": "Erstelldatum"
-
+      "creationDateH": "Erstelldatum",
+      "tableSelect": "Tisch Auswahl"
     }
   }
 }
