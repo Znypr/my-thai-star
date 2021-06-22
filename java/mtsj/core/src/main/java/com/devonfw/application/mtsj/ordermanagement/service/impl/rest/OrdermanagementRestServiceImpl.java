@@ -1,5 +1,7 @@
 package com.devonfw.application.mtsj.ordermanagement.service.impl.rest;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -43,7 +45,6 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
 
   @Override
   public OrderEto saveOrder(OrderCto order) {
-
     return this.ordermanagement.saveOrder(order);
   }
 
@@ -58,6 +59,12 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
 
     this.ordermanagement.deleteOrder(id);
 
+  }
+
+  @Override
+  public OrderEto changeOrder(OrderCto order) {
+
+    return this.ordermanagement.changeOrder(order);
   }
 
   @Override

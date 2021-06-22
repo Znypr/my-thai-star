@@ -117,4 +117,14 @@ public class BookingmanagementRestServiceImpl implements BookingmanagementRestSe
     this.bookingmanagement.cancelInvite(bookingToken);
   }
 
+  @Override
+  public void askForHelp(String bookingToken) {
+    this.bookingmanagement.setHelp(bookingToken,true);
+  }
+
+  @Override
+  public void cancelAskForHelp(String bookingToken) {
+    this.bookingmanagement.setHelp(bookingToken,false);
+  }
+
 }

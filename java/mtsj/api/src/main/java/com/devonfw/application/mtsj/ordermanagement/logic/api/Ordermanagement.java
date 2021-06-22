@@ -43,6 +43,14 @@ public interface Ordermanagement {
   OrderCto findOrder(Long id);
 
   /**
+   * Returns a Order by its id 'id'.
+   *
+   * @param id The id 'id' of the Order.
+   * @return The {@link OrderEto} with id 'id'
+   */
+  OrderEto changeOrder(OrderCto order);
+
+  /**
    * Returns a paginated list of Orders matching the search criteria. Needs Authorization.
    *
    * @param criteria the {@link OrderSearchCriteriaTo}.

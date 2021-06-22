@@ -57,7 +57,7 @@ export interface OrderDishView {
   };
 }
 
-export interface OrderView {
+export interface  OrderView {
   dish: {
     id: number;
     name: string;
@@ -112,6 +112,7 @@ export interface OrderListView {
   orderLines: OrderView[];
   booking: BookingView;
   orderStatus: string;
+  paid: Boolean;
 }
 
 export interface OrderDishListView {

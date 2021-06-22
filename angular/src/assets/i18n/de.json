@@ -13,7 +13,11 @@
     "clearFilters": "Filter zurücksetzen",
     "applyFilters": "Filter anwenden",
     "removeComment": "Kommentar entfernen",
-    "addComment": "Kommentar hinzufügen"
+    "addComment": "Kommentar hinzufügen",
+    "edit": "Bearbeiten",
+    "reset": "Zurücksetzen",
+    "delete": "Löschen",
+    "add": "Hinzufügen"
   },
   "table": {
     "rowsPage": "Zeilen pro Seite",
@@ -46,6 +50,13 @@
       "paidSuccess": "Bezahlung erfolgreich eingetragen",
       "unpaidSuccess": "Bezahlung erfolgreich entfernt",
       "paidFail": "Bezahlung fehlgeschlagen"
+    },
+    "orderChange": {
+      "reset": "Bestellungsänderungen wurden zurückgesetzt",
+      "applySuccess": "Bestellung wurde erfolgreich angepasst",
+      "applyFail": "Bestellung konnte nicht angepasst werden",
+      "deleteOrderlineSuccess": "Artikel wurde aus Bestellung entfernt",
+      "deleteOrderlineFail": "Letzte Bestellung kann nicht entfernt werden"
     }
   },
   "formFields": {
@@ -98,7 +109,6 @@
     "orders": "Bestellungen",
     "reservations": "Reservierungen",
     "archive": "Archiv",
-    "tables": "Tische",
     "userActions": {
       "user": "Benutzer",
       "pairing": "Zwei-Faktor-Authentifizierung einstellen",
@@ -199,7 +209,8 @@
         "commentsH": "Kommentare",
         "extrasH": "Extra",
         "quantityH": "Anzahl",
-        "priceH": "Preis"
+        "priceH": "Preis",
+        "dishSelection":"Gerichtewahl"
       },
       "orderStatus": {
         "open": "Offen",
@@ -232,8 +243,8 @@
       "paidH": "Bezahlt",
       "ownerH": "Eigentümer",
       "tableH": "Tisch",
-      "creationDateH": "Erstelldatum",
-      "tableSelect": "Tisch Auswahl"
+      "creationDateH": "Erstelldatum"
+
     }
   }
 }

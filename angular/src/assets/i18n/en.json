@@ -13,7 +13,11 @@
     "clearFilters": "Clear Filters",
     "applyFilters": "Apply Filters",
     "removeComment": "Remove Comment",
-    "addComment": "Add comment"
+    "addComment": "Add comment",
+    "edit": "Edit",
+    "reset": "Reset",
+    "delete": "Delete",
+    "add": "Add"
   },
   "table": {
     "rowsPage": "Rows per page",
@@ -44,8 +48,15 @@
     },
     "paid": {
       "paidSuccess": "Payment successful registered",
-      "unpaidSuccess": "Payment successful removed",
+      "unpaidSuccess": "Payment successfully removed",
       "paidFail": "Payment failed"
+    },
+    "orderChange": {
+      "reset": "Reset was successful",
+      "applySuccess": "Change of order was successfully applied",
+      "applyFail": "Change of order failed",
+      "deleteOrderlineSuccess": "Orderline successfully removed",
+      "deleteOrderlineFail": "Last orderline can't be removed"
     }
   },
   "formFields": {
@@ -199,7 +210,8 @@
         "commentsH": "Comments",
         "extrasH": "Extra",
         "quantityH": "Quantity",
-        "priceH": "Price"
+        "priceH": "Price",
+        "dishSelection":"Select dish"
       },
       "orderStatus": {
         "open": "Open",

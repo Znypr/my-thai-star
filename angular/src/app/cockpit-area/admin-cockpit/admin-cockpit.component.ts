@@ -12,7 +12,7 @@ import {
   Pageable,
 } from '../../shared/backend-models/interfaces';
 import { AdminDialogComponent } from './admin-dialog/admin-dialog.component';
-import * as config from '../../config';
+import * as config from '../../config'
 import { Title } from '@angular/platform-browser';
 
 
@@ -62,12 +62,12 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   };
 
   constructor(
+    title: Title,
     private dialog: MatDialog,
     private adminCockpitService: AdminCockpitService,
     private configService: ConfigService,
-    title: Title
   ) {
-    title.setTitle('Admin Menu');
+    title.setTitle('Admin Area');
     this.pageSizes = this.configService.getValues().pageSizes;
   }
 
@@ -122,6 +122,13 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
       data: selection,
     });
   }
+
+  // sendPasswordResetMail(){
+  //   this.adminCockpitService.sendPasswordResetLink(0).subscribe(
+  //     (res) => {
+  //       alert("hallo");
+  //     });
+  // }
 
   // tslint:disable-next-line:typedef
   getUserInput(event: any) {

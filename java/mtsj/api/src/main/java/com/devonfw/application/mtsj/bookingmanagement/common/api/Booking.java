@@ -59,4 +59,8 @@ public interface Booking extends ApplicationEntity {
 
   public void setUserId(Long userId);
 
+  public void setNeedHelp(boolean help);
+
+  public boolean getNeedHelp();
+
 }

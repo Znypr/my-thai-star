@@ -56,6 +56,7 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
 
 
   constructor(
+    title: Title,
     private waiterCockpitService: WaiterCockpitService,
     private translocoService: TranslocoService,
     private dialog: MatDialog,

@@ -14,6 +14,10 @@ export const DefaultENTest = {
     applyFilters: 'Apply Filters',
     removeComment: 'Remove Comment',
     addComment: 'Add comment',
+    edit: 'Edit',
+    reset: 'Reset',
+    delete: 'Delete',
+    add: 'Add',
   },
   table: {
     rowsPage: 'Rows per page',
@@ -47,6 +51,13 @@ export const DefaultENTest = {
       paidSuccess: 'Payment successful registered',
       unpaidSuccess: 'Payment successful removed',
       paidFail: 'Payment failed',
+    },
+    orderChange: {
+      reset: 'Reset was successful',
+      applySuccess: 'Change of order was successfully applied',
+      applyFail: 'Change of order failed',
+      deleteOrderlineSuccess: 'Orderline successfully removed',
+      deleteOrderlineFail: "Last orderline can't be removed",
     },
   },
   formFields: {
@@ -208,6 +219,7 @@ export const DefaultENTest = {
         extrasH: 'Extra',
         quantityH: 'Quantity',
         priceH: 'Price',
+        dishSelection: 'Select dish',
       },
       orderStatus: {
         open: 'Open',

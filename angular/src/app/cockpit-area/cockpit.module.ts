@@ -13,6 +13,7 @@ import { ReservationCockpitComponent } from './reservation-cockpit/reservation-c
 import { OrderCockpitComponent } from './order-cockpit/order-cockpit.component';
 import { OrderArchiveComponent } from './order-archive/order-archive.component';
 import { OrderDialogComponent } from './order-cockpit/order-dialog/order-dialog.component';
+import { OrderChangeDialogComponent } from './order-cockpit/order-change-dialog/order-change-dialog.component';
 import { ArchiveDialogComponent } from './order-archive/archive-dialog/archive-dialog.component';
 import { ReservationDialogComponent } from './reservation-cockpit/reservation-dialog/reservation-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -25,6 +26,8 @@ import { AdminDialogComponent } from './admin-cockpit/admin-dialog/admin-dialog.
 import { TableCockpitComponent } from './table-cockpit/table-cockpit.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ResetPasswordCockpitComponent } from './reset-password-cockpit/reset-password-cockpit.component';
+import { MenuService } from 'app/menu/services/menu.service';
+import { MenuComponent } from 'app/menu/container/menu.component';
 
 @NgModule({
   imports: [
@@ -49,6 +52,7 @@ import { ResetPasswordCockpitComponent } from './reset-password-cockpit/reset-pa
     OrderArchiveComponent,
     ReservationDialogComponent,
     OrderDialogComponent,
+    OrderChangeDialogComponent,
     ArchiveDialogComponent,
     PredictionCockpitComponent,
     ClusteringCockpitComponent,
@@ -68,6 +72,7 @@ import { ResetPasswordCockpitComponent } from './reset-password-cockpit/reset-pa
   entryComponents: [
     ReservationDialogComponent,
     OrderDialogComponent,
+    OrderChangeDialogComponent,
     OrderCockpitComponent,
     ArchiveDialogComponent,
     PredictionCockpitComponent,
