@@ -1,4 +1,4 @@
-<form (ngSubmit)="filter()" #filterForm="ngForm">
+<!-- <form (ngSubmit)="filter()" #filterForm="ngForm">
     <div>
         <mat-expansion-panel data-name="reservationFilter">
             <mat-expansion-panel-header>
@@ -36,40 +36,46 @@
     </div>
 </form>
 <mat-progress-bar *ngIf="!reservations" color="accent" mode="indeterminate">
-</mat-progress-bar>
+</mat-progress-bar> -->
 <mat-card>
-    <mat-card-title>{{'cockpit.reservations.title' | transloco}}</mat-card-title>
+    <mat-card-title>{{'cockpit.tables.title' | transloco}}</mat-card-title>
     <mat-divider></mat-divider>
 
     <div class="tableContainer">
-        <table mat-table [dataSource]="reservations" matSort (matSortChange)="sort($event)">
+        <table mat-table [dataSource]="bookings" matSort (matSortChange)="sort($event)">
 
             <!-- Date Column -->
-            <ng-container matColumnDef="bookingDate">
+            <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[0].label}} </th>
-                <td mat-cell *matCellDef="let element"> {{element.booking.bookingDate|amFromUnix|amDateFormat:'lll'}}
+                <td mat-cell *matCellDef="let element"> {{element.booking.tableId}}
                 </td>
             </ng-container>
 
             <!-- Email Column -->
-            <ng-container matColumnDef="email">
+            <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[1].label}} </th>
-                <td mat-cell *matCellDef="let element"> {{element.booking.email}} </td>
+                <td mat-cell *matCellDef="let element"> {{'cockpit.table.tableH' | transloco}} {{element.booking.tableId}} </td>
             </ng-container>
 
-            <!-- Ref No Column -->
-            <ng-container matColumnDef="bookingToken">
+            <!-- Alexa ID Column -->
+            <ng-container matColumnDef="alexaDevice">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[2].label}} </th>
-                <td mat-cell *matCellDef="let element"> {{element.booking.bookingToken}} </td>
+                <td mat-cell *matCellDef="let element">
+                    <mat-form-field [floatLabel]="'never'">
+                        <mat-label>{{columns[3].label}}</mat-label>
+                        <input matInput (input)="onChange($event.target.value)">
+                        
+                    </mat-form-field>
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selected(row)"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
         </table>
     </div>
 
-    <div class="property-text-center noResults" *ngIf="reservations.length===0">
+    <div class="property-text-center noResults" *ngIf="bookings.length===0">
         <h3>{{'table.noResults' | transloco}}.</h3>
     </div>
     <mat-paginator #pagingBar [length]="totalReservations" [pageSize]="pageable.pageSize" [pageSizeOptions]="pageSizes"

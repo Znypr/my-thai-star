@@ -1,5 +1,5 @@
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
-import { ReservationView } from '../../shared/view-models/interfaces';
+import { ReservationView, BookingView } from '../../shared/view-models/interfaces';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent, MatPaginator } from '@angular/material/paginator';
@@ -13,6 +13,8 @@ import * as moment from 'moment';
 import { ConfigService } from '../../core/config/config.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { Subscription } from 'rxjs';
+import { Title } from '@angular/platform-browser';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-cockpit-table-cockpit',
@@ -30,19 +32,22 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
 
   @ViewChild('pagingBar', { static: true }) pagingBar: MatPaginator;
 
-  reservations: ReservationView[] = [];
+  bookings: ReservationView[] = [];
+  tables: ReservationView[] = [];
   totalReservations: number;
 
   columns: any[];
-  displayedColumns: string[] = ['bookingDate', 'email', 'bookingToken'];
+  displayedColumns: string[] = ['id', 'name', 'alexaDevice'];
 
   pageSizes: number[];
+
+  selected = new FormControl("selected");
+
 
   filters: FilterCockpit = {
     bookingDate: undefined,
     email: undefined,
     bookingToken: undefined,
-
   };
 
   constructor(
@@ -50,7 +55,9 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
     private translocoService: TranslocoService,
     private dialog: MatDialog,
     private configService: ConfigService,
+    title: Title
   ) {
+    title.setTitle('Table Overview');
     this.pageSizes = this.configService.getValues().pageSizes;
   }
 
@@ -64,12 +71,13 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
 
   setTableHeaders(lang: string): void {
     this.translocoSubscription = this.translocoService
-      .selectTranslateObject('cockpit.table', {}, lang)
-      .subscribe((cockpitTable) => {
+      .selectTranslateObject('cockpit.tables', {}, lang)
+      .subscribe((cockpitTables) => {
         this.columns = [
-          { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
-          { name: 'booking.email', label: cockpitTable.emailH },
-          { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH }
+          { name: 'id', label: cockpitTables.idH },
+          { name: 'name', label: cockpitTables.nameH },
+          { name: 'alexaDevice', label: cockpitTables.alexaDeviceH },
+          { name: 'alexaSelection', label: cockpitTables.alexaSelect },
         ];
       });
   }
@@ -84,12 +92,26 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
       .getReservations(this.pageable, this.sorting, this.filters)
       .subscribe((data: any) => {
         if (!data) {
-          this.reservations = [];
+          this.bookings = [];
+          // this.tables = [];
         } else {
-          this.reservations = data.content;
-        }
+          this.bookings = data.content;
+          
+          // for(let booking of data.content) {
+          //   let add: boolean = true;
+          //   for(let table of this.tables) {
+          //     if(booking.booking.tableId == table.booking.tableId) add = false;
+          //   }
+          //   if(add) this.tables.push(booking);
+          // }
+          // console.log(this.tables);
+        } 
+        
         this.totalReservations = data.totalElements;
       });
+      
+
+
   }
 
   clearFilters(filters: any): void {
@@ -119,11 +141,9 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
     this.applyFilters();
   }
 
-  selected(selection: ReservationView): void {
-    // this.dialog.open(ReservationDialogComponent, {
-    //   width: '80%',
-    //   data: selection,
-    // });
+  onChange(alexaId: any) : void {
+
+    console.log(alexaId);
   }
 
   ngOnDestroy(): void {

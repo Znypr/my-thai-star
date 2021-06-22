@@ -13,6 +13,7 @@ import * as moment from 'moment';
 import { ConfigService } from '../../core/config/config.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { Subscription } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-cockpit-reservation-cockpit',
@@ -34,7 +35,7 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
   totalReservations: number;
 
   columns: any[];
-  displayedColumns: string[] = ['bookingDate', 'email', 'bookingToken'];
+  displayedColumns: string[] = ['bookingDate', 'email', 'bookingToken', 'table'];
 
   pageSizes: number[];
 
@@ -45,12 +46,23 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
 
   };
 
+  tables: any[] = [
+    { id: 0 },
+    { id: 1 },
+    { id: 2 },
+    { id: 3 }
+  ];
+
+
+
   constructor(
     private waiterCockpitService: WaiterCockpitService,
     private translocoService: TranslocoService,
     private dialog: MatDialog,
     private configService: ConfigService,
+    title: Title
   ) {
+    title.setTitle('Reservations');
     this.pageSizes = this.configService.getValues().pageSizes;
   }
 
@@ -59,6 +71,18 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
       this.setTableHeaders(event);
       moment.locale(this.translocoService.getActiveLang());
     });
+
+    // this.waiterCockpitService
+    //   .getTables({seatsNumber: undefined})
+    //   .subscribe((data: any)=> {
+    //     if (!data) {
+    //         this.tables = [];
+    //       } else {
+    //         this.tables = data;
+    //         console.log(data);
+    //       }
+    // });
+
     this.applyFilters();
   }
 
@@ -69,7 +93,9 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
         this.columns = [
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
           { name: 'booking.email', label: cockpitTable.emailH },
-          { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH }
+          { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
+          { name: 'booking.table', label: cockpitTable.tableH },
+          { name: 'booking.tableSelect', label: cockpitTable.tableSelect }
         ];
       });
   }
@@ -124,6 +150,12 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
       width: '80%',
       data: selection,
     });
+  }
+
+  onChange(tableId: any, reservation: any) : void {
+
+    console.log(reservation); // current reservation object
+    console.log(tableId); // selected tableId of element
   }
 
   ngOnDestroy(): void {

@@ -169,6 +169,11 @@ export interface SaveOrderResponse {
   revision: any;
 }
 
+export interface Table {
+  id: number;
+  seats: number;
+}
+
 // Roles
 export interface Role {
   name: string;

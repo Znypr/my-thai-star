@@ -98,6 +98,7 @@
     "orders": "Bestellungen",
     "reservations": "Reservierungen",
     "archive": "Archiv",
+    "tables": "Tische",
     "userActions": {
       "user": "Benutzer",
       "pairing": "Zwei-Faktor-Authentifizierung einstellen",
@@ -216,6 +217,13 @@
         "assistantsH": "Teilnehmer"
       }
     },
+    "tables": {
+      "title": "Tisch Übersicht",
+      "alexaSelect": "Alexa Auswahl",
+      "idH": "Tisch ID",
+      "nameH": "Tisch Name",
+      "alexaDeviceH":"Alexa Gerät"
+    },
     "table": {
       "reservationDateH": "Reservierungsdatum",
       "emailH": "Email",
@@ -224,7 +232,8 @@
       "paidH": "Bezahlt",
       "ownerH": "Eigentümer",
       "tableH": "Tisch",
-      "creationDateH": "Erstelldatum"
+      "creationDateH": "Erstelldatum",
+      "tableSelect": "Tisch Auswahl"
     }
   }
 }

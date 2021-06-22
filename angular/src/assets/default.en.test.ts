@@ -100,6 +100,7 @@ export const DefaultENTest = {
     orders: 'Orders',
     reservations: 'Reservations',
     archive: 'Archive',
+    tables: 'Tables',
     userActions: {
       user: 'User',
       pairing: 'Set two-factor authentication',
@@ -224,6 +225,13 @@ export const DefaultENTest = {
         assistantsH: 'Assistants',
       },
     },
+    tables: {
+      title: 'Table Overview',
+      alexaSelect: 'Alexa Selection',
+      idH: 'Table ID',
+      nameH: 'Table Name',
+      alexaDeviceH:'Alexa Device'
+    },
     table: {
       reservationDateH: 'Reservation Date',
       emailH: 'Email',
@@ -233,6 +241,7 @@ export const DefaultENTest = {
       ownerH: 'Owner',
       tableH: 'Table',
       creationDateH: 'Creation date',
+      tableSelect: 'Table Selection'
     },
   },
 };

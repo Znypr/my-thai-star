@@ -19,6 +19,7 @@ import {
   OrderResponse,
   OrderView,
   OrderViewResult,
+  Table,
 } from '../../shared/view-models/interfaces';
 import { PriceCalculatorService } from '../../sidenav/services/price-calculator.service';
 import { TranslocoService } from '@ngneat/transloco';
@@ -28,6 +29,8 @@ import { Subscription } from 'rxjs';
 export class WaiterCockpitService {
   private readonly getReservationsRestPath: string =
     'bookingmanagement/v1/booking/search';
+    private readonly getTableRestPath: string =
+    'bookingmanagement/v1/table/search';
   private readonly getOrdersRestPath: string =
     'ordermanagement/v1/order/search';
   private readonly filterOrdersRestPath: string =
@@ -119,6 +122,17 @@ export class WaiterCockpitService {
       exhaustMap((restServiceRoot) =>
         this.http.post<BookingResponse[]>(
           `${restServiceRoot}${this.getReservationsRestPath}`,
+          filters,
+        ),
+      ),
+    );
+  }
+
+  getTables(filters: any) : Observable<Table[]> {
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.post<Table[]>(
+          `${restServiceRoot}${this.getTableRestPath}`,
           filters,
         ),
       ),
