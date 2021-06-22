@@ -55,6 +55,7 @@ export interface BookingView {
   tableId?: number;
   bookingToken?: number;
   creationDate?: string;
+  needHelp: boolean;
 }
 
 export interface FriendsInvite {
