@@ -33,6 +33,8 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   private currentPage = 1;
 
   pageSize = 4;
+
+  menu;
   columnss: any[];
 
   data: any;
@@ -76,6 +78,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   constructor(
     // private menuService: MenuService,
     private store: Store<fromApp.State>,
+    private menuService: MenuService,
     private waiterCockpitService: WaiterCockpitService,
     private translocoService: TranslocoService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
@@ -87,7 +90,51 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     this.pageSizes = this.configService.getValues().pageSizesDialog;
   }
 
+  getMenu(filters: any): void {
+    const pageable: Pageable = {
+      pageSize: 8,
+      pageNumber: 0,
+      sort: [
+        {
+          property: filters.sort.property,
+          direction: filters.sort.direction,
+        },
+      ],
+    };
+    this.menuService
+      .getDishes(this.menuService.composeFilters(pageable, filters))
+      .pipe(
+        map((res: any) => {
+          return res.content.map((item) => item.dish);
+        }),
+      )
+      .subscribe((menu) => {
+        this.menu = menu;
+        console.log(this.menu);
+      });
+  }
+
   ngOnInit(): void {
+
+    this.getMenu({
+      sort: {
+        name: undefined,
+        property: 'price',
+        direction: SortDirection.DESC,
+      },
+      categories: {
+        mainDishes: false,
+        starters: false,
+        desserts: false,
+        noodle: false,
+        rice: false,
+        curry: false,
+        vegan: false,
+        vegetarian: false,
+        favourites: false,
+      },
+    });
+    console.log(this.menu);
 
     this.dishes$ = this.store.select(fromMenu.getDishes);
     this.store
@@ -198,17 +245,15 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   getDishById(dishId: number): PlateView {
 
     let newDish: PlateView;
-
-    for (const entry of this.dishes) {
-      // tslint:disable-next-line:triple-equals
-      if (entry.dish.id == dishId) {
+    for (const entry of this.menu) {
+      if (entry.id == dishId) {
+        console.log("found !");
         newDish = {
-          id: entry.dish.id,
-          name: entry.dish.name,
-          description: entry.dish.description,
-          price: entry.dish.price,
+          id: entry.id,
+          name: entry.name,
+          description: entry.description,
+          price: entry.price,
         };
-
       }
     }
     return newDish;
@@ -216,15 +261,17 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
 
   addOrderline(): void {
 
+    console.log(this.dishSelect.value);
     const dish = this.getDishById(this.dishSelect.value);
 
     const orderline: any = {
-      orderLine: {amount: 1, comment: ''},
+      orderLine: {amount: 1, comment: '', dishId: dish.id},
       order: null,
       dish,
       extras: [],
     };
 
+    console.log(orderline);
     this.newOrderLines.push(orderline);
     this.updateOrderlines();
   }

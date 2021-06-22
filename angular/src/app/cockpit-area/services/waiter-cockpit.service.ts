@@ -30,6 +30,8 @@ import {TranslocoService} from '@ngneat/transloco';
 import {Subscription} from 'rxjs';
 import * as fromOrder from "../../sidenav/store/selectors/order.selectors";
 import {Order} from "../../menu/models/order.model";
+import {MenuService} from "../../menu/services/menu.service";
+import {SortDirection} from "../../menu/components/menu-filters/filter-sort/filter-sort.component";
 
 
 @Injectable()
@@ -51,11 +53,12 @@ export class WaiterCockpitService {
 
   private readonly getOrderRestPath: string = 'ordermanagement/v1/order';
   private readonly saveOrdersPath: string = 'ordermanagement/v1/order';
+  private readonly filtersRestPath: string = 'dishmanagement/v1/dish/search';
 
   private readonly restServiceRoot$: Observable<string> =
     this.config.getRestServiceRoot();
   private translocoSubscription = Subscription.EMPTY;
-
+  private menuService;
   constructor(
     private http: HttpClient,
     private priceCalculator: PriceCalculatorService,
@@ -63,6 +66,8 @@ export class WaiterCockpitService {
     public snackBar: SnackBarService,
     private translocoService: TranslocoService,
   ) {
+
+    this.menuService = new MenuService(http, config);
   }
 
   getOrders(

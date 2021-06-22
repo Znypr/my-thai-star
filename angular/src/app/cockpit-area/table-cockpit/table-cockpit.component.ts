@@ -32,7 +32,6 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
 
   @ViewChild('pagingBar', { static: true }) pagingBar: MatPaginator;
 
-  alexaId: any = "321321321";
   bookings: ReservationView[] = [];
   tables: ReservationView[] = [];
   totalReservations: number;
@@ -55,7 +54,6 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
     private translocoService: TranslocoService,
     private dialog: MatDialog,
     private configService: ConfigService,
-    private snackbar: SnackBarService,
     title: Title
   ) {
     title.setTitle('Table Overview');
@@ -127,47 +125,15 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
     this.applyFilters();
   }
 
-  onChange(alexaId: any) : void {
-
+  onChange(alexaId: any): void {
     console.log(alexaId);
   }
 
-  addTable(filters: any) : void {
+  addTable(filters: any): void {
 
-    // TODO
-    // delete table from database
-
-    // if(successful)
-    this.snackbar.openSnack(
-            this.translocoService.translate('alerts.table.addSuccess'),
-            4000,
-            'green',
-          );
-    // else
-    this.snackbar.openSnack(
-            this.translocoService.translate('alerts.table.addFail'),
-            4000,
-            'red',
-          );
   }
 
-  removeTable(table: any) : void {
-
-    // TODO
-    // delete table from database
-
-    // if(successful)
-    this.snackbar.openSnack(
-            this.translocoService.translate('alerts.table.deleteSuccess'),
-            4000,
-            'green',
-          );
-    // else
-    this.snackbar.openSnack(
-            this.translocoService.translate('alerts.table.deleteFail'),
-            4000,
-            'red',
-          );
+  removeTable(table: any): void {
 
   }
 
