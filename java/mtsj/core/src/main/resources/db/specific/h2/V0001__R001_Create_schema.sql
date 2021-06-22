@@ -10,6 +10,8 @@ CREATE TABLE "Table" (
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   seatsNumber INTEGER NOT NULL,
+  tableName VARCHAR (255) NULL,
+  alexaId VARCHAR (255) NULL,
   CONSTRAINT PK_Table PRIMARY KEY(id)
 );
 
@@ -65,6 +67,7 @@ CREATE TABLE Booking (
   idTable BIGINT,
   idOrder BIGINT,
   assistants INTEGER,
+  needHelp BOOLEAN NOT NULL DEFAULT ((0)) ,
   CONSTRAINT PK_Booking PRIMARY KEY(id),
   CONSTRAINT FK_Booking_idUser FOREIGN KEY(idUser) REFERENCES User(id) NOCHECK,
   CONSTRAINT FK_Booking_idTable FOREIGN KEY(idTable) REFERENCES "Table"(id) NOCHECK

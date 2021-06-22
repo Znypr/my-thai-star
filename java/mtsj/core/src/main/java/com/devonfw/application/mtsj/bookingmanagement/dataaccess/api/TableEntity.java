@@ -10,6 +10,8 @@ import com.devonfw.application.mtsj.general.dataaccess.api.ApplicationPersistenc
 public class TableEntity extends ApplicationPersistenceEntity implements Table {
 
   private Integer seatsNumber;
+  private String tableName;
+  private String alexaId;
 
   private static final long serialVersionUID = 1L;
 
@@ -22,13 +24,32 @@ public class TableEntity extends ApplicationPersistenceEntity implements Table {
     return this.seatsNumber;
   }
 
-  /**
-   * @param seatsNumber new value of {@link #getseatsNumber}.
-   */
+
   @Override
   public void setSeatsNumber(Integer seatsNumber) {
 
     this.seatsNumber = seatsNumber;
   }
+
+  @Override
+  public String getTableName() {
+    return this.tableName;
+  }
+
+  @Override
+  public String getAlexaID() {
+    return this.alexaId;
+  }
+
+  @Override
+  public void setTableName(String name) {
+    this.tableName = name;
+  }
+
+  @Override
+  public void setAlexaID(String id) {
+    this.alexaId = id;
+  }
+
 
 }

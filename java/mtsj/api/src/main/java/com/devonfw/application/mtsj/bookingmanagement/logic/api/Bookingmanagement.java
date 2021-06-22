@@ -106,6 +106,8 @@ public interface Bookingmanagement {
    */
   boolean deleteInvitedGuest(Long invitedGuestId);
 
+  void setHelp(String bookingToken,boolean help);
+
   void cancelInvite(String bookingToken);
 
   /**

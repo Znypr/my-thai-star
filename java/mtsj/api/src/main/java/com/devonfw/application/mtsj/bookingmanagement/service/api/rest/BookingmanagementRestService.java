@@ -119,6 +119,13 @@ public interface BookingmanagementRestService {
   @GET
   public void cancelInvite(@PathParam("token") String bookingToken);
 
+  @Path("/booking/help/{token}")
+  @GET
+  public void askForHelp(@PathParam("token") String bookingToken);
+
+  @Path("/booking/dishelp/{token}")
+  @GET
+  public void cancelAskForHelp(@PathParam("token") String bookingToken);
   /**
    * Delegates to {@link Bookingmanagement#findTable}.
    *
