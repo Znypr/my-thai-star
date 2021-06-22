@@ -1,9 +1,11 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ConfigService } from '../../../core/config/config.service';
 import { UserView, UserListView } from '../../../shared/view-models/interfaces';
 import { AdminCockpitService } from '../../services/admin-cockpit.service';
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 
 
 @Component({
@@ -41,6 +43,7 @@ export class AdminDialogComponent implements OnInit {
 
 
   constructor(
+    private dialog: MatDialog,
     private adminCockpitService: AdminCockpitService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
     private configService: ConfigService,
@@ -61,8 +64,15 @@ export class AdminDialogComponent implements OnInit {
   sendPasswordResetMail(userId: number){
     this.adminCockpitService.sendPasswordResetMail(userId).subscribe(
       (res) => {
-        alert("Die Email wird verarbeitet und in Kürze versendet");
+        this.adminCockpitService.snackBar("Die Email wird verarbeitet und in Kürze versendet", "verstanden");
       });
+  }
+
+  selected(selection: any): void {
+    this.dialog.open(DeleteDialogComponent, {
+      width: '80%',
+      data: selection,
+    });
   }
 
   ngOnInit(): void {

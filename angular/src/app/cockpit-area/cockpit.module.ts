@@ -59,6 +59,7 @@ import { MenuComponent } from 'app/menu/container/menu.component';
     AdminCockpitComponent,
     AdminDialogComponent,
     ResetPasswordCockpitComponent,
+    DeleteDialogComponent,
     TableCockpitComponent,
   ],
   exports: [

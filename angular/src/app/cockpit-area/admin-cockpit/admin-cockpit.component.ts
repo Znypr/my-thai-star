@@ -13,7 +13,12 @@ import {
 } from '../../shared/backend-models/interfaces';
 import { AdminDialogComponent } from './admin-dialog/admin-dialog.component';
 import * as config from '../../config'
-import { Title } from '@angular/platform-browser';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 
 @Component({
@@ -25,6 +30,8 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   // private translocoSubscription = Subscription.EMPTY;
   hide = true;
   config = config.config;
+  form: any;
+  REGEXP_EMAIL = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
   private pageable: Pageable = {
     pageSize: 8,
@@ -62,12 +69,10 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   };
 
   constructor(
-    title: Title,
     private dialog: MatDialog,
-    private adminCockpitService: AdminCockpitService,
+    public adminCockpitService: AdminCockpitService,
     private configService: ConfigService,
   ) {
-    title.setTitle('Admin Area');
     this.pageSizes = this.configService.getValues().pageSizes;
   }
 
@@ -143,6 +148,7 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
     });
     return responseOfCreation;
   }
+
 
   clearFilters(filters: any): void {
     filters.reset();
