@@ -39,7 +39,7 @@ public class AskForHelpIntentHandler implements RequestHandler {
         String payload ="";
 
         try {
-            response = bo.basicPost(bookingToken, BASE_URL + "/mythaistar/services/rest/bookingmanagement/v1/booking/help");
+            response = bo.basicGET(BASE_URL + "/mythaistar/services/rest/bookingmanagement/v1/booking/help/" + bookingToken);
             speechText = "Ein Kellner wurde benachrichtigt und wird so bald wie möglich bei dir sein.";
         } catch (IOException | NotFound | Different e) {
             speechText = "Der my thai star Server scheint Probleme bei der Verarbeitung deiner Anfrage zu haben.";
