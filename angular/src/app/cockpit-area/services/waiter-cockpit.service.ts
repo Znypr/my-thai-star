@@ -40,6 +40,8 @@ export class WaiterCockpitService {
     'bookingmanagement/v1/table/search';
   private readonly getReservationsRestPath: string =
     'bookingmanagement/v1/booking/search';
+  private readonly getReservationsUpdateRestPath: string =
+    'bookingmanagement/v1/booking/update';
   private readonly getOrdersRestPath: string =
     'ordermanagement/v1/order/search';
   private readonly filterOrdersRestPath: string =
@@ -50,6 +52,7 @@ export class WaiterCockpitService {
     'ordermanagement/v1/order/paid';
   private readonly getOrderUpdateRestPath: string =
     'ordermanagement/v1/order/change';
+  private readonly getTableSaveRestPath: string = 'bookingmanagement/v1/table/';
 
   private readonly getOrderRestPath: string = 'ordermanagement/v1/order';
   private readonly saveOrdersPath: string = 'ordermanagement/v1/order';
@@ -196,6 +199,37 @@ export class WaiterCockpitService {
     );
   }
 
+  addTable(tableName: string, alexaId: string) {
+    let path = this.getTableSaveRestPath;
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.post(`${restServiceRoot}${path}`, {
+          seatsNumber: 4,
+          tableName: tableName,
+          alexaID: alexaId,
+        }),
+      ),
+    );
+  }
+
+  deleteTable(tableId: string) {
+    const path = this.getTableSaveRestPath + tableId;
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.delete(`${restServiceRoot}${path}`),
+      ),
+    );
+  }
+
+
+  updateBooking(bookingCto: any) {
+    let path = this.getReservationsUpdateRestPath;
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.post(`${restServiceRoot}${path}`, bookingCto),
+      ),
+    );
+  }
 
   orderComposer(orderList: OrderView[]): OrderView[] {
     const orders: OrderView[] = cloneDeep(orderList);

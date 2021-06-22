@@ -40,6 +40,11 @@ public class BookingmanagementRestServiceImpl implements BookingmanagementRestSe
   }
 
   @Override
+  public BookingEto updateBooking(BookingCto booking) {
+    return this.bookingmanagement.updateBooking(booking);
+  }
+
+  @Override
   public void deleteBooking(long id) {
 
     this.bookingmanagement.deleteBooking(id);

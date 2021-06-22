@@ -33,7 +33,7 @@ public class AskForHelpIntentHandler implements RequestHandler {
         String speechText = "";
         AttributesManager attributesManager = input.getAttributesManager();
         Map<String, Object> attributes = attributesManager.getSessionAttributes();
-        String bookingToken = (String) attributes.get("orderLines");
+        String bookingToken = (String) attributes.get("bookingToken");
         String response;
         BasicOperations bo = new BasicOperations();
         String payload ="";
@@ -50,5 +50,19 @@ public class AskForHelpIntentHandler implements RequestHandler {
                 .withSpeech(speechText)
                 .withSimpleCard("MyThaiStar", speechText)
                 .build();
+    }
+
+    public static void main(String[] args) {
+        String speechText = "";
+        String response;
+        BasicOperations bo = new BasicOperations();
+        String bookingToken = "TestToken";
+        try {
+            response = bo.basicGET(BASE_URL + "/mythaistar/services/rest/bookingmanagement/v1/booking/help/" + bookingToken);
+            speechText = "Ein Kellner wurde benachrichtigt und wird so bald wie möglich bei dir sein.";
+        } catch (IOException | NotFound | Different e) {
+            speechText = "Der my thai star Server scheint Probleme bei der Verarbeitung deiner Anfrage zu haben.";
+            e.printStackTrace();
+        }
     }
 }

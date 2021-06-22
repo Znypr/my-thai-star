@@ -97,6 +97,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
                 "/services/rest/imagemanagement/**",
                 "/services/rest/ordermanagement/v1/order",
                 "/services/rest/bookingmanagement/v1/booking",
+                "/services/rest/bookingmanagement/v1/booking/update",
                 "/services/rest/bookingmanagement/v1/booking/help/**",
                 "/services/rest/bookingmanagement/v1/booking/dishelp/**",
                 "/services/rest/bookingmanagement/v1/booking/cancel/**",

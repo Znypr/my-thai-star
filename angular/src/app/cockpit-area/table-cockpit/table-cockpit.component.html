@@ -1,34 +1,23 @@
-<form (ngSubmit)="applyFilters()" #filterForm="ngForm">
-    <div>
-        <mat-expansion-panel data-name="orderFilter">
-            <mat-expansion-panel-header>
-                <mat-panel-title>{{ 'cockpit.addTable' | transloco }}</mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="formRow">
-                <div class="formMobileRow">
-                    <mat-form-field class="searchBy">
-                        <input matInput [placeholder]="'formFields.name' | transloco" [(ngModel)]="filters.name"
-                            name="name">
-                    </mat-form-field>
-                    <mat-form-field class="searchBy">
-                        <input matInput [placeholder]="'formFields.alexaId' | transloco"
-                            [(ngModel)]="filters.alexaId" name="alexaId">
-                    </mat-form-field>
-                </div>
-                <div class="formDesktopRow">
-                    <mat-form-field class="searchBy">
-                        <input matInput [placeholder]="'formFields.name' | transloco" [(ngModel)]="filters.name" name="name">
-                    </mat-form-field>
-                    <mat-form-field class="searchBy">
-                        <input matInput [placeholder]="'formFields.alexaId' | transloco" [(ngModel)]="filters.alexaId" name="alexaId">
+<form (ngSubmit)="addTable($event)">
+  <div>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ 'cockpit.addTable' | transloco }}</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="formRow">
+
+        <div class="formDesktopRow">
+          <mat-form-field class="searchBy">
+            <input id="tableName" matInput [placeholder]="'formFields.name' | transloco" name="name">
+          </mat-form-field>
+          <mat-form-field class="searchBy">
+            <input id="alexaID" matInput [placeholder]="'formFields.alexaId' | transloco" name="alexaId">
                     </mat-form-field>
                 </div>
             </div>
             <div class="align-right">
-                <button  name="orderClearFilters" mat-button color="warn"
-                    (click)="clearFilters(filterForm)">{{'buttons.reset' | transloco}}</button>
-                <button  name="orderApplyFilters" mat-button
-                    color="accent">{{'buttons.add' | transloco}}</button>
+              <button name="addTableButton" mat-button
+                      color="accent">{{'buttons.add' | transloco}}</button>
             </div>
         </mat-expansion-panel>
     </div>

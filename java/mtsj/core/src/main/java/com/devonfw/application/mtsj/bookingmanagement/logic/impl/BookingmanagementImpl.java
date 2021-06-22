@@ -230,12 +230,19 @@ public class BookingmanagementImpl extends AbstractComponentFacade implements Bo
   }
 
   @Override
+  public BookingEto updateBooking(BookingCto bookingCto) {
+    BookingEntity bookingEntity = getBeanMapper().map(bookingCto.getBooking(), BookingEntity.class);
+    getBookingDao().save(bookingEntity);
+    return bookingCto.getBooking();
+  }
+
+  @Override
   public String buildToken(String email, String type) throws NoSuchAlgorithmException {
 
     Instant now = Instant.now();
     LocalDateTime ldt1 = LocalDateTime.ofInstant(now, ZoneId.systemDefault());
     String date = String.format("%04d", ldt1.getYear()) + String.format("%02d", ldt1.getMonthValue())
-        + String.format("%02d", ldt1.getDayOfMonth()) + "_";
+            + String.format("%02d", ldt1.getDayOfMonth()) + "_";
 
     String time = String.format("%02d", ldt1.getHour()) + String.format("%02d", ldt1.getMinute())
         + String.format("%02d", ldt1.getSecond());

@@ -1,19 +1,20 @@
-import { WaiterCockpitService } from '../services/waiter-cockpit.service';
-import { ReservationView } from '../../shared/view-models/interfaces';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { PageEvent, MatPaginator } from '@angular/material/paginator';
-import { Sort } from '@angular/material/sort';
-import { ReservationDialogComponent } from './reservation-dialog/reservation-dialog.component';
+import {WaiterCockpitService} from '../services/waiter-cockpit.service';
+import {ReservationView} from '../../shared/view-models/interfaces';
+import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {PageEvent, MatPaginator} from '@angular/material/paginator';
+import {Sort} from '@angular/material/sort';
+import {ReservationDialogComponent} from './reservation-dialog/reservation-dialog.component';
 import {
   FilterCockpit,
   Pageable,
 } from '../../shared/backend-models/interfaces';
 import * as moment from 'moment';
-import { ConfigService } from '../../core/config/config.service';
-import { TranslocoService } from '@ngneat/transloco';
-import { Subscription } from 'rxjs';
-import { Title } from '@angular/platform-browser';
+import {ConfigService} from '../../core/config/config.service';
+import {TranslocoService} from '@ngneat/transloco';
+import {Subscription} from 'rxjs';
+import {Title} from '@angular/platform-browser';
+import {SortDirection} from "../../menu/components/menu-filters/filter-sort/filter-sort.component";
 
 @Component({
   selector: 'app-cockpit-reservation-cockpit',
@@ -29,13 +30,13 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
     // total: 1,
   };
 
-  @ViewChild('pagingBar', { static: true }) pagingBar: MatPaginator;
+  @ViewChild('pagingBar', {static: true}) pagingBar: MatPaginator;
 
   reservations: ReservationView[] = [];
   totalReservations: number;
 
   columns: any[];
-  displayedColumns: string[] = ['needHelp','bookingDate', 'email', 'bookingToken', 'table'];
+  displayedColumns: string[] = ['needHelp', 'bookingDate', 'email', 'bookingToken', 'table'];
 
   pageSizes: number[];
 
@@ -47,12 +48,11 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
   };
 
   tables: any[] = [
-    { id: 0 },
-    { id: 1 },
-    { id: 2 },
-    { id: 3 }
+    {id: 0},
+    {id: 1},
+    {id: 2},
+    {id: 3}
   ];
-
 
 
   constructor(
@@ -70,6 +70,7 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
 
     this.applyFilters();
 
+
     this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders(event);
       moment.locale(this.translocoService.getActiveLang());
@@ -85,12 +86,12 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
       .selectTranslateObject('cockpit.table', {}, lang)
       .subscribe((cockpitTable) => {
         this.columns = [
-          { name: 'booking.needHelp', label: cockpitTable.needHelpH },
-          { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
-          { name: 'booking.email', label: cockpitTable.emailH },
-          { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
-          { name: 'booking.table', label: cockpitTable.tableH },
-          { name: 'booking.tableSelect', label: cockpitTable.tableSelect }
+          {name: 'booking.needHelp', label: cockpitTable.needHelpH},
+          {name: 'booking.bookingDate', label: cockpitTable.reservationDateH},
+          {name: 'booking.email', label: cockpitTable.emailH},
+          {name: 'booking.bookingToken', label: cockpitTable.bookingTokenH},
+          {name: 'booking.table', label: cockpitTable.tableH},
+          {name: 'booking.tableSelect', label: cockpitTable.tableSelect}
         ];
       });
   }
@@ -101,6 +102,18 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
   }
 
   applyFilters(): void {
+    const customPageable = new Pageable();
+    customPageable.pageSize = 24;
+    customPageable.pageNumber = 0;
+    customPageable.sort = {
+      property: 'id',
+      direction: SortDirection.DESC
+    };
+    this.waiterCockpitService.getTables(customPageable, this.sorting, this.filters).subscribe((data: any) => {
+      this.tables = data.content;
+      console.log(this.tables);
+    });
+
     this.waiterCockpitService
       .getReservations(this.pageable, this.sorting, this.filters)
       .subscribe((data: any) => {
@@ -147,14 +160,15 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
     });
   }
 
-  noHelpNeeded(element: any) : boolean {
+  noHelpNeeded(element: any): boolean {
     return !element.booking.needHelp;
   }
 
-  onChange(tableId: any, reservation: any) : void {
-
-    console.log(reservation); // current reservation object
+  onChange(tableId: any, reservation: any): void {
     console.log(tableId); // selected tableId of element
+    reservation.booking.tableId = tableId;
+    console.log(reservation);
+    this.waiterCockpitService.updateBooking(reservation).subscribe();
   }
 
   ngOnDestroy(): void {

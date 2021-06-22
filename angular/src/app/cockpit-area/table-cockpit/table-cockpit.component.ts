@@ -27,7 +27,6 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
   pageable: Pageable = {
     pageSize: 8,
     pageNumber: 0,
-    // total: 1,
   };
 
   @ViewChild('pagingBar', { static: true }) pagingBar: MatPaginator;
@@ -125,16 +124,23 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
     this.applyFilters();
   }
 
-  onChange(alexaId: any): void {
-    console.log(alexaId);
+  addTable(event: any): void {
+
+    const info = [
+      event.target.tableName.value,
+      event.target.alexaID.value,
+    ];
+
+    this.waiterCockpitService.addTable(info[0], info[1]).subscribe(() => {
+      this.applyFilters();
+    });
+
   }
 
-  addTable(filters: any): void {
-
-  }
-
-  removeTable(table: any): void {
-
+  removeTable(tableID: any): void {
+    this.waiterCockpitService.deleteTable(tableID.id).subscribe(() => {
+      this.applyFilters();
+    });
   }
 
   ngOnDestroy(): void {

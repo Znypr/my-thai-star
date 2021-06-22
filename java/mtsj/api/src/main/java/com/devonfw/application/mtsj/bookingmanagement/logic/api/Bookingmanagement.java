@@ -74,23 +74,26 @@ public interface Bookingmanagement {
    */
   boolean deleteBooking(Long bookingId);
 
-  /**
-   * Saves a booking and store it in the database.
-   *
-   * @param booking the {@link BookingEto} to create.
-   * @return the new {@link BookingEto} that has been saved with ID and version.
-   */
-  BookingEto saveBooking(BookingCto booking);
+    /**
+     * Saves a booking and store it in the database.
+     *
+     * @param booking the {@link BookingEto} to create.
+     * @return the new {@link BookingEto} that has been saved with ID and version.
+     */
+    BookingEto saveBooking(BookingCto booking);
 
-  /**
-   * Returns a InvitedGuest by its id 'id'.
-   *
-   * @param id The id 'id' of the InvitedGuest.
-   * @return The {@link InvitedGuestEto} with id 'id'
-   */
-  InvitedGuestEto findInvitedGuest(Long id);
 
-  /**
+    BookingEto updateBooking(BookingCto bookingCto);
+
+    /**
+     * Returns a InvitedGuest by its id 'id'.
+     *
+     * @param id The id 'id' of the InvitedGuest.
+     * @return The {@link InvitedGuestEto} with id 'id'
+     */
+    InvitedGuestEto findInvitedGuest(Long id);
+
+    /**
    * Returns a paginated list of InvitedGuests matching the search criteria.
    *
    * @param criteria the {@link InvitedGuestSearchCriteriaTo}.

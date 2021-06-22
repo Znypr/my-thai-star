@@ -49,6 +49,11 @@ public interface BookingmanagementRestService {
   @Path("/booking/")
   public BookingEto saveBooking(@Valid BookingCto booking);
 
+
+  @POST
+  @Path("/booking/update/")
+  public BookingEto updateBooking(@Valid BookingCto booking);
+
   /**
    * Delegates to {@link Bookingmanagement#deleteBooking}.
    *
