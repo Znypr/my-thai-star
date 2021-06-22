@@ -41,30 +41,38 @@
     <div class="tableContainer">
       <table mat-table [dataSource]="reservations" matSort (matSortChange)="sort($event)">
 
+        <!-- Attention Column -->
+        <ng-container matColumnDef="needHelp">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[0].label}} </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-flat-button color="warn" [disabled]="noHelpNeeded(element)" [disableRipple]="true">{{'buttons.help' | transloco }}</button>
+          </td>
+        </ng-container>
+
         <!-- Date Column -->
         <ng-container matColumnDef="bookingDate">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[0].label}} </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[1].label}} </th>
           <td mat-cell *matCellDef="let element" (click)="selected(element)"> {{element.booking.bookingDate|amFromUnix|amDateFormat:'lll'}} </td>
         </ng-container>
 
         <!-- Email Column -->
         <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[1].label}} </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[2].label}} </th>
           <td mat-cell *matCellDef="let element" (click)="selected(element)"> {{element.booking.email}} </td>
         </ng-container>
 
         <!-- Token Column -->
         <ng-container matColumnDef="bookingToken">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[2].label}} </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[3].label}} </th>
           <td mat-cell *matCellDef="let element" (click)="selected(element)"> {{element.booking.bookingToken}} </td>
         </ng-container>
 
         <!-- Table Column -->
         <ng-container matColumnDef="table">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[3].label}} </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[4].label}} </th>
           <td mat-cell *matCellDef="let element">
             <mat-form-field [floatLabel]="'never'">
-            <mat-label>{{columns[4].label}}</mat-label>
+            <mat-label>{{columns[5].label}}</mat-label>
               <mat-select (selectionChange)="onChange($event.value, element)">
                 <mat-option *ngFor="let table of tables" [value]="table.id">
                   {{'cockpit.table.tableH' | transloco}} {{table.id}}

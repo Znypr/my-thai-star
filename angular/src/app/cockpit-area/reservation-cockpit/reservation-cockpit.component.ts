@@ -35,7 +35,7 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
   totalReservations: number;
 
   columns: any[];
-  displayedColumns: string[] = ['bookingDate', 'email', 'bookingToken', 'table'];
+  displayedColumns: string[] = ['needHelp','bookingDate', 'email', 'bookingToken', 'table'];
 
   pageSizes: number[];
 
@@ -85,6 +85,7 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
       .selectTranslateObject('cockpit.table', {}, lang)
       .subscribe((cockpitTable) => {
         this.columns = [
+          { name: 'booking.needHelp', label: cockpitTable.needHelpH },
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
           { name: 'booking.email', label: cockpitTable.emailH },
           { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
@@ -144,6 +145,10 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
       width: '80%',
       data: selection,
     });
+  }
+
+  noHelpNeeded(element: any) : boolean {
+    return !element.booking.needHelp;
   }
 
   onChange(tableId: any, reservation: any) : void {

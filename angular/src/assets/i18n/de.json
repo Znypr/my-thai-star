@@ -16,7 +16,9 @@
     "addComment": "Kommentar hinzufügen",
     "add": "Hinzufügen",
     "delete": "Entfernen",
-     "reset": "Zurücksetzen"
+     "reset": "Zurücksetzen",
+    "edit": "Bearbeiten",
+    "help": "Hilfe"
   },
   "table": {
     "rowsPage": "Zeilen pro Seite",
@@ -243,7 +245,8 @@
       "ownerH": "Eigentümer",
       "tableH": "Tisch",
       "creationDateH": "Erstelldatum",
-      "tableSelect": "Tisch Auswahl"
+      "tableSelect": "Tisch Auswahl",
+      "needHelpH": "Hilfe erforderlich"
     }
   }
 }

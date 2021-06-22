@@ -16,7 +16,9 @@ export const DefaultENTest = {
     addComment: 'Add comment',
     add: 'Add',
     delete: 'Delete',
-    reset: 'Reset'
+    reset: 'Reset',
+    edit: 'Edits',
+    help: 'Help'
   },
   table: {
     rowsPage: 'Rows per page',
@@ -251,7 +253,8 @@ export const DefaultENTest = {
       ownerH: 'Owner',
       tableH: 'Table',
       creationDateH: 'Creation date',
-      tableSelect: 'Table Selection'
+      tableSelect: 'Table Selection',
+      needHelpH: 'Help required'
     },
   },
 };

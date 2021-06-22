@@ -16,7 +16,9 @@
     "addComment": "Add comment",
     "add": "Add",
     "delete": "Delete",
-    "reset": "Reset"
+    "reset": "Reset",
+    "edit": "Edit",
+    "help": "Help"
   },
   "table": {
     "rowsPage": "Rows per page",
@@ -243,7 +245,8 @@
       "ownerH": "Owner",
       "tableH": "Table",
       "creationDateH": "Creation date",
-      "tableSelect": "Table Selection"
+      "tableSelect": "Table Selection",
+      "needHelpH": "Help required"
     }
   }
 }
