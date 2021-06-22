@@ -211,7 +211,8 @@
         "commentsH": "Kommentare",
         "extrasH": "Extra",
         "quantityH": "Anzahl",
-        "priceH": "Preis"
+        "priceH": "Preis",
+        "dishSelection":"Gerichtauswahl"
       },
       "orderStatus": {
         "open": "Offen",

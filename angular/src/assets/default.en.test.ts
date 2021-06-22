@@ -220,6 +220,7 @@ export const DefaultENTest = {
         extrasH: 'Extra',
         quantityH: 'Quantity',
         priceH: 'Price',
+        dishSelection: 'Dish Selection'
       },
       orderStatus: {
         open: 'Open',
