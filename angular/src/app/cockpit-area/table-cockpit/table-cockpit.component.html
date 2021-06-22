@@ -51,7 +51,7 @@
             <!-- Email Column -->
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[1].label}} </th>
-                <td mat-cell *matCellDef="let element"> {{'cockpit.table.tableH' | transloco}} {{element.tableName}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.tableName}} </td>
             </ng-container>
 
             <!-- Alexa ID Column -->

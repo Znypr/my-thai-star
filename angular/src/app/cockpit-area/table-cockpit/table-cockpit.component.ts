@@ -1,20 +1,20 @@
-import { WaiterCockpitService } from '../services/waiter-cockpit.service';
-import { ReservationView, BookingView } from '../../shared/view-models/interfaces';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { PageEvent, MatPaginator } from '@angular/material/paginator';
-import { Sort } from '@angular/material/sort';
+import {WaiterCockpitService} from '../services/waiter-cockpit.service';
+import {ReservationView, BookingView} from '../../shared/view-models/interfaces';
+import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {PageEvent, MatPaginator} from '@angular/material/paginator';
+import {Sort} from '@angular/material/sort';
 // import { ReservationDialogComponent } from './reservation-dialog/reservation-dialog.component';
 import {
   FilterCockpit,
   Pageable,
 } from '../../shared/backend-models/interfaces';
 import * as moment from 'moment';
-import { ConfigService } from '../../core/config/config.service';
-import { TranslocoService } from '@ngneat/transloco';
-import { Subscription } from 'rxjs';
-import { Title } from '@angular/platform-browser';
-import { FormControl } from '@angular/forms';
+import {ConfigService} from '../../core/config/config.service';
+import {TranslocoService} from '@ngneat/transloco';
+import {Subscription} from 'rxjs';
+import {Title} from '@angular/platform-browser';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-cockpit-table-cockpit',
@@ -30,7 +30,7 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
     // total: 1,
   };
 
-  @ViewChild('pagingBar', { static: true }) pagingBar: MatPaginator;
+  @ViewChild('pagingBar', {static: true}) pagingBar: MatPaginator;
 
   alexaId: any = "321321321";
   bookings: ReservationView[] = [];
@@ -42,7 +42,7 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
 
   pageSizes: number[];
 
-  selected = new FormControl("selected");
+  selected = new FormControl('selected');
 
 
   filters: any = {
@@ -74,10 +74,10 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
       .selectTranslateObject('cockpit.tables', {}, lang)
       .subscribe((cockpitTables) => {
         this.columns = [
-          { name: 'id', label: cockpitTables.idH },
-          { name: 'name', label: cockpitTables.nameH },
-          { name: 'alexaDevice', label: cockpitTables.alexaDeviceH },
-          { name: 'alexaSelection', label: cockpitTables.alexaSelect },
+          {name: 'id', label: cockpitTables.idH},
+          {name: 'name', label: cockpitTables.nameH},
+          {name: 'alexaDevice', label: cockpitTables.alexaDeviceH},
+          {name: 'alexaSelection', label: cockpitTables.alexaSelect},
         ];
       });
   }
@@ -95,8 +95,8 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
           this.bookings = [];
         } else {
           this.bookings = data.content;
-        } 
-        
+        }
+
         this.totalReservations = data.totalElements;
       });
   }
@@ -128,22 +128,22 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
     this.applyFilters();
   }
 
-  onChange(alexaId: any) : void {
+  onChange(alexaId: any): void {
 
     console.log(alexaId);
   }
 
-  removeTable(table: any) : void {
+  removeTable(table: any): void {
 
     // TODO
-    //delete table from database
-
-    if(successful)
-    this.snackbar.openSnack(
-            this.translocoService.translate('alert.dialog.deleteTableSuccess'),
-            4000,
-            'green',
-          );
+    // delete table from database
+    /*
+        if(successful)
+        this.snackbar.openSnack(
+                this.translocoService.translate('alert.dialog.deleteTableSuccess'),
+                4000,
+                'green',
+              );*/
   }
 
   ngOnDestroy(): void {
