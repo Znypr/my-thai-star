@@ -47,14 +47,14 @@
             <!-- Date Column -->
             <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[0].label}} </th>
-                <td mat-cell *matCellDef="let element"> {{element.booking.tableId}}
+                <td mat-cell *matCellDef="let element"> {{element.id}}
                 </td>
             </ng-container>
 
             <!-- Email Column -->
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[1].label}} </th>
-                <td mat-cell *matCellDef="let element"> {{'cockpit.table.tableH' | transloco}} {{element.booking.tableId}} </td>
+                <td mat-cell *matCellDef="let element">{{element.tableName}} </td>
             </ng-container>
 
             <!-- Alexa ID Column -->
@@ -62,9 +62,8 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[2].label}} </th>
                 <td mat-cell *matCellDef="let element">
                     <mat-form-field [floatLabel]="'never'">
-                        <mat-label>{{columns[3].label}}</mat-label>
-                        <input matInput (input)="onChange($event.target.value)">
-                        
+                        <mat-label>{{columns[3].label}}</mat-label><td mat-cell *matCellDef="let element">{{element.tableName}} </td>
+
                     </mat-form-field>
                 </td>
             </ng-container>

@@ -23,7 +23,7 @@ import {
   OrderResponse,
   OrderView,
   OrderViewResult,
-  PlateView, SaveOrderResponse,
+  PlateView, SaveOrderResponse, TableResponse,
 } from '../../shared/view-models/interfaces';
 import {PriceCalculatorService} from '../../sidenav/services/price-calculator.service';
 import {TranslocoService} from '@ngneat/transloco';
@@ -34,6 +34,8 @@ import {Order} from "../../menu/models/order.model";
 
 @Injectable()
 export class WaiterCockpitService {
+  private readonly getTableRestPath: string =
+    'bookingmanagement/v1/table/search';
   private readonly getReservationsRestPath: string =
     'bookingmanagement/v1/booking/search';
   private readonly getOrdersRestPath: string =
@@ -166,6 +168,23 @@ export class WaiterCockpitService {
       exhaustMap((restServiceRoot) =>
         this.http.post<BookingResponse[]>(
           `${restServiceRoot}${this.getReservationsRestPath}`,
+          filters,
+        ),
+      ),
+    );
+  }
+
+  getTables(
+    pageable: Pageable,
+    sorting: Sort[],
+    filters: FilterCockpit,
+  ): Observable<TableResponse[]> {
+    filters.pageable = pageable;
+    filters.pageable.sort = sorting;
+    return this.restServiceRoot$.pipe(
+      exhaustMap((restServiceRoot) =>
+        this.http.post<TableResponse[]>(
+          `${restServiceRoot}${this.getTableRestPath}`,
           filters,
         ),
       ),

@@ -29,6 +29,18 @@ export interface DishResponse {
   content: DishView;
 }
 
+export interface TableResponse {
+  pageable: Pageable;
+  content: TableView;
+}
+
+export interface TableView {
+  id: number;
+  seatsNumber: number;
+  tableName: string;
+  alexaID: string;
+}
+
 // BOOKING
 export interface ReservationView {
   booking: BookingView;

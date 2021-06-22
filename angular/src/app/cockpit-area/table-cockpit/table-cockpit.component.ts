@@ -89,29 +89,16 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
 
   applyFilters(): void {
     this.waiterCockpitService
-      .getReservations(this.pageable, this.sorting, this.filters)
+      .getTables(this.pageable, this.sorting, this.filters)
       .subscribe((data: any) => {
         if (!data) {
           this.bookings = [];
           // this.tables = [];
         } else {
           this.bookings = data.content;
-          
-          // for(let booking of data.content) {
-          //   let add: boolean = true;
-          //   for(let table of this.tables) {
-          //     if(booking.booking.tableId == table.booking.tableId) add = false;
-          //   }
-          //   if(add) this.tables.push(booking);
-          // }
-          // console.log(this.tables);
-        } 
-        
+        }
         this.totalReservations = data.totalElements;
       });
-      
-
-
   }
 
   clearFilters(filters: any): void {
