@@ -11,6 +11,9 @@ INSERT INTO User(id, modificationCounter, username, password, twoFactorStatus, e
 INSERT INTO User(id, modificationCounter, username, password, twoFactorStatus, email, idRole) VALUES (3, 1, 'admin', '{bcrypt}$2a$10$1CAKyUHbX6RJqT5cUP6/aOMTIlYYvGIO/a3Dt/erbYKKgmbgJMGsG', false, 'admin@mail.com', 3);
 INSERT INTO User(id, modificationCounter, username, password, twoFactorStatus, email, idRole) VALUES (4, 1, 'waiter2', '{bcrypt}$2a$10$1CAKyUHbX6RJqT5cUP6/aOMTIlYYvGIO/a3Dt/erbYKKgmbgJMGsG', false, 'waiter2@mail.com', 1);
 
+INSERT INTO ResetToken(id, modificationCounter, idUser, expires, token, flag) VALUES (0,1,0,DATEADD('DAY', 5, CURRENT_TIMESTAMP),'RT_20210517_74da0febeb981971f39e7620d6e03eb5',false);
+
+
 INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (0, 1, 4);
 INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (1, 1, 4);
 INSERT INTO "Table"(id, modificationCounter, seatsNumber) VALUES (2, 1, 4);

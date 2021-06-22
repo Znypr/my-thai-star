@@ -33,8 +33,10 @@ CREATE TABLE User (
   email VARCHAR (120) NOT NULL,
   idRole BIGINT NOT NULL,
   CONSTRAINT PK_User PRIMARY KEY(id),
-  UNIQUE KEY user_name (username),
-  UNIQUE KEY user_email (email),
+	UNIQUE KEY user_name (username) NOCHECK,
+	UNIQUE KEY user_email (email) NOCHECK,
+-- constraint uq1 unique key (username) NOCHECK,
+-- constraint uq2 unique key (email) NOCHECK,
   CONSTRAINT FK_User_idRole FOREIGN KEY(idRole) REFERENCES UserRole(id) NOCHECK
 );
 
