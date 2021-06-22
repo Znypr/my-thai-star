@@ -54,7 +54,9 @@
     },
     "table": {
       "deleteSuccess": "Tisch erfolgreich entfernt",
-      "deleteFail": "Tisch konnte nicht entfernt werden"
+      "deleteFail": "Tisch konnte nicht entfernt werden",
+      "addSuccess": "Tisch erfolgreich hinzugefügt",
+      "addFail": "Tisch konnte nicht hinzugefügt werden"
     }
   },
   "formFields": {
