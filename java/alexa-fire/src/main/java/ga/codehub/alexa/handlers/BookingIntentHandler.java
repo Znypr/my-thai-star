@@ -51,8 +51,8 @@ public class BookingIntentHandler implements RequestHandler {
         Map<String, Object> attributes = attributesManager.getSessionAttributes();
 
         String speechText = "";
-        String name;
-        String userEmail;
+        String name = "";
+        String userEmail = "";
         try {
             try {
                 name = input.getServiceClientFactory().getUpsService().getProfileName();
