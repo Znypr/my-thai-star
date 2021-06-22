@@ -61,8 +61,8 @@ public class OrderIntentHandler implements RequestHandler {
                         throw new AlexaException();
                     }
                     Slot amount_s = slotMap.get("amount");
-                    Slot dish_s = slotMap.get("item");
-                    Slot extras_s = slotMap.get("extra");
+                    Slot dish_s = slotMap.get("dish");
+                    Slot extras_s = slotMap.get("extras");
 
                     amount = amount_s.getValue();
                     dish = dish_s.getValue();
@@ -100,6 +100,7 @@ public class OrderIntentHandler implements RequestHandler {
 
                     dishID = getDishIDbyName(dish);
 
+
                     if (dishID == -1) {
                         speechText = "Die Anfrage fuehrte zu keinen Ergebnissen. Bitte versuchen Sie es eine andere Anfrage. ";
 
@@ -129,11 +130,12 @@ public class OrderIntentHandler implements RequestHandler {
                         orderlines.add("{\"orderLine\":{\"dishId\":" + dishID + ",\"amount\":" + amount + ",\"comment\":\"\"},\"extras\":[" + extrasIds + "]}");
                         shoppingcart.add(dish + ";" + amount + ";" + extras);
                         speechText = "Das Gericht wurde in den Warenkorb gelegt. Antworten Sie mit Weiteres Gericht hinzufuegen, wenn Sie ein weiteres Gericht hinzufuegen wollen und mit Bestellung absenden, um die Bestellung zu beenden.";
+
                     }
                 }
 
-
             } catch (AlexaException e) {
+                speechText = "Ein Fehler ist aufgetreten...";
                 e.printStackTrace();
             }
 
