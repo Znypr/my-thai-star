@@ -2,6 +2,7 @@ import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
+import { Title } from '@angular/platform-browser';
 import { TranslocoService } from '@ngneat/transloco';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
@@ -61,11 +62,13 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private translocoService: TranslocoService,
     private waiterCockpitService: WaiterCockpitService,
-    private configService: ConfigService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
+    private configService: ConfigService,
+    title: Title
   ) {
-    this.pageSizes = this.configService.getValues().pageSizes;
+    title.setTitle('Orders');
     this.data = dialogData;
+    this.pageSizes = this.configService.getValues().pageSizes;
   }
 
   ngOnInit(): void {

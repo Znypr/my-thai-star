@@ -22,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslocoRootModule } from '../transloco-root.module';
 import { AdminCockpitComponent } from './admin-cockpit/admin-cockpit.component';
 import { AdminDialogComponent } from './admin-cockpit/admin-dialog/admin-dialog.component';
+import { TableCockpitComponent } from './table-cockpit/table-cockpit.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ResetPasswordCockpitComponent } from './reset-password-cockpit/reset-password-cockpit.component';
 
@@ -54,9 +55,11 @@ import { ResetPasswordCockpitComponent } from './reset-password-cockpit/reset-pa
     AdminCockpitComponent,
     AdminDialogComponent,
     ResetPasswordCockpitComponent,
+    TableCockpitComponent,
   ],
   exports: [
     ReservationCockpitComponent,
+    TableCockpitComponent,
     OrderCockpitComponent,
     OrderArchiveComponent,
     PredictionCockpitComponent,

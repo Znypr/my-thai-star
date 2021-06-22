@@ -60,6 +60,10 @@
               <mat-icon>restaurant_menu</mat-icon>
               RESERVATIONS
             </a>
+            <a mat-list-item (click)="navigateTo('tables')">
+              <mat-icon>restaurant_menu</mat-icon>
+              TABLES
+            </a>
           </mat-nav-list>
           <mat-nav-list menu-items *ngIf="(role$ | async) === 'ADMIN'"> //added 
             <a mat-list-item (click)="navigateTo('restaurant')">
