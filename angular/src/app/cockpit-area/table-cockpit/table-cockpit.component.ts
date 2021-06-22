@@ -15,6 +15,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import { FormControl } from '@angular/forms';
+import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
 
 @Component({
   selector: 'app-cockpit-table-cockpit',
@@ -55,6 +56,7 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
     private translocoService: TranslocoService,
     private dialog: MatDialog,
     private configService: ConfigService,
+    private snackbar: SnackBarService,
     title: Title
   ) {
     title.setTitle('Table Overview');
@@ -103,8 +105,6 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
 
   clearFilters(filters: any): void {
     filters.reset();
-    this.applyFilters();
-    this.pagingBar.firstPage();
   }
 
   page(pagingEvent: PageEvent): void {
@@ -133,17 +133,43 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
     console.log(alexaId);
   }
 
-  removeTable(table: any) : void {
+  addTable(filters: any) : void {
 
     // TODO
-    //delete table from database
+    // delete table from database
 
-    if(successful)
+    // if(successful)
     this.snackbar.openSnack(
-            this.translocoService.translate('alert.dialog.deleteTableSuccess'),
+            this.translocoService.translate('alerts.table.addSuccess'),
             4000,
             'green',
           );
+    // else
+    this.snackbar.openSnack(
+            this.translocoService.translate('alerts.table.addFail'),
+            4000,
+            'red',
+          );
+  }
+
+  removeTable(table: any) : void {
+
+    // TODO
+    // delete table from database
+
+    // if(successful)
+    this.snackbar.openSnack(
+            this.translocoService.translate('alerts.table.deleteSuccess'),
+            4000,
+            'green',
+          );
+    // else
+    this.snackbar.openSnack(
+            this.translocoService.translate('alerts.table.deleteFail'),
+            4000,
+            'red',
+          );
+
   }
 
   ngOnDestroy(): void {

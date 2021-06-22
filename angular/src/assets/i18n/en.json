@@ -52,7 +52,9 @@
     },
     "table": {
       "deleteSuccess": "Table removed successfully",
-      "deleteFail": "Table couln't be removed"
+      "deleteFail": "Table couldn't be removed",
+      "addSuccess": "Table added successfully",
+      "addFail": "Table couldn't be added"
     }
   },
   "formFields": {
