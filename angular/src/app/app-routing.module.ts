@@ -11,6 +11,7 @@ import { NotSupportedComponent } from './core/not-supported/not-supported.compon
 import { EmailConfirmationsComponent } from './email-confirmations/container/email-confirmations/email-confirmations.component';
 import { HomeComponent } from './home/container/home/home.component';
 import { MenuComponent } from './menu/container/menu.component';
+import { TableCockpitComponent } from './cockpit-area/table-cockpit/table-cockpit.component';
 
 const appRoutes: Routes = [
   { path: 'restaurant', component: HomeComponent, pathMatch: 'full' },
@@ -30,6 +31,11 @@ const appRoutes: Routes = [
   {
     path: 'reservations',
     component: ReservationCockpitComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'tables',
+    component: TableCockpitComponent,
     canActivate: [AuthGuardService],
   },
   {
