@@ -105,10 +105,10 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
     const customPageable = new Pageable();
     customPageable.pageSize = 24;
     customPageable.pageNumber = 0;
-    customPageable.sort = {
-      property: 'id',
-      direction: SortDirection.DESC
-    };
+    // customPageable.sort = {
+      // property: 'id',
+      // direction: SortDirection.DESC
+    // };
     this.waiterCockpitService.getTables(customPageable, this.sorting, this.filters).subscribe((data: any) => {
       this.tables = data.content;
       console.log(this.tables);

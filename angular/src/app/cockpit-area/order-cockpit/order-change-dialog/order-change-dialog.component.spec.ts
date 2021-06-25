@@ -14,7 +14,7 @@ import { dialogOrderDetails } from '../../../../in-memory-test-data/db-order-dia
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-describe('OrderChangeDialogComponent', () => {
+fdescribe('OrderChangeDialogComponent', () => {
   let component: OrderChangeDialogComponent;
   let fixture: ComponentFixture<OrderChangeDialogComponent>;
   let initialState;
@@ -38,9 +38,12 @@ describe('OrderChangeDialogComponent', () => {
       ],
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(OrderChangeDialogComponent);
+      fixtureService = TestBed.createComponent(WaiterCockpitService);
       component = fixture.componentInstance;
+      service = fixtureService.componentInstance;
       el = fixture.debugElement;
       fixture.detectChanges();
+      fixtureService.detectChanges();
     });
   }));
 
@@ -52,4 +55,39 @@ describe('OrderChangeDialogComponent', () => {
     expect(component).toBeTruthy();
     expect(component.datat[0].bookingToken).toEqual(dialogOrderDetails.booking.bookingToken);
   });
+
+  it('should get menu', () => {
+    expect(component.menu).not.toBeUndefined();
+  });
+
+  it('should get price', () => {
+    const dish = el.query(By.css('#dishPrice'));
+    expect(dish.nativeElement.textContent.trim()).not.toBeUndefined();
+  });
+
+  it('should reset on button click', () => {
+    const resetButton = el.query(By.css('#resetButton'));
+    spyOn(component,'reset');
+    expect(component.reset).toHaveBeenCalled();
+  });
+
+  it('should apply changes',() => {
+    spyOn(service,'saveOrder');
+    component.apply();
+    expect(service.saveOrder).toHaveBeenCalled();
+  });
+
+  it('should add orderline', () => {
+    spyOn(component,'updateOrderlines');
+    component.dishSelect.value = 0;
+    component.addOrderline();
+    expect(component.updateOrderlines).toHaveBeenCalled();
+  });
+
+//needs to be implemented
+  it('should delete orderline', () => {
+
+  });
+
+
 });
