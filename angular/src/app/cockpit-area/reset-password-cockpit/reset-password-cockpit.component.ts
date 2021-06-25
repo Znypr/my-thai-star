@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { TranslocoService } from '@ngneat/transloco';
+import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
 import { AdminCockpitService } from '../services/admin-cockpit.service';
 
 @Component({
@@ -15,6 +17,8 @@ export class ResetPasswordCockpitComponent implements OnInit {
   resetTokenEntity: any;
 
   constructor(
+    private snackBarService: SnackBarService,
+    private translocoService: TranslocoService,
    private route: ActivatedRoute,
    private router: Router,
    private adminCockpitService: AdminCockpitService
@@ -40,17 +44,6 @@ export class ResetPasswordCockpitComponent implements OnInit {
     // console.log(id);
   }
 
-  onButtonClick(token: String){
-    this.adminCockpitService.getUserIdByToken(token).subscribe(
-      (data: any) => {
-        if (!data) {
-          this.resetTokenEntity = [];
-        } else {
-          this.resetTokenEntity = data;
-        }
-    });
-    // console.log(this.entity.content);
-  }
 
   changePassword(event: any){
     const info = [
@@ -59,13 +52,18 @@ export class ResetPasswordCockpitComponent implements OnInit {
     ];
     if(info[0]==info[1]){
       this.adminCockpitService.changePassword(this.userId,info[0],this.token).subscribe(
-        () => this.adminCockpitService.snackBar("Passwort wurde geändert","verstanden")
-      );
+        () => this.snackBarService.openSnack(this.translocoService.translate('alerts.resetPassword.success'), 3000, 'green'));
+      
+      this.adminCockpitService.reloadPage('/restaurant');
     } else {
-      this.adminCockpitService.snackBar("Fragen Sie einen neuen Rücksetzlink an", "verstanden");
+      this.snackBarService.openSnack(this.translocoService.translate('alerts.resetPassword.fail'), 3000, 'red');
     }
   }
 
-    // this.route.snapshot.paramMap.get('token');
+  reset(filters: any) : void {
+    filters.reset();
+
+  }
+
 
 }

@@ -1,11 +1,3 @@
-<!-- <div>
-  <mat-expansion-panel data-name="orderFilter">
-    <mat-expansion-panel-header>
-        <mat-panel-title>Accounts</mat-panel-title>
-    </mat-expansion-panel-header>
-  </mat-expansion-panel>
-</div> -->
-
 <form (ngSubmit)="getUserInput($event)" #filterForm="ngForm">
   <div>
     <mat-expansion-panel>
@@ -51,41 +43,7 @@
           </mat-form-field>
 
         </div>
-        
-        <div class="formMobileRow">
-          <mat-form-field class="searchBy">
-            <mat-label>{{ columns[0].label }}</mat-label>
-            <input id="Username" name="username"matInput required="required" />
-          </mat-form-field>
-
-          <mat-form-field class="searchBy" required="required">
-            <mat-label>{{ columns[1].label }}</mat-label>
-            <input id="Email" type="email" name="email" matInput placeholder="user@mail.com" ngModel [email]="true"
-              required="required" />
-            <mat-error id="EmailError">
-              Please enter a valid email address
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="searchBy">
-            <mat-label>{{ columns[2].label }}</mat-label>
-            <select matNativeControl id="Role" name="role">
-              <option *ngFor="let element of roles" [value]="element.permission">
-                {{ element.label }}
-              </option>
-            </select>
-          </mat-form-field>
-
-          <mat-form-field class="searchBy">
-            <mat-label>{{ columns[4].label }}</mat-label>
-            <input required id="Password" name="password" matInput [type]="hide ? 'password' : 'text'" />
-            <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-              [attr.aria-pressed]="hide">
-              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-          </mat-form-field>
-
-        </div>
+      
 
       </div>
 

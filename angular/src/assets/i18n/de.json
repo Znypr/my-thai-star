@@ -17,7 +17,8 @@
     "addComment": "Kommentar hinzufügen",
     "create":"Erstellen",
     "reset":"Zurücksetzen",
-    "delete":"Löschen"
+    "delete":"Löschen",
+    "save":"Speichern"
   },
   "table": {
     "rowsPage": "Zeilen pro Seite",
@@ -28,6 +29,11 @@
     "accessError": "Zugang verweigert, bitte erst einloggen",
     "genericError": "Ein Fehler ist aufgetreten, bitte versuche es später noch einmal",
     "urlError": "Url nicht gefunden, bitte versuche es noch einmal",
+    "resetPassword": {
+      "notification":"Email zum Passwort zurücksetzen wurde an Benutzer versendet",
+      "success":"Änderung des Passworts war erfolgreich",
+      "fail":"Änderung des Passworts schlug fehl"
+    },
     "emailConfirmations": {
       "invitationAccept": "Einladung erfolgreich angenommen",
       "invitationReject": "Einladung erfolgreich abgelehnt",
@@ -254,6 +260,11 @@
     "userDialog": {
       "user":"Aktueller Benutzer",
       "reset":"Password zurücksetzen"
+    },
+    "resetPassword": {
+      "title":"Ändern Sie ihr Passwort",
+      "enter":"Geben Sie ein Passwort ein",
+      "confirm":"Bestätigen Sie das Passwort"
     }
   }
 }

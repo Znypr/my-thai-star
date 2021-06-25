@@ -87,14 +87,12 @@ export class AdminDialogComponent implements OnInit {
   deleteUser(userId:number){
     this.adminCockpitService.deleteUser(userId).subscribe();
     this.snackBarService.openSnack(this.translocoService.translate('alerts.deleteUser.success'), 3000, 'green');
-    this.ngOnDestroy();
+    this.adminCockpitService.reloadPage('/admin');
   }
 
   sendPasswordResetMail(userId: number){
-    this.adminCockpitService.sendPasswordResetMail(userId).subscribe(
-      (res) => {
-        alert("Die Anfrage wird verarbeitet und die Email in Kürze versendet");
-      });
+    this.adminCockpitService.sendPasswordResetMail(userId).subscribe();
+    this.snackBarService.openSnack(this.translocoService.translate('alerts.resetPassword.notification'), 3000, 'green');
   }
 
   ngOnDestroy() {

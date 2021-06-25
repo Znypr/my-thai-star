@@ -16,7 +16,8 @@
     "addComment": "Add comment",
     "create":"Create",
     "reset":"Reset",
-    "delete":"Delete"
+    "delete":"Delete",
+    "save":"Save"
   },
   "table": {
     "rowsPage": "Rows per page",
@@ -27,6 +28,11 @@
     "accessError": "Access denied, please log in first",
     "genericError": "An error has ocurred, please try again later",
     "urlError": "Url not found, please try again",
+    "resetPassword": {
+      "notification":"Email to reset password has been sent to user",
+      "success":"Password was successfully updated",
+      "fail":"Password update failed"
+    },
     "emailConfirmations": {
       "invitationAccept": "Invitation succesfully accepted",
       "invitationReject": "Invitation succesfully rejected",
@@ -253,6 +259,11 @@
     "userDialog": {
       "user":"Current User",
       "reset":"reset Password"
+    },
+    "resetPassword": {
+      "title":"Change your password",
+      "enter":"Enter your password",
+      "confirm":"Confirm your password"
     }
   }
 }

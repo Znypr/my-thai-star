@@ -97,8 +97,8 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
           .selectTranslateObject('cockpit.users.roles', {}, lang)
           .subscribe((roles) => {
             this.roles = [
+              { name: 'customer', label: roles.customer },
             { name: 'waiter', label: roles.waiter },
-            { name: 'customer', label: roles.customer },
             { name: 'manager', label: roles.manager },
             { name: 'admin', label: roles.admin }
           ];
@@ -139,7 +139,7 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
 
   selected(selection: UserListView): void {
     this.dialog.open(AdminDialogComponent, {
-      width: '50%',
+      width: '60%',
       data: selection,
     });
   }
