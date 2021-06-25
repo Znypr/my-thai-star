@@ -12,6 +12,10 @@ table {
   min-width: 600px;
 }
 
+.lastColumn {
+  text-align: right;
+}
+
 .totalRow {
   box-sizing: border-box;
   display: flex;
@@ -48,6 +52,11 @@ th {
 .extrasData {
   padding: 0 3%;
   word-break: break-word;
+}
+
+.mat-button.mat-secondary {
+   background-color: transparent;
+   color: #ffcc66;
 }
 
 .tableIdHeader,

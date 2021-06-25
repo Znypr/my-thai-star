@@ -14,7 +14,10 @@
     "clearFilters": "Filter zurücksetzen",
     "applyFilters": "Filter anwenden",
     "removeComment": "Kommentar entfernen",
-    "addComment": "Kommentar hinzufügen"
+    "addComment": "Kommentar hinzufügen",
+    "create":"Erstellen",
+    "reset":"Zurücksetzen",
+    "delete":"Löschen"
   },
   "table": {
     "rowsPage": "Zeilen pro Seite",
@@ -47,6 +50,10 @@
       "paidSuccess": "Bezahlung erfolgreich eingetragen",
       "unpaidSuccess": "Bezahlung erfolgreich entfernt",
       "paidFail": "Bezahlung fehlgeschlagen"
+    },
+    "deleteUser":{
+      "success":"Benutzer wurde erfolgreich entfernt",
+      "fail":"Benutzer konnte nicht entfernt werden"
     }
   },
   "formFields": {
@@ -228,6 +235,25 @@
       "ownerH": "Eigentümer",
       "tableH": "Tisch",
       "creationDateH": "Erstelldatum"
+    },
+    "users": {
+        "title": "Benutzer Übersicht",
+        "usernameH":"Benutzername",
+        "emailH":"Email",
+        "roleH":"Rolle",
+        "idH":"ID",
+        "passwordH":"Passwort",
+        "inputTitle":"Benutzer erstellen",
+        "roles": {
+          "waiter":"Kellner",
+          "customer":"Kunde",
+          "manager":"Manager",
+          "admin":"Admin"
+        }
+    },
+    "userDialog": {
+      "user":"Aktueller Benutzer",
+      "reset":"Password zurücksetzen"
     }
   }
 }

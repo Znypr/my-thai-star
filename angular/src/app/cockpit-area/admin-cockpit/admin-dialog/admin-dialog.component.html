@@ -1,39 +1,42 @@
-<p>Folgender Benutzer: {{data.username}}</p>
+<div class="heading">
+  <h3>{{'cockpit.userDialog.user' | transloco}} - {{data.username}}</h3>
+</div>
 <mat-divider></mat-divider>
 <div class="tableContainer">
    <table mat-table [dataSource]="datat">
-     <ng-container matColumnDef="user.id">
-       <th mat-header-cell *matHeaderCellDef> ID</th>
-       <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-     </ng-container>
-
+     
      <ng-container matColumnDef="user.username">
-       <th mat-header-cell *matHeaderCellDef> Name</th>
+       <th mat-header-cell *matHeaderCellDef> {{ columns[0].label }}</th>
        <td mat-cell *matCellDef="let element" > {{element.username}} </td>
-     </ng-container>
-
-     <ng-container matColumnDef="user.email">
-       <th mat-header-cell *matHeaderCellDef> Email </th>
-       <td mat-cell *matCellDef="let element" > {{element.email}} </td>
-     </ng-container>
-
-     <ng-container matColumnDef="user.idRole">
-      <th mat-header-cell *matHeaderCellDef> Role </th>
-      <td mat-cell *matCellDef="let element" > 
-      <span *ngIf="element.userRoleId === 0"> CUSTOMER</span>
-        <span *ngIf="element.userRoleId === 1"> WAITER</span>
-        <span *ngIf="element.userRoleId === 2"> MANAGER</span>
-        <span *ngIf="element.userRoleId === 3"> ADMIN</span>
-      </td>
-    </ng-container>
+      </ng-container>
+      
+      <ng-container matColumnDef="user.email">
+        <th mat-header-cell *matHeaderCellDef> {{ columns[1].label }} </th>
+        <td mat-cell *matCellDef="let element" > {{element.email}} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="user.idRole">
+        <th mat-header-cell *matHeaderCellDef> {{ columns[2].label }} </th>
+        <td mat-cell *matCellDef="let element" > 
+          <span *ngIf="element.userRoleId === 0"> {{ roles[0].label }}</span>
+          <span *ngIf="element.userRoleId === 1"> {{ roles[1].label }}</span>
+          <span *ngIf="element.userRoleId === 2"> {{ roles[2].label }}</span>
+          <span *ngIf="element.userRoleId === 3"> {{ roles[3].label }}</span>
+        </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="user.id">
+        <th mat-header-cell *matHeaderCellDef class="lastColumn"> {{ columns[3].label }}</th>
+        <td mat-cell *matCellDef="let element" class="lastColumn"> {{element.id}} </td>
+      </ng-container>
 
      <tr mat-header-row *matHeaderRowDef="displayedColumnsT"></tr>
      <tr mat-row *matRowDef="let row; columns: displayedColumnsT;"></tr>
    </table>
 </div>
 <div class="actionButtons" >
-  <button mat-button mat-dialog-close (click)="deleteUser(data.id)">Löschen</button>
-  <button mat-button (click)="sendPasswordResetMail(data.id)">Rücksetzlink schicken</button>
+  <button mat-button mat-dialog-close (click)="deleteUser(data.id)" color="warn">{{'buttons.delete' | transloco | uppercase}}</button>
+  <button mat-button (click)="sendPasswordResetMail(data.id)" color="secondary">{{'cockpit.userDialog.reset' | transloco | uppercase}}</button>
 </div>
 <div class="align-right actionButtons">
   <button mat-button mat-dialog-close color="accent">{{'buttons.close' | transloco | uppercase}}</button>

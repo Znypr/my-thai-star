@@ -1,6 +1,5 @@
 {
   "buttons": {
-    "createUser": "Create new user",
     "cancel": "Cancel",
     "apply": "Apply",
     "close": "Close",
@@ -14,7 +13,10 @@
     "clearFilters": "Clear Filters",
     "applyFilters": "Apply Filters",
     "removeComment": "Remove Comment",
-    "addComment": "Add comment"
+    "addComment": "Add comment",
+    "create":"Create",
+    "reset":"Reset",
+    "delete":"Delete"
   },
   "table": {
     "rowsPage": "Rows per page",
@@ -47,6 +49,10 @@
       "paidSuccess": "Payment successful registered",
       "unpaidSuccess": "Payment successful removed",
       "paidFail": "Payment failed"
+    },
+    "deleteUser":{
+      "success":"User was successfully removed",
+      "fail":"User couldn't be removed"
     }
   },
   "formFields": {
@@ -175,7 +181,7 @@
     }
   },
   "cockpit": {
-    "createUser": "Create user",
+    "createUser": "Create User",
     "filter": "Filter",
     "order-archive": {
       "title": "Order Archive",
@@ -228,6 +234,25 @@
       "ownerH": "Owner",
       "tableH": "Table",
       "creationDateH": "Creation date"
+    },
+    "users": {
+        "title": "User Overview",
+        "usernameH":"Username",
+        "emailH":"Email",
+        "roleH":"Role",
+        "idH":"ID",
+        "passwordH":"Password",
+        "inputTitle":"Create User",
+        "roles": {
+          "waiter":"Waiter",
+          "customer":"Customer",
+          "manager":"Manager",
+          "admin":"Admin"
+        }
+    },
+    "userDialog": {
+      "user":"Current User",
+      "reset":"reset Password"
     }
   }
 }

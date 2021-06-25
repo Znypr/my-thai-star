@@ -1,6 +1,9 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { TranslocoService } from '@ngneat/transloco';
+import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
+import * as moment from 'moment';
 import { ConfigService } from '../../../core/config/config.service';
 import { UserView, UserListView } from '../../../shared/view-models/interfaces';
 import { AdminCockpitService } from '../../services/admin-cockpit.service';
@@ -15,6 +18,8 @@ export class AdminDialogComponent implements OnInit {
   private fromRow = 0;
   private currentPage = 1;
 
+  columns: any[];
+  roles: any[];
   pageSize = 4;
 
   @ViewChild('pagingBar', { static: true }) pagingBar: MatPaginator;
@@ -23,40 +28,66 @@ export class AdminDialogComponent implements OnInit {
   datat: UserListView[] = [];
   columnst: any[];
   displayedColumnsT: string[] = [
-    'user.id',
     'user.username',
     'user.email',
-    'user.idRole'
+    'user.idRole',
+    'user.id'
   ];
-
-  // datao: UserView[] = [];
-  // columnso: any[];
-  // displayedColumnsO: string[] = [
-  //   'user.id',
-  //   'user.name',
-  //   'user.email',
-  // ];
 
   pageSizes: number[];
   filteredData: UserListView[] = this.datat;
 
 
   constructor(
+    private snackBarService: SnackBarService,
     private adminCockpitService: AdminCockpitService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
     private configService: ConfigService,
-
+    private translocoService: TranslocoService,
   ) {
     this.data = dialogData;
     this.pageSizes = this.configService.getValues().pageSizesDialog;
   }
 
+  ngOnInit(): void {
+    this.translocoService.langChanges$.subscribe((event: any) => {
+        this.setTableHeaders(event);
+      moment.locale(this.translocoService.getActiveLang());
+    });
+    this.datat.push(this.data);
+  }
 
-// You have to subscribe to execute the observable,
-// which initiates the DELETE request
+  setTableHeaders(lang: string): void {
+        this.translocoService
+          .selectTranslateObject('cockpit.users', {}, lang)
+          .subscribe((cockpitTable) => {
+            this.columns = [
+            { name: 'username', label: cockpitTable.usernameH },
+            { name: 'email', label: cockpitTable.emailH },
+            { name: 'role', label: cockpitTable.roleH },
+            { name: 'id', label: cockpitTable.idH },
+          ];
+        });
+
+        this.translocoService
+          .selectTranslateObject('cockpit.users.roles', {}, lang)
+          .subscribe((roles) => {
+            this.roles = [
+            { name: 'waiter', label: roles.waiter },
+            { name: 'customer', label: roles.customer },
+            { name: 'manager', label: roles.manager },
+            { name: 'admin', label: roles.admin }
+          ];
+        });
+    }
+
+
+  // You have to subscribe to execute the observable,
+  // which initiates the DELETE request
   deleteUser(userId:number){
     this.adminCockpitService.deleteUser(userId).subscribe();
-    this.adminCockpitService.reloadPage('/admin');
+    this.snackBarService.openSnack(this.translocoService.translate('alerts.deleteUser.success'), 3000, 'green');
+    this.ngOnDestroy();
   }
 
   sendPasswordResetMail(userId: number){
@@ -66,9 +97,6 @@ export class AdminDialogComponent implements OnInit {
       });
   }
 
-  ngOnInit(): void {
-    this.datat.push(this.data);
-    // this.filter()
+  ngOnDestroy() {
   }
-
 }

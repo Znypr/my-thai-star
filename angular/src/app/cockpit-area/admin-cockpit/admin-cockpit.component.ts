@@ -13,6 +13,7 @@ import {
 } from '../../shared/backend-models/interfaces';
 import { AdminDialogComponent } from './admin-dialog/admin-dialog.component';
 import * as config from '../../config'
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -35,50 +36,74 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   pageSize = 8;
 
   @ViewChild('pagingBar', { static: true }) pagingBar: MatPaginator;
-  //
+  
   users: UserListView[] = [];
   totalUsers: number;
   resetTokenEntity:any;
-  //
+  
   columns: any[];
-  //
+  roles: any[];
+  
   displayedColumns: string[] = [
-    'user.id',
     'user.username',
     'user.email',
     'user.idRole',
-    // 'userrole.idRole',
+    'user.id',
   ];
 
   pageSizes: number[];
-
-
+  
+  
   filters: FilterAdminCockpit = {
-    id: undefined,
     username: undefined,
     email: undefined,
     idRole: undefined,
+    id: undefined,
   };
-
+  
   constructor(
     private dialog: MatDialog,
+    private translocoService: TranslocoService,
     private adminCockpitService: AdminCockpitService,
     private configService: ConfigService,
-  ) {
-    this.pageSizes = this.configService.getValues().pageSizes;
-  }
+    title: Title
+    ) {
+      title.setTitle('Admin Cockpit');
+      this.pageSizes = this.configService.getValues().pageSizes;
+    }
+    
+    ngOnInit() {
+      this.applyFilters();
+      this.translocoService.langChanges$.subscribe((event: any) => {
+        this.setTableHeaders(event);
+      moment.locale(this.translocoService.getActiveLang());
+    });
+    }
 
-  // setTableHeaders(lang: string): void {
-  //   this.translocoSubscription = this.translocoService
-  //     .selectTranslateObject('user.table', {}, lang)
-  //     .subscribe((cockpitTable) => {
-  //       this.columns = [
-  //         { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
-  //         { name: 'booking.email', label: cockpitTable.emailH },
-  //         { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
-  //       ];
-  //     });
-  // }
+    setTableHeaders(lang: string): void {
+        this.translocoService
+          .selectTranslateObject('cockpit.users', {}, lang)
+          .subscribe((cockpitTable) => {
+            this.columns = [
+            { name: 'username', label: cockpitTable.usernameH },
+            { name: 'email', label: cockpitTable.emailH },
+            { name: 'role', label: cockpitTable.roleH },
+            { name: 'id', label: cockpitTable.idH },
+            { name: 'password', label: cockpitTable.passwordH }
+          ];
+        });
+
+        this.translocoService
+          .selectTranslateObject('cockpit.users.roles', {}, lang)
+          .subscribe((roles) => {
+            this.roles = [
+            { name: 'waiter', label: roles.waiter },
+            { name: 'customer', label: roles.customer },
+            { name: 'manager', label: roles.manager },
+            { name: 'admin', label: roles.admin }
+          ];
+        });
+    }
 
   onButtonClick(token: String){
     this.adminCockpitService.getUserIdByToken(token).subscribe(
@@ -90,7 +115,6 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
           this.resetTokenEntity = data;
         }
     });
-    // console.log(this.entity.content);
   }
 
   funk(){
@@ -115,7 +139,7 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
 
   selected(selection: UserListView): void {
     this.dialog.open(AdminDialogComponent, {
-      width: '80%',
+      width: '50%',
       data: selection,
     });
   }
@@ -148,23 +172,25 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
     this.pagingBar.firstPage();
   }
 
+  disable(filter: any) : boolean {
+    if
+    (
+      filter.username == "" 
+      || filter.email == ""
+      || filter.role == ""
+      || filter.password == ""
+    ) return true;
+      
+    else return false;
+    
+  }
+
   page(pagingEvent: PageEvent): void {
     this.pageable = {
       pageSize: pagingEvent.pageSize,
       pageNumber: pagingEvent.pageIndex,
       sort: this.pageable.sort,
     };
-    this.applyFilters();
-  }
-
-
-  //
-  // ngOnDestroy(): void {
-  //   this.translocoSubscription.unsubscribe();
-  // }
-
-  // THIS NEEDS TO BE HERE TO WORK
-  ngOnInit() {
     this.applyFilters();
   }
 
