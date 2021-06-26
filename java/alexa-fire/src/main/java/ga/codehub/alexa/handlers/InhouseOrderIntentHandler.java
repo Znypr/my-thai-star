@@ -40,7 +40,6 @@ public class InhouseOrderIntentHandler implements RequestHandler {
 
         // Order
         String dish = "";
-        //String comment = "";
         String extrasIds = "";
         String amount = "";
         Integer dishID = -1;
@@ -52,7 +51,7 @@ public class InhouseOrderIntentHandler implements RequestHandler {
                 name = input.getServiceClientFactory().getUpsService().getProfileName();
                 userEmail = input.getServiceClientFactory().getUpsService().getProfileEmail();
             } catch (NullPointerException nullp) {
-                speechText = "Deine Alexa braucht zusätzliche Berechtigungen !";
+                speechText = "Deine Alexa braucht zusätzliche Berechtigungen!";
                 throw new AlexaException();
             }
 
@@ -61,9 +60,7 @@ public class InhouseOrderIntentHandler implements RequestHandler {
             Intent intent = intentRequest.getIntent();
 
             if(intent.getConfirmationStatus().toString().equals("DENIED")){
-                /*attributes.put("cancledSlots", intent.getSlots());
-                attributesManager.setSessionAttributes(attributes);*/
-                speechText = "Die Bestellung wurde abgebrochen. Um die Bestellung neu zu starten, sagen Sie bitte Bestellung tätigen.";
+                speechText = "Die Bestellung wurde abgebrochen. Um die Bestellung neu zu starten, sagen Sie bitte Bestellung taetigen.";
             }else{
                 Map<String, Slot> slotMap = intent.getSlots();
                 if ((slotMap.size() != 4)&&(slotMap.size() != 3)) {
@@ -110,7 +107,7 @@ public class InhouseOrderIntentHandler implements RequestHandler {
                 dishID = getDishIDbyName(dish);
 
                 if (dishID == -1) {
-                    speechText = "Die Anfrage fuehrte zu keinen Ergebnissen. Bitte versuchen Sie es eine andere Anfrage. ";
+                    speechText = "Leider fuehrte die Suche nach dem Gericht zu keinen Ergebnissen. Bitte versuchen Sie eine andere Anfrage. ";
 
                 } else {
                     ArrayList<String> orderlines;
@@ -137,7 +134,7 @@ public class InhouseOrderIntentHandler implements RequestHandler {
                             response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/bookingmanagement/v1/booking");
 
                         } catch (Exception ex) {
-                            speechText = "Der MyThaiStar-Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben";
+                            speechText = "Der my-thai-star Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben";
                             throw new AlexaException();
                         }
 
@@ -201,13 +198,11 @@ public class InhouseOrderIntentHandler implements RequestHandler {
                     dishID = Integer.parseInt(resp.content[0].dish.id);
 
                 } else {
-                    speechText = "Die Anfrage führte zu keinen Ergebnissen. Bitte versuchen Sie es eine andere Anfrage.";
-
                     dishID = -1;
                 }
 
             } catch (Exception ex) {
-                speechText = "Der MyThaiStar-Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben. "
+                speechText = "Der my-thai-star Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben. "
                         + ex.toString();
                 throw new AlexaException();
             }

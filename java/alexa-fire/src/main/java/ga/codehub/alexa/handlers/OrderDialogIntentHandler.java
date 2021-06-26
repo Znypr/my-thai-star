@@ -43,9 +43,11 @@ public class OrderDialogIntentHandler implements RequestHandler {
             String payload = buildPayLoad(orderlines, payload_beginning, payload_ending);
             try {
                 bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/ordermanagement/v1/order");     
-                speechText = "Vielen Dank für Ihre Bestellung. ";
+                speechText = "Vielen Dank fuer Ihre Bestellung. ";
+                attributes.remove("orderLines");
+                attributes.remove("shoppingcart");
             } catch (Exception ex) {
-                speechText = "Der MyThaiStar-Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben. " + ex.toString();
+                speechText = "Der my-thai-star Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben. " + ex.toString();
                 throw new AlexaException();
             }
         } catch (AlexaException e) {

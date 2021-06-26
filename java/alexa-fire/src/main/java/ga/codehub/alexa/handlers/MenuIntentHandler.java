@@ -13,6 +13,7 @@
 
 package ga.codehub.alexa.handlers;
 
+import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.*;
@@ -28,19 +29,6 @@ import static ga.codehub.alexa.MyThaiStarStreamHandler.BASE_URL;
 
 public class MenuIntentHandler implements RequestHandler {
 
-    public static void main(String[] args) {
-        BasicOperations bo = new BasicOperations();
-        Gson gson = new Gson();
-        String payload = "{\"categories\":[],\"searchBy\":\"\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
-        String response;
-        ga.codehub.entity.menu.Response resp;
-        try {
-            response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/dishmanagement/v1/dish/search");
-            resp = gson.fromJson(response, ga.codehub.entity.menu.Response.class);
-        } catch (Exception ex) {
-        }
-    }
-
     @Override
     public boolean canHandle(HandlerInput input) {
         return input.matches(intentName("MenuIntent"))
@@ -54,12 +42,13 @@ public class MenuIntentHandler implements RequestHandler {
                 || input.matches(intentName("SortIntent")) || input.matches(intentName("SearchIntent"))
                 || input.matches(intentName("ChangeDirectionIntent")) || input.matches(intentName("DescriptionIntent"))
                 || input.matches(intentName("MaxPriceIntent"));
-        // || input.matches(intentName("FavoritIntent"));
     }
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
 
+        AttributesManager attributesManager = input.getAttributesManager();
+        Map<String, Object> attributes = attributesManager.getSessionAttributes();
         String speechText = "";
 
         try {
@@ -151,6 +140,7 @@ public class MenuIntentHandler implements RequestHandler {
                         direction = "\"ASC\"";
                     }
                 }
+                attributes.put("currentDirection", direction);
 
                 if (property_slot.getValue().toLowerCase().equals("name")) {
                     property = "\"name\"";
@@ -163,6 +153,7 @@ public class MenuIntentHandler implements RequestHandler {
                 } else if (property_slot.getValue().toLowerCase().equals("preis")) {
                     speechText = "Die Sortierung erfolgt nun nach Preis. ";
                 }
+                attributes.put("currentProperty", property);
             }
             if (input.matches(intentName("ChangeDirectionIntent"))) {
                 Request request = input.getRequestEnvelope().getRequest();
@@ -171,19 +162,36 @@ public class MenuIntentHandler implements RequestHandler {
 
                 Map<String, Slot> slotMap = intent.getSlots();
 
-                if (slotMap.size() != 1) {
+                if ((slotMap.size() != 1)&&(slotMap.size() != 0)) {
                     throw new AlexaException();
                 }
 
                 Slot direction_slot = slotMap.get("direction");
+                property = attributes.get("currentProperty").toString();
+                if (direction_slot.getValue() != null) {
+                    if (direction_slot.getValue().toLowerCase().equals("aufsteigend")) {
+                        direction = "\"ASC\"";
+                        speechText = "Die Sortierung erfolgt nun aufsteigend. ";
 
-                if (direction_slot.getValue().toLowerCase().equals("aufsteigend")) {
-                    direction = "\"ASC\"";
-                    speechText = "Die Sortierung erfolgt nun aufsteigend. ";
-
-                } else if (direction_slot.getValue().toLowerCase().equals("absteigend")) {
-                    speechText = "Die Sortierung erfolgt nun absteigend. ";
+                    } else if (direction_slot.getValue().toLowerCase().equals("absteigend")) {
+                        speechText = "Die Sortierung erfolgt nun absteigend. ";
+                    }
+                }else {
+                    direction = attributes.get("currentDirection").toString();
+                    if(direction.equals("\"ASC\"")){
+                        direction = "\"DESC\"";
+                        attributes.remove("currentDirection");
+                        attributes.put("currentDirection", direction);
+                        speechText = "Die Sortierung erfolgt nun absteigend. ";
+                    }else{
+                        direction = "\"ASC\"";
+                        attributes.remove("currentDirection");
+                        attributes.put("currentDirection", direction);
+                        speechText = "Die Sortierung erfolgt nun aufsteigend. ";
+                    }
                 }
+
+
             }
 
             // Read Description
@@ -204,16 +212,16 @@ public class MenuIntentHandler implements RequestHandler {
                 Boolean curry = (keyword.equals("thai green chicken curry") || keyword.equals("thai spicy basil fried rice") || keyword.equals("thai thighs fish/prawns") || keyword.equals("garlic paradise salad"));
 
                 if(tofu) {
-                    extras = " Tofu Option verfügbar.";
+                    extras = " Tofu Option verfuegbar.";
 
                 }else if(curry) {
-                    extras = " Extra Curry Option verfügbar";
+                    extras = " Extra Curry Option verfuegbar";
 
                 }else if(tofu && curry){
-                    extras = " Extra Curry und Tofu Optionen verfügbar";
+                    extras = " Extra Curry und Tofu Optionen verfuegbar";
 
                 }else {
-                    extras = " Keine weiteren Bestelloptionen verfügbar.";
+                    extras = " Keine weiteren Bestelloptionen verfuegbar.";
                 }
             }
 
@@ -240,11 +248,11 @@ public class MenuIntentHandler implements RequestHandler {
                     }
 
                 } else {
-                    speechText = "Die Anfrage führte zu keinen Ergebnissen. Bitte versuchen Sie eine andere Anfrage.";
+                    speechText = "Die Anfrage fuehrte zu keinen Ergebnissen. Bitte versuchen Sie eine andere Anfrage.";
                 }
 
             } catch (Exception ex) {
-                speechText = "Der MyThaiStar-Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben. "
+                speechText = "Der my-thai-star Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben. "
                         + ex.toString();
                 throw new AlexaException();
             }
@@ -255,8 +263,8 @@ public class MenuIntentHandler implements RequestHandler {
 
         return input.getResponseBuilder()
         .withSpeech(speechText)
-        // .withSimpleCard("MyThaiStar", speechText)
-        .withReprompt(speechText)
+        .withSimpleCard("MyThaiStar", speechText)
+        .withShouldEndSession(false)
         .build();
 
     }

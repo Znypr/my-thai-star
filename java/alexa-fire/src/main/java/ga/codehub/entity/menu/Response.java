@@ -9,9 +9,6 @@ public class Response {
 
     public String toStringNames() {
         StringBuilder sb = new StringBuilder();
-        /*for (Content c : content) {
-            sb.append(c.dish.name + ", ");
-        }*/
         for(int i = 0; i < content.length; i++){
             Content c = content[i];
             if(i == content.length-1){

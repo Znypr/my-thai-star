@@ -29,10 +29,10 @@ public class CancelandStopIntentHandler implements RequestHandler {
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
-        String speechText = "Auf Wiedersehen. ";
+        String speechText = "Der Skill wurde beendet. Bis bald.";
         return input.getResponseBuilder()
                 .withSpeech(speechText)
-                .withSimpleCard("HelloWorld", speechText)
+                .withSimpleCard("MyThaiStar", speechText)
                 .build();
     }
 }

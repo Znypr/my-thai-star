@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "mythaistar extern",
+            "invocationName": "mythaistar inhouse",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
@@ -16,63 +16,6 @@
                     "samples": []
                 },
                 {
-                    "name": "BookingIntent",
-                    "slots": [
-                        {
-                            "name": "count",
-                            "type": "AMAZON.NUMBER",
-                            "samples": [
-                                "mit {count} leuten",
-                                "mit {count} personen",
-                                "mit {count}",
-                                "{count} leute",
-                                "{count} personen",
-                                "{count}"
-                            ]
-                        },
-                        {
-                            "name": "time",
-                            "type": "AMAZON.TIME",
-                            "samples": [
-                                "{time}"
-                            ]
-                        },
-                        {
-                            "name": "date",
-                            "type": "AMAZON.DATE",
-                            "samples": [
-                                "{date}"
-                            ]
-                        }
-                    ],
-                    "samples": [
-                        "Hätten Sie noch einen Tisch frei für {time}",
-                        "Hätten Sie noch einen Tisch frei für {date}",
-                        "Hätten Sie noch einen Tisch frei für {count}",
-                        "Hätten Sie noch einen Tisch frei für {count} Personen",
-                        "Ich würde gerne mit {count} vorbeikommen",
-                        "Ich würde gerne um {time} vorbeikommen",
-                        "Ich würde gerne {date} vorbeikommen",
-                        "Ich hätte gerne einen Tisch für {date}",
-                        "Ich würde gerne einen Tisch reservieren {count}",
-                        "Ich würde gerne einen Tisch reservieren für {date}",
-                        "Ich hätte gerne einen Tisch am {date}",
-                        "Ich hätte gerne einen Tisch um {time}",
-                        "Ich hätte gerne einen Tisch für {count}",
-                        "Ich hätte gerne einen Tisch für {count} Personen",
-                        "Ich komme {date} mit {count} Personen",
-                        "resevieren einen Tisch für {count}",
-                        "reserviere einen Tisch am {date}",
-                        "reserviere einen Tisch um {time}",
-                        "Können wir gegen {time} kommen",
-                        "Ich brauche einen Tisch für {count}",
-                        "einen Tisch für {count} Personen am {date} um {time}",
-                        "Buche einen Tisch für {count} Personen um {time} am {date}",
-                        "Tisch reservieren",
-                        "Tisch buchen"
-                    ]
-                },
-                {
                     "name": "AMAZON.FallbackIntent",
                     "samples": []
                 },
@@ -84,6 +27,17 @@
                     "name": "MenuIntent",
                     "slots": [],
                     "samples": [
+                        "was kann man hier bestellen",
+                        "was kann man bestellen",
+                        "was steht auf dem menue",
+                        "was steht auf dem menu",
+                        "was steht auf dem menü",
+                        "was ist auf dem Menue",
+                        "was ist auf dem Menu",
+                        "was ist auf dem Menü",
+                        "Menue",
+                        "Menu",
+                        "Menü",
                         "was ist auf der speisekarte",
                         "Kannst du mir sagen was auf der Karte steht",
                         "Was steht auf der Karte",
@@ -99,6 +53,10 @@
                     "name": "FoodIntent",
                     "slots": [],
                     "samples": [
+                        "Essen",
+                        "Was kann ich hier essen",
+                        "Was gibt es an Speisen",
+                        "Was gibt es an Gerichten",
                         "Was kann man bei euch essen",
                         "Was kann ich bei euch essen",
                         "Was gibt es bei euch zu essen",
@@ -115,6 +73,13 @@
                     "name": "DrinkIntent",
                     "slots": [],
                     "samples": [
+                        "Ich hätte gerne was zu trinken was gibt es",
+                        "Was kann man bei euch an Drinks bestellen",
+                        "Was kann ich an Drinks bestellen",
+                        "Was gibt es an Drinks",
+                        "was kann ich trinken",
+                        "Was kann man zu trinken bestellen",
+                        "was gibt es an Getränken",
                         "Was kann man bei euch trinken",
                         "Was kann ich bei euch trinken",
                         "Was gibt es bei euch zu trinken",
@@ -134,20 +99,38 @@
                     "name": "CurryIntent",
                     "slots": [],
                     "samples": [
+                        "Gerichte die Curry enthalten",
+                        "Speisen die Curry enthalten",
+                        "Gerichte mit Curry als Zutat",
+                        "Speisen mit Curry als Zutat",
+                        "Speisen mit Curry",
+                        "Gerichte mit Curry",
+                        "Worin ist Curry",
+                        "Welche Gerichte beinhalten Curry",
+                        "Welche Speisen enthalten Curry",
+                        "Wo ist Curry enthalten",
+                        "Was beinhaltet Curry",
                         "Curry",
                         "Curry Gerichte",
-                        "Curry Speisen",
-                        "Curry Mahlzeiten"
+                        "Curry Speisen"
                     ]
                 },
                 {
                     "name": "VeganIntent",
                     "slots": [],
                     "samples": [
+                        "gibt es vegane speisen",
+                        "gibt es vegane gerichte",
+                        "was ist vegan auf dem menü",
+                        "was ist vegan auf der speisekarte",
+                        "Veganes Menü",
+                        "Vegane Speisekarte",
+                        "welche vegane Gerichte gibt es",
+                        "welche veganen Speisen gibt es",
+                        "Was ist vegan",
                         "Vegan",
                         "Vegane Gerichte",
                         "Vegane Speisen",
-                        "Vegane Mahlzeiten",
                         "Was gibt es an veganen Gerichten",
                         "Was gibt es an veganen Speisen"
                     ]
@@ -156,11 +139,19 @@
                     "name": "RiceIntent",
                     "slots": [],
                     "samples": [
+                        "Welche Gericht enthalten Reis",
+                        "Welche Speisen enthalten Reis",
+                        "Was enthält Reis",
+                        "Wo ist Reis dabei",
+                        "Worin ist Reis",
+                        "Speisen mit Reis als Zutat",
+                        "Gerichte mit Reis als Zutat",
+                        "Speisen die Reis enthalten",
+                        "Gerichte die Reis enthalten",
                         "Reis",
                         "Reis Gerichte",
                         "Gerichte mit Reis",
                         "Speisen mit Reis",
-                        "Mahlzeiten mit Reis",
                         "Was gibt es an Speisen mit Reis",
                         "Was gibt es an Gerichten mit Reis"
                     ]
@@ -169,10 +160,18 @@
                     "name": "VegetarianIntent",
                     "slots": [],
                     "samples": [
+                        "was ist vegetarisch",
+                        "welche vegetarischen Speisen gibt es",
+                        "welche vegetarischen Gerichte gibt es",
+                        "vegetarische speisekarte",
+                        "vegetarisches menü",
+                        "was ist vegetarisch auf der Speisekarte",
+                        "was ist vegetarisch auf dem menü",
+                        "gibt es vegetarische Gerichte",
+                        "gibt es vegetarische Speisen",
                         "Vegetarisch",
                         "Vegetarische Gerichte",
                         "Vegetarische Speisen",
-                        "Vegetarische Mahlzeiten",
                         "Was gibt es an vegetarischen Gerichten",
                         "Was gibt es an vegetarischen Speisen"
                     ]
@@ -181,32 +180,77 @@
                     "name": "StarterIntent",
                     "slots": [],
                     "samples": [
+                        "Welche Gerichte sind Starter",
+                        "Welche Gerichte sind Vorspeisen",
+                        "Was kann ich als Vorspeise bestellen",
                         "Vorspeisen",
                         "Starter",
                         "Welche Vorspeisen gibt es",
                         "Welche Starter gibt es",
                         "Was gibt es an Vorspeisen",
-                        "Was gibt es an Startern"
+                        "Was gibt es an Starter",
+                        "Was kann ich als Starter bestellen",
+                        "Gibt es Vorspeisen",
+                        "Gibt es Starter",
+                        "Was gibt es an Gerichten die Vorspeisen sind",
+                        "Was gibt es an Speisen die Vorspeisen sind",
+                        "Was gibt es an Gerichten die Starter sind",
+                        "Was gibt es an Speisen die Starter sind",
+                        "Was gibt es an Vorspeisen",
+                        "Was gibt es für Vorspeisen",
+                        "Was gibt es an Starter",
+                        "Was gibt es für Starter"
                     ]
                 },
                 {
                     "name": "DessertIntent",
                     "slots": [],
                     "samples": [
+                        "Welche Speisen sind Desserts",
+                        "Welche Speisen sind Nachspeisen",
+                        "Welche Speisen sind Nachtisch",
+                        "Welche Gerichte sind Desserts",
+                        "Welche Gerichte sind Nachspeisen",
+                        "Welche Gerichte sind Nachtisch",
+                        "Was kann ich als Dessert bestellen",
+                        "Was kann ich als Nachspeise bestellen",
+                        "Was kann ich als Nachtisch bestellen",
+                        "Nachtisch",
                         "Desserts",
                         "Nachspeisen",
+                        "Gibt es Nachtisch",
+                        "Gibt es Dessert",
+                        "Gibt es Nachspeisen",
                         "Welche Desserts gibt es",
                         "Welche Nachspeisen gibt es",
+                        "Welchen Nachtisch gibt es",
                         "Was gibt es an Desserts",
                         "Was gibt es für Desserts",
                         "Was gibt es an Nachspeisen",
-                        "Was gibt es für Nachspeisen"
+                        "Was gibt es für Nachspeisen",
+                        "Was gibt es an Nachtisch",
+                        "Was gibt es für Nachtisch",
+                        "Was gibt es an Gerichten die Nachspeisen sind",
+                        "Was gibt es an Speisen die Nachspeisen sind",
+                        "Was gibt es an Gerichten die Dessert sind",
+                        "Was gibt es an Speisen die Desserts sind",
+                        "Was gibt es an Gerichten die Nachtisch sind",
+                        "Was gibt es an Speisen die Nachtisch sind"
                     ]
                 },
                 {
                     "name": "NoodleIntent",
                     "slots": [],
                     "samples": [
+                        "Welche Gericht enthalten Nudeln",
+                        "Welche Speisen enthalten Nudeln",
+                        "Was enthält Nudeln",
+                        "Wo sind Nudeln dabei",
+                        "Worin sind Nudeln",
+                        "Speisen mit Nudeln als Zutat",
+                        "Gerichte mit Nudeln als Zutat",
+                        "Speisen die Nudeln enthalten",
+                        "Gerichte die Nudeln enthalten",
                         "Nudeln",
                         "Nudel Gerichte",
                         "Nudel Mahlzeiten",
@@ -218,25 +262,6 @@
                         "Was gibt es an Mahlzeiten mit Nudeln",
                         "Was gibt es an Speisen mit Nudeln",
                         "Was gibt es an Gerichten mit Nudeln"
-                    ]
-                },
-                {
-                    "name": "FavoritIntent",
-                    "slots": [],
-                    "samples": [
-                        "Favouriten",
-                        "Lieblingsessen",
-                        "Lieblingsspeisen",
-                        "Lieblingsgerichte",
-                        "Lieblingsmahlzeiten",
-                        "Welche Speisen esse ich am liebsten",
-                        "Welche Gerichte esse ich am liebsten",
-                        "Welche Mahlzeiten esse ich am liebsten",
-                        "Was sind meine Favoriten",
-                        "Was sind meine Lieblingsgerichte",
-                        "Was sind meine Lieblingsessen",
-                        "Was sind meine Lieblingsgerichte",
-                        "Was sind meine Lieblingsmahlzeiten"
                     ]
                 },
                 {
@@ -270,16 +295,22 @@
                             "name": "property",
                             "type": "SORTCATEGORY",
                             "samples": [
-                                "Nach Likes sortieren",
-                                "Nach Preis sortieren",
-                                "Nach Name sortieren",
-                                "Nach Likes",
-                                "Nach Preis",
-                                "Nach Name"
+                                "{property}",
+                                "Nach {property} sortieren",
+                                "Nach {property}"
                             ]
                         }
                     ],
                     "samples": [
+                        "Sortierung ändern {direction} nach {property}",
+                        "Sortierung ändern nach {property}",
+                        "Sortier die Speisekarte",
+                        "Sortiere {direction} nach {property}",
+                        "Menü {direction} nach {property}",
+                        "Sortiere nach {property}",
+                        "Menü nach {property} sortieren",
+                        "Speisekarte nach {property} sortieren",
+                        "Menü nach {property}",
                         "Sortiere die Speisekarte {direction}",
                         "Sortiere die Speisekarte {direction} nach {property}",
                         "Sortiere die Speisekarte nach {property}",
@@ -296,14 +327,17 @@
                     "slots": [
                         {
                             "name": "direction",
-                            "type": "DIRECTION",
-                            "samples": [
-                                "absteigend",
-                                "aufsteigend"
-                            ]
+                            "type": "DIRECTION"
                         }
                     ],
                     "samples": [
+                        "änder die richtung",
+                        "wechsel die sortierrichtung zu {direction}",
+                        "wechsel die richtung zu {direction}",
+                        "wechsel die richtung",
+                        "ändere die richtung zu {direction}",
+                        "ändere die sortierrichtung zu {direction}",
+                        "ändere die sortierrichtung",
                         "ändere die sortierreihenfolge zu {direction}",
                         "ändere die sortierreihenfolge",
                         "sortier {direction}"
@@ -321,6 +355,11 @@
                         }
                     ],
                     "samples": [
+                        "suche",
+                        "suchen",
+                        "suche {keyword} im menü",
+                        "suche {keyword} in der speisekarte",
+                        "ich möchte etwas in der speisekarte suchen",
                         "suche starten",
                         "suche nach {keyword}",
                         "gibt es {keyword}",
@@ -342,6 +381,16 @@
                         }
                     ],
                     "samples": [
+                        "informationen über {dish}",
+                        "infos über {dish}",
+                        "informationen zu {dish}",
+                        "infos zu {dish}",
+                        "beschreibung zu {dish}",
+                        "ich hätte gerne mehr informationen zu {dish}",
+                        "ich hätte gerne mehr infos zu {dish}",
+                        "mehr Informationen zu {dish}",
+                        "mehr Infos zu {dish}",
+                        "was ist {dish} genau",
                         "erzähle mehr",
                         "erzähle mehr zu {dish}",
                         "erzähle mir mehr zu {dish}",
@@ -356,13 +405,19 @@
                         "Was ist {dish}",
                         "Beschreibung von {dish}",
                         "Beschreibung",
-                        "Beschreibung von",
                         "Lies mir die Beschreibung vor"
                     ]
                 },
                 {
-                    "name": "OrderIntent",
+                    "name": "InhouseOrderIntent",
                     "slots": [
+                        {
+                            "name": "personCount",
+                            "type": "AMAZON.NUMBER",
+                            "samples": [
+                                "{personCount}"
+                            ]
+                        },
                         {
                             "name": "dish",
                             "type": "DISH",
@@ -384,11 +439,11 @@
                             "name": "extras",
                             "type": "EXTRAS",
                             "samples": [
-                                "Ja {extras}",
-                                "Ja extra {extras}",
-                                "Nein {extras} extra",
+                                "{extras}",
                                 "Nein {extras}",
-                                "{extras}"
+                                "Nein {extras} extra",
+                                "Ja extra {extras}",
+                                "Ja {extras}"
                             ]
                         }
                     ],
@@ -426,12 +481,11 @@
                     "slots": [],
                     "samples": [
                         "Bestellung absenden",
-                        "Bestellung beenden",
-                        "Nein"
+                        "Bestellung beenden"
                     ]
                 },
                 {
-                    "name": "AddOrderIntent",
+                    "name": "InhouseAddOrderIntent",
                     "slots": [
                         {
                             "name": "dish",
@@ -452,22 +506,28 @@
                             "name": "extras",
                             "type": "EXTRAS",
                             "samples": [
-                                "Nein {extras}",
-                                "Nein {extras} extra",
-                                "Ja extra {extras}",
+                                "{extras}",
                                 "Ja {extras}",
-                                "{extras}"
+                                "Ja extra {extras}",
+                                "Nein {extras} extra",
+                                "Nein {extras}"
                             ]
                         }
                     ],
                     "samples": [
-                        "weiteres Gericht hinzufügen"
+                        "weiteres Gericht hinzufügen",
+                        "weiteres Gericht hinzufuegen"
                     ]
                 },
                 {
                     "name": "ShoppingCartIntent",
                     "slots": [],
                     "samples": [
+                        "Inhalt Warenkorb",
+                        "Warenkorb Inhalt",
+                        "Warenkorbinhalt",
+                        "Was liegt in meinem Warenkorb",
+                        "Was habe ich zu meinem Warenkorb hinzugefügt",
                         "Was ist in meinem Warenkorb",
                         "Warenkorb"
                     ]
@@ -494,6 +554,9 @@
                     "name": "OpeningHoursIntent",
                     "slots": [],
                     "samples": [
+                        "öffnungszeiten des restaurants",
+                        "von wann bis wann ist das restaurant geöffnet",
+                        "wann ist das restaurant geöffnet",
                         "Öffnungszeiten",
                         "wann habt ihr geöffnet"
                     ]
@@ -506,17 +569,28 @@
                         "Wo ist das Restaurant",
                         "Wo",
                         "Adresse",
-                        "Was ist die Adresse des Restaurants"
+                        "Was ist die Adresse des Restaurants",
+                        "Was ist die Adresse"
                     ]
                 },
                 {
                     "name": "PaymentIntent",
                     "slots": [],
                     "samples": [
-                        "Mit was kann man bei euch bezahlen",
-                        "Bezahlungsmöglichkeiten",
+                        "Wie kann ich bezahlen",
                         "Zahlungsmöglichkeiten",
-                        "Wie kann ich bezahlen"
+                        "Bezahlungsmöglichkeiten",
+                        "Mit was kann man bei euch bezahlen"
+                    ]
+                },
+                {
+                    "name": "AskForHelpIntent",
+                    "slots": [],
+                    "samples": [
+                        "Kellner rufen",
+                        "Kellner",
+                        "Sos",
+                        "Ich brauch Hilfe"
                     ]
                 }
             ],
@@ -561,22 +635,12 @@
                     "values": [
                         {
                             "name": {
-                                "value": "curry"
+                                "value": "nein"
                             }
                         },
                         {
                             "name": {
-                                "value": "tofu"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "tofu und curry"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "curry und tofu"
+                                "value": "nichts"
                             }
                         },
                         {
@@ -586,7 +650,22 @@
                         },
                         {
                             "name": {
-                                "value": "nichts"
+                                "value": "curry und tofu"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "tofu und curry"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "tofu"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "curry"
                             }
                         }
                     ]
@@ -596,37 +675,7 @@
                     "values": [
                         {
                             "name": {
-                                "value": "thai green chicken curry"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "thai spicy basil fried rice"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "thai peanut beef"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "thai thighs fish/prawns"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "thai thighs fish"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "thai thighs prawns"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "garlic paradise salad"
+                                "value": "beer"
                             }
                         },
                         {
@@ -636,7 +685,37 @@
                         },
                         {
                             "name": {
-                                "value": "beer"
+                                "value": "garlic paradise salad"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "thai thighs prawns"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "thai thighs fish"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "thai thighs fish/prawns"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "thai peanut beef"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "thai spicy basil fried rice"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "thai green chicken curry"
                             }
                         }
                     ]
@@ -645,52 +724,6 @@
         },
         "dialog": {
             "intents": [
-                {
-                    "name": "BookingIntent",
-                    "confirmationRequired": false,
-                    "prompts": {},
-                    "slots": [
-                        {
-                            "name": "count",
-                            "type": "AMAZON.NUMBER",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.638601641517.1343819274126"
-                            },
-                            "validations": [
-                                {
-                                    "type": "isGreaterThan",
-                                    "prompt": "Slot.Validation.360857703564.462585299979.1231487673451",
-                                    "value": "0"
-                                },
-                                {
-                                    "type": "isLessThan",
-                                    "prompt": "Slot.Validation.360857703564.462585299979.1213859191672",
-                                    "value": "9"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "time",
-                            "type": "AMAZON.TIME",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.638601641517.1465548728509"
-                            }
-                        },
-                        {
-                            "name": "date",
-                            "type": "AMAZON.DATE",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.638601641517.133236874959"
-                            }
-                        }
-                    ]
-                },
                 {
                     "name": "SortIntent",
                     "confirmationRequired": false,
@@ -701,7 +734,13 @@
                             "type": "DIRECTION",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
-                            "prompts": {}
+                            "prompts": {},
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.40106577543.240205688221.26334570207"
+                                }
+                            ]
                         },
                         {
                             "name": "property",
@@ -710,7 +749,13 @@
                             "elicitationRequired": true,
                             "prompts": {
                                 "elicitation": "Elicit.Slot.844326227827.732129452023"
-                            }
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.40106577543.1059369757352.1244946423945"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -723,10 +768,14 @@
                             "name": "direction",
                             "type": "DIRECTION",
                             "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.906245739529.1513247883848"
-                            }
+                            "elicitationRequired": false,
+                            "prompts": {},
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.1412526711392.973648530072.1150416146371"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -742,17 +791,44 @@
                             "elicitationRequired": true,
                             "prompts": {
                                 "elicitation": "Elicit.Slot.375590570398.1289814459478"
-                            }
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.608210041670.42425287859.518119658108"
+                                }
+                            ]
                         }
                     ]
                 },
                 {
-                    "name": "OrderIntent",
+                    "name": "InhouseOrderIntent",
                     "confirmationRequired": true,
                     "prompts": {
-                        "confirmation": "Confirm.Intent.106121358168"
+                        "confirmation": "Confirm.Intent.1022729880227"
                     },
                     "slots": [
+                        {
+                            "name": "personCount",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.203293420325.1408036804779"
+                            },
+                            "validations": [
+                                {
+                                    "type": "isLessThan",
+                                    "prompt": "Slot.Validation.370056265903.515989141588.1605169177181",
+                                    "value": "9"
+                                },
+                                {
+                                    "type": "isGreaterThan",
+                                    "prompt": "Slot.Validation.370056265903.515989141588.1531718756986",
+                                    "value": "0"
+                                }
+                            ]
+                        },
                         {
                             "name": "dish",
                             "type": "DISH",
@@ -760,7 +836,13 @@
                             "elicitationRequired": true,
                             "prompts": {
                                 "elicitation": "Elicit.Slot.382605869067.730385150306"
-                            }
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.370056265903.654044753086.1184866389915"
+                                }
+                            ]
                         },
                         {
                             "name": "amount",
@@ -784,8 +866,14 @@
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
-                                "elicitation": "Elicit.Slot.106121358168.180357509052"
-                            }
+                                "elicitation": "Elicit.Slot.423780607981.1388586273407"
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.1231033728737.157759813505.584164566777"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -796,10 +884,10 @@
                     "slots": []
                 },
                 {
-                    "name": "AddOrderIntent",
+                    "name": "InhouseAddOrderIntent",
                     "confirmationRequired": true,
                     "prompts": {
-                        "confirmation": "Confirm.Intent.1283972123237"
+                        "confirmation": "Confirm.Intent.726226696195"
                     },
                     "slots": [
                         {
@@ -809,7 +897,13 @@
                             "elicitationRequired": true,
                             "prompts": {
                                 "elicitation": "Elicit.Slot.882094195472.435909990664"
-                            }
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.1237631189379.924790567827.928239483702"
+                                }
+                            ]
                         },
                         {
                             "name": "amount",
@@ -833,8 +927,14 @@
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
-                                "elicitation": "Elicit.Slot.1283972123237.1267269640812"
-                            }
+                                "elicitation": "Elicit.Slot.797222888860.1103454340361"
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.1471300670329.364783117251.1091322208765"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -859,38 +959,11 @@
         },
         "prompts": [
             {
-                "id": "Elicit.Slot.638601641517.1343819274126",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Mit wie vielen Leuten moechtest du kommen?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.638601641517.1465548728509",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Um wieviel Uhr soll ich deinen Tisch freihalten ?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.638601641517.133236874959",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "An welchem Tag wollt Ihr kommen"
-                    }
-                ]
-            },
-            {
                 "id": "Elicit.Slot.844326227827.959037062903",
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Soll das Menü aufsteigend oder absteigend sortiert werden?"
+                        "value": "Soll das Menue aufsteigend oder absteigend sortiert werden?"
                     }
                 ]
             },
@@ -925,7 +998,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Zu welchem Gericht möchten Sie eine Beschreibung?"
+                        "value": "Zu welchem Gericht moechten Sie eine Beschreibung?"
                     }
                 ]
             },
@@ -943,7 +1016,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Bitte geben Sie an was sie bestellen möchten. "
+                        "value": "Bitte geben Sie an, was Sie bestellen moechten."
                     }
                 ]
             },
@@ -961,7 +1034,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Bitte geben Sie eine gültige Anzahl an."
+                        "value": "Bitte geben Sie eine gueltige Anzahl an."
                     }
                 ]
             },
@@ -988,7 +1061,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Bitte geben Sie eine gültige Zahl ein."
+                        "value": "Bitte geben Sie eine gueltige Zahl ein."
                     }
                 ]
             },
@@ -997,7 +1070,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Was möchten Sie noch zusätzlich bestellen?"
+                        "value": "Was moechten Sie noch zusaetzlich bestellen?"
                     }
                 ]
             },
@@ -1006,7 +1079,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Bitte geben Sie eine gültige Anzahl an."
+                        "value": "Bitte geben Sie eine gueltige Anzahl an."
                     }
                 ]
             },
@@ -1015,7 +1088,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Wie oft möchten Sie {dish} bestellen?"
+                        "value": "Wie oft moechten Sie {dish} bestellen?"
                     }
                 ]
             },
@@ -1029,38 +1102,146 @@
                 ]
             },
             {
-                "id": "Elicit.Slot.106121358168.180357509052",
+                "id": "Elicit.Slot.203293420325.1408036804779",
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Wollen Sie Tofu oder extra Curry, falls für das ausgewählte Gericht möglich, zu ihrer Bestellung hinzufügen?"
+                        "value": "Wie viele Personen sitzen an diesem Tisch?"
                     }
                 ]
             },
             {
-                "id": "Confirm.Intent.1283972123237",
+                "id": "Elicit.Slot.423780607981.1388586273407",
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Es wird {amount} {dish} mit {extras} extra zum Warenkorb hinzugefügt, korrekt?"
+                        "value": "Wollen Sie Tofu oder extra Curry, falls fuer das ausgewaehlte Gericht möglich, zu ihrer Bestellung hinzufuegen?"
                     }
                 ]
             },
             {
-                "id": "Elicit.Slot.1283972123237.1267269640812",
+                "id": "Confirm.Intent.423780607981",
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Wollen Sie Tofu oder extra Curry, falls für das ausgewählte Gericht möglich, zu ihrer Bestellung hinzufügen?"
+                        "value": "Es wird {amount} {dish} mit {extras} extra zum Warenkorb hinzugefuegt, korrekt?"
                     }
                 ]
             },
             {
-                "id": "Confirm.Intent.106121358168",
+                "id": "Elicit.Slot.797222888860.1103454340361",
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Es wird {amount} {dish} mit {extras} extra zum Warenkorb hinzugefügt, korrekt?"
+                        "value": "Wollen Sie Tofu oder extra Curry, falls fuer das ausgewaehlte Gericht möglich, zu ihrer Bestellung hinzufuegen?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Intent.1022729880227",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Es wird {amount} {dish} mit {extras} extra zum Warenkorb hinzugefuegt, korrekt?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Intent.726226696195",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Es wird {amount} {dish} mit {extras} extra zum Warenkorb hinzugefuegt, korrekt?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.1471300670329.364783117251.1091322208765",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Bitte geben Sie ein gueltigen Wert für das Extra ein."
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.1231033728737.157759813505.584164566777",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Bitte geben Sie ein gueltigen Wert für das Extra ein."
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.608210041670.42425287859.518119658108",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Bitte geben Sie ein passendes Gericht an."
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.370056265903.654044753086.1184866389915",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Bitte geben Sie ein passendes Gericht an."
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.370056265903.515989141588.1605169177181",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Es duerfen nur maximal acht Personen an einem Tisch sitzen. "
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.370056265903.515989141588.1531718756986",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Sie muessen mindestens eine Person angeben."
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.1237631189379.924790567827.928239483702",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Bitte geben Sie ein passendes Gericht an."
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.40106577543.240205688221.26334570207",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Bitte geben Sie einen gültigen Wert für die Sortierrichtung an."
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.40106577543.1059369757352.1244946423945",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Bitte geben Sie einen gültigen Wert für die Sortierkategorie an."
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.1412526711392.973648530072.1150416146371",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Bitte geben Sie einen gültigen Wert für die Sortierrichtung an."
                     }
                 ]
             }

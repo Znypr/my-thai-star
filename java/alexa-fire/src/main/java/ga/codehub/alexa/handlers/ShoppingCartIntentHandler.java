@@ -30,7 +30,7 @@ public class ShoppingCartIntentHandler implements RequestHandler {
             ArrayList<String> shoppingcart = (ArrayList<String>) attributes.get("shoppingcart");
             for (String item_s : shoppingcart) {
                 String[] item = item_s.split(";");
-                if ((item[2].equals("nichts")) || item[2].equals("kein")) {
+                if ((item[2].equals("nichts")) || (item[2].equals("kein")) || (item[2].equals("nein"))) {
                     speechText += item[1] + " " + item[0];
                 } else {
                     speechText += item[1] + " " + item[0] + " mit extra " + item[2];

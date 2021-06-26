@@ -37,7 +37,6 @@ public class OrderIntentHandler implements RequestHandler {
 
         // Order
         String dish = "";
-        //String comment = "";
         String extras = "";
         String amount = "";
         String extrasIds = "";
@@ -54,7 +53,7 @@ public class OrderIntentHandler implements RequestHandler {
                 if(intent.getConfirmationStatus().toString().equals("DENIED")){
                     /*attributes.put("cancledSlots", intent.getSlots());
                     attributesManager.setSessionAttributes(attributes);*/
-                    speechText = "Die Bestellung wurde abgebrochen. Um die Bestellung neu zu starten, sagen Sie bitte Bestellung tätigen.";
+                    speechText = "Die Bestellung wurde abgebrochen. Um die Bestellung neu zu starten, sagen Sie bitte Bestellung taetigen.";
                 }else{
                     Map<String, Slot> slotMap = intent.getSlots();
                     if (slotMap.size() != 3) {
@@ -102,7 +101,7 @@ public class OrderIntentHandler implements RequestHandler {
 
 
                     if (dishID == -1) {
-                        speechText = "Die Anfrage fuehrte zu keinen Ergebnissen. Bitte versuchen Sie es eine andere Anfrage. ";
+                        speechText = "Leider fuehrte die Suche nach dem Gericht zu keinen Ergebnissen. Bitte versuchen Sie eine andere Anfrage.";
 
                     } else {
                         ArrayList<String> orderlines;
@@ -142,7 +141,6 @@ public class OrderIntentHandler implements RequestHandler {
             return input.getResponseBuilder()
                         .withSpeech(speechText)
                         .withSimpleCard("MyThaiStar", speechText)
-                        .withReprompt("Möchten Sie noch weitere Dinge bestellen?")
                         .build();
 
     
@@ -156,7 +154,7 @@ public class OrderIntentHandler implements RequestHandler {
                 .build();
 
             return input.getResponseBuilder()
-                    .withSpeech("Sie müssen zunächst einen Tisch buchen um Bestellungen zu tätigen. ")
+                    .withSpeech("Sie müssen zunächst einen Tisch buchen um Bestellungen zu taetigen. ")
                     .build();     
         }
     }
@@ -185,13 +183,11 @@ public class OrderIntentHandler implements RequestHandler {
                     dishID = Integer.parseInt(resp.content[0].dish.id);
 
                 } else {
-                    speechText = "Die Anfrage führte zu keinen Ergebnissen. Bitte versuchen Sie es eine andere Anfrage.";
-
                     dishID = -1;
                 }
 
             } catch (Exception ex) {
-                speechText = "Der MyThaiStar-Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben. "
+                speechText = "Der my-thai-star Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben. "
                     + ex.toString();
                 throw new AlexaException();
              }
