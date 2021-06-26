@@ -14,7 +14,7 @@ import {ConfigService} from '../../core/config/config.service';
 import {TranslocoService} from '@ngneat/transloco';
 import {Subscription} from 'rxjs';
 import {Title} from '@angular/platform-browser';
-import {SortDirection} from "../../menu/components/menu-filters/filter-sort/filter-sort.component";
+import {SortDirection} from '../../menu/components/menu-filters/filter-sort/filter-sort.component';
 
 @Component({
   selector: 'app-cockpit-reservation-cockpit',
