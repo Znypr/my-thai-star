@@ -36,15 +36,13 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
   totalReservations: number;
 
   columns: any[];
-  displayedColumns: string[] = ['needHelp', 'bookingDate', 'email', 'bookingToken', 'table'];
+  displayedColumns: string[] = ['needHelp', 'owner', 'bookingDate', 'assistants', 'table'];
 
   pageSizes: number[];
 
   filters: FilterCockpit = {
-    bookingDate: undefined,
-    email: undefined,
-    bookingToken: undefined,
-
+    tableId: undefined,
+    name: undefined,
   };
 
   tables: any[] = [
@@ -87,9 +85,9 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
       .subscribe((cockpitTable) => {
         this.columns = [
           {name: 'booking.needHelp', label: cockpitTable.needHelpH},
+          {name: 'booking.owner', label: cockpitTable.ownerH},
           {name: 'booking.bookingDate', label: cockpitTable.reservationDateH},
-          {name: 'booking.email', label: cockpitTable.emailH},
-          {name: 'booking.bookingToken', label: cockpitTable.bookingTokenH},
+          {name: 'booking.assistants', label: cockpitTable.assistantsH},
           {name: 'booking.table', label: cockpitTable.tableH},
           {name: 'booking.tableSelect', label: cockpitTable.tableSelect}
         ];

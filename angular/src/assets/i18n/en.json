@@ -67,7 +67,7 @@
     "date": "Date",
     "name": "Name",
     "email": "Email",
-    "assistants": "Table guests",
+    "assistants": "Amount of guests",
     "friends": "Friends",
     "terms": "Accept terms",
     "dateTime": "Date and time",
@@ -77,8 +77,11 @@
     "total": "Total",
     "referenceNumber": "Reference number",
     "orderStatus": "Status", 
+    "paid":"Paid",
     "tableName": "Table Name",
-    "alexaId": "Alexa ID"
+    "alexaId": "Alexa ID",
+    "owner":"Owner",
+    "table":"Table ID"
   },
   "bookTable": {
     "title": "You can invite your friends to lunch or book a table",
@@ -249,7 +252,8 @@
       "tableH": "Table",
       "creationDateH": "Creation date",
       "tableSelect": "Table Selection",
-      "needHelpH": "Help required"
+      "needHelpH": "Help required",
+      "assistantsH":"Guests"
     }
   }
 }

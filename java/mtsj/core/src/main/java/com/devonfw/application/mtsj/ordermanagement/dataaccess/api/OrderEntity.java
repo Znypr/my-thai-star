@@ -209,5 +209,4 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
     this.paid = paid;
   }
 
-
 }

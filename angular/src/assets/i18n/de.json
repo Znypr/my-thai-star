@@ -67,7 +67,7 @@
     "date": "Datum",
     "name": "Name",
     "email": "Email",
-    "assistants": "Tischgäste",
+    "assistants": "Anzahl Gäste",
     "friends": "Freunde",
     "terms": "Bedingungen akzeptieren",
     "dateTime": "Datum und Uhrzeit",
@@ -77,8 +77,11 @@
     "total": "Gesamt",
     "referenceNumber": "Referenznummer",
     "orderStatus": "Status",
+    "paid":"Bezahlt",
     "tableName": "Tisch Name",
-    "alexaId": "Alexa ID"
+    "alexaId": "Alexa ID",
+    "owner":"Eigentümer",
+    "table":"Tisch ID"
   },
   "bookTable": {
     "title": "Du kannst deine Freunde zum Mittagessen einladen oder einen Tisch buchen",
@@ -249,7 +252,8 @@
       "tableH": "Tisch",
       "creationDateH": "Erstelldatum",
       "tableSelect": "Tisch Auswahl",
-      "needHelpH": "Hilfe erforderlich"
+      "needHelpH": "Hilfe erforderlich",
+      "assistantsH":"Gäste"
     }
   }
 }

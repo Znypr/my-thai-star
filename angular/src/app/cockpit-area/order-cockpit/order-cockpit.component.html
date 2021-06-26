@@ -7,18 +7,24 @@
         <div class="formRow">
           <div class="formMobileRow">
             <mat-form-field color="accent" class="searchBy">
-              <input matInput [placeholder]="'formFields.email' | transloco" [(ngModel)]="filters.email" name="email">
+              <input matInput [placeholder]="'formFields.table' | transloco" [(ngModel)]="filters.tableId" name="tableId">
             </mat-form-field>
             <mat-form-field color="accent" class="searchBy">
-              <input matInput [placeholder]="'formFields.referenceNumber' | transloco" [(ngModel)]="filters.bookingToken" name="bookingToken">
+              <input matInput [placeholder]="'formFields.orderStatus' | transloco" [(ngModel)]="filters.orderStatus" name="orderStatus">
+            </mat-form-field>
+            <mat-form-field color="accent" class="searchBy">
+              <input matInput [placeholder]="'formFields.paid' | transloco" [(ngModel)]="filters.paid" name="paid">
             </mat-form-field>
           </div>
           <div class="formDesktopRow">
             <mat-form-field color="accent" class="searchBy">
-              <input matInput [placeholder]="'formFields.email' | transloco" [(ngModel)]="filters.email" name="email">
+              <input matInput [placeholder]="'formFields.table' | transloco" [(ngModel)]="filters.tableId" name="tableId">
             </mat-form-field>
             <mat-form-field color="accent" class="searchBy">
-              <input matInput [placeholder]="'formFields.referenceNumber' | transloco" [(ngModel)]="filters.bookingToken" name="bookingToken">
+              <input matInput [placeholder]="'formFields.orderStatus' | transloco" [(ngModel)]="filters.orderStatus" name="orderStatus">
+            </mat-form-field>
+            <mat-form-field color="accent" class="searchBy">
+              <input matInput [placeholder]="'formFields.paid' | transloco" [(ngModel)]="filters.paid" name="paid">
             </mat-form-field>
           </div>
         </div>
@@ -41,24 +47,24 @@
     <div class="tableContainer">
       <table mat-table [dataSource]="orders" matSort (matSortChange)="sort($event)">
 
+        <!-- Table Column -->
+        <ng-container matColumnDef="booking.tableId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[0].label}} </th>
+          <td mat-cell *matCellDef="let element; let row;" (click)="selected(row)"> {{element.booking.tableId}} </td>
+        </ng-container>
+        
+        <!-- Owner Column -->
+        <ng-container matColumnDef="booking.owner">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[1].label}} </th>
+          <td mat-cell *matCellDef="let element; let row;" (click)="selected(row)"> {{element.booking.name}} </td>
+        </ng-container>
+
         <!-- Date Column -->
         <ng-container matColumnDef="booking.bookingDate">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[0].label}} </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[2].label}} </th>
           <td mat-cell *matCellDef="let element; let row;" (click)="selected(row)"> {{element.booking.bookingDate|amFromUnix|amDateFormat:'lll'}} </td>
         </ng-container>
 
-        <!-- Email Column -->
-        <ng-container matColumnDef="booking.email">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[1].label}} </th>
-          <td mat-cell *matCellDef="let element; let row;" (click)="selected(row)"> {{element.booking.email}} </td>
-        </ng-container>
-
-        <!-- Ref No Column -->
-        <ng-container matColumnDef="booking.bookingToken">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[2].label}} </th>
-          <td mat-cell *matCellDef="let element; let row;" (click)="selected(row)"> {{element.booking.bookingToken}} </td>
-        </ng-container>
-        
         <!-- Payment Column -->
         <ng-container matColumnDef="paid"> 
           <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[3].label}} </th>
@@ -84,7 +90,7 @@
 
         <!-- Edit Column -->
         <ng-container matColumnDef="orderEdit">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columnsb[0].label}} </th>
+          <th mat-header-cell *matHeaderCellDef class="centered"> {{columnsb[0].label}} </th>
           <td mat-cell *matCellDef="let element; let row">
           <button mat-button color="accent" [disabled]="checkIfOpen(element)" (click)="editOrder(row)">{{'buttons.edit' | transloco | uppercase}}</button>
           </td>

@@ -43,9 +43,9 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   columnss: any[];
 
   displayedColumns: string[] = [
+    'booking.tableId',
     'booking.bookingDate',
-    'booking.email',
-    'booking.bookingToken',
+    'booking.owner',
     'paid',
     'orderStatus',
     'orderEdit',
@@ -54,9 +54,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
   pageSizes: number[];
 
   filters: FilterCockpit = {
-    bookingDate: undefined,
-    email: undefined,
-    bookingToken: undefined,
+    tableId: undefined,
     orderStatus: undefined,
     paid: undefined,
   };
@@ -108,9 +106,9 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       .selectTranslateObject('cockpit.table', {}, lang)
       .subscribe((cockpitTable) => {
         this.columns = [
+          { name: 'booking.tableId', label: cockpitTable.tableH },
+          { name: 'booking.owner', label: cockpitTable.ownerH },
           { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
-          { name: 'booking.email', label: cockpitTable.emailH },
-          { name: 'booking.bookingToken', label: cockpitTable.bookingTokenH },
           { name: 'paid', label: cockpitTable.paidH },
           { name: 'orderStatus', label: cockpitTable.orderStatusH },
         ];

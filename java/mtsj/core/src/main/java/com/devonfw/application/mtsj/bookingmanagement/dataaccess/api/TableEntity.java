@@ -51,5 +51,4 @@ public class TableEntity extends ApplicationPersistenceEntity implements Table {
     this.alexaId = id;
   }
 
-
 }

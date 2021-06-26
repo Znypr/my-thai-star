@@ -83,6 +83,14 @@ public interface OrderRepository extends DefaultRepository<OrderEntity> {
     if ((orderStatus != null) && alias.getOrderStatus() != null) {
       query.where(Alias.$(alias.getOrderStatus().toLowerCase()).eq(orderStatus.toLowerCase()));
     }
+    Boolean paid = criteria.getPaid();
+    if ((paid != null) && alias.getPaid() != null) {
+      query.where(Alias.$(alias.getPaid()).eq(paid));
+    }
+    Long tableId = criteria.getTableId();
+    if ((tableId != null) && alias.getBooking().getTable() != null) {
+      query.where(Alias.$(alias.getBooking().getTable().getId()).eq(tableId));
+    }
     
     return QueryUtil.get().findPaginated(criteria.getPageable(), query, true);
   }
