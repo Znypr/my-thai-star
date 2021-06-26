@@ -35,7 +35,7 @@
    </table>
 </div>
 <div class="actionButtons" >
-  <button mat-button mat-dialog-close (click)="deleteUser(data.id)" color="warn">{{'buttons.delete' | transloco | uppercase}}</button>
+  <button mat-button mat-dialog-close (click)="deleteUser(data.id)" color="warn" [disabled]="isDisabled(data.userRoleId)">{{'buttons.delete' | transloco | uppercase}}</button>
   <button mat-button (click)="sendPasswordResetMail(data.id)" color="secondary">{{'cockpit.userDialog.reset' | transloco | uppercase}}</button>
 </div>
 <div class="align-right actionButtons">

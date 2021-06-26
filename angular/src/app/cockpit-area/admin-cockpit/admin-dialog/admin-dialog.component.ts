@@ -40,10 +40,10 @@ export class AdminDialogComponent implements OnInit {
 
   constructor(
     private snackBarService: SnackBarService,
+    private translocoService: TranslocoService,
     private adminCockpitService: AdminCockpitService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
     private configService: ConfigService,
-    private translocoService: TranslocoService,
   ) {
     this.data = dialogData;
     this.pageSizes = this.configService.getValues().pageSizesDialog;
@@ -93,6 +93,11 @@ export class AdminDialogComponent implements OnInit {
   sendPasswordResetMail(userId: number){
     this.adminCockpitService.sendPasswordResetMail(userId).subscribe();
     this.snackBarService.openSnack(this.translocoService.translate('alerts.resetPassword.notification'), 3000, 'green');
+  }
+
+  isDisabled(role: any) : boolean {
+    // true if user is manager
+    return role == 2;
   }
 
   ngOnDestroy() {

@@ -1,4 +1,4 @@
-<form (ngSubmit)="getUserInput($event)" #filterForm="ngForm">
+<form (ngSubmit)="getUserInput($event)" #filterForm>
   <div>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
@@ -10,13 +10,13 @@
           <!-- username column -->
           <mat-form-field class="searchBy">
             <mat-label>{{ columns[0].label }}</mat-label>
-            <input id="Username" name="username" matInput ngModel required="required" />
+            <input id="Username" matInput ngModel required="required" />
           </mat-form-field>
 
           <!-- email column -->
           <mat-form-field class="searchBy" required="required">
             <mat-label>{{ columns[1].label }}</mat-label>
-            <input id="Email" type="email" name="email" matInput ngModel [email]="true" required="required" />
+            <input id="Email" type="email"matInput ngModel [email]="true" required="required" />
             <mat-error id="EmailError">
               Please enter a valid email address
             </mat-error>
@@ -26,8 +26,8 @@
           <mat-form-field class="searchBy">
             <mat-label>{{ columns[2].label }}</mat-label>
             <select matNativeControl id="Role">
-              <option *ngFor="let element of config.roles" [value]="element.permission">
-                {{element.name}}
+              <option *ngFor="let role of roles" [value]="role.permission">
+                {{role.label}}
               </option>
             </select>
           </mat-form-field>
@@ -35,7 +35,7 @@
           <!-- password column -->
           <mat-form-field class="searchBy">
             <mat-label>{{ columns[4].label }}</mat-label>
-            <input required id="Password" name="password" matInput [type]="hide ? 'password' : 'text'" />
+            <input required id="Password" matInput [type]="hide ? 'password' : 'text'" />
             <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
               [attr.aria-pressed]="hide">
               <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
@@ -43,10 +43,7 @@
           </mat-form-field>
 
         </div>
-      
-
       </div>
-
 
       <div class="align-right">
         <button mat-button type="button" color="warn" (click)="clearFilters(filterForm)">

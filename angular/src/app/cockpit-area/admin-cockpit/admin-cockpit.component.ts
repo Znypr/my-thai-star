@@ -14,6 +14,8 @@ import {
 import { AdminDialogComponent } from './admin-dialog/admin-dialog.component';
 import * as config from '../../config'
 import { Title } from '@angular/platform-browser';
+import { FilterFormData } from 'app/menu/components/menu-filters/menu-filters.component';
+import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
 
 
 @Component({
@@ -22,7 +24,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./admin-cockpit.component.scss']
 })
 export class AdminCockpitComponent implements OnInit, OnDestroy {
-  // private translocoSubscription = Subscription.EMPTY;
+
   hide = true;
   config = config.config;
 
@@ -63,6 +65,7 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   
   constructor(
     private dialog: MatDialog,
+    private snackBarService: SnackBarService,
     private translocoService: TranslocoService,
     private adminCockpitService: AdminCockpitService,
     private configService: ConfigService,
@@ -97,33 +100,30 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
           .selectTranslateObject('cockpit.users.roles', {}, lang)
           .subscribe((roles) => {
             this.roles = [
-              { name: 'customer', label: roles.customer },
-            { name: 'waiter', label: roles.waiter },
-            { name: 'manager', label: roles.manager },
-            { name: 'admin', label: roles.admin }
+              { label: roles.customer, permission: 0  },
+              { label: roles.waiter, permission: 1  },
+              { label: roles.manager, permission: 2  },
+              { label: roles.admin, permission: 3  }
           ];
         });
     }
 
-  onButtonClick(token: String){
-    this.adminCockpitService.getUserIdByToken(token).subscribe(
-      (data: any) => {
-        if (!data) {
-          this.resetTokenEntity = [];
-          alert('Hallo');
-        } else {
-          this.resetTokenEntity = data;
-        }
-    });
-  }
-
-  funk(){
-    console.log(this.resetTokenEntity);
-    return true;
-  }
-
-
-
+  // onButtonClick(token: String){
+  //   this.adminCockpitService.getUserIdByToken(token).subscribe(
+  //     (data: any) => {
+  //       if (!data) {
+  //         this.resetTokenEntity = [];
+  //         alert('Hallo');
+  //       } else {
+  //         this.resetTokenEntity = data;
+  //       }
+  //   });
+  // }
+  
+  //   funk(){
+  //   console.log(this.resetTokenEntity);
+  //   return true;
+  // }
   applyFilters(): void {
     this.adminCockpitService
       .getUsers(this.pageable, this.sorting, this.filters)
@@ -139,7 +139,7 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
 
   selected(selection: UserListView): void {
     this.dialog.open(AdminDialogComponent, {
-      width: '60%',
+      width: '50%',
       data: selection,
     });
   }
@@ -158,9 +158,10 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
       },
         err =>
         {
-          this.adminCockpitService.snackBar("E-Mail oder Nutzername schon vergeben", "Ok");
+           this.snackBarService.openSnack(this.translocoService.translate('alerts.createUser.fail'), 3000, 'red');
         });
 
+        this.snackBarService.openSnack(this.translocoService.translate('alerts.createUser.success'), 3000, 'green');
     return responseOfCreation;
   }
     return null;
@@ -172,18 +173,6 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
     this.pagingBar.firstPage();
   }
 
-  disable(filter: any) : boolean {
-    if
-    (
-      filter.username == "" 
-      || filter.email == ""
-      || filter.role == ""
-      || filter.password == ""
-    ) return true;
-      
-    else return false;
-    
-  }
 
   page(pagingEvent: PageEvent): void {
     this.pageable = {

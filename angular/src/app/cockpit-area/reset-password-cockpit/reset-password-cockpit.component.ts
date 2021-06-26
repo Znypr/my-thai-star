@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { TranslocoService } from '@ngneat/transloco';
 import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
+import { PasswordDialogComponent } from 'app/user-area/components/password-dialog/password-dialog.component';
 import { AdminCockpitService } from '../services/admin-cockpit.service';
 
 @Component({
@@ -15,6 +17,8 @@ export class ResetPasswordCockpitComponent implements OnInit {
   userId: number;
   isValid= false;
   resetTokenEntity: any;
+
+  @ViewChild('pagingBar', { static: true }) pagingBar: MatPaginator;
 
   constructor(
     private snackBarService: SnackBarService,
@@ -34,17 +38,6 @@ export class ResetPasswordCockpitComponent implements OnInit {
     );
   }
 
-  getTokenByToken(token: String) {
-    // let id;
-    // this.adminCockpitService.getUserIdByToken(token).subscribe(
-    //   (data: any) => {
-    //     id= data;
-    //   }
-    // );
-    // console.log(id);
-  }
-
-
   changePassword(event: any){
     const info = [
       event.target.Password.value,
@@ -60,9 +53,8 @@ export class ResetPasswordCockpitComponent implements OnInit {
     }
   }
 
-  reset(filters: any) : void {
-    filters.reset();
-
+  reset(form: any) : void {
+    form.reset();
   }
 
 

@@ -59,6 +59,10 @@
     "deleteUser":{
       "success":"User was successfully removed",
       "fail":"User couldn't be removed"
+    },
+    "createUser":{
+      "success":"User successfully created",
+      "fail":"Email or username already exists"
     }
   },
   "formFields": {
