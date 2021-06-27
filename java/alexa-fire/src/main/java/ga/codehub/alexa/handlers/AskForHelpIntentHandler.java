@@ -31,19 +31,20 @@ public class AskForHelpIntentHandler implements RequestHandler {
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
-        String speechText = "";
         AttributesManager attributesManager = input.getAttributesManager();
         Map<String, Object> attributes = attributesManager.getSessionAttributes();
         String bookingToken = (String) attributes.get("bookingToken");
-        String response;
+
+        String speechText = "";
         BasicOperations bo = new BasicOperations();
-        String payload = "";
 
         try {
             bo.basicGET(BASE_URL + "/mythaistar/services/rest/bookingmanagement/v1/booking/help/" + bookingToken);
             speechText = "Ein Kellner wurde benachrichtigt und wird so bald wie moeglich bei dir sein.";
+
         } catch (Different diff){
             speechText = "Ein Kellner wurde benachrichtigt und wird so bald wie moeglich bei dir sein.";
+
         } catch (NotFound | IOException ex) {
             speechText = "Der my-thai-star Server scheint Probleme bei der Verarbeitung deiner Anfrage zu haben.";
         }

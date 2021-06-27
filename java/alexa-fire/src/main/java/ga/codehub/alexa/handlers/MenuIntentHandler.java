@@ -32,49 +32,33 @@ public class MenuIntentHandler implements RequestHandler {
     @Override
     public boolean canHandle(HandlerInput input) {
         return input.matches(intentName("MenuIntent"))
-
                 || input.matches(intentName("FoodIntent")) || input.matches(intentName("DrinkIntent"))
                 || input.matches(intentName("CurryIntent")) || input.matches(intentName("VeganIntent"))
                 || input.matches(intentName("RiceIntent")) || input.matches(intentName("VegetarianIntent"))
                 || input.matches(intentName("StarterIntent")) || input.matches(intentName("DessertIntent"))
-                || input.matches(intentName("NoodleIntent"))
-
-                || input.matches(intentName("SortIntent")) || input.matches(intentName("SearchIntent"))
-                || input.matches(intentName("ChangeDirectionIntent")) || input.matches(intentName("DescriptionIntent"))
-                || input.matches(intentName("MaxPriceIntent"));
+                || input.matches(intentName("NoodleIntent")) || input.matches(intentName("SortIntent"))
+                || input.matches(intentName("SearchIntent")) || input.matches(intentName("ChangeDirectionIntent"))
+                || input.matches(intentName("DescriptionIntent")) || input.matches(intentName("MaxPriceIntent"));
     }
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
-
         AttributesManager attributesManager = input.getAttributesManager();
         Map<String, Object> attributes = attributesManager.getSessionAttributes();
         String speechText = "";
+        String payload = "";
+        String dish_category = "";
+        String property = "\"price\"";
+        String direction = "\"DESC\"";
+        String priceLimit = null;
+        String keyword = "";
+        String extras = "";
 
         try {
-            String payload = "";
-            String dish_category = "";
-            String property = "\"price\"";
-            String direction = "\"DESC\"";
-            String priceLimit = null;
-            String keyword = "";
-            String extras = "";
-
-            // Search Menu
-            if (input.matches(intentName("SearchIntent"))) {
-                Request request = input.getRequestEnvelope().getRequest();
-                IntentRequest intentRequest = (IntentRequest) request;
-                Intent intent = intentRequest.getIntent();
-
-                Map<String, Slot> slotMap = intent.getSlots();
-                if (slotMap.size() != 1) {
-                    throw new AlexaException();
-                }
-                Slot search = slotMap.get("keyword");
-                keyword = search.getValue();
-
-                speechText = "Es wird nach " + keyword + " gesucht. ";
-            }
+            Request request = input.getRequestEnvelope().getRequest();
+            IntentRequest intentRequest = (IntentRequest) request;
+            Intent intent = intentRequest.getIntent();
+            Map<String, Slot> slotMap = intent.getSlots();
 
             // Filter Menu
             if (input.matches(intentName("MenuIntent")))
@@ -108,30 +92,21 @@ public class MenuIntentHandler implements RequestHandler {
                 dish_category = "{\"id\":3}";
 
             if (input.matches(intentName("MaxPriceIntent"))) {
-                Request request = input.getRequestEnvelope().getRequest();
-                IntentRequest intentRequest = (IntentRequest) request;
-                Intent intent = intentRequest.getIntent();
-
-                Map<String, Slot> slotMap = intent.getSlots();
                 if (slotMap.size() != 1) {
                     throw new AlexaException();
                 }
+
                 Slot maxPrice = slotMap.get("maxPrice");
                 priceLimit = maxPrice.getValue();
-
-                speechText = "Der Preis wurde auf " + priceLimit + " Euro eingeschraenkt. ";
+                speechText = "Der Preis wurde auf maximal " + priceLimit + " Euro beschraenkt. ";
             }
 
             // Sort Menu
             if (input.matches(intentName("SortIntent"))) {
-                Request request = input.getRequestEnvelope().getRequest();
-                IntentRequest intentRequest = (IntentRequest) request;
-                Intent intent = intentRequest.getIntent();
-
-                Map<String, Slot> slotMap = intent.getSlots();
                 if ((slotMap.size() != 2) && (slotMap.size() != 1)) {
                     throw new AlexaException();
                 }
+
                 Slot direction_slot = slotMap.get("direction");
                 Slot property_slot = slotMap.get("property");
 
@@ -140,7 +115,6 @@ public class MenuIntentHandler implements RequestHandler {
                         direction = "\"ASC\"";
                     }
                 }
-                attributes.put("currentDirection", direction);
 
                 if (property_slot.getValue().toLowerCase().equals("name")) {
                     property = "\"name\"";
@@ -153,21 +127,32 @@ public class MenuIntentHandler implements RequestHandler {
                 } else if (property_slot.getValue().toLowerCase().equals("preis")) {
                     speechText = "Die Sortierung erfolgt nun nach Preis. ";
                 }
+
                 attributes.put("currentProperty", property);
+                attributes.put("currentDirection", direction);
             }
+
+            // Search Menu
+            if (input.matches(intentName("SearchIntent"))) {
+                if (slotMap.size() != 1) {
+                    throw new AlexaException();
+                }
+
+                Slot search = slotMap.get("keyword");
+                keyword = search.getValue();
+                speechText = "Es wird nach " + keyword + " gesucht. ";
+            }
+
+            // Change the direction of sort
             if (input.matches(intentName("ChangeDirectionIntent"))) {
-                Request request = input.getRequestEnvelope().getRequest();
-                IntentRequest intentRequest = (IntentRequest) request;
-                Intent intent = intentRequest.getIntent();
-
-                Map<String, Slot> slotMap = intent.getSlots();
-
                 if ((slotMap.size() != 1)&&(slotMap.size() != 0)) {
                     throw new AlexaException();
                 }
 
                 Slot direction_slot = slotMap.get("direction");
                 property = attributes.get("currentProperty").toString();
+                direction = attributes.get("currentDirection").toString();
+
                 if (direction_slot.getValue() != null) {
                     if (direction_slot.getValue().toLowerCase().equals("aufsteigend")) {
                         direction = "\"ASC\"";
@@ -176,32 +161,24 @@ public class MenuIntentHandler implements RequestHandler {
                     } else if (direction_slot.getValue().toLowerCase().equals("absteigend")) {
                         speechText = "Die Sortierung erfolgt nun absteigend. ";
                     }
+
                 }else {
-                    direction = attributes.get("currentDirection").toString();
+                    attributes.remove("currentDirection");
                     if(direction.equals("\"ASC\"")){
                         direction = "\"DESC\"";
-                        attributes.remove("currentDirection");
-                        attributes.put("currentDirection", direction);
                         speechText = "Die Sortierung erfolgt nun absteigend. ";
+
                     }else{
                         direction = "\"ASC\"";
-                        attributes.remove("currentDirection");
-                        attributes.put("currentDirection", direction);
                         speechText = "Die Sortierung erfolgt nun aufsteigend. ";
                     }
                 }
 
-
+                attributes.put("currentDirection", direction);
             }
 
             // Read Description
             if (input.matches(intentName("DescriptionIntent"))) {
-                Request request = input.getRequestEnvelope().getRequest();
-                IntentRequest intentRequest = (IntentRequest) request;
-                Intent intent = intentRequest.getIntent();
-
-                Map<String, Slot> slotMap = intent.getSlots();
-
                 if (slotMap.size() != 1) {
                     throw new AlexaException();
                 }
@@ -252,8 +229,7 @@ public class MenuIntentHandler implements RequestHandler {
                 }
 
             } catch (Exception ex) {
-                speechText = "Der my-thai-star Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben. "
-                        + ex.toString();
+                speechText = "Der my-thai-star Server scheint Probleme mit der Verarbeitung Ihrer Anfrage zu haben. Bitte versuchen Sie es nochmal.";
                 throw new AlexaException();
             }
 

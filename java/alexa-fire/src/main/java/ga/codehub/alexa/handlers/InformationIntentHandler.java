@@ -18,12 +18,16 @@ public class InformationIntentHandler implements RequestHandler {
     @Override
     public Optional<Response> handle(HandlerInput input) {
         String speechText = " ";
+
         if(input.matches(intentName("InformationIntent"))) {
             speechText = "Das my-thai-star Restaurant ist ein virtuelles Restaurant der Firma Capgemini. In unserem kleinen, modernen Restaurant koennen Ihre Freunde und Sie gemeinsam bei einem entspannten Abendessen die thailaendische Kueche erleben und geniessen. Wir versuchen stets unserem Motto Mehr als nur leckeres Essen treu zu bleiben und hoffen, dass es Ihnen bei uns gefaellt.";
+
         } else if (input.matches(intentName("OpeningHoursIntent"))){
             speechText = "Das virtuelle my-thai-star Restaurant hat von Dienstag bis Sonntag zwischen 11 Uhr und 23 Uhr geoeffnet.";
+
         } else if (input.matches(intentName("AdressIntent"))){
             speechText = "Die Adresse des my-thai-star Restaurants lautet: Matrix-Straße 42 101010 Magrathea.";
+
         } else if (input.matches(intentName("PaymentIntent"))){
             speechText = "Die folgenden Zahlungsmoeglichkeiten gibt es in unserem Restaurant: Kreditkarte, EC-Karte, Bar, Paypal, Google Pay, Apple Pay, BitCoin.";
         }

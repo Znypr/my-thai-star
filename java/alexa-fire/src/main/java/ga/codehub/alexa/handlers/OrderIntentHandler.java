@@ -28,14 +28,10 @@ public class OrderIntentHandler implements RequestHandler {
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
-
         AttributesManager attributesManager = input.getAttributesManager();
         Map<String, Object> attributes = attributesManager.getSessionAttributes();
 
-        // Booking
         String bookingToken = "";
-
-        // Order
         String dish = "";
         String extras = "";
         String amount = "";
@@ -51,21 +47,23 @@ public class OrderIntentHandler implements RequestHandler {
                 Intent intent = intentRequest.getIntent();
 
                 if(intent.getConfirmationStatus().toString().equals("DENIED")){
-                    /*attributes.put("cancledSlots", intent.getSlots());
-                    attributesManager.setSessionAttributes(attributes);*/
                     speechText = "Die Bestellung wurde abgebrochen. Um die Bestellung neu zu starten, sagen Sie bitte Bestellung taetigen.";
+
                 }else{
                     Map<String, Slot> slotMap = intent.getSlots();
+
                     if (slotMap.size() != 3) {
                         throw new AlexaException();
                     }
-                    Slot amount_s = slotMap.get("amount");
-                    Slot dish_s = slotMap.get("dish");
-                    Slot extras_s = slotMap.get("extras");
 
-                    amount = amount_s.getValue();
-                    dish = dish_s.getValue();
-                    extras = extras_s.getValue();
+                    Slot amountSlot = slotMap.get("amount");
+                    Slot dishSlot = slotMap.get("dish");
+                    Slot extrasSlot = slotMap.get("extras");
+
+                    amount = amountSlot.getValue();
+                    dish = dishSlot.getValue();
+                    extras = extrasSlot.getValue();
+
                     Boolean tofu = (dish.equals("thai green chicken curry") || dish.equals("thai spicy basil fried rice") || dish.equals("thai peanut beef"));
                     Boolean curry = (dish.equals("thai green chicken curry") || dish.equals("thai spicy basil fried rice") || dish.equals("thai thighs fish/prawns") || dish.equals("garlic paradise salad"));
 
@@ -99,43 +97,40 @@ public class OrderIntentHandler implements RequestHandler {
 
                     dishID = getDishIDbyName(dish);
 
-
                     if (dishID == -1) {
                         speechText = "Leider fuehrte die Suche nach dem Gericht zu keinen Ergebnissen. Bitte versuchen Sie eine andere Anfrage.";
 
                     } else {
                         ArrayList<String> orderlines;
                         ArrayList<String> shoppingcart;
-                        if (!attributes.containsKey("orderLines")) {
 
+                        if (!attributes.containsKey("orderLines")) {
                             orderlines = new ArrayList<String>();
                             attributes.put("orderLines", orderlines);
 
                             shoppingcart = new ArrayList<String>();
                             attributes.put("shoppingcart", shoppingcart);
 
-                            String payload_beginning = "{\"booking\":{\"bookingToken\":\"" + bookingToken + "\"},\"orderLines\":[";
-                            String payload_ending = "]}";
+                            String payloadStart = "{\"booking\":{\"bookingToken\":\"" + bookingToken + "\"},\"orderLines\":[";
+                            attributes.put("start", payloadStart);
 
-                            attributes.put("beginning", payload_beginning);
-                            attributes.put("ending", payload_ending);
+                            String payloadEnd = "]}";
+                            attributes.put("end", payloadEnd);
 
                         } else {
                             orderlines = (ArrayList<String>)attributes.get("orderLines");
                             shoppingcart = (ArrayList<String>) attributes.get("shoppingcart");
                         }
 
-
                         orderlines.add("{\"orderLine\":{\"dishId\":" + dishID + ",\"amount\":" + amount + ",\"comment\":\"\"},\"extras\":[" + extrasIds + "]}");
                         shoppingcart.add(dish + ";" + amount + ";" + extras);
-                        speechText = "Das Gericht wurde in den Warenkorb gelegt. Antworten Sie mit Weiteres Gericht hinzufuegen, wenn Sie ein weiteres Gericht hinzufuegen wollen und mit Bestellung absenden, um die Bestellung zu beenden.";
 
+                        speechText = "Das Gericht wurde in den Warenkorb gelegt. Antworten Sie mit Weiteres Gericht hinzufuegen, wenn Sie ein weiteres Gericht hinzufuegen wollen oder mit Bestellung absenden, um die Bestellung zu beenden.";
                     }
                 }
 
             } catch (AlexaException e) {
-                speechText = "Ein Fehler ist aufgetreten...";
-                e.printStackTrace();
+                speechText = "Der my-thai-star Server scheint Probleme mit dem Hinzufuegen Ihrer Bestellung zum Warenkorb zu haben. Bitte versuchen Sie es nochmal.";
             }
 
             return input.getResponseBuilder()
@@ -145,16 +140,12 @@ public class OrderIntentHandler implements RequestHandler {
 
     
         } else {
-            // The user must have invoked this intent before they order.
-            // Trigger the BookingIntent.
-
-            // Create the intent.
             Intent intent = Intent.builder()
                 .withName("BookingIntent")
                 .build();
 
             return input.getResponseBuilder()
-                    .withSpeech("Sie müssen zunächst einen Tisch buchen um Bestellungen zu taetigen. ")
+                    .withSpeech("Sie müssen zunaechst einen Tisch buchen um eine Bestellung taetigen zu koennen. ")
                     .build();     
         }
     }
@@ -162,24 +153,23 @@ public class OrderIntentHandler implements RequestHandler {
 
        
 
-    private Integer getDishIDbyName (String DishName) {
-
-        String payload = "";
+    private Integer getDishIDbyName (String dish) {
+        String payload;
         Integer dishID = -1;
-        try {
 
-            payload = "{\"categories\":[],\"searchBy\":\"" + DishName + "\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,"
+        try {
+            payload = "{\"categories\":[],\"searchBy\":\"" + dish + "\",\"pageable\":{\"pageSize\":8,\"pageNumber\":0,"
                     + "\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
-        
             BasicOperations bo = new BasicOperations();
             Gson gson = new Gson();
             String response;
             ga.codehub.entity.menu.Response resp;
+
             try {
                 response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/dishmanagement/v1/dish/search");
+
                 if (!response.equals("no match")) {
                     resp = gson.fromJson(response, ga.codehub.entity.menu.Response.class);
-
                     dishID = Integer.parseInt(resp.content[0].dish.id);
 
                 } else {
@@ -187,10 +177,10 @@ public class OrderIntentHandler implements RequestHandler {
                 }
 
             } catch (Exception ex) {
-                speechText = "Der my-thai-star Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben. "
-                    + ex.toString();
+                speechText = "Der my-thai-star Server scheint Probleme beim Finden des Gerichts in der Datenbank zu haben. Bitte versuchen Sie es nochmal.";
                 throw new AlexaException();
-             }
+            }
+
         } catch(AlexaException e) {
             e.printStackTrace();
         }

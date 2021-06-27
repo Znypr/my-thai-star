@@ -32,24 +32,26 @@ public class OrderDialogIntentHandler implements RequestHandler {
     public Optional<Response> handle(HandlerInput input) {
         AttributesManager attributesManager = input.getAttributesManager();
         Map<String, Object> attributes = attributesManager.getSessionAttributes();
-
         String speechText = "";
 
         try {
             BasicOperations bo = new BasicOperations();
-            String payload_beginning = (String) attributes.get("beginning");
-            String payload_ending = (String) attributes.get("ending");
+            String payloadStart = (String) attributes.get("start");
+            String payloadEnd = (String) attributes.get("end");
             ArrayList<String> orderlines = (ArrayList<String>) attributes.get("orderLines");
-            String payload = buildPayLoad(orderlines, payload_beginning, payload_ending);
+            String payload = buildPayLoad(orderlines, payloadStart, payloadEnd);
+
             try {
                 bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/ordermanagement/v1/order");     
                 speechText = "Vielen Dank fuer Ihre Bestellung. ";
                 attributes.remove("orderLines");
                 attributes.remove("shoppingcart");
+
             } catch (Exception ex) {
-                speechText = "Der my-thai-star Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben. " + ex.toString();
+                speechText = "Der my-thai-star Server scheint Probleme mit dem Abschließen Ihrer Bestellung zu haben. Bitte versuchen Sie es nochmal.";
                 throw new AlexaException();
             }
+
         } catch (AlexaException e) {
             e.printStackTrace();
         }
@@ -61,19 +63,21 @@ public class OrderDialogIntentHandler implements RequestHandler {
             .build();
     }
 
-    public static String buildPayLoad(ArrayList<String> orderlines, String beginning, String end) {
-
+    public static String buildPayLoad(ArrayList<String> orderlines, String start, String end) {
         Iterator<String> iterator = orderlines.iterator();
-        String payload = beginning;
+        String payload = start;
+
         while(iterator.hasNext()) {
             String orderline = iterator.next();
         
             if(!iterator.hasNext()) {
                 payload += orderline;
+
             } else {
                 payload += orderline + ",";
             }
         }
+
         payload += end;
         return payload;
     }

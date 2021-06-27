@@ -44,7 +44,7 @@ public class LaunchRequestHandler implements RequestHandler {
         return input.getResponseBuilder()
                 .withAskForPermissionsConsentCard(permission)
                 .withSpeech(speechText)
-                .withSimpleCard("My-Thai-Star", speechText)
+                .withSimpleCard("MyThaiStar", speechText)
                 .withReprompt(speechText)
                 .build();
     }

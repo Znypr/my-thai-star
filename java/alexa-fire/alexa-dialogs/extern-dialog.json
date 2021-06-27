@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "mythaistar inhouse",
+            "invocationName": "mythaistar extern",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
@@ -14,6 +14,63 @@
                 {
                     "name": "AMAZON.StopIntent",
                     "samples": []
+                },
+                {
+                    "name": "BookingIntent",
+                    "slots": [
+                        {
+                            "name": "count",
+                            "type": "AMAZON.NUMBER",
+                            "samples": [
+                                "mit {count} leuten",
+                                "mit {count} personen",
+                                "mit {count}",
+                                "{count} leute",
+                                "{count} personen",
+                                "{count}"
+                            ]
+                        },
+                        {
+                            "name": "date",
+                            "type": "AMAZON.DATE",
+                            "samples": [
+                                "{date}"
+                            ]
+                        },
+                        {
+                            "name": "time",
+                            "type": "AMAZON.TIME",
+                            "samples": [
+                                "{time}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "Hätten Sie noch einen Tisch frei für {time}",
+                        "Hätten Sie noch einen Tisch frei für {date}",
+                        "Hätten Sie noch einen Tisch frei für {count}",
+                        "Hätten Sie noch einen Tisch frei für {count} Personen",
+                        "Ich würde gerne mit {count} vorbeikommen",
+                        "Ich würde gerne um {time} vorbeikommen",
+                        "Ich würde gerne {date} vorbeikommen",
+                        "Ich hätte gerne einen Tisch für {date}",
+                        "Ich würde gerne einen Tisch reservieren {count}",
+                        "Ich würde gerne einen Tisch reservieren für {date}",
+                        "Ich hätte gerne einen Tisch am {date}",
+                        "Ich hätte gerne einen Tisch um {time}",
+                        "Ich hätte gerne einen Tisch für {count}",
+                        "Ich hätte gerne einen Tisch für {count} Personen",
+                        "Ich komme {date} mit {count} Personen",
+                        "resevieren einen Tisch für {count}",
+                        "reserviere einen Tisch am {date}",
+                        "reserviere einen Tisch um {time}",
+                        "Können wir gegen {time} kommen",
+                        "Ich brauche einen Tisch für {count}",
+                        "einen Tisch für {count} Personen am {date} um {time}",
+                        "Buche einen Tisch für {count} Personen um {time} am {date}",
+                        "Tisch reservieren",
+                        "Tisch buchen"
+                    ]
                 },
                 {
                     "name": "AMAZON.FallbackIntent",
@@ -295,9 +352,12 @@
                             "name": "property",
                             "type": "SORTCATEGORY",
                             "samples": [
-                                "{property}",
-                                "Nach {property} sortieren",
-                                "Nach {property}"
+                                "Nach Likes sortieren",
+                                "Nach Preis sortieren",
+                                "Nach Name sortieren",
+                                "Nach Likes",
+                                "Nach Preis",
+                                "Nach Name"
                             ]
                         }
                     ],
@@ -409,15 +469,8 @@
                     ]
                 },
                 {
-                    "name": "InhouseOrderIntent",
+                    "name": "OrderIntent",
                     "slots": [
-                        {
-                            "name": "personCount",
-                            "type": "AMAZON.NUMBER",
-                            "samples": [
-                                "{personCount}"
-                            ]
-                        },
                         {
                             "name": "dish",
                             "type": "DISH",
@@ -439,11 +492,11 @@
                             "name": "extras",
                             "type": "EXTRAS",
                             "samples": [
-                                "{extras}",
-                                "Nein {extras}",
-                                "Nein {extras} extra",
+                                "Ja {extras}",
                                 "Ja extra {extras}",
-                                "Ja {extras}"
+                                "Nein {extras} extra",
+                                "Nein {extras}",
+                                "{extras}"
                             ]
                         }
                     ],
@@ -485,7 +538,7 @@
                     ]
                 },
                 {
-                    "name": "InhouseAddOrderIntent",
+                    "name": "AddOrderIntent",
                     "slots": [
                         {
                             "name": "dish",
@@ -506,17 +559,16 @@
                             "name": "extras",
                             "type": "EXTRAS",
                             "samples": [
-                                "{extras}",
-                                "Ja {extras}",
-                                "Ja extra {extras}",
+                                "Nein {extras}",
                                 "Nein {extras} extra",
-                                "Nein {extras}"
+                                "Ja extra {extras}",
+                                "Ja {extras}",
+                                "{extras}"
                             ]
                         }
                     ],
                     "samples": [
-                        "weiteres Gericht hinzufügen",
-                        "weiteres Gericht hinzufuegen"
+                        "weiteres Gericht hinzufügen"
                     ]
                 },
                 {
@@ -577,20 +629,10 @@
                     "name": "PaymentIntent",
                     "slots": [],
                     "samples": [
-                        "Wie kann ich bezahlen",
-                        "Zahlungsmöglichkeiten",
+                        "Mit was kann man bei euch bezahlen",
                         "Bezahlungsmöglichkeiten",
-                        "Mit was kann man bei euch bezahlen"
-                    ]
-                },
-                {
-                    "name": "AskForHelpIntent",
-                    "slots": [],
-                    "samples": [
-                        "Kellner rufen",
-                        "Kellner",
-                        "Sos",
-                        "Ich brauch Hilfe"
+                        "Zahlungsmöglichkeiten",
+                        "Wie kann ich bezahlen"
                     ]
                 }
             ],
@@ -640,22 +682,7 @@
                         },
                         {
                             "name": {
-                                "value": "nichts"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "kein"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "curry und tofu"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "tofu und curry"
+                                "value": "curry"
                             }
                         },
                         {
@@ -665,7 +692,22 @@
                         },
                         {
                             "name": {
-                                "value": "curry"
+                                "value": "tofu und curry"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "curry und tofu"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "kein"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "nichts"
                             }
                         }
                     ]
@@ -675,37 +717,7 @@
                     "values": [
                         {
                             "name": {
-                                "value": "beer"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "tea"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "garlic paradise salad"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "thai thighs prawns"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "thai thighs fish"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "thai thighs fish/prawns"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "thai peanut beef"
+                                "value": "thai green chicken curry"
                             }
                         },
                         {
@@ -715,7 +727,37 @@
                         },
                         {
                             "name": {
-                                "value": "thai green chicken curry"
+                                "value": "thai peanut beef"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "thai thighs fish/prawns"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "thai thighs fish"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "thai thighs prawns"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "garlic paradise salad"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "tea"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "beer"
                             }
                         }
                     ]
@@ -724,6 +766,62 @@
         },
         "dialog": {
             "intents": [
+                {
+                    "name": "BookingIntent",
+                    "confirmationRequired": true,
+                    "prompts": {
+                        "confirmation": "Confirm.Intent.1411906942592"
+                    },
+                    "slots": [
+                        {
+                            "name": "count",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.638601641517.1343819274126"
+                            },
+                            "validations": [
+                                {
+                                    "type": "isGreaterThan",
+                                    "prompt": "Slot.Validation.360857703564.462585299979.1231487673451",
+                                    "value": "0"
+                                },
+                                {
+                                    "type": "isLessThan",
+                                    "prompt": "Slot.Validation.360857703564.462585299979.1213859191672",
+                                    "value": "9"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "date",
+                            "type": "AMAZON.DATE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.638601641517.133236874959"
+                            },
+                            "validations": [
+                                {
+                                    "type": "isInDuration",
+                                    "prompt": "Slot.Validation.576819981600.703301492340.367544748498",
+                                    "start": "P0D",
+                                    "end": ""
+                                }
+                            ]
+                        },
+                        {
+                            "name": "time",
+                            "type": "AMAZON.TIME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.638601641517.1465548728509"
+                            }
+                        }
+                    ]
+                },
                 {
                     "name": "SortIntent",
                     "confirmationRequired": false,
@@ -734,13 +832,7 @@
                             "type": "DIRECTION",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
-                            "prompts": {},
-                            "validations": [
-                                {
-                                    "type": "hasEntityResolutionMatch",
-                                    "prompt": "Slot.Validation.40106577543.240205688221.26334570207"
-                                }
-                            ]
+                            "prompts": {}
                         },
                         {
                             "name": "property",
@@ -749,13 +841,7 @@
                             "elicitationRequired": true,
                             "prompts": {
                                 "elicitation": "Elicit.Slot.844326227827.732129452023"
-                            },
-                            "validations": [
-                                {
-                                    "type": "hasEntityResolutionMatch",
-                                    "prompt": "Slot.Validation.40106577543.1059369757352.1244946423945"
-                                }
-                            ]
+                            }
                         }
                     ]
                 },
@@ -769,13 +855,7 @@
                             "type": "DIRECTION",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
-                            "prompts": {},
-                            "validations": [
-                                {
-                                    "type": "hasEntityResolutionMatch",
-                                    "prompt": "Slot.Validation.1412526711392.973648530072.1150416146371"
-                                }
-                            ]
+                            "prompts": {}
                         }
                     ]
                 },
@@ -795,40 +875,19 @@
                             "validations": [
                                 {
                                     "type": "hasEntityResolutionMatch",
-                                    "prompt": "Slot.Validation.608210041670.42425287859.518119658108"
+                                    "prompt": "Slot.Validation.813531091089.694913599335.373349082431"
                                 }
                             ]
                         }
                     ]
                 },
                 {
-                    "name": "InhouseOrderIntent",
+                    "name": "OrderIntent",
                     "confirmationRequired": true,
                     "prompts": {
-                        "confirmation": "Confirm.Intent.1022729880227"
+                        "confirmation": "Confirm.Intent.106121358168"
                     },
                     "slots": [
-                        {
-                            "name": "personCount",
-                            "type": "AMAZON.NUMBER",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.203293420325.1408036804779"
-                            },
-                            "validations": [
-                                {
-                                    "type": "isLessThan",
-                                    "prompt": "Slot.Validation.370056265903.515989141588.1605169177181",
-                                    "value": "9"
-                                },
-                                {
-                                    "type": "isGreaterThan",
-                                    "prompt": "Slot.Validation.370056265903.515989141588.1531718756986",
-                                    "value": "0"
-                                }
-                            ]
-                        },
                         {
                             "name": "dish",
                             "type": "DISH",
@@ -840,7 +899,7 @@
                             "validations": [
                                 {
                                     "type": "hasEntityResolutionMatch",
-                                    "prompt": "Slot.Validation.370056265903.654044753086.1184866389915"
+                                    "prompt": "Slot.Validation.202067845503.556138476776.961475079334"
                                 }
                             ]
                         },
@@ -866,12 +925,12 @@
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
-                                "elicitation": "Elicit.Slot.423780607981.1388586273407"
+                                "elicitation": "Elicit.Slot.106121358168.180357509052"
                             },
                             "validations": [
                                 {
                                     "type": "hasEntityResolutionMatch",
-                                    "prompt": "Slot.Validation.1231033728737.157759813505.584164566777"
+                                    "prompt": "Slot.Validation.479354537985.945266292800.852807415157"
                                 }
                             ]
                         }
@@ -884,10 +943,10 @@
                     "slots": []
                 },
                 {
-                    "name": "InhouseAddOrderIntent",
+                    "name": "AddOrderIntent",
                     "confirmationRequired": true,
                     "prompts": {
-                        "confirmation": "Confirm.Intent.726226696195"
+                        "confirmation": "Confirm.Intent.1283972123237"
                     },
                     "slots": [
                         {
@@ -897,13 +956,7 @@
                             "elicitationRequired": true,
                             "prompts": {
                                 "elicitation": "Elicit.Slot.882094195472.435909990664"
-                            },
-                            "validations": [
-                                {
-                                    "type": "hasEntityResolutionMatch",
-                                    "prompt": "Slot.Validation.1237631189379.924790567827.928239483702"
-                                }
-                            ]
+                            }
                         },
                         {
                             "name": "amount",
@@ -927,12 +980,12 @@
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
-                                "elicitation": "Elicit.Slot.797222888860.1103454340361"
+                                "elicitation": "Elicit.Slot.1283972123237.1267269640812"
                             },
                             "validations": [
                                 {
                                     "type": "hasEntityResolutionMatch",
-                                    "prompt": "Slot.Validation.1471300670329.364783117251.1091322208765"
+                                    "prompt": "Slot.Validation.479354537985.945266292800.852807415157"
                                 }
                             ]
                         }
@@ -958,6 +1011,33 @@
             "delegationStrategy": "ALWAYS"
         },
         "prompts": [
+            {
+                "id": "Elicit.Slot.638601641517.1343819274126",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Wie viele Personen?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.638601641517.1465548728509",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Um wie viel Uhr?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.638601641517.133236874959",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Welcher Tag?"
+                    }
+                ]
+            },
             {
                 "id": "Elicit.Slot.844326227827.959037062903",
                 "variations": [
@@ -1016,7 +1096,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Bitte geben Sie an, was Sie bestellen moechten."
+                        "value": "Bitte geben Sie an, was Sie bestellen moechten. "
                     }
                 ]
             },
@@ -1102,61 +1182,52 @@
                 ]
             },
             {
-                "id": "Elicit.Slot.203293420325.1408036804779",
+                "id": "Elicit.Slot.106121358168.180357509052",
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Wie viele Personen sitzen an diesem Tisch?"
+                        "value": "Wollen Sie Tofu oder extra Curry, falls fuer das ausgewaehlte Gericht moeglich, zu ihrer Bestellung hinzufuegen?"
                     }
                 ]
             },
             {
-                "id": "Elicit.Slot.423780607981.1388586273407",
+                "id": "Confirm.Intent.1283972123237",
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Wollen Sie Tofu oder extra Curry, falls fuer das ausgewaehlte Gericht möglich, zu ihrer Bestellung hinzufuegen?"
+                        "value": "Es wird {amount} {dish}  zum Warenkorb hinzugefuegt, korrekt?"
                     }
                 ]
             },
             {
-                "id": "Confirm.Intent.423780607981",
+                "id": "Elicit.Slot.1283972123237.1267269640812",
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Es wird {amount} {dish} mit {extras} extra zum Warenkorb hinzugefuegt, korrekt?"
+                        "value": "Wollen Sie Tofu oder extra Curry, falls für das ausgewaehlte Gericht moeglich, zu ihrer Bestellung hinzufuegen?"
                     }
                 ]
             },
             {
-                "id": "Elicit.Slot.797222888860.1103454340361",
+                "id": "Confirm.Intent.106121358168",
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Wollen Sie Tofu oder extra Curry, falls fuer das ausgewaehlte Gericht möglich, zu ihrer Bestellung hinzufuegen?"
+                        "value": "Es wird {amount} {dish} zum Warenkorb hinzugefuegt, korrekt?"
                     }
                 ]
             },
             {
-                "id": "Confirm.Intent.1022729880227",
+                "id": "Slot.Validation.576819981600.703301492340.367544748498",
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Es wird {amount} {dish} mit {extras} extra zum Warenkorb hinzugefuegt, korrekt?"
+                        "value": "Bitte geben Sie ein Datum in der Zukunft an."
                     }
                 ]
             },
             {
-                "id": "Confirm.Intent.726226696195",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Es wird {amount} {dish} mit {extras} extra zum Warenkorb hinzugefuegt, korrekt?"
-                    }
-                ]
-            },
-            {
-                "id": "Slot.Validation.1471300670329.364783117251.1091322208765",
+                "id": "Slot.Validation.479354537985.945266292800.852807415157",
                 "variations": [
                     {
                         "type": "PlainText",
@@ -1165,16 +1236,16 @@
                 ]
             },
             {
-                "id": "Slot.Validation.1231033728737.157759813505.584164566777",
+                "id": "Confirm.Intent.1411906942592",
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Bitte geben Sie ein gueltigen Wert für das Extra ein."
+                        "value": "Es wird ein Tisch für {count} Personen am {date} um {time} gebucht, korrekt?"
                     }
                 ]
             },
             {
-                "id": "Slot.Validation.608210041670.42425287859.518119658108",
+                "id": "Slot.Validation.813531091089.694913599335.373349082431",
                 "variations": [
                     {
                         "type": "PlainText",
@@ -1183,65 +1254,11 @@
                 ]
             },
             {
-                "id": "Slot.Validation.370056265903.654044753086.1184866389915",
+                "id": "Slot.Validation.202067845503.556138476776.961475079334",
                 "variations": [
                     {
                         "type": "PlainText",
                         "value": "Bitte geben Sie ein passendes Gericht an."
-                    }
-                ]
-            },
-            {
-                "id": "Slot.Validation.370056265903.515989141588.1605169177181",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Es duerfen nur maximal acht Personen an einem Tisch sitzen. "
-                    }
-                ]
-            },
-            {
-                "id": "Slot.Validation.370056265903.515989141588.1531718756986",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Sie muessen mindestens eine Person angeben."
-                    }
-                ]
-            },
-            {
-                "id": "Slot.Validation.1237631189379.924790567827.928239483702",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Bitte geben Sie ein passendes Gericht an."
-                    }
-                ]
-            },
-            {
-                "id": "Slot.Validation.40106577543.240205688221.26334570207",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Bitte geben Sie einen gültigen Wert für die Sortierrichtung an."
-                    }
-                ]
-            },
-            {
-                "id": "Slot.Validation.40106577543.1059369757352.1244946423945",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Bitte geben Sie einen gültigen Wert für die Sortierkategorie an."
-                    }
-                ]
-            },
-            {
-                "id": "Slot.Validation.1412526711392.973648530072.1150416146371",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Bitte geben Sie einen gültigen Wert für die Sortierrichtung an."
                     }
                 ]
             }

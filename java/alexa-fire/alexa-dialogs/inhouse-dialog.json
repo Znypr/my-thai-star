@@ -515,8 +515,7 @@
                         }
                     ],
                     "samples": [
-                        "weiteres Gericht hinzufügen",
-                        "weiteres Gericht hinzufuegen"
+                        "weiteres Gericht hinzufügen"
                     ]
                 },
                 {
@@ -590,11 +589,7 @@
                         "Kellner rufen",
                         "Kellner",
                         "Sos",
-                        "Ich brauch Hilfe",
-                        "Ich benötige Hilfe",
-                        "Kellner zur Hilfe holen",
-                        "Ich brauche einen Kellner",
-                        "Hilfestellung"
+                        "Ich brauch Hilfe"
                     ]
                 }
             ],
@@ -1146,7 +1141,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Es wird {amount} {dish} mit {extras} extra zum Warenkorb hinzugefuegt, korrekt?"
+                        "value": "Es wird {amount} {dish}  zum Warenkorb hinzugefuegt, korrekt?"
                     }
                 ]
             },
@@ -1155,7 +1150,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Es wird {amount} {dish} mit {extras} extra zum Warenkorb hinzugefuegt, korrekt?"
+                        "value": "Es wird {amount} {dish} zum Warenkorb hinzugefuegt, korrekt?"
                     }
                 ]
             },
