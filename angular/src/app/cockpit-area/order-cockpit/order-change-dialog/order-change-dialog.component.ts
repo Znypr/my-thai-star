@@ -286,33 +286,22 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   }
 
   deleteOrderline(element: any): void {
+    const orderlines: any[] = [];
 
-    if (this.filteredData.length > 1) {
-      const orderlines: any[] = [];
-
-      for (const orderline of this.datao) {
-        if (orderline != element) { orderlines.push(orderline); }
-      }
-      this.newOrderLines = orderlines;
-      this.updateOrderlines();
-
-
-      this.snackbarServive.openSnack(
-        this.translocoService.translate(
-          'alerts.orderChange.deleteOrderlineSuccess',
-        ),
-        2000,
-        'green',
-      );
-    } else {
-      this.snackbarServive.openSnack(
-        this.translocoService.translate(
-          'alerts.orderChange.deleteOrderlineFail',
-        ),
-        2000,
-        'red',
-      );
+    for (const orderline of this.datao) {
+      if (orderline != element) { orderlines.push(orderline); }
     }
+    this.newOrderLines = orderlines;
+    this.updateOrderlines();
+
+
+    this.snackbarServive.openSnack(
+      this.translocoService.translate(
+        'alerts.orderChange.deleteOrderlineSuccess',
+      ),
+      2000,
+      'green',
+    );
   }
 
   handleExtra(element: any, checked: boolean, extra: String): void {
@@ -386,7 +375,7 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
   }
 
   isLastOrderline(): boolean {
-    if (this.filteredData.length > 1) { return false; }
+    if (this.filteredData.length > 0) { return false; }
     else { return true; }
   }
 

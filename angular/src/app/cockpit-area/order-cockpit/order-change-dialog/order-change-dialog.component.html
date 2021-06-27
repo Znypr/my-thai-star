@@ -88,7 +88,7 @@
     <ng-container matColumnDef="orderlineDelete">
       <th mat-header-cell *matHeaderCellDef class="delteHeader"> {{'buttons.delete' | transloco | uppercase}} </th>
       <td mat-cell *matCellDef="let element; let row" class="deleteData">
-        <button mat-button color="warn" (click)="deleteOrderline(element)" [disabled]="isLastOrderline()">{{'buttons.delete' | transloco | uppercase}}</button>
+        <button mat-button color="warn" (click)="deleteOrderline(element)">{{'buttons.delete' | transloco | uppercase}}</button>
       </td>
     </ng-container>
 
@@ -128,6 +128,6 @@
 <div class="align-right actionButtons">
   <button id="resetButton" mat-button (click)="reset()" color="warn">{{'buttons.reset' | transloco | uppercase}}</button>
   <button mat-button mat-dialog-close color="accent">{{'buttons.cancel' | transloco | uppercase}}</button>
-  <button mat-button (click)="apply()" mat-dialog-close
+  <button mat-button [disabled]="isLastOrderline()" (click)="apply()" mat-dialog-close
           color="accent">{{'buttons.apply' | transloco | uppercase}}</button>
 </div>
