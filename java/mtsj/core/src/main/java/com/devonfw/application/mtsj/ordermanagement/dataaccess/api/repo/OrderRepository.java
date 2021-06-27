@@ -80,8 +80,8 @@ public interface OrderRepository extends DefaultRepository<OrderEntity> {
       query.where(Alias.$(alias.getBooking().getBookingToken()).toLowerCase().eq(bookingToken.toLowerCase()));
     }
     String orderStatus = criteria.getOrderStatus();
-    if ((orderStatus != null) && alias.getOrderStatus() != null) {
-      query.where(Alias.$(alias.getOrderStatus().toLowerCase()).eq(orderStatus.toLowerCase()));
+    if (orderStatus != null) {
+      query.where(Alias.$(alias.getOrderStatus()).eq(orderStatus));
     }
     Boolean paid = criteria.getPaid();
     if ((paid != null) && alias.getPaid() != null) {

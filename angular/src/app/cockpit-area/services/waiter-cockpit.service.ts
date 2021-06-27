@@ -81,14 +81,7 @@ export class WaiterCockpitService {
     let path: string;
     filters.pageable = pageable;
     filters.pageable.sort = sorting;
-    // if (filters.email || filters.bookingToken || filters.orderStatus) {
-    //   path = this.filterOrdersRestPath;
-    // } else {
-    //   delete filters.email;
-    //   delete filters.bookingToken;
-    //   delete filters.orderStatus;
-    //   path = this.getOrdersRestPath;
-    // }
+
     return this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
         this.http.post<OrderResponse[]>(`${restServiceRoot}${this.filterOrdersRestPath}`, filters),

@@ -53,6 +53,8 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
 
   pageSizes: number[];
 
+  test: any;
+
   filters: FilterCockpit = {
     tableId: undefined,
     orderStatus: undefined,
@@ -118,7 +120,7 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       .selectTranslateObject('buttons', {}, lang)
       .subscribe((button) => {
         this.columnsb = [
-          { name: 'orderEdit', label: button.edit },
+          { name: 'orderEdit', label: button.action },
         ];
       });
   }
@@ -141,11 +143,40 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       });
   }
 
+  checkOrderStatus() : string {
+    if(this.filters.orderStatus != undefined)
+      return this.filters.orderStatus;
+    else return "all";
+  }
+
+  checkPaid() : string {
+    if(this.filters.paid != undefined)
+      if(this.filters.paid == true) 
+        return "true";
+      else 
+        return "false";
+    else return "all";
+  }
+
   clearFilters(filters: any): void {
+    this.filters.paid = undefined;
+    this.filters.orderStatus = undefined;
     filters.reset();
     this.applyFilters();
     this.pagingBar.firstPage();
   }
+
+  filterPaid(value: any) : void {
+    if(value == "all")  this.filters.paid = null;
+    else if(value == "true") this.filters.paid = true;
+    else this.filters.paid = false;
+  }
+
+  filterState(value: any) : void {
+    if(value == "all")  this.filters.orderStatus = null;
+    else this.filters.orderStatus = value;
+  }
+
 
   page(pagingEvent: PageEvent): void {
     this.pageable = {

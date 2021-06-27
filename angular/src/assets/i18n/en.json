@@ -18,7 +18,8 @@
     "delete": "Delete",
     "reset": "Reset",
     "edit": "Edit",
-    "help": "Help"
+    "help": "Help",
+    "action":"Action"
   },
   "table": {
     "rowsPage": "Rows per page",
@@ -57,6 +58,9 @@
       "deleteFail": "Table couldn't be removed",
       "addSuccess": "Table added successfully",
       "addFail": "Table couldn't be added"
+    }, 
+    "orderChange": {
+      "reset":"Order edit was reset"
     }
   },
   "formFields": {
@@ -223,7 +227,13 @@
         "open": "Open",
         "preparing": "Preparing",
         "delivered": "Delivered",
-        "cancelled": "Cancelled"
+        "cancelled": "Cancelled",
+        "all":"Alle"
+      },
+      "payment":{
+        "paid":"Paid",
+        "notPaid":"Not Paid",
+        "all": "All"
       }
     },
     "reservations": {

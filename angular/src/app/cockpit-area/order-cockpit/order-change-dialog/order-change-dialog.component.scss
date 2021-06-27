@@ -9,6 +9,21 @@
   justify-content: space-between;
 }
 
+/* Hide scrollbar for IE, Edge add Firefox */
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none; /* Firefox */
+}
+
+.centered {
+  text-align: center;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
 select {
   text-align-last: center;
   height: 40px;

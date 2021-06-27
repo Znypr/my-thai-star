@@ -34,9 +34,9 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
   columnst: any[];
   displayedColumnsT: string[] = [
     'bookingDate',
-    'creationDate',
     'name',
-    'email',
+    'paid',
+    'orderStatus',
     'tableId',
   ];
 
@@ -103,9 +103,9 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
       .subscribe((cockpitTable) => {
         this.columnst = [
           { name: 'bookingDate', label: cockpitTable.reservationDateH },
-          { name: 'creationDate', label: cockpitTable.creationDateH },
           { name: 'name', label: cockpitTable.ownerH },
-          { name: 'email', label: cockpitTable.emailH },
+          { name: 'paid', label: cockpitTable.paidH },
+          { name: 'orderStatus', label: cockpitTable.orderStatusH },
           { name: 'tableId', label: cockpitTable.tableH },
         ];
       });

@@ -16,9 +16,10 @@
     "addComment": "Kommentar hinzufügen",
     "add": "Hinzufügen",
     "delete": "Entfernen",
-     "reset": "Zurücksetzen",
+    "reset": "Zurücksetzen",
     "edit": "Bearbeiten",
-    "help": "Hilfe"
+    "help": "Hilfe",
+    "action":"Aktion"
   },
   "table": {
     "rowsPage": "Zeilen pro Seite",
@@ -57,6 +58,9 @@
       "deleteFail": "Tisch konnte nicht entfernt werden",
       "addSuccess": "Tisch erfolgreich hinzugefügt",
       "addFail": "Tisch konnte nicht hinzugefügt werden"
+    }, 
+    "orderChange": {
+      "reset":"Bestellungsänderung wurde zurückgesetzt"
     }
   },
   "formFields": {
@@ -223,7 +227,13 @@
         "open": "Offen",
         "preparing": "In Zubereitung",
         "delivered": "Geliefert",
-        "cancelled": "Storniert"
+        "cancelled": "Storniert",
+        "all":"All"
+      },
+      "payment":{
+        "paid":"Bezahlt",
+        "notPaid":"Nicht Bezahlt",
+        "all": "Alle"
       }
     },
     "reservations": {

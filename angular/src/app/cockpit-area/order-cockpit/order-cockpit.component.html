@@ -9,23 +9,33 @@
             <mat-form-field color="accent" class="searchBy">
               <input matInput [placeholder]="'formFields.table' | transloco" [(ngModel)]="filters.tableId" name="tableId">
             </mat-form-field>
-            <mat-form-field color="accent" class="searchBy">
-              <input matInput [placeholder]="'formFields.orderStatus' | transloco" [(ngModel)]="filters.orderStatus" name="orderStatus">
-            </mat-form-field>
-            <mat-form-field color="accent" class="searchBy">
-              <input matInput [placeholder]="'formFields.paid' | transloco" [(ngModel)]="filters.paid" name="paid">
-            </mat-form-field>
+            <mat-button-toggle-group class="flex" class="searchBy" (change)="filterState($event.value)" [value]="checkOrderStatus()">
+              <mat-button-toggle class="flexchild" value="all">{{'cockpit.orders.orderStatus.all' | transloco}}</mat-button-toggle>
+              <mat-button-toggle class="flexchild" value="open">{{'cockpit.orders.orderStatus.open' | transloco}}</mat-button-toggle>
+              <mat-button-toggle class="flexchild" value="preparing">{{'cockpit.orders.orderStatus.preparing' | transloco}}</mat-button-toggle>
+              <mat-button-toggle class="flexchild" value="delivered">{{'cockpit.orders.orderStatus.delivered' | transloco}}</mat-button-toggle>
+            </mat-button-toggle-group>
+            <mat-button-toggle-group class="flex" class="searchBy" (change)="filterPaid($event.value)" [value]="checkPaid()">
+              <mat-button-toggle class="flexchild" value="all">{{'cockpit.orders.payment.all' | transloco}}</mat-button-toggle>
+              <mat-button-toggle class="flexchild" value="true">{{'cockpit.orders.payment.paid' | transloco}}</mat-button-toggle>
+              <mat-button-toggle class="flexchild" value="false">{{'cockpit.orders.payment.notPaid' | transloco}}</mat-button-toggle>
+            </mat-button-toggle-group>
           </div>
           <div class="formDesktopRow">
             <mat-form-field color="accent" class="searchBy">
               <input matInput [placeholder]="'formFields.table' | transloco" [(ngModel)]="filters.tableId" name="tableId">
             </mat-form-field>
-            <mat-form-field color="accent" class="searchBy">
-              <input matInput [placeholder]="'formFields.orderStatus' | transloco" [(ngModel)]="filters.orderStatus" name="orderStatus">
-            </mat-form-field>
-            <mat-form-field color="accent" class="searchBy">
-              <input matInput [placeholder]="'formFields.paid' | transloco" [(ngModel)]="filters.paid" name="paid">
-            </mat-form-field>
+            <mat-button-toggle-group class="flex" class="searchBy" (change)="filterState($event.value)" [value]="checkOrderStatus()">
+              <mat-button-toggle class="flexchild" value="all">{{'cockpit.orders.orderStatus.all' | transloco}}</mat-button-toggle>
+              <mat-button-toggle class="flexchild" value="open">{{'cockpit.orders.orderStatus.open' | transloco}}</mat-button-toggle>
+              <mat-button-toggle class="flexchild" value="preparing">{{'cockpit.orders.orderStatus.preparing' | transloco}}</mat-button-toggle>
+              <mat-button-toggle class="flexchild" value="delivered">{{'cockpit.orders.orderStatus.delivered' | transloco}}</mat-button-toggle>
+            </mat-button-toggle-group>
+            <mat-button-toggle-group class="flex" class="searchBy" (change)="filterPaid($event.value)" [value]="checkPaid()">
+              <mat-button-toggle class="flexchild" value="all">{{'cockpit.orders.payment.all' | transloco}}</mat-button-toggle>
+              <mat-button-toggle class="flexchild" value="true">{{'cockpit.orders.payment.paid' | transloco}}</mat-button-toggle>
+              <mat-button-toggle class="flexchild" value="false">{{'cockpit.orders.payment.notPaid' | transloco}}</mat-button-toggle>
+            </mat-button-toggle-group>
           </div>
         </div>
         <div class="align-right">

@@ -86,7 +86,6 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     private snackbarServive: SnackBarService,
   ) {
     this.data = dialogData;
-    console.log(dialogData);
     this.pageSizes = this.configService.getValues().pageSizesDialog;
   }
 
@@ -110,11 +109,12 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
       )
       .subscribe((menu) => {
         this.menu = menu;
-        console.log(this.menu);
       });
   }
 
   ngOnInit(): void {
+    this.translocoService.langChanges$.subscribe((event: any) => {this.setTableHeaders(event)});
+    this.removeComment = false;
 
     this.getMenu({
       sort: {
@@ -134,30 +134,20 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
         favourites: false,
       },
     });
-    console.log(this.menu);
 
     this.dishes$ = this.store.select(fromMenu.getDishes);
     this.store
       .select(fromMenu.getDishes)
       .subscribe((menu) => (this.dishes = menu));
 
-
-    this.translocoService.langChanges$.subscribe((event: any) => {
-      this.setTableHeaders(event);
-    });
-    this.removeComment = false;
-
-    this.totalPrice = this.waiterCockpitService.getTotalPrice(
-      this.data.orderLines,
-    );
-    this.datao = this.waiterCockpitService.orderComposerChange(
-      this.data.orderLines,
-    );
-    this.newOrderLines = this.datao;
     this.datat.push(this.data.booking);
-    this.filter();
+    this.datao = this.waiterCockpitService.orderComposerChange(this.data.orderLines);
+    this.totalPrice = this.waiterCockpitService.getTotalPrice(this.data.orderLines);
 
-    console.log('init: ', this.datao);
+    this.newOrderLines = this.datao;
+    this.filter();
+      
+    console.log('DATAO INIT: ', this.datao);
   }
 
   getPrice(): number {
@@ -226,11 +216,9 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
 
   // tslint:disable-next-line:typedef
   apply() {
-
+    this.updateOrderlines();
     this.waiterCockpitService.saveOrder(this.data).subscribe();
-
     this.filter();
-
   }
 
   getLoadedOrderLineByID(orderLineId: number) : any{
@@ -247,7 +235,6 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
     let newDish: PlateView;
     for (const entry of this.menu) {
       if (entry.id == dishId) {
-        console.log("found !");
         newDish = {
           id: entry.id,
           name: entry.name,
@@ -261,28 +248,21 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
 
   addOrderline(): void {
 
-    console.log(this.dishSelect.value);
     const dish = this.getDishById(this.dishSelect.value);
-
     const orderline: any = {
       orderLine: {amount: 1, comment: '', dishId: dish.id},
       order: null,
       dish,
       extras: [],
     };
-
-    console.log(orderline);
     this.newOrderLines.push(orderline);
-    this.updateOrderlines();
-  }
 
-  updateOrderlines(): void{
     this.datao = this.waiterCockpitService.orderComposerChange(
       this.newOrderLines,
     );
-    this.data.orderLines = this.datao;
     this.filter();
 
+    console.log("DATAO ADD:", this.datao);
   }
 
   deleteOrderline(element: any): void {
@@ -292,17 +272,21 @@ export class OrderChangeDialogComponent implements OnInit, OnDestroy {
       if (orderline != element) { orderlines.push(orderline); }
     }
     this.newOrderLines = orderlines;
-    this.updateOrderlines();
-
-
-    this.snackbarServive.openSnack(
-      this.translocoService.translate(
-        'alerts.orderChange.deleteOrderlineSuccess',
-      ),
-      2000,
-      'green',
+    this.datao = this.waiterCockpitService.orderComposerChange(
+      this.newOrderLines,
     );
+    this.filter();
+
+    console.log("DATAO DELETE:", this.datao);
   }
+
+  updateOrderlines(): void{
+    this.datao = this.waiterCockpitService.orderComposerChange(this.newOrderLines);
+    this.data.orderLines = this.datao;
+    this.filter();
+
+  }
+
 
   handleExtra(element: any, checked: boolean, extra: String): void {
     if (checked) { this.addExtra(element, extra); }

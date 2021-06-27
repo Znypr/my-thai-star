@@ -24,7 +24,7 @@ export class ArchiveDialogComponent implements OnInit, OnDestroy {
   data: any;
   datat: BookingView[] = [];
   columnst: any[];
-  displayedColumnsT: string[] = ['bookingDate', 'creationDate', 'name'];
+  displayedColumnsT: string[] = ['tableId', 'bookingDate', 'paid', 'orderStatus'];
 
   datao: OrderView[] = [];
 
@@ -61,9 +61,10 @@ export class ArchiveDialogComponent implements OnInit, OnDestroy {
       .selectTranslateObject('cockpit.table', {}, lang)
       .subscribe((cockpitTable) => {
         this.columnst = [
+          { name: 'tableId', label: cockpitTable.tableH },
           { name: 'bookingDate', label: cockpitTable.reservationDateH },
-          { name: 'creationDate', label: cockpitTable.creationDateH },
-          { name: 'name', label: cockpitTable.ownerH },
+          { name: 'paid', label: cockpitTable.paidH },
+          { name: 'orderStatus', label: cockpitTable.orderStatusH },
         ];
       });
   }
