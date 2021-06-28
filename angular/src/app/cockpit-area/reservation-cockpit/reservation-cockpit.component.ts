@@ -94,6 +94,14 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
       });
   }
 
+  getGuestAmount(element) : number {
+    let amount = 1;
+    for(let guest of element.invitedGuests) {
+      if(guest.accepted) amount++;
+    }
+    return amount;
+  }
+
   filter(): void {
     this.pageable.pageNumber = 0;
     this.applyFilters();

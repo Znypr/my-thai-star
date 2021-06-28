@@ -20,6 +20,12 @@
   }
 }
 
+/* Hide scrollbar for IE, Edge add Firefox */
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none; /* Firefox */
+}
+
 .formMobileRow {
   flex: 1;
   align-items: center;

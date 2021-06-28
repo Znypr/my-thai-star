@@ -21,12 +21,12 @@
           <!-- Paid Column -->
           <ng-container matColumnDef="paid">
                <th mat-header-cell *matHeaderCellDef class="creationDateHeader"> {{columnst[2].label}} </th>
-               <td mat-cell *matCellDef="let element" class="creationDateData"> {{data.order.paid}} </td>
+               <td mat-cell *matCellDef="let element" class="creationDateData"> {{getTranslationPathPaid(data.order.paid) | transloco}} </td>
           </ng-container>
           <!-- State Column -->
           <ng-container matColumnDef="orderStatus">
                <th mat-header-cell *matHeaderCellDef class="emailHeader"> {{columnst[3].label}} </th>
-               <td mat-cell *matCellDef="let element" class="emailData"> {{data.order.orderStatus}} </td>
+               <td mat-cell *matCellDef="let element" class="emailData">{{getTranslationPathState(data.order.orderStatus) | transloco}} </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumnsT"></tr>

@@ -125,6 +125,22 @@ export class OrderArchiveComponent implements OnInit, OnDestroy {
       });
   }
 
+  getTranslationPathState(orderStatus: string) : string {
+    let path = "cockpit.orders.orderStatus.";
+
+    if(orderStatus == "open") return path += "open";
+    if(orderStatus == "preparing") return path += "preparing";
+    if(orderStatus == "delivered") return path += "delivered";
+    if(orderStatus == "cancelled") return path += "cancelled";
+  }
+
+  getTranslationPathPaid(paid: boolean) : string {
+    let path = "cockpit.orders.payment.";
+
+    if(paid) return path += "yes";
+    else return path += "no";
+  }
+
   clearFilters(filters: any): void {
     this.filters.orderStatus = undefined;
     filters.reset();

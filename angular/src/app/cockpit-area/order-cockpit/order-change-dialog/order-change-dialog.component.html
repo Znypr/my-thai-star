@@ -65,7 +65,7 @@
 
 <div class="flex">
   <span>
-    <mat-form-field>
+    <mat-form-field [floatLabel]="'never'" >
       <mat-select [formControl]="dishSelect" placeholder="{{'cockpit.orders.dialogTable.dishSelection' | transloco }}">
         <mat-option *ngFor="let entry of menu" [value]="entry.id">
           {{entry.name}}

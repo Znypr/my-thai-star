@@ -78,7 +78,7 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[3].label}} </th>
                     <td mat-cell *matCellDef="let element">
                          <mat-form-field [floatLabel]="'never'">
-                         <mat-label>{{element.order.orderStatus}}</mat-label>
+                         <mat-label>{{getTranslationPathState(element.order.orderStatus) | transloco}}</mat-label>
                          <mat-select (selectionChange)="onChange($event.value, element)" [disabled]="checkIfCancelled(element)">
                               <mat-option *ngFor="let status of columnss" [value]="status.name" [disabled]="disableCurrentStatusOption(status.name, element)">
                                    {{status.label}}

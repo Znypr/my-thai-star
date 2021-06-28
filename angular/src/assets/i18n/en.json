@@ -233,7 +233,9 @@
       "payment":{
         "paid":"Paid",
         "notPaid":"Not Paid",
-        "all": "All"
+        "all": "All",
+        "yes":"Yes",
+        "no": "No"
       }
     },
     "reservations": {
@@ -242,7 +244,7 @@
       "dialogTable": {
         "guestEmailH": "Guest email",
         "acceptanceH": "Acceptances and declines",
-        "assistantsH": "Assistants"
+        "assistantsH": "Guests"
       }
     },
     "tables": {
