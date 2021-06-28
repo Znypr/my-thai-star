@@ -26,7 +26,8 @@ const adminCockpitServiceStub = {
   getUsers: jasmine.createSpy('getUsers').and.returnValue(of(userData
 
   )),
-  snackBar: jasmine.createSpy('snackBar').and.returnValue(of("Alle Felder müssen ausgefüllt sein", "verstanden")),
+  snackBar(){return null;},
+  //snackBar: jasmine.createSpy('snackBar').and.returnValue(of("Alle Felder müssen ausgefüllt sein", "verstanden")),
 };
 const mockDialog = {
   open: jasmine.createSpy('dialog.open').and.returnValue({
@@ -41,7 +42,7 @@ class TestBedSetUp {
       declarations: [AdminCockpitComponent],
       providers: [
         { provide: MatDialog, useValue: mockDialog },
-        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: userData },
         { provide: AdminCockpitService, useValue:
           adminCockpitServiceStub
         },
@@ -123,22 +124,24 @@ fdescribe('AdminCockpitComponent', () => {
     //TODO add same user twice
   }));
 
-  //C3 doesn't work
-  it('unsupported email should show error message', async() => {
+  //C3
+  it('unsupported email should show error message', fakeAsync(() => {
     fixture.detectChanges();
 
     const username = el.query(By.css('#Username'));
     const email = el.query(By.css('#Email'));
+    const submit = el.query(By.css('#submitButton'));
+
 
     email.nativeElement.value="test@test";
-    username.nativeElement.click();
+    submit.nativeElement.click();
     fixture.detectChanges();
-    await fixture.whenStable();
+    tick();
 
     // expect(fixture.debugElement.queryAll(By.css("#EmailError")).length).toEqual(1);
-    expect(fixture.debugElement.queryAll(By.css("#EmailError"))[0].nativeElement.innerHTML.trim()).toMatch("Please enter a valid email address");
+    expect(fixture.debugElement.queryAll(By.css("#EmailError"))[0].nativeElement.textContent.trim()).toMatch("Please enter a valid email address");
 
-  });
+  }));
 
   //C4 works
   it('number of roles should be 4', async() => {
@@ -197,9 +200,11 @@ it('should create user with symbols', () => {
   expect(component).toBeTruthy();
 });
 
-//C8 TODO doesn't work yet
-it('should open snackBar if not all fields are provided', async() => {
+//C8
+it('should open snackBar if not all fields are provided', fakeAsync(() => {
   fixture.detectChanges();
+  tick();
+  spyOn(adminCockpitService,'snackBar').and.callThrough();
   expect(adminCockpitService.snackBar).toHaveBeenCalledTimes(0);
   const username = el.query(By.css('#Username'));
   const email = el.query(By.css('#Email'));
@@ -208,24 +213,44 @@ it('should open snackBar if not all fields are provided', async() => {
   const submit = el.query(By.css('#submitButton'));
 
   username.nativeElement.value="Jürgen";
-  click(submit);
+  username.nativeElement.dispatchEvent(new Event('input'));
+  submit.nativeElement.click();
   fixture.detectChanges();
-  await fixture.whenStable();
-
+  tick();
   expect(adminCockpitService.snackBar).toHaveBeenCalledTimes(1);
-});
-//test
-fit('should create a snackbar using our component when the button is clicked', () => {
-    const buttonDe: DebugElement = fixture.debugElement;
-    const buttonEl: HTMLElement = buttonDe.nativeElement;
-    const button = buttonEl.querySelector(
-      'button#compButton'
-    ) as HTMLButtonElement;
-    button.click();
-    fixture.detectChanges();
-    const snackingDiv = document.querySelector('snack-bar-container');
-    expect(snackingDiv).toBeTruthy();
-  });
+}));
+
+
+it('should request adding new user when all credentials are given', fakeAsync(() => {
+  fixture.detectChanges();
+  tick();
+  spyOn(adminCockpitService,'snackBar').and.callThrough();
+  expect(adminCockpitService.snackBar).toHaveBeenCalledTimes(0);
+  // const username = el.query(By.css('#Username'));
+  // const email = el.query(By.css('#Email'));
+  // const role = el.query(By.css('#Role'));
+  // const password = el.query(By.css('#Password'));
+  // const submit = el.query(By.css('#submitButton'));
+
+  const username = fixture.debugElement.nativeElement.querySelector('#Username');
+  const email = fixture.debugElement.nativeElement.querySelector('#Email');
+  const role = fixture.debugElement.nativeElement.querySelector('#Role');
+  const password = fixture.debugElement.nativeElement.querySelector('#Password');
+  const submit = fixture.debugElement.nativeElement.querySelector('#submitButton');
+
+  username.value='Jürgen';
+  username.dispatchEvent(new Event('input'));
+  email.value='jürgen@mail.com';
+  email.dispatchEvent(new Event('input'));
+  password.value='password';
+  password.dispatchEvent(new Event('input'));
+  fixture.detectChanges();
+  tick();
+  submit.click();
+  fixture.detectChanges();
+  tick();
+  expect(adminCockpitService.snackBar).toHaveBeenCalledTimes(0);
+}));
 
 //C9
 it('should show in paginator number of users', async() => {
@@ -239,11 +264,13 @@ it('should show in paginator number of users', async() => {
 //c12 in userarea service
 
 //c14
-it('should open dialog and close after clicking the close button', async() => {
+it('should open dialog after clicking row', fakeAsync(() => {
   fixture.detectChanges();
-  const clearFilter = el.queryAll(By.css('User'));
-  click(clearFilter[0]);
-  await fixture.whenStable();
+  tick();
+  const clearFilter = fixture.debugElement.nativeElement.querySelector('#User');
+  clearFilter.click();
+  fixture.detectChanges();
+  tick();
   expect(dialog.open).toHaveBeenCalled();
   // expect(dialog.open).toHaveBeenCalled();
   // const closeButton = el.queryAll(By.css('#closeButton'));
@@ -251,43 +278,15 @@ it('should open dialog and close after clicking the close button', async() => {
   // await fixture.whenStable();
   // fixture.detectChanges();
   // expect(dialog.open).toBeTruthy();
-});
+}));
 
-//C16
-it('should show a snackBar after user has been deleted', async() => {
-  fixture.detectChanges();
-  spyOn(adminCockpitService, 'snackBar');
-  expect(adminCockpitService.snackBar).toHaveBeenCalledTimes(0);
-  const clearFilter = el.queryAll(By.css('.mat-row'));
-  click(clearFilter[0]);
-  await fixture.whenStable();
-  expect(dialog.open).toHaveBeenCalled();
-  const deleteButton = el.queryAll(By.css('#deleteButton'));
-  click(deleteButton[0]);
-  await fixture.whenStable();
-  fixture.detectChanges();
-  expect(adminCockpitService.snackBar).toHaveBeenCalledTimes(1);
-});
+//C16 in admin-dialog
 
 //C19 in admin-cockpit.service
 
 //C21 in userarea
 
-//C22
-it('should show a snackBar after user has received a reset link', async() => {
-  fixture.detectChanges();
-  spyOn(adminCockpitService, 'snackBar');
-  expect(adminCockpitService.snackBar).toHaveBeenCalledTimes(0);
-  const clearFilter = el.queryAll(By.css('.mat-row'));
-  click(clearFilter[0]);
-  await fixture.whenStable();
-  expect(dialog.open).toHaveBeenCalled();
-  const resetButton = el.queryAll(By.css('#resetButton'));
-  click(resetButton[0]);
-  await fixture.whenStable();
-  fixture.detectChanges();
-  expect(adminCockpitService.snackBar).toHaveBeenCalledTimes(1);
-});
+//C22 in admin-dialog
 
 
 

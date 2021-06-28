@@ -27,7 +27,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 
-fdescribe('AdminCockpitService', () => {
+describe('AdminCockpitService', () => {
   // let service: AdminCockpitService;
   let adminCockpitService: AdminCockpitService;
   let httpTestingController: HttpTestingController;

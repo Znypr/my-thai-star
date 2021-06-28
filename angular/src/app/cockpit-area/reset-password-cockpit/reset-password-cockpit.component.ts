@@ -30,27 +30,17 @@ export class ResetPasswordCockpitComponent implements OnInit {
     );
   }
 
-  getTokenByToken(token: String) {
-    // let id;
-    // this.adminCockpitService.getUserIdByToken(token).subscribe(
-    //   (data: any) => {
-    //     id= data;
-    //   }
-    // );
-    // console.log(id);
-  }
-
-  onButtonClick(token: String){
-    this.adminCockpitService.getUserIdByToken(token).subscribe(
-      (data: any) => {
-        if (!data) {
-          this.resetTokenEntity = [];
-        } else {
-          this.resetTokenEntity = data;
-        }
-    });
-    // console.log(this.entity.content);
-  }
+  // onButtonClick(token: String){
+  //   this.adminCockpitService.getUserIdByToken(token).subscribe(
+  //     (data: any) => {
+  //       if (!data) {
+  //         this.resetTokenEntity = [];
+  //       } else {
+  //         this.resetTokenEntity = data;
+  //       }
+  //   });
+  //   // console.log(this.entity.content);
+  // }
 
   changePassword(event: any){
     const info = [

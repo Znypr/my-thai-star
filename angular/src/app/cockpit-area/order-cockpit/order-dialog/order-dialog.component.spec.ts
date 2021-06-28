@@ -14,7 +14,7 @@ import { dialogOrderDetails } from '../../../../in-memory-test-data/db-order-dia
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-describe('OrderDialogComponent', () => {
+fdescribe('OrderDialogComponent', () => {
   let component: OrderDialogComponent;
   let fixture: ComponentFixture<OrderDialogComponent>;
   let initialState;

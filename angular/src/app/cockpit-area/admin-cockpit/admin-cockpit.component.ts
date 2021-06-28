@@ -101,25 +101,6 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   ]);
 
 
-  onButtonClick(token: String){
-    this.adminCockpitService.getUserIdByToken(token).subscribe(
-      (data: any) => {
-        if (!data) {
-          this.resetTokenEntity = [];
-          alert('Hallo');
-        } else {
-          this.resetTokenEntity = data;
-        }
-    });
-    // console.log(this.entity.content);
-  }
-
-  funk(){
-    console.log(this.resetTokenEntity);
-    return true;
-  }
-
-
 
   applyFilters(): void {
     this.adminCockpitService
@@ -149,6 +130,19 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   // }
 
   // tslint:disable-next-line:typedef
+  // getUserInput(event: any) {
+  //   const info = [
+  //     event.target.Username.value,
+  //     event.target.Email.value,
+  //     event.target.Role.value,
+  //     event.target.Password.value
+  //   ];
+  //   const responseOfCreation = this.adminCockpitService.addUser(info[0], info[1], info[2], info[3]).subscribe(res => {
+  //     this.applyFilters();
+  //   });
+  //   return responseOfCreation;
+  // }
+
   getUserInput(event: any) {
     const info = [
       event.target.Username.value,
@@ -156,10 +150,17 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
       event.target.Role.value,
       event.target.Password.value
     ];
-    const responseOfCreation = this.adminCockpitService.addUser(info[0], info[1], info[2], info[3]).subscribe(res => {
-      this.applyFilters();
-    });
-    return responseOfCreation;
+      if(this.username.valid && this.email.valid && this.password.valid){
+        const responseOfCreation = this.adminCockpitService.addUser(info[0], info[1], info[2], info[3]).subscribe(res => {
+          this.applyFilters();
+        });
+        // this.email.reset();
+        // this.username.reset();
+        // this.password.reset();
+
+        return responseOfCreation;
+      }
+      this.adminCockpitService.snackBar("Alle Felder müssen ausgefüllt sein", "verstanden")
   }
 
 

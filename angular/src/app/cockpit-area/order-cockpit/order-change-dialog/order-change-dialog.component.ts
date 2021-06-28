@@ -2,7 +2,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ConfigService } from '../../../core/config/config.service';
-import {BookingView, DishView, OrderView, PlateView, SaveOrderResponse} from '../../../shared/view-models/interfaces';
+import { BookingView, DishView, OrderView, PlateView, SaveOrderResponse } from '../../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../../services/waiter-cockpit.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';

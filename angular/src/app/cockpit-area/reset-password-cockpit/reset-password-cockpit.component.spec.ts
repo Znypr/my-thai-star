@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from '../../core/core.module';
@@ -13,11 +13,12 @@ import { By } from '@angular/platform-browser';
 import { click } from '../../shared/common/test-utils';
 import { DebugElement } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs/internal/observable/of';
 
 
 
 
-describe('ResetPasswordCockpitComponent', () => {
+fdescribe('ResetPasswordCockpitComponent', () => {
   let component: ResetPasswordCockpitComponent;
   let fixture: ComponentFixture<ResetPasswordCockpitComponent>;
   let adminCockpitService: AdminCockpitService;
@@ -66,30 +67,46 @@ describe('ResetPasswordCockpitComponent', () => {
   });
 
   //C24
-  it('should open a snackBar if passwords are not identical', async() => {
+  it('should open a snackBar if passwords are not identical', fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
     spyOn(adminCockpitService, 'snackBar');
-    const passwordField = el.query(By.css('#Password'));
-    const paswordConfirmField = el.query(By.css('#confirmPassword'));
+    const passwordField = fixture.debugElement.nativeElement.querySelector('#Password');
+    const passwordConfirmField = fixture.debugElement.nativeElement.querySelector('#confirmPassword');
+
+// const password = fixture.debugElement.nativeElement.querySelector('#Password');
+// const submit = fixture.debugElement.nativeElement.querySelector('#submitButton');
+
+
     const button = el.query(By.css('#submitButton'));
 
-    passwordField.nativeElement.value="password";
-    paswordConfirmField.nativeElement.value="password2";
+    passwordField.value="password";
+    passwordField.dispatchEvent(new Event('input'));
+    passwordConfirmField.value="password2";
+    passwordConfirmField.dispatchEvent(new Event('input'));
     button.nativeElement.click();
-    await fixture.whenStable();
+    fixture.detectChanges();
+    tick();
     expect(adminCockpitService.snackBar).toHaveBeenCalled();
-  });
+  }));
 
-  //C26 + C27
-  it('should open a snackBar if passwords are not identical', async() => {
+  // C26 + C27
+  it('should open a snackBar if passwords are not identical', fakeAsync(() => {
+    spyOn(adminCockpitService, 'changePassword').and.returnValue(of(null));
+    fixture.detectChanges();
+    tick();
     spyOn(adminCockpitService, 'snackBar');
-    const passwordField = el.query(By.css('#Password'));
-    const paswordConfirmField = el.query(By.css('#confirmPassword'));
+    const passwordField = fixture.debugElement.nativeElement.querySelector('#Password');
+    const passwordConfirmField = fixture.debugElement.nativeElement.querySelector('#confirmPassword');
     const button = el.query(By.css('#submitButton'));
 
-    passwordField.nativeElement.value="password";
-    paswordConfirmField.nativeElement.value="password";
+    passwordField.value="password";
+    passwordField.dispatchEvent(new Event('input'));
+    passwordConfirmField.value="password";
+    passwordConfirmField.dispatchEvent(new Event('input'));
     button.nativeElement.click();
-    await fixture.whenStable();
+    fixture.detectChanges();
+    tick();
     expect(adminCockpitService.snackBar).toHaveBeenCalled();
-  });
+  }));
 });

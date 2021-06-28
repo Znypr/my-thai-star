@@ -7,7 +7,7 @@ import { ConfigService } from '../../core/config/config.service';
 import { config } from '../../core/config/config';
 import { provideMockStore } from '@ngrx/store/testing';
 
-describe('WaiterCockpitService', () => {
+fdescribe('WaiterCockpitService', () => {
   let initialState;
   beforeEach(() => {
     initialState = { config };

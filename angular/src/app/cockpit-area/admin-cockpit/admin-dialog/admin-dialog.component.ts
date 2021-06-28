@@ -6,6 +6,9 @@ import { ConfigService } from '../../../core/config/config.service';
 import { UserView, UserListView } from '../../../shared/view-models/interfaces';
 import { AdminCockpitService } from '../../services/admin-cockpit.service';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
+import { TranslocoService } from '@ngneat/transloco';
+import * as moment from 'moment';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -16,6 +19,7 @@ import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 export class AdminDialogComponent implements OnInit {
   private fromRow = 0;
   private currentPage = 1;
+  private translocoSubscription = Subscription.EMPTY;
 
   pageSize = 4;
 
@@ -46,6 +50,7 @@ export class AdminDialogComponent implements OnInit {
     private dialog: MatDialog,
     private adminCockpitService: AdminCockpitService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
+    private translocoService: TranslocoService,
     private configService: ConfigService,
 
   ) {
@@ -54,12 +59,7 @@ export class AdminDialogComponent implements OnInit {
   }
 
 
-// You have to subscribe to execute the observable,
-// which initiates the DELETE request
-  deleteUser(userId:number){
-    this.adminCockpitService.deleteUser(userId).subscribe();
-    this.adminCockpitService.reloadPage('/admin');
-  }
+
 
   sendPasswordResetMail(userId: number){
     this.adminCockpitService.sendPasswordResetMail(userId).subscribe(
@@ -77,7 +77,14 @@ export class AdminDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.datat.push(this.data);
-    // this.filter()
+    this.translocoService.langChanges$.subscribe((event: any) => {
+      moment.locale(this.translocoService.getActiveLang());
+    });
   }
+
+    ngOnDestroy(): void {
+      this.translocoSubscription.unsubscribe();
+    }
+    // this.filter()
 
 }
