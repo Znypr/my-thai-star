@@ -1,6 +1,17 @@
 version: '3'
 
 services:
+  database:
+    build: 'database/'
+    restart: always
+    container_name: 'database'
+    image: mysql
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - my-thai-star
   reverse-proxy:
     build: 'reverse-proxy/'
     restart: always
@@ -22,8 +33,6 @@ services:
     restart: always
     container_name: 'mts_java'
     image: my-thai-star/java:latest
-    ports:
-      - '8081:8081'
     networks:
       - my-thai-star
 networks:

@@ -35,8 +35,6 @@ public class SpringBootApp {
    * @param args - arguments
    */
   public static void main(String[] args) {
-    System.out.println("CURRENT VERSION");
-
     if (Arrays.stream(args).anyMatch((String e) -> e.contains("--spring.batch.job.names"))) {
       // if executing batch job, explicitly exit jvm to report error code from batch
       System.exit(SpringApplication.exit(SpringApplication.run(SpringBootApp.class, args)));

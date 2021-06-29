@@ -11,20 +11,20 @@ SET
 -- Schema mydb
 -- -----------------------------------------------------
 -- -----------------------------------------------------
--- Schema bootdb
+-- Schema mythai
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema bootdb
+-- Schema mythai
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `bootdb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+CREATE SCHEMA IF NOT EXISTS `mythai` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE
-`bootdb` ;
+`mythai` ;
 
 -- -----------------------------------------------------
--- Table `bootdb`.`BinaryObject`
+-- Table `mythai`.`BinaryObject`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`BinaryObject`
+CREATE TABLE IF NOT EXISTS `mythai`.`BinaryObject`
 (
     `id`
     BIGINT
@@ -55,9 +55,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`BinaryObject`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`UserRole`
+-- Table `mythai`.`UserRole`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`UserRole`
+CREATE TABLE IF NOT EXISTS `mythai`.`UserRole`
 (
     `id`
     BIGINT
@@ -86,9 +86,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`UserRole`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`User`
+-- Table `mythai`.`User`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`User`
+CREATE TABLE IF NOT EXISTS `mythai`.`User`
 (
     `id`
     BIGINT
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`User`
 (
     `idRole`
 )
-    REFERENCES `bootdb`.`UserRole`
+    REFERENCES `mythai`.`UserRole`
 (
     `id`
 ))
@@ -143,9 +143,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`User`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`Table`
+-- Table `mythai`.`Table`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`Table`
+CREATE TABLE IF NOT EXISTS `mythai`.`Table`
 (
     `id`
     BIGINT
@@ -175,9 +175,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`Table`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`InvitedGuest`
+-- Table `mythai`.`InvitedGuest`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`InvitedGuest`
+CREATE TABLE IF NOT EXISTS `mythai`.`InvitedGuest`
 (
     `id`
     BIGINT
@@ -223,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`InvitedGuest`
 (
     `idOrder`
 )
-    REFERENCES `bootdb`.`Orders`
+    REFERENCES `mythai`.`Orders`
 (
     `id`
 ),
@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`InvitedGuest`
 (
     `idBooking`
 )
-    REFERENCES `bootdb`.`Booking`
+    REFERENCES `mythai`.`Booking`
 (
     `id`
 ))
@@ -242,9 +242,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`InvitedGuest`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`Orders`
+-- Table `mythai`.`Orders`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`Orders`
+CREATE TABLE IF NOT EXISTS `mythai`.`Orders`
 (
     `id`
     BIGINT
@@ -287,7 +287,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`Orders`
 (
     `idBooking`
 )
-    REFERENCES `bootdb`.`Booking`
+    REFERENCES `mythai`.`Booking`
 (
     `id`
 ),
@@ -296,7 +296,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`Orders`
 (
     `idInvitedGuest`
 )
-    REFERENCES `bootdb`.`InvitedGuest`
+    REFERENCES `mythai`.`InvitedGuest`
 (
     `id`
 ),
@@ -305,7 +305,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`Orders`
 (
     `idHost`
 )
-    REFERENCES `bootdb`.`Booking`
+    REFERENCES `mythai`.`Booking`
 (
     `id`
 ))
@@ -315,9 +315,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`Orders`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`Booking`
+-- Table `mythai`.`Booking`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`Booking`
+CREATE TABLE IF NOT EXISTS `mythai`.`Booking`
 (
     `id`
     BIGINT
@@ -394,7 +394,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`Booking`
 (
     `idUser`
 )
-    REFERENCES `bootdb`.`User`
+    REFERENCES `mythai`.`User`
 (
     `id`
 ),
@@ -403,7 +403,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`Booking`
 (
     `idTable`
 )
-    REFERENCES `bootdb`.`Table`
+    REFERENCES `mythai`.`Table`
 (
     `id`
 ),
@@ -412,7 +412,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`Booking`
 (
     `idOrder`
 )
-    REFERENCES `bootdb`.`Orders`
+    REFERENCES `mythai`.`Orders`
 (
     `id`
 ))
@@ -422,9 +422,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`Booking`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`Category`
+-- Table `mythai`.`Category`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`Category`
+CREATE TABLE IF NOT EXISTS `mythai`.`Category`
 (
     `id`
     BIGINT
@@ -454,9 +454,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`Category`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`Image`
+-- Table `mythai`.`Image`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`Image`
+CREATE TABLE IF NOT EXISTS `mythai`.`Image`
 (
     `id`
     BIGINT
@@ -495,9 +495,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`Image`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`Dish`
+-- Table `mythai`.`Dish`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`Dish`
+CREATE TABLE IF NOT EXISTS `mythai`.`Dish`
 (
     `id`
     BIGINT
@@ -510,7 +510,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`Dish`
     `description`
     VARCHAR
 (
-    1500
+    15000
 ) NULL DEFAULT NULL,
     `name` VARCHAR
 (
@@ -535,7 +535,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`Dish`
 (
     `idImage`
 )
-    REFERENCES `bootdb`.`Image`
+    REFERENCES `mythai`.`Image`
 (
     `id`
 ))
@@ -545,9 +545,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`Dish`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`DishCategory`
+-- Table `mythai`.`DishCategory`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`DishCategory`
+CREATE TABLE IF NOT EXISTS `mythai`.`DishCategory`
 (
     `idDish`
     BIGINT
@@ -572,7 +572,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`DishCategory`
 (
     `idDish`
 )
-    REFERENCES `bootdb`.`Dish`
+    REFERENCES `mythai`.`Dish`
 (
     `id`
 ),
@@ -581,7 +581,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`DishCategory`
 (
     `idCategory`
 )
-    REFERENCES `bootdb`.`Category`
+    REFERENCES `mythai`.`Category`
 (
     `id`
 ))
@@ -591,9 +591,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`DishCategory`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`Ingredient`
+-- Table `mythai`.`Ingredient`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`Ingredient`
+CREATE TABLE IF NOT EXISTS `mythai`.`Ingredient`
 (
     `id`
     BIGINT
@@ -627,9 +627,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`Ingredient`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`DishIngredient`
+-- Table `mythai`.`DishIngredient`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`DishIngredient`
+CREATE TABLE IF NOT EXISTS `mythai`.`DishIngredient`
 (
     `idDish`
     BIGINT
@@ -654,7 +654,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`DishIngredient`
 (
     `idIngredient`
 )
-    REFERENCES `bootdb`.`Ingredient`
+    REFERENCES `mythai`.`Ingredient`
 (
     `id`
 ),
@@ -663,7 +663,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`DishIngredient`
 (
     `idDish`
 )
-    REFERENCES `bootdb`.`Dish`
+    REFERENCES `mythai`.`Dish`
 (
     `id`
 ))
@@ -673,9 +673,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`DishIngredient`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`OrderLine`
+-- Table `mythai`.`OrderLine`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`OrderLine`
+CREATE TABLE IF NOT EXISTS `mythai`.`OrderLine`
 (
     `id`
     BIGINT
@@ -714,7 +714,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`OrderLine`
 (
     `idDish`
 )
-    REFERENCES `bootdb`.`Dish`
+    REFERENCES `mythai`.`Dish`
 (
     `id`
 ),
@@ -723,7 +723,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`OrderLine`
 (
     `idOrder`
 )
-    REFERENCES `bootdb`.`Orders`
+    REFERENCES `mythai`.`Orders`
 (
     `id`
 ))
@@ -733,9 +733,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`OrderLine`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`OrderDishExtraIngredient`
+-- Table `mythai`.`OrderDishExtraIngredient`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`OrderDishExtraIngredient`
+CREATE TABLE IF NOT EXISTS `mythai`.`OrderDishExtraIngredient`
 (
     `idOrderLine`
     BIGINT
@@ -760,7 +760,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`OrderDishExtraIngredient`
 (
     `idOrderLine`
 )
-    REFERENCES `bootdb`.`OrderLine`
+    REFERENCES `mythai`.`OrderLine`
 (
     `id`
 ),
@@ -769,7 +769,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`OrderDishExtraIngredient`
 (
     `idIngredient`
 )
-    REFERENCES `bootdb`.`Ingredient`
+    REFERENCES `mythai`.`Ingredient`
 (
     `id`
 ))
@@ -779,9 +779,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`OrderDishExtraIngredient`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`OrderedDishesPerDay`
+-- Table `mythai`.`OrderedDishesPerDay`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`OrderedDishesPerDay`
+CREATE TABLE IF NOT EXISTS `mythai`.`OrderedDishesPerDay`
 (
     `id`
     BIGINT
@@ -820,7 +820,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`OrderedDishesPerDay`
 (
     `idDish`
 )
-    REFERENCES `bootdb`.`Dish`
+    REFERENCES `mythai`.`Dish`
 (
     `id`
 ))
@@ -830,9 +830,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`OrderedDishesPerDay`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`OrderedDishesPerMonth`
+-- Table `mythai`.`OrderedDishesPerMonth`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`OrderedDishesPerMonth`
+CREATE TABLE IF NOT EXISTS `mythai`.`OrderedDishesPerMonth`
 (
     `id`
     BIGINT
@@ -867,7 +867,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`OrderedDishesPerMonth`
 (
     `idDish`
 )
-    REFERENCES `bootdb`.`Dish`
+    REFERENCES `mythai`.`Dish`
 (
     `id`
 ))
@@ -877,9 +877,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`OrderedDishesPerMonth`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`PREDICTION_ALL_FORECAST`
+-- Table `mythai`.`PREDICTION_ALL_FORECAST`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`PREDICTION_ALL_FORECAST`
+CREATE TABLE IF NOT EXISTS `mythai`.`PREDICTION_ALL_FORECAST`
 (
     `id`
     BIGINT
@@ -918,7 +918,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`PREDICTION_ALL_FORECAST`
 (
     `IDDISH`
 )
-    REFERENCES `bootdb`.`Dish`
+    REFERENCES `mythai`.`Dish`
 (
     `id`
 ))
@@ -928,9 +928,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`PREDICTION_ALL_FORECAST`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`PREDICTION_ALL_MODELS`
+-- Table `mythai`.`PREDICTION_ALL_MODELS`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`PREDICTION_ALL_MODELS`
+CREATE TABLE IF NOT EXISTS `mythai`.`PREDICTION_ALL_MODELS`
 (
     `id`
     BIGINT
@@ -959,7 +959,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`PREDICTION_ALL_MODELS`
 (
     `IDDISH`
 )
-    REFERENCES `bootdb`.`Dish`
+    REFERENCES `mythai`.`Dish`
 (
     `id`
 ))
@@ -969,9 +969,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`PREDICTION_ALL_MODELS`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`PREDICTION_FORECAST_DATA`
+-- Table `mythai`.`PREDICTION_FORECAST_DATA`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`PREDICTION_FORECAST_DATA`
+CREATE TABLE IF NOT EXISTS `mythai`.`PREDICTION_FORECAST_DATA`
 (
     `timestamp`
     INT
@@ -996,9 +996,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`PREDICTION_FORECAST_DATA`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`ResetToken`
+-- Table `mythai`.`ResetToken`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`ResetToken`
+CREATE TABLE IF NOT EXISTS `mythai`.`ResetToken`
 (
     `id`
     BIGINT
@@ -1032,9 +1032,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`ResetToken`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`RevInfo`
+-- Table `mythai`.`RevInfo`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`RevInfo`
+CREATE TABLE IF NOT EXISTS `mythai`.`RevInfo`
 (
     `id`
     BIGINT
@@ -1060,9 +1060,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`RevInfo`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`UserFavourite`
+-- Table `mythai`.`UserFavourite`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`UserFavourite`
+CREATE TABLE IF NOT EXISTS `mythai`.`UserFavourite`
 (
     `id`
     BIGINT
@@ -1100,7 +1100,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`UserFavourite`
 (
     `idUser`
 )
-    REFERENCES `bootdb`.`User`
+    REFERENCES `mythai`.`User`
 (
     `id`
 ),
@@ -1109,7 +1109,7 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`UserFavourite`
 (
     `idDish`
 )
-    REFERENCES `bootdb`.`Dish`
+    REFERENCES `mythai`.`Dish`
 (
     `id`
 ))
@@ -1119,9 +1119,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`UserFavourite`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`flyway_schema_history`
+-- Table `mythai`.`flyway_schema_history`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`flyway_schema_history`
+CREATE TABLE IF NOT EXISTS `mythai`.`flyway_schema_history`
 (
     `installed_rank`
     INT
@@ -1169,9 +1169,9 @@ CREATE TABLE IF NOT EXISTS `bootdb`.`flyway_schema_history`
 
 
 -- -----------------------------------------------------
--- Table `bootdb`.`hibernate_sequence`
+-- Table `mythai`.`hibernate_sequence`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bootdb`.`hibernate_sequence`
+CREATE TABLE IF NOT EXISTS `mythai`.`hibernate_sequence`
 (
     `next_val` BIGINT NULL DEFAULT NULL
 )

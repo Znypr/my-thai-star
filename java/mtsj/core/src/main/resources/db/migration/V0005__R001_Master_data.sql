@@ -26,23 +26,23 @@ INSERT INTO ResetToken(id, modificationCounter, idUser, expires, token, flag)
 VALUES (0, 1, 0, DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 10 DAY), 'RT_20210517_74da0febeb981971f39e7620d6e03eb5', false);
 
 
-INSERT INTO bootdb.Table(id, modificationCounter, seatsNumber)
+INSERT INTO mythai.Table(id, modificationCounter, seatsNumber)
 VALUES (0, 1, 4);
-INSERT INTO bootdb.Table(id, modificationCounter, seatsNumber)
+INSERT INTO mythai.Table(id, modificationCounter, seatsNumber)
 VALUES (1, 1, 4);
-INSERT INTO bootdb.Table(id, modificationCounter, seatsNumber)
+INSERT INTO mythai.Table(id, modificationCounter, seatsNumber)
 VALUES (2, 1, 4);
-INSERT INTO bootdb.Table(id, modificationCounter, seatsNumber)
+INSERT INTO mythai.Table(id, modificationCounter, seatsNumber)
 VALUES (3, 1, 4);
-INSERT INTO bootdb.Table(id, modificationCounter, seatsNumber)
+INSERT INTO mythai.Table(id, modificationCounter, seatsNumber)
 VALUES (4, 1, 6);
-INSERT INTO bootdb.Table(id, modificationCounter, seatsNumber)
+INSERT INTO mythai.Table(id, modificationCounter, seatsNumber)
 VALUES (5, 1, 6);
-INSERT INTO bootdb.Table(id, modificationCounter, seatsNumber)
+INSERT INTO mythai.Table(id, modificationCounter, seatsNumber)
 VALUES (6, 1, 6);
-INSERT INTO bootdb.Table(id, modificationCounter, seatsNumber)
+INSERT INTO mythai.Table(id, modificationCounter, seatsNumber)
 VALUES (7, 1, 8);
-INSERT INTO bootdb.Table(id, modificationCounter, seatsNumber)
+INSERT INTO mythai.Table(id, modificationCounter, seatsNumber)
 VALUES (8, 1, 8);
 
 
