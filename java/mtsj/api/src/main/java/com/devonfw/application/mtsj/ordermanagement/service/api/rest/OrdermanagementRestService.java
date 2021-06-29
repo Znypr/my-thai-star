@@ -51,17 +51,6 @@ public interface OrdermanagementRestService {
   @Path("/order/")
   public OrderEto saveOrder(OrderCto cto);
 
-  /**
-   * Delegates to {@link Ordermanagement#changeOrder}.
-   *
-   * @param {@link OrderCto} to be updatesd
-   * @return the recently updated {@link OrderEto}
-   */
-  @POST
-  @Path("/order/change/")
-  public OrderEto changeOrder(OrderCto order);
-
-
     /**
      * Delegates to {@link Ordermanagement#updateOrderStatus}.
      *
@@ -115,25 +104,6 @@ public interface OrdermanagementRestService {
   @GET
   @Path("/orderline/{id}/")
   public OrderLineEto getOrderLine(@PathParam("id") long id);
-
-  /**
-   * Delegates to {@link Ordermanagement#saveOrderLine}.
-   *
-   * @param orderline the {@link OrderLineEto} to be saved
-   * @return the recently created {@link OrderLineEto}
-   */
-  @POST
-  @Path("/orderline/")
-  public OrderLineEto saveOrderLine(OrderLineEto orderline);
-
-  /**
-   * Delegates to {@link Ordermanagement#deleteOrderLine}.
-   *
-   * @param id ID of the {@link OrderLineEto} to be deleted
-   */
-  @DELETE
-  @Path("/orderline/{id}/")
-  public void deleteOrderLine(@PathParam("id") long id);
 
     /**
      * Delegates to {@link Ordermanagement#}.

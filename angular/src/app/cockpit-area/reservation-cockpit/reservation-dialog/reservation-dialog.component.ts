@@ -97,6 +97,14 @@ export class ReservationDialogComponent implements OnInit {
       });
   }
 
+  getGuestAmount(element) : number {
+    let amount = 1;
+    for(let guest of element.invitedGuests) {
+      if(guest.accepted) amount++;
+    }
+    return amount;
+  }
+
   page(pagingEvent: PageEvent): void {
     this.fromRow = pagingEvent.pageSize * pagingEvent.pageIndex;
     this.currentPage = pagingEvent.pageIndex + 1;

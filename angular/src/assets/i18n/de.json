@@ -16,9 +16,10 @@
     "addComment": "Kommentar hinzufügen",
     "add": "Hinzufügen",
     "delete": "Entfernen",
-     "reset": "Zurücksetzen",
+    "reset": "Zurücksetzen",
     "edit": "Bearbeiten",
-    "help": "Hilfe"
+    "help": "Hilfe",
+    "action":"Aktion"
   },
   "table": {
     "rowsPage": "Zeilen pro Seite",
@@ -57,6 +58,9 @@
       "deleteFail": "Tisch konnte nicht entfernt werden",
       "addSuccess": "Tisch erfolgreich hinzugefügt",
       "addFail": "Tisch konnte nicht hinzugefügt werden"
+    }, 
+    "orderChange": {
+      "reset":"Bestellungsänderung wurde zurückgesetzt"
     }
   },
   "formFields": {
@@ -67,7 +71,7 @@
     "date": "Datum",
     "name": "Name",
     "email": "Email",
-    "assistants": "Tischgäste",
+    "assistants": "Anzahl Gäste",
     "friends": "Freunde",
     "terms": "Bedingungen akzeptieren",
     "dateTime": "Datum und Uhrzeit",
@@ -77,8 +81,11 @@
     "total": "Gesamt",
     "referenceNumber": "Referenznummer",
     "orderStatus": "Status",
+    "paid":"Bezahlt",
     "tableName": "Tisch Name",
-    "alexaId": "Alexa ID"
+    "alexaId": "Alexa ID",
+    "owner":"Eigentümer",
+    "table":"Tisch ID"
   },
   "bookTable": {
     "title": "Du kannst deine Freunde zum Mittagessen einladen oder einen Tisch buchen",
@@ -220,7 +227,15 @@
         "open": "Offen",
         "preparing": "In Zubereitung",
         "delivered": "Geliefert",
-        "cancelled": "Storniert"
+        "cancelled": "Storniert",
+        "all":"Alle"
+      },
+      "payment":{
+        "paid":"Bezahlt",
+        "notPaid":"Nicht Bezahlt",
+        "all": "Alle",
+        "yes":"Ja",
+        "no": "Nein"
       }
     },
     "reservations": {
@@ -229,7 +244,7 @@
       "dialogTable": {
         "guestEmailH": "Gäste email",
         "acceptanceH": "Zusagen und Absagen",
-        "assistantsH": "Teilnehmer"
+        "assistantsH": "Gäste"
       }
     },
     "tables": {
@@ -249,7 +264,8 @@
       "tableH": "Tisch",
       "creationDateH": "Erstelldatum",
       "tableSelect": "Tisch Auswahl",
-      "needHelpH": "Hilfe erforderlich"
+      "needHelpH": "Hilfe erforderlich",
+      "assistantsH":"Gäste"
     }
   }
 }

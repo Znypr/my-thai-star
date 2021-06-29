@@ -1,27 +1,32 @@
 <div class="heading">
      <h3 mat-dialog-title>{{'cockpit.orders.dialogTitle' | transloco}} : {{data.booking.bookingToken}} </h3>
-     <h3 mat-dialog-title>{{'cockpit.table.paidH' | transloco}} : {{data.order.paid}}</h3>
-     <h3 mat-dialog-title>{{'cockpit.table.orderStatusH' | transloco}} : {{this.data.order.orderStatus}}</h3>
 </div>
 <mat-divider></mat-divider>
 <div class="tableContainer">
      <table mat-table [dataSource]="datat">
+
+         <!-- Table Column -->
+          <ng-container matColumnDef="tableId">
+               <th mat-header-cell *matHeaderCellDef class="creationDateHeader"> {{columnst[0].label}} </th>
+               <td mat-cell *matCellDef="let element" class="creationDateData"> {{data.booking.tableId}} </td>
+          </ng-container>
+
           <!-- Reservation Date Column -->
           <ng-container matColumnDef="bookingDate">
-               <th mat-header-cell *matHeaderCellDef> {{columnst[0].label}} </th>
+               <th mat-header-cell *matHeaderCellDef> {{columnst[1].label}} </th>
                <td mat-cell *matCellDef="let element" class="bookingDateData">
                     {{element.bookingDate|amFromUnix|amDateFormat:'lll'}} </td>
           </ng-container>
-          <!-- Creation Date Column -->
-          <ng-container matColumnDef="creationDate">
-               <th mat-header-cell *matHeaderCellDef class="creationDateHeader"> {{columnst[1].label}} </th>
-               <td mat-cell *matCellDef="let element" class="creationDateData">
-                    {{element.creationDate|amFromUnix|amDateFormat:'lll'}} </td>
+
+          <!-- Paid Column -->
+          <ng-container matColumnDef="paid">
+               <th mat-header-cell *matHeaderCellDef class="creationDateHeader"> {{columnst[2].label}} </th>
+               <td mat-cell *matCellDef="let element" class="creationDateData"> {{getTranslationPathPaid(data.order.paid) | transloco}} </td>
           </ng-container>
-          <!-- Owner Column -->
-          <ng-container matColumnDef="name">
-               <th mat-header-cell *matHeaderCellDef class="nameHeader"> {{columnst[2].label}} </th>
-               <td mat-cell *matCellDef="let element" class="nameData"> {{element.name}} </td>
+          <!-- State Column -->
+          <ng-container matColumnDef="orderStatus">
+               <th mat-header-cell *matHeaderCellDef class="emailHeader"> {{columnst[3].label}} </th>
+               <td mat-cell *matCellDef="let element" class="emailData">{{getTranslationPathState(data.order.orderStatus) | transloco}} </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumnsT"></tr>

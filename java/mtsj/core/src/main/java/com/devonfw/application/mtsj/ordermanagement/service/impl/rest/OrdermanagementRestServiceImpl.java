@@ -62,12 +62,6 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
   }
 
   @Override
-  public OrderEto changeOrder(OrderCto order) {
-
-    return this.ordermanagement.changeOrder(order);
-  }
-
-  @Override
   public Page<OrderCto> findOrdersByPost(OrderSearchCriteriaTo searchCriteriaTo) {
 
     return this.ordermanagement.findOrdersByPost(searchCriteriaTo);
@@ -77,18 +71,6 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
   public OrderLineEto getOrderLine(long id) {
 
     return this.ordermanagement.findOrderLine(id);
-  }
-
-  @Override
-  public OrderLineEto saveOrderLine(OrderLineEto orderline) {
-
-    return this.ordermanagement.saveOrderLine(orderline);
-  }
-
-  @Override
-  public void deleteOrderLine(long id) {
-
-    this.ordermanagement.deleteOrderLine(id);
   }
 
   @Override

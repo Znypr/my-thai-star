@@ -7,23 +7,33 @@
                <div class="formRow">
                     <div class="formMobileRow">
                          <mat-form-field color="accent" class="searchBy">
-                              <input matInput [placeholder]="'formFields.email' | transloco" [(ngModel)]="filters.email"
-                                   name="email">
+                              <input matInput [placeholder]="'formFields.table' | transloco" [(ngModel)]="filters.tableId"
+                                   name="tableId">
                          </mat-form-field>
                          <mat-form-field color="accent" class="searchBy">
                               <input matInput [placeholder]="'formFields.referenceNumber' | transloco"
                                    [(ngModel)]="filters.bookingToken" name="bookingToken">
                          </mat-form-field>
+                         <mat-button-toggle-group class="flex" class="searchBy" (change)="filterState($event.value)" [value]="checkOrderStatus()">
+                              <mat-button-toggle class="flexchild" value="all">{{'cockpit.orders.orderStatus.all' | transloco}}</mat-button-toggle>
+                              <mat-button-toggle class="flexchild" value="delivered">{{'cockpit.orders.orderStatus.delivered' | transloco}}</mat-button-toggle>
+                              <mat-button-toggle class="flexchild" value="cancelled">{{'cockpit.orders.orderStatus.cancelled' | transloco}}</mat-button-toggle>
+                         </mat-button-toggle-group>
                     </div>
                     <div class="formDesktopRow">
                          <mat-form-field color="accent" class="searchBy">
-                              <input matInput [placeholder]="'formFields.email' | transloco" [(ngModel)]="filters.email"
-                                   name="email">
+                              <input matInput [placeholder]="'formFields.table' | transloco" [(ngModel)]="filters.tableId"
+                                   name="tableId">
                          </mat-form-field>
                          <mat-form-field color="accent" class="searchBy">
                               <input matInput [placeholder]="'formFields.referenceNumber' | transloco"
                                    [(ngModel)]="filters.bookingToken" name="bookingToken">
                          </mat-form-field>
+                         <mat-button-toggle-group class="flex" class="searchBy" (change)="filterState($event.value)" [value]="checkOrderStatus()">
+                              <mat-button-toggle class="flexchild" value="all">{{'cockpit.orders.orderStatus.all' | transloco}}</mat-button-toggle>
+                              <mat-button-toggle class="flexchild" value="delivered">{{'cockpit.orders.orderStatus.delivered' | transloco}}</mat-button-toggle>
+                              <mat-button-toggle class="flexchild" value="cancelled">{{'cockpit.orders.orderStatus.cancelled' | transloco}}</mat-button-toggle>
+                         </mat-button-toggle-group>
                     </div>
                </div>
                <div class="align-right">
@@ -43,18 +53,18 @@
 
      <div class="tableContainer">
           <table mat-table [dataSource]="orders" matSort (matSortChange)="sort($event)">
+     
+               <!-- Table Column -->
+               <ng-container matColumnDef="booking.tableId">
+                    <th mat-header-cell *matHeaderCellDef class="creationDateHeader"> {{columns[0].label}} </th>
+                    <td mat-cell *matCellDef="let element" class="creationDateData"> {{element.booking.tableId}} </td>
+               </ng-container>
 
                <!-- Date Column -->
                <ng-container matColumnDef="booking.bookingDate">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[0].label}} </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[1].label}} </th>
                     <td mat-cell *matCellDef="let element; let row;" (click)="selected(row)">
                          {{element.booking.bookingDate|amFromUnix|amDateFormat:'lll'}} </td>
-               </ng-container>
-
-               <!-- Email Column -->
-               <ng-container matColumnDef="booking.email">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[1].label}} </th>
-                    <td mat-cell *matCellDef="let element; let row;" (click)="selected(row)"> {{element.booking.email}} </td>
                </ng-container>
 
                <!-- Ref No Column -->
@@ -68,7 +78,7 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columns[3].label}} </th>
                     <td mat-cell *matCellDef="let element">
                          <mat-form-field [floatLabel]="'never'">
-                         <mat-label>{{element.order.orderStatus}}</mat-label>
+                         <mat-label>{{getTranslationPathState(element.order.orderStatus) | transloco}}</mat-label>
                          <mat-select (selectionChange)="onChange($event.value, element)" [disabled]="checkIfCancelled(element)">
                               <mat-option *ngFor="let status of columnss" [value]="status.name" [disabled]="disableCurrentStatusOption(status.name, element)">
                                    {{status.label}}

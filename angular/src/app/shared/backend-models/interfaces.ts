@@ -13,11 +13,13 @@ export class Filter {
 export class FilterCockpit {
   pageable?: Pageable;
   // sort?: Sorting[];
-  bookingDate: string;
-  email: string;
-  bookingToken: number;
+  bookingDate?: string;
+  email?: string;
+  bookingToken?: number;
+  name?: string;
+  tableId?: number;
   orderStatus?: string;
-  paid?: boolean;
+  paid?: boolean
 }
 
 // to filter users in admin-cockpit
