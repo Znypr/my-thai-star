@@ -379,7 +379,9 @@
                         "Sortiere das Menü {direction} nach {property}",
                         "Sortiere das Menü {direction}",
                         "Sortiere das Menü nach {property}",
-                        "Sortiere das Menü"
+                        "Sortiere das Menü",
+                        "Sortier das Menü {direction}",
+                        "Sortier das Menü nach {property}"
                     ]
                 },
                 {
