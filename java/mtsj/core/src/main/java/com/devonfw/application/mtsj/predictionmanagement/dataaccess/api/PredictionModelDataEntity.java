@@ -19,7 +19,7 @@ public class PredictionModelDataEntity extends ApplicationPersistenceEntity impl
 
   private DishEntity dish;
 
-  private String key;
+  private String ID;
 
   private String value;
 
@@ -45,16 +45,16 @@ public class PredictionModelDataEntity extends ApplicationPersistenceEntity impl
     return this.dish.getId();
   }
 
-  // @Id
-  public String getKey() {
+    // @Id
+    public String getID() {
 
-    return this.key;
-  }
+        return this.ID;
+    }
 
-  public void setKey(String key) {
+    public void setID(String key) {
 
-    this.key = key;
-  }
+        this.ID = key;
+    }
 
   public String getValue() {
 

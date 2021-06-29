@@ -3,7 +3,10 @@ package com.devonfw.application.mtsj;
 import java.util.Arrays;
 import java.util.TimeZone;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -32,7 +35,6 @@ public class SpringBootApp {
    * @param args - arguments
    */
   public static void main(String[] args) {
-
     if (Arrays.stream(args).anyMatch((String e) -> e.contains("--spring.batch.job.names"))) {
       // if executing batch job, explicitly exit jvm to report error code from batch
       System.exit(SpringApplication.exit(SpringApplication.run(SpringBootApp.class, args)));
