@@ -30,10 +30,11 @@ public class HelpIntentHandler implements RequestHandler {
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
-        String speechText = "Sie können sich unsere Speisekarte vorlesen lassen und Bestellungen tätigen. Sollten Sie den externen MyThaiStar Skill verwenden, können Sie ebenfalls einen Tisch für unser wunderbares Restaurant buchen. Sollten Sie den inhouse Skill verwenden, können Sie zusätzlich einen Kellner rufen lassen, der Ihnen bei allen weiteren Fragen helfen wird. ";
+        String speechText = "Sie koennen sich unsere Speisekarte vorlesen lassen und Bestellungen taetigen. Sollten Sie den externen my-thai-star Skill verwenden, koennen Sie ebenfalls einen Tisch für unser wunderbares Restaurant buchen. Sollten Sie den inhouse Skill verwenden, können Sie zusaetzlich einen Kellner rufen lassen, der Ihnen bei allen weiteren Fragen helfen wird. ";
+
         return input.getResponseBuilder()
                 .withSpeech(speechText)
-                .withSimpleCard("HelloWorld", speechText)
+                .withSimpleCard("MyThaiStar", speechText)
                 .withReprompt(speechText)
                 .build();
     }

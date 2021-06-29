@@ -22,20 +22,25 @@ public class ShoppingCartIntentHandler implements RequestHandler {
         String speechText = "";
         AttributesManager attributesManager = input.getAttributesManager();
         Map<String, Object> attributes = attributesManager.getSessionAttributes();
+
         if (!attributes.containsKey("orderLines")) {
             speechText = "Ihr Warenkorb ist derzeit leer.";
+
         }else{
+            ArrayList<String> shoppingcart = (ArrayList<String>) attributes.get("shoppingcart");
             speechText = "Ihr Warenkorb beinhaltet derzeit folgende Gerichte: ";
 
-            ArrayList<String> shoppingcart = (ArrayList<String>) attributes.get("shoppingcart");
-            for (String item_s : shoppingcart) {
-                String[] item = item_s.split(";");
-                if ((item[2].equals("nichts")) || item[2].equals("kein")) {
+            for (String itemString : shoppingcart) {
+                String[] item = itemString.split(";");
+
+                if ((item[2].equals("nichts")) || (item[2].equals("kein")) || (item[2].equals("nein"))) {
                     speechText += item[1] + " " + item[0];
+
                 } else {
                     speechText += item[1] + " " + item[0] + " mit extra " + item[2];
                 }
-                if(!item_s.equals(shoppingcart.get(shoppingcart.size() - 1))){
+
+                if(!itemString.equals(shoppingcart.get(shoppingcart.size() - 1))){
                     speechText += ", ";
                 }
             }

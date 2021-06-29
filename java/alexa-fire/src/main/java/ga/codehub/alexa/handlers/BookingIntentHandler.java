@@ -46,19 +46,20 @@ public class BookingIntentHandler implements RequestHandler {
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
-
         AttributesManager attributesManager = input.getAttributesManager();
         Map<String, Object> attributes = attributesManager.getSessionAttributes();
 
         String speechText = "";
         String name = "";
         String userEmail = "";
+
         try {
             try {
                 name = input.getServiceClientFactory().getUpsService().getProfileName();
                 userEmail = input.getServiceClientFactory().getUpsService().getProfileEmail();
+
             } catch (NullPointerException nullp) {
-                speechText = "Deine Alexa braucht zusätzliche Berechtigungen !";
+                speechText = "Das Alexa Geraet verfuegt nicht über die benoetigten Berechtigungen.";
                 throw new AlexaException();
             }
 
@@ -66,49 +67,60 @@ public class BookingIntentHandler implements RequestHandler {
             IntentRequest intentRequest = (IntentRequest) request;
             Intent intent = intentRequest.getIntent();
 
-            Map<String, Slot> slotMap = intent.getSlots();
-            if (slotMap.size() != 3) {
-                throw new AlexaException();
+            if(intent.getConfirmationStatus().toString().equals("DENIED")){
+                speechText = "Die Tischbuchung wurde abgebrochen. Um die Buchung neu zu starten, sagen Sie bitte Tisch buchen.";
+
+            }else {
+                Map<String, Slot> slotMap = intent.getSlots();
+
+                if (slotMap.size() != 3) {
+                    throw new AlexaException();
+                }
+
+                Slot personCountSlot = slotMap.get("count");
+                Slot timeSlot = slotMap.get("time");
+                Slot dateSlot = slotMap.get("date");
+                String date_time;
+
+                try {
+                    date_time = RestDateManager.getDate(dateSlot.getValue() + " " + timeSlot.getValue());
+
+                } catch (ParseException ex) {
+                    speechText = "Der my-thai-star Server scheint Probleme bei der Verarbeitung des Datums zu haben. Bitte versuchen Sie es nochmal.";
+                    throw new AlexaException();
+                }
+
+                ga.codehub.entity.booking.Request myApiRequest = new ga.codehub.entity.booking.Request();
+                myApiRequest.booking = new Booking();
+                myApiRequest.booking.email = userEmail;
+                myApiRequest.booking.assistants = personCountSlot.getValue();
+                myApiRequest.booking.bookingDate = date_time;
+                myApiRequest.booking.name = name;
+
+                BasicOperations bo = new BasicOperations();
+                Gson gson = new Gson();
+                String payload = gson.toJson(myApiRequest);
+                String response;
+                ga.codehub.entity.booking.Booking resp;
+
+                try {
+                    response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/bookingmanagement/v1/booking");
+
+                } catch (Exception ex) {
+                    speechText = "Der my-thai-star Server scheint Probleme mit dem Buchen Ihres Tischs zu haben. Bitte versuchen Sie es nochmal.";
+                    throw new AlexaException();
+                }
+
+                resp = gson.fromJson(response, ga.codehub.entity.booking.Booking.class);
+                attributes.put("bookingToken", resp.bookingToken);
+                attributesManager.setSessionAttributes(attributes);
+                speechText = "Die Tischbuchung war erfolgreich. Bis bald im my-thai-star Restaurant!";
             }
-            Slot personCount = slotMap.get("count");
-            Slot time = slotMap.get("time");
-            Slot date = slotMap.get("date");
-
-            String date_time;
-            try {
-                date_time = RestDateManager.getDate(date.getValue() + " " + time.getValue());
-            } catch (ParseException ex) {
-                speechText = "Da ist was mit der Zeit schiefgelaufen !";
-                throw new AlexaException();
-            }
-            ga.codehub.entity.booking.Request myApiRequest = new ga.codehub.entity.booking.Request();
-            myApiRequest.booking = new Booking();
-            myApiRequest.booking.email = userEmail;
-            myApiRequest.booking.assistants = personCount.getValue();
-            myApiRequest.booking.bookingDate = date_time;
-            myApiRequest.booking.name = name;
-
-            BasicOperations bo = new BasicOperations();
-            Gson gson = new Gson();
-            String payload = gson.toJson(myApiRequest);
-            String response;
-            ga.codehub.entity.booking.Booking resp;
-            try {
-                response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/bookingmanagement/v1/booking");
-            } catch (Exception ex) {
-                speechText = "Der MyThaiStar-Server scheint Probleme mit der Verarbeitung deiner Anfrage zu haben";
-                throw new AlexaException();
-            }
-
-            resp = gson.fromJson(response, ga.codehub.entity.booking.Booking.class);
-            attributes.put("bookingToken", resp.bookingToken);
-            attributesManager.setSessionAttributes(attributes);
-
-            speechText = "Cool wir sehen uns dann! ";
 
         } catch (AlexaException e) {
             e.printStackTrace();
         }
+
         return input.getResponseBuilder()
                 .withSpeech(speechText)
                 .withSimpleCard("MyThaiStar", speechText)

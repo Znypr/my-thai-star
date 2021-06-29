@@ -33,7 +33,7 @@ public class LaunchRequestHandler implements RequestHandler {
     @Override
     public Optional<Response> handle(HandlerInput input) {
 
-        String speechText = "Willkommen bei My-Thai-Star! Was möchten Sie heute tun?";
+        String speechText = "Willkommen bei my-thai-star! Was moechten Sie heute tun?";
 
         ArrayList<String> permission = new ArrayList<>();
 
@@ -44,7 +44,7 @@ public class LaunchRequestHandler implements RequestHandler {
         return input.getResponseBuilder()
                 .withAskForPermissionsConsentCard(permission)
                 .withSpeech(speechText)
-                .withSimpleCard("My-Thai-Star", speechText)
+                .withSimpleCard("MyThaiStar", speechText)
                 .withReprompt(speechText)
                 .build();
     }
