@@ -12,12 +12,9 @@
   <description>Core of the server for the mtsj application - a simple example using the Open Application Standard Platform for Java (devon4j).</description>
 
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
-    <mts.database.name>h2</mts.database.name>
-    <mts.database.profile>h2mem</mts.database.profile> <!-- profile for spring -->
-    <mts.database.groupId>com.h2database</mts.database.groupId>
-    <mts.database.artifactId>h2</mts.database.artifactId>
-    <mts.database.version>1.4.194</mts.database.version>
   </properties>
 
   <dependencies>
@@ -147,11 +144,6 @@
     </dependency>
 
     <!-- Database -->
-    <dependency>
-      <groupId>${mts.database.groupId}</groupId>
-      <artifactId>${mts.database.artifactId}</artifactId>
-      <version>${mts.database.version}</version>
-    </dependency>
     <dependency>
       <!-- Need for SAP Hana-->
       <groupId>com.sap.cloud.db.jdbc</groupId>
@@ -326,29 +318,5 @@
     </plugins>
   </build>
 
-  <profiles>
-    <profile>
-      <id>hana</id>
-      <properties>
-        <mts.database.name>hana</mts.database.name>
-        <mts.database.profile>hana</mts.database.profile>
-        <mts.database.groupId>com.sap.cloud.db.jdbc</mts.database.groupId>
-        <mts.database.artifactId>ngdbc</mts.database.artifactId>
-        <mts.database.version>2.3.48</mts.database.version>
-      </properties>
-      <build>
-        <resources>
-          <!-- Custom entity mapping for HANA -->
-          <resource>
-            <directory>src/main/resources/db/specific/hana</directory>
-            <includes>
-              <include>orm.xml</include>
-            </includes>
-            <targetPath>META-INF</targetPath>
-          </resource>
-        </resources>
-      </build>
-    </profile>
-  </profiles>
 
 </project>

@@ -14,7 +14,7 @@ import com.devonfw.module.jpa.dataaccess.api.data.DefaultRepository;
  * {@link DefaultRepository} for {@link PredictionModelDataEntity}.
  */
 public interface PredictionModelDataRepository extends DefaultRepository<PredictionModelDataEntity> {
-  @Query("select count(modelData) from PredictionModelDataEntity modelData where modelData.dish.id=:idDish and modelData.key = '_date' and modelData.value = :startDate ")
+  @Query("select count(modelData) from PredictionModelDataEntity modelData where modelData.dish.id=:idDish and modelData.ID = '_date' and modelData.value = :startDate ")
   public int isTrainingNecessary(@Param("idDish") Long idDish, @Param("startDate") String startDate);
 
   @Query("select count(dishEntity) from DishEntity dishEntity")

@@ -41,7 +41,7 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
   /**
    * @return booking
    */
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "idBooking")
   public BookingEntity getBooking() {
 
@@ -59,7 +59,7 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
   /**
    * @return invitedGuest
    */
-  @OneToOne(fetch = FetchType.EAGER)
+  @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "idInvitedGuest")
   public InvitedGuestEntity getInvitedGuest() {
 
@@ -77,7 +77,7 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
   /**
    * @return orderLines
    */
-  @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
   public List<OrderLineEntity> getOrderLines() {
 
     return this.orderLines;
