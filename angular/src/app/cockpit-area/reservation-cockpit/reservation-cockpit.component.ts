@@ -68,7 +68,6 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
 
     this.applyFilters();
 
-
     this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders(event);
       moment.locale(this.translocoService.getActiveLang());

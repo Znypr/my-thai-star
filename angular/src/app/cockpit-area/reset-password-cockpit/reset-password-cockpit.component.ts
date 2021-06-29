@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { TranslocoService } from '@ngneat/transloco';
+import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
+import { PasswordDialogComponent } from 'app/user-area/components/password-dialog/password-dialog.component';
 import { AdminCockpitService } from '../services/admin-cockpit.service';
 
 @Component({
@@ -14,7 +18,11 @@ export class ResetPasswordCockpitComponent implements OnInit {
   isValid= false;
   resetTokenEntity: any;
 
+  @ViewChild('pagingBar', { static: true }) pagingBar: MatPaginator;
+
   constructor(
+    private snackBarService: SnackBarService,
+    private translocoService: TranslocoService,
    private route: ActivatedRoute,
    private router: Router,
    private adminCockpitService: AdminCockpitService
@@ -30,18 +38,6 @@ export class ResetPasswordCockpitComponent implements OnInit {
     );
   }
 
-  // onButtonClick(token: String){
-  //   this.adminCockpitService.getUserIdByToken(token).subscribe(
-  //     (data: any) => {
-  //       if (!data) {
-  //         this.resetTokenEntity = [];
-  //       } else {
-  //         this.resetTokenEntity = data;
-  //       }
-  //   });
-  //   // console.log(this.entity.content);
-  // }
-
   changePassword(event: any){
     const info = [
       event.target.Password.value,
@@ -49,13 +45,17 @@ export class ResetPasswordCockpitComponent implements OnInit {
     ];
     if(info[0]==info[1]){
       this.adminCockpitService.changePassword(this.userId,info[0],this.token).subscribe(
-        () => this.adminCockpitService.snackBar("Passwort wurde geändert","verstanden")
-      );
+        () => this.snackBarService.openSnack(this.translocoService.translate('alerts.resetPassword.success'), 3000, 'green'));
+      
+      this.adminCockpitService.reloadPage('/restaurant');
     } else {
-      this.adminCockpitService.snackBar("Fragen Sie einen neuen Rücksetzlink an", "verstanden");
+      this.snackBarService.openSnack(this.translocoService.translate('alerts.resetPassword.fail'), 3000, 'red');
     }
   }
 
-    // this.route.snapshot.paramMap.get('token');
+  reset(form: any) : void {
+    form.reset();
+  }
+
 
 }

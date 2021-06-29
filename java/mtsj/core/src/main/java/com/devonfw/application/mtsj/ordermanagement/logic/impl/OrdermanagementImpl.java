@@ -215,11 +215,11 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
         ctos.add(cto);
     }
 
-    /**
-     * @param order
-     */
-    @Override
-    public OrderCto updateOrderStatus(OrderEto order) {
+  /**
+   * @param order
+   */
+  @Override
+  public OrderCto updateOrderStatus(OrderEto order) {
 
         System.out.println(order);
         OrderEntity orderEntity = getOrderDao().find(order.getId());
@@ -228,7 +228,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
         LOG.debug("Order with id '{}' has been modified.", resultEntity.getId());
         return getBeanMapper().map(resultEntity, OrderCto.class);
 
-    }
+  }
 
     /**
      * @param order
@@ -243,7 +243,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
         LOG.debug("Order with id '{}' has been modified.", resultEntity.getId());
         return getBeanMapper().map(resultEntity, OrderCto.class);
 
-    }
+  }
 
     @Override
     public List<OrderCto> findOrders(Long idBooking) {

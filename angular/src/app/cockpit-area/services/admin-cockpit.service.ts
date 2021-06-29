@@ -92,10 +92,9 @@ export class AdminCockpitService {
   //   let path = this.addUserRestPath;
   // }
 
-// delete certain user from database by id
+  // delete certain user from database by id
   deleteUser(userId: number): Observable<{}> {
     let path = this.deleteUserRestPath;
-    this._snackBar.open("gelöscht", "verstanden");
     let result= this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
         this.http.delete(`${restServiceRoot}${path}/${userId}`),
@@ -104,7 +103,7 @@ export class AdminCockpitService {
     return result;
   }
 
-// admin can add a user
+  // admin can add a user
   addUser(username: string, email: string, userRoleId: number, password: string) {
     let path = this.addUserRestPath;
     return this.restServiceRoot$.pipe(

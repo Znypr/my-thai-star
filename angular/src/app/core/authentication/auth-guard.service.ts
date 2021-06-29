@@ -35,7 +35,9 @@ export class AuthGuardService implements CanActivate, OnDestroy {
       this.store.select(fromAuth.getLogged),
     ]).pipe(
       map(([role, logged]) => {
-        if (state.url === '/admin' && role === 'ADMIN' && logged) {
+        if ((state.url === '/admin' || state.url === '/orders' ||
+        state.url === '/order-archive' ||
+        state.url === '/reservations') && role === 'ADMIN' && logged) {
           return true;
         }
         if (

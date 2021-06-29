@@ -82,9 +82,9 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       moment.locale(this.translocoService.getActiveLang());
     });
 
-    // setInterval(() => {
-    //   this.applyFilters(); // api call
-    // }, 10000);
+    setInterval(() => {
+      this.applyFilters(); // api call
+    }, 10000);
   }
 
   setOrderStatus(lang: string): void {

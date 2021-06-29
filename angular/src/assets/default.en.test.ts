@@ -29,7 +29,7 @@ export const DefaultENTest = {
     accessError: 'Access denied, please log in first',
     genericError: 'An error has ocurred, please try again later',
     urlError: 'Url not found, please try again',
-    'email confirmations': {
+    emailConfirmations: {
       invitationAccept: 'Invitation succesfully accepted',
       invitationReject: 'Invitation succesfully rejected',
       bookingCancel: 'Booking succesfully cancelled',

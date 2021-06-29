@@ -31,107 +31,98 @@ import com.devonfw.application.mtsj.general.common.impl.security.twofactor.TwoFa
  */
 public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Value("${security.cors.enabled}")
-    boolean corsEnabled = true;
+  @Value("${security.cors.enabled}")
+  boolean corsEnabled = true;
 
-    @Inject
-    private BaseUserDetailsService userDetailsService;
+  @Inject
+  private BaseUserDetailsService userDetailsService;
 
-    @Inject
-    private PasswordEncoder passwordEncoder;
+  @Inject
+  private PasswordEncoder passwordEncoder;
 
-    @Bean
-    public AdvancedDaoAuthenticationProvider advancedDaoAuthenticationProvider() {
+  @Bean
+  public AdvancedDaoAuthenticationProvider advancedDaoAuthenticationProvider() {
 
-        AdvancedDaoAuthenticationProvider authProvider = new AdvancedDaoAuthenticationProvider();
-        authProvider.setPasswordEncoder(this.passwordEncoder);
-        authProvider.setUserDetailsService(this.userDetailsService);
-        return authProvider;
+    AdvancedDaoAuthenticationProvider authProvider = new AdvancedDaoAuthenticationProvider();
+    authProvider.setPasswordEncoder(this.passwordEncoder);
+    authProvider.setUserDetailsService(this.userDetailsService);
+    return authProvider;
+  }
+
+  @Bean
+  public TwoFactorAuthenticationProvider twoFactorAuthenticationProvider() {
+
+    TwoFactorAuthenticationProvider authProvider = new TwoFactorAuthenticationProvider();
+    authProvider.setPasswordEncoder(this.passwordEncoder);
+    return authProvider;
+  }
+
+  @Inject
+  private AdvancedDaoAuthenticationProvider advancedDaoAuthenticationProvider;
+
+  @Inject
+  private TwoFactorAuthenticationProvider twoFactorAuthenticationProvider;
+
+  private CorsFilter getCorsFilter() {
+
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    CorsConfiguration config = new CorsConfiguration();
+    config.setAllowCredentials(true);
+    config.addAllowedOrigin("*");
+    config.addAllowedHeader("*");
+    config.addAllowedMethod("OPTIONS");
+    config.addAllowedMethod("HEAD");
+    config.addAllowedMethod("GET");
+    config.addAllowedMethod("PUT");
+    config.addAllowedMethod("POST");
+    config.addAllowedMethod("DELETE");
+    config.addAllowedMethod("PATCH");
+    source.registerCorsConfiguration("/**", config);
+    return new CorsFilter(source);
+  }
+
+  /**
+   * Configure spring security to enable login with JWT.
+   */
+  @Override
+  public void configure(HttpSecurity http) throws Exception {
+
+    http.headers().frameOptions().disable();
+    String[] unsecuredResources = new String[] { "/login", "/security/**", "/services/rest/login",
+    "/services/rest/logout", "/services/rest/dishmanagement/**", "/services/rest/imagemanagement/**",
+    "/services/rest/ordermanagement/v1/order", "/services/rest/bookingmanagement/v1/booking",
+    "/services/rest/bookingmanagement/v1/booking/cancel/**",
+    "/services/rest/bookingmanagement/v1/invitedguest/accept/**",
+    "/services/rest/bookingmanagement/v1/invitedguest/decline/**",
+    "/services/rest/ordermanagement/v1/order/cancelorder/**",
+    "/services/rest/usermanagement/v1/changePassword",
+    "/services/rest/usermanagement/v1/token/**",
+    "/h2-console/**" };
+
+    http.userDetailsService(this.userDetailsService).csrf().disable().exceptionHandling().and().sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+        .antMatchers(unsecuredResources).permitAll().antMatchers(HttpMethod.POST, "/login").permitAll().anyRequest()
+        .authenticated().and()
+        // verification with OTP are filtered with the TwoFactorFilter
+        .addFilterBefore(new TwoFactorFilter("/verify", authenticationManager(), this.userDetailsService),
+            UsernamePasswordAuthenticationFilter.class)
+        // the api/login requests are filtered with the JWTLoginFilter
+        .addFilterBefore(new JWTLoginFilter("/login", authenticationManager(), this.userDetailsService),
+            UsernamePasswordAuthenticationFilter.class)
+        // other requests are filtered to check the presence of JWT in header
+        .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
+    if (this.corsEnabled) {
+      http.addFilterBefore(getCorsFilter(), CsrfFilter.class);
     }
 
-    @Bean
-    public TwoFactorAuthenticationProvider twoFactorAuthenticationProvider() {
+  }
 
-        TwoFactorAuthenticationProvider authProvider = new TwoFactorAuthenticationProvider();
-        authProvider.setPasswordEncoder(this.passwordEncoder);
-        return authProvider;
-    }
+  @Override
+  @SuppressWarnings("javadoc")
+  public void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-    @Inject
-    private AdvancedDaoAuthenticationProvider advancedDaoAuthenticationProvider;
-
-    @Inject
-    private TwoFactorAuthenticationProvider twoFactorAuthenticationProvider;
-
-    private CorsFilter getCorsFilter() {
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("OPTIONS");
-        config.addAllowedMethod("HEAD");
-        config.addAllowedMethod("GET");
-        config.addAllowedMethod("PUT");
-        config.addAllowedMethod("POST");
-        config.addAllowedMethod("DELETE");
-        config.addAllowedMethod("PATCH");
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
-    }
-
-    /**
-     * Configure spring security to enable login with JWT.
-     */
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-
-        http.headers().frameOptions().disable();
-        String[] unsecuredResources = new String[]{
-                "/login",
-                "/security/**",
-                "/services/rest/login",
-                "/services/rest/logout",
-                "/services/rest/dishmanagement/**",
-                "/services/rest/imagemanagement/**",
-                "/services/rest/ordermanagement/v1/order",
-                "/services/rest/bookingmanagement/v1/booking",
-                "/services/rest/bookingmanagement/v1/booking/update",
-                "/services/rest/bookingmanagement/v1/booking/help/**",
-                "/services/rest/bookingmanagement/v1/booking/dishelp/**",
-                "/services/rest/bookingmanagement/v1/booking/cancel/**",
-                "/services/rest/bookingmanagement/v1/invitedguest/accept/**",
-                "/services/rest/bookingmanagement/v1/invitedguest/decline/**",
-                "/services/rest/ordermanagement/v1/order/cancelorder/**",
-                "/services/rest/usermanagement/v1/changePassword",
-                "/services/rest/usermanagement/v1/token/**",
-                "/h2-console/**"};
-
-        http.userDetailsService(this.userDetailsService).csrf().disable().exceptionHandling().and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-                .antMatchers(unsecuredResources).permitAll().antMatchers(HttpMethod.POST, "/login").permitAll().anyRequest()
-                .authenticated().and()
-                // verification with OTP are filtered with the TwoFactorFilter
-                .addFilterBefore(new TwoFactorFilter("/verify", authenticationManager(), this.userDetailsService),
-                        UsernamePasswordAuthenticationFilter.class)
-                // the api/login requests are filtered with the JWTLoginFilter
-                .addFilterBefore(new JWTLoginFilter("/login", authenticationManager(), this.userDetailsService),
-                        UsernamePasswordAuthenticationFilter.class)
-                // other requests are filtered to check the presence of JWT in header
-                .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-
-        if (this.corsEnabled) {
-            http.addFilterBefore(getCorsFilter(), CsrfFilter.class);
-        }
-
-    }
-
-    @Override
-    @SuppressWarnings("javadoc")
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-        auth.authenticationProvider(this.advancedDaoAuthenticationProvider)
-                .authenticationProvider(this.twoFactorAuthenticationProvider);
-    }
+    auth.authenticationProvider(this.advancedDaoAuthenticationProvider)
+        .authenticationProvider(this.twoFactorAuthenticationProvider);
+  }
 }

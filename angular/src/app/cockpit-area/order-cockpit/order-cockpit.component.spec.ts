@@ -70,6 +70,10 @@ class TestBedSetUp {
       ],
       imports: [
         MatDialogModule,
+<<<<<<< HEAD
+=======
+
+>>>>>>> adminbugs
         BrowserAnimationsModule,
         ReactiveFormsModule,
         getTranslocoModule(),
@@ -129,7 +133,7 @@ fdescribe('OrderCockpitComponent', () => {
     expect(component.totalOrders).toBe(8);
   });
 
-  it('should clear form and reset', fakeAsync(() => {
+  fit('should clear form and reset', fakeAsync(() => {
     const clearFilter = el.query(By.css('.orderClearFilters'));
     click(clearFilter);
     fixture.detectChanges();
@@ -163,6 +167,7 @@ fdescribe('OrderCockpitComponent', () => {
     expect(component.totalOrders).toBe(8);
   }));
 
+<<<<<<< HEAD
   it('should filter the order table on click of submit', fakeAsync(() => {
     fixture.detectChanges();
     const submit = el.query(By.css('.orderApplyFilters'));
@@ -390,6 +395,21 @@ fdescribe('OrderCockpitComponent', () => {
 //
 //   expect(select.textContent).toEqual('preparing');
 // });
+=======
+  //C50
+it('should change status open in prepairing', fakeAsync(() => {
+  fixture.detectChanges();
+  spyOn(component, 'onChange');
+  const row = el.query(By.css('#selectStatus')).nativeElement;
+  row.click();
+  fixture.detectChanges();
+  const selectOptions = el.queryAll(By.css('#optionForStatus'));
+  selectOptions[1].nativeElement.click();
+  fixture.detectChanges();
+  expect(component.onChange).toHaveBeenCalled();
+  flush();
+}));
+>>>>>>> adminbugs
 
 });
 
