@@ -18,7 +18,7 @@
       <th mat-header-cell *matHeaderCellDef class="commentHeader"> {{columnso[1].label}} </th>
       <td mat-cell *matCellDef="let element" class="commentData">
         <mat-form-field color="accent" [floatLabel]="'never'">
-          <input matInput (click)="removeField(element)" (input)="changeComment(element, $event.target.value)" name="extras">{{element.orderLine.comment}}
+          <input matInput (click)="removeField(element)" (input)="changeComment(element, $event.target.value)" name="extras">
         </mat-form-field>
       </td>
     </ng-container>

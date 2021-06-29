@@ -257,50 +257,6 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
         return ctos;
     }
 
-    @Override
-    public OrderEto changeOrder(OrderCto cto) {
-
-        System.out.println("changeOrder::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
-
-        // Process old orderlines
-        OrderEntity order = getOrderDao().find(cto.getOrder().getId());
-        List<OrderLineEntity> orderLines = getOrderLineDao().findOrderLines(order.getId());
-        // List<OrderLineEntity> SavedOrderLines = getOrderLineDao().findOrderLines(order.getId());
-
-        for (OrderLineEntity orderLine : orderLines) {
-            getOrderLineDao().deleteById(orderLine.getId());
-            LOG.debug("Orderline with id '{}' has been deleted.", orderLine.getId());
-        }
-
-        // create new orderline entity
-        // List<OrderLineCto> linesCto = orderlines;
-        List<OrderLineEntity> orderLineEntities = new ArrayList<>();
-        for (OrderLineCto lineCto : cto.getOrderLines()) {
-            OrderLineEntity orderLineEntity = getBeanMapper().map(lineCto, OrderLineEntity.class);
-            orderLineEntity.setExtras(getBeanMapper().mapList(lineCto.getExtras(), IngredientEntity.class));
-            orderLineEntity.setDishId(lineCto.getOrderLine().getDishId());
-            orderLineEntity.setAmount(lineCto.getOrderLine().getAmount());
-            orderLineEntity.setComment(lineCto.getOrderLine().getComment());
-            orderLineEntities.add(orderLineEntity);
-        }
-
-        // String token = order.getBooking().getBookingToken();
-        order.setOrderLines(orderLineEntities);
-        OrderEntity resultOrderEntity = getOrderDao().save(order);
-        LOG.debug("Order with id '{}' has been updated.", resultOrderEntity.getId());
-
-        // set relation
-        for (OrderLineEntity orderLineEntity : orderLineEntities) {
-            orderLineEntity.setOrderId(order.getId());
-            OrderLineEntity resultOrderLine = getOrderLineDao().save(orderLineEntity);
-            LOG.info("OrderLine with id '{}' has been created.", resultOrderLine.getId());
-        }
-
-        // sendOrderConfirmationEmail(token, resultOrderEntity);
-
-        return getBeanMapper().map(order, OrderEto.class);
-    }
-
 
     @Override
     public boolean deleteOrder(Long orderId) {
@@ -400,28 +356,6 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
         Pageable pagResultTo = PageRequest.of(criteria.getPageable().getPageNumber(), orderLinesCto.size());
         Page<OrderLineCto> pagListTo = new PageImpl<>(orderLinesCto, pagResultTo, pagResultTo.getPageSize());
         return pagListTo;
-    }
-
-    @Override
-    public boolean deleteOrderLine(Long orderLineId) {
-
-        OrderLineEntity orderLine = getOrderLineDao().find(orderLineId);
-        getOrderLineDao().delete(orderLine);
-        LOG.debug("The orderLine with id '{}' has been deleted.", orderLineId);
-        return true;
-    }
-
-    @Override
-    public OrderLineEto saveOrderLine(OrderLineEto orderLine) {
-
-        Objects.requireNonNull(orderLine, "orderLine");
-        OrderLineEntity orderLineEntity = getBeanMapper().map(orderLine, OrderLineEntity.class);
-
-        // initialize, validate orderLineEntity here if necessary
-        OrderLineEntity resultEntity = getOrderLineDao().save(orderLineEntity);
-        LOG.debug("OrderLine with id '{}' has been created.", resultEntity.getId());
-
-        return getBeanMapper().map(resultEntity, OrderLineEto.class);
     }
 
     /**

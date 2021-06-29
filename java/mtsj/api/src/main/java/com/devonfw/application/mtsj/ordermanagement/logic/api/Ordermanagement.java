@@ -42,13 +42,6 @@ public interface Ordermanagement {
    */
   OrderCto findOrder(Long id);
 
-  /**
-   * Returns a Order by its id 'id'.
-   *
-   * @param id The id 'id' of the Order.
-   * @return The {@link OrderEto} with id 'id'
-   */
-  OrderEto changeOrder(OrderCto order);
 
   /**
    * Returns a paginated list of Orders matching the search criteria. Needs Authorization.
@@ -131,21 +124,6 @@ public interface Ordermanagement {
   // PaginatedListTo<OrderLineEto> findOrderLineEtos(OrderLineSearchCriteriaTo criteria);
   Page<OrderLineCto> findOrderLineCtos(OrderLineSearchCriteriaTo criteria);
 
-  /**
-   * Deletes a orderLine from the database by its id 'orderLineId'.
-   *
-   * @param orderLineId Id of the orderLine to delete
-   * @return boolean <code>true</code> if the orderLine can be deleted, <code>false</code> otherwise
-   */
-  boolean deleteOrderLine(Long orderLineId);
-
-  /**
-   * Saves a orderLine and store it in the database.
-   *
-   * @param orderLine the {@link OrderLineEto} to create.
-   * @return the new {@link OrderLineEto} that has been saved with ID and version.
-   */
-  OrderLineEto saveOrderLine(OrderLineEto orderLine);
 
   Page<OrderedDishesCto> findOrderedDishes(OrderedDishesSearchCriteriaTo criteria);
 
