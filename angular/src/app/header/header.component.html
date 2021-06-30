@@ -66,7 +66,11 @@
     >
       {{ 'main.reservations' | transloco | uppercase }}
     </a>
-      
+    <a mat-tab-link routerLink="/tables" routerLinkActive="navBottomBorder"
+      [routerLinkActiveOptions]="{ exact: true }">
+      {{ 'main.tables' | transloco | uppercase }}
+    </a>
+
     </nav>
   </div>
   <div *ngIf="(auth.getRole() | async) === 'WAITER'" class="forDesktop">

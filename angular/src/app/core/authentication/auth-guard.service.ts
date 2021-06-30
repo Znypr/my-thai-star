@@ -37,7 +37,7 @@ export class AuthGuardService implements CanActivate, OnDestroy {
       map(([role, logged]) => {
         if ((state.url === '/admin' || state.url === '/orders' ||
         state.url === '/order-archive' ||
-        state.url === '/reservations') && role === 'ADMIN' && logged) {
+        state.url === '/reservations' || state.url === '/tables') && role === 'ADMIN' && logged) {
           return true;
         }
         if (
@@ -49,8 +49,8 @@ export class AuthGuardService implements CanActivate, OnDestroy {
         }
 
         if (
-          (state.url === '/orders' 
-          || state.url === '/order-archive' 
+          (state.url === '/orders'
+          || state.url === '/order-archive'
           || state.url === '/reservations'
           || state.url === '/tables') &&
           role === 'WAITER' &&
