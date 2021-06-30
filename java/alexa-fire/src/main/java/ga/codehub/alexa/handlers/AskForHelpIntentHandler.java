@@ -3,19 +3,12 @@ package ga.codehub.alexa.handlers;
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
-import com.amazon.ask.model.*;
-import com.google.gson.Gson;
-import ga.codehub.RestDateManager;
-import ga.codehub.alexa.Exceptions.AlexaException;
-import ga.codehub.entity.booking.Booking;
+import com.amazon.ask.model.Response;
 import ga.codehub.tools.BasicOperations;
 import ga.codehub.tools.exceptions.Different;
 import ga.codehub.tools.exceptions.NotFound;
-import jdk.internal.org.jline.utils.DiffHelper;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
@@ -38,11 +31,12 @@ public class AskForHelpIntentHandler implements RequestHandler {
         String speechText = "";
         BasicOperations bo = new BasicOperations();
 
+
         try {
             bo.basicGET(BASE_URL + "/bookingmanagement/v1/booking/help/" + bookingToken);
             speechText = "Ein Kellner wurde benachrichtigt und wird so bald wie moeglich bei dir sein.";
 
-        } catch (Different diff){
+        } catch (Different | NullPointerException ex) {
             speechText = "Ein Kellner wurde benachrichtigt und wird so bald wie moeglich bei dir sein.";
         } catch (NotFound | IOException ex) {
             speechText = "Der my-thai-star Server scheint Probleme bei der Verarbeitung deiner Anfrage zu haben.";
@@ -50,6 +44,7 @@ public class AskForHelpIntentHandler implements RequestHandler {
 
         return input.getResponseBuilder()
                 .withSpeech(speechText)
+                .withShouldEndSession(false)
                 .withSimpleCard("MyThaiStar", speechText)
                 .build();
     }

@@ -28,6 +28,7 @@ public class InhouseOrderIntentHandler implements RequestHandler {
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
+
         AttributesManager attributesManager = input.getAttributesManager();
         Map<String, Object> attributes = attributesManager.getSessionAttributes();
 
@@ -170,7 +171,9 @@ public class InhouseOrderIntentHandler implements RequestHandler {
             e.printStackTrace();
         }
 
+
         return input.getResponseBuilder()
+                .withShouldEndSession(false)
                 .withSpeech(speechText)
                 .withSimpleCard("MyThaiStar", speechText)
                 .build();
