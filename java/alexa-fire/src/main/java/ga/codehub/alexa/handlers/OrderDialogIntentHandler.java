@@ -42,7 +42,7 @@ public class OrderDialogIntentHandler implements RequestHandler {
             String payload = buildPayLoad(orderlines, payloadStart, payloadEnd);
 
             try {
-                bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/ordermanagement/v1/order");     
+                bo.basicPost(payload, BASE_URL + "/ordermanagement/v1/order");
                 speechText = "Vielen Dank fuer Ihre Bestellung. ";
                 attributes.remove("orderLines");
                 attributes.remove("shoppingcart");

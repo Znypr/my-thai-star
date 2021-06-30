@@ -2,6 +2,7 @@
 FROM maven:3.6-jdk-11 AS build
 WORKDIR /app
 COPY mtsj/ /app
+COPY mtsj/core/src/main/resources/config/app/application.properties /app/mtsj/core/src/main/resources/config/app/application.properties
 RUN mvn clean install
 
 # 2. Deploy Java war

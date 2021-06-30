@@ -57,7 +57,6 @@ public class BookingIntentHandler implements RequestHandler {
             try {
                 name = input.getServiceClientFactory().getUpsService().getProfileName();
                 userEmail = input.getServiceClientFactory().getUpsService().getProfileEmail();
-
             } catch (NullPointerException nullp) {
                 speechText = "Das Alexa Geraet verfuegt nicht über die benoetigten Berechtigungen.";
                 throw new AlexaException();
@@ -104,7 +103,7 @@ public class BookingIntentHandler implements RequestHandler {
                 ga.codehub.entity.booking.Booking resp;
 
                 try {
-                    response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/bookingmanagement/v1/booking");
+                    response = bo.basicPost(payload, BASE_URL + "/bookingmanagement/v1/booking");
 
                 } catch (Exception ex) {
                     speechText = "Der my-thai-star Server scheint Probleme mit dem Buchen Ihres Tischs zu haben. Bitte versuchen Sie es nochmal.";

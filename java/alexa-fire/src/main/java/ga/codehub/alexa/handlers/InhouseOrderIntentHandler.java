@@ -129,7 +129,7 @@ public class InhouseOrderIntentHandler implements RequestHandler {
                         ga.codehub.entity.booking.Booking resp;
 
                         try {
-                            response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/bookingmanagement/v1/booking");
+                            response = bo.basicPost(payload, BASE_URL + "/bookingmanagement/v1/booking");
 
                         } catch (Exception ex) {
                             speechText = "Der my-thai-star Server scheint Probleme mit Ihrer Anfrage zu haben";
@@ -189,7 +189,7 @@ public class InhouseOrderIntentHandler implements RequestHandler {
             ga.codehub.entity.menu.Response resp;
 
             try {
-                response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/dishmanagement/v1/dish/search");
+                response = bo.basicPost(payload, BASE_URL + "/dishmanagement/v1/dish/search");
 
                 if (!response.equals("no match")) {
                     resp = gson.fromJson(response, ga.codehub.entity.menu.Response.class);

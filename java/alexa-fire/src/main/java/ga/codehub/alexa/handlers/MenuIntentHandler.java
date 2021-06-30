@@ -212,7 +212,7 @@ public class MenuIntentHandler implements RequestHandler {
             ga.codehub.entity.menu.Response resp;
 
             try {
-                response = bo.basicPost(payload, BASE_URL + "/mythaistar/services/rest/dishmanagement/v1/dish/search");
+                response = bo.basicPost(payload, BASE_URL + "/dishmanagement/v1/dish/search");
 
                 if (!response.equals("no match")) {
                     resp = gson.fromJson(response, ga.codehub.entity.menu.Response.class);
