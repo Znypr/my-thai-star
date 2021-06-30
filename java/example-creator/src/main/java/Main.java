@@ -32,6 +32,7 @@ public class Main {
 
         BasicOperations bo = new BasicOperations();
 
+        String url = "";
         /*
         For Windows users change chromedrive to chromedriver.exe
          */
@@ -46,7 +47,7 @@ public class Main {
 
         try {
 
-            String res = bo.basicPost(json_body, "http://localhost:8081" + "/mythaistar/login");
+            String res = bo.basicPost(json_body, "http://localhost:8081" + "/api/login");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NotFound notFound) {
@@ -85,7 +86,6 @@ public class Main {
                     String token = bookTable(user);
                     randomBookDishes(token);
 
-
                     chromeDriver.close();
                 }
             });
@@ -97,7 +97,7 @@ public class Main {
         String user_creation = "{\"username\":\"" + user.username + "\",\"email\":\"" + user.email + "\",\"userRoleId\":\"1\",\"password\":\"waiter\"}";
 
         try {
-            bo.basicPost(user_creation, "http://localhost:8081/mythaistar/services/rest/usermanagement/v1/user");
+            bo.basicPost(user_creation, "http://localhost:8081/api/services/rest/usermanagement/v1/user");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NotFound notFound) {
@@ -131,7 +131,7 @@ public class Main {
 
         // Post booking to DataBase //
         try {
-            ga.codehub.entity.booking.Response resp = gson.fromJson(bo.basicPost(payload, "http://localhost:8081" + "/mythaistar/services/rest/bookingmanagement/v1/booking"), ga.codehub.entity.booking.Response.class);
+            ga.codehub.entity.booking.Response resp = gson.fromJson(bo.basicPost(payload, "http://localhost:8081" + "/api/services/rest/bookingmanagement/v1/booking"), ga.codehub.entity.booking.Response.class);
             return resp.bookingToken;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -150,7 +150,7 @@ public class Main {
             String menuePayload = "{\"categories\":[],\"searchBy\":\"\",\"pageable\":{\"pageSize\":21,\"pageNumber\":0,\"sort\":[{\"property\":\"price\",\"direction\":\"DESC\"}]},\"maxPrice\":null,\"minLikes\":null}";
 
             Gson gson = new Gson();
-            Response res = gson.fromJson(bo.basicPost(menuePayload, "http://localhost:8081/mythaistar/services/rest/dishmanagement/v1/dish/search"), Response.class);
+            Response res = gson.fromJson(bo.basicPost(menuePayload, "http://localhost:8081/api/services/rest/dishmanagement/v1/dish/search"), Response.class);
             ga.codehub.entity.order.Request orderRequest = new ga.codehub.entity.order.Request();
             ArrayList<OrderLines> orders = new ArrayList<>();
             for (int i = 0; i < getRandomNumberInRange(1, 8); i++) {
@@ -165,7 +165,7 @@ public class Main {
             orderRequest.booking.bookingToken = bookingID;
             orderRequest.orderLines = orders.toArray(new OrderLines[orders.size()]);
             String orderPayload = gson.toJson(orderRequest);
-            bo.basicPost(orderPayload, "http://localhost:8081/mythaistar/services/rest/ordermanagement/v1/order");
+            bo.basicPost(orderPayload, "http://localhost:8081/api/services/rest/ordermanagement/v1/order");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NotFound notFound) {
