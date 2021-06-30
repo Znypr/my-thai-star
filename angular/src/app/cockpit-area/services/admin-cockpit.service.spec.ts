@@ -25,9 +25,23 @@ import { Router, RouterModule, ActivatedRoute, ParamMap } from '@angular/router'
 import { OverlayModule } from '@angular/cdk/overlay';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import {
+  FilterAdminCockpit,
+  Pageable,
+  Sort,
+} from 'app/shared/backend-models/interfaces';
 
 
-describe('AdminCockpitService', () => {
+const configServiceStub = {
+  getRestPathRoot: jasmine
+    .createSpy('getRestPathRoot')
+    .and.returnValue(of('http://localhost:8081/mythaistar/')),
+  getRestServiceRoot: jasmine
+    .createSpy('getRestServiceRoot')
+    .and.returnValue(of('http://localhost:8081/mythaistar/services/rest/')),
+};
+
+fdescribe('AdminCockpitService', () => {
   // let service: AdminCockpitService;
   let adminCockpitService: AdminCockpitService;
   let httpTestingController: HttpTestingController;
@@ -40,9 +54,9 @@ describe('AdminCockpitService', () => {
         provideMockStore({ initialState }),
         AdminCockpitService,
         MatSnackBar,
-        ConfigService,
+        { provide: ConfigService, useValue: configServiceStub },
       ],
-      imports: [HttpClientTestingModule, RouterModule ,HttpClientModule,OverlayModule, RouterTestingModule],//.withRoutes([{path: 'admin', component: AdminCockpitComponent}])
+      imports: [HttpClientTestingModule,BrowserAnimationsModule, RouterModule ,HttpClientModule,OverlayModule, RouterTestingModule],//.withRoutes([{path: 'admin', component: AdminCockpitComponent}])
     }).compileComponents();
     adminCockpitService = TestBed.inject(AdminCockpitService);
       httpTestingController = TestBed.inject(HttpTestingController);
@@ -62,18 +76,43 @@ describe('AdminCockpitService', () => {
 
   it('should send addUser-request to server', inject(
     [AdminCockpitService], (service: AdminCockpitService) => {
-      adminCockpitService.addUser("Tester","tester@mail.com",0,"password").subscribe((response: HttpResponse<any>) => {
-        expect(response.status).toBe(200);
-        expect(response.body).toBe('Success');
-      });
+      adminCockpitService.addUser("Tester","tester@mail.com",0,"password").subscribe();
+      const req = httpTestingController.expectOne(config.restServiceRoot + 'usermanagement/v1/user');
+      expect(req.request.method).toEqual('POST');
+      req.flush('Success');
+  }));
+
+  it('should send getUsers-request to server', inject(
+    [AdminCockpitService], (service: AdminCockpitService) => {
+      adminCockpitService.getUsers({  pageSize: 8, pageNumber: 0,}, [], new FilterAdminCockpit).subscribe();
+      const req = httpTestingController.expectOne(config.restServiceRoot + 'usermanagement/v1/user/search');
+      expect(req.request.method).toEqual('POST');
+      req.flush('Success');
   }));
 
   it('should send deleteUser-request to server', inject(
     [AdminCockpitService], (service: AdminCockpitService) => {
-      adminCockpitService.deleteUser(0).subscribe((response: HttpResponse<any>) => {
-        expect(response.status).toBe(200);
-        expect(response.body).toBe('Success');
-      });
+      adminCockpitService.deleteUser(0).subscribe();
+      const req = httpTestingController.expectOne(config.restServiceRoot + 'usermanagement/v1/user/0');
+      expect(req.request.method).toEqual('DELETE');
+      req.flush('Success');
   }));
+
+  it('should send sendPasswordResetMail-request to server', inject(
+    [AdminCockpitService], (service: AdminCockpitService) => {
+      adminCockpitService.sendPasswordResetMail(0).subscribe();
+      const req = httpTestingController.expectOne(config.restServiceRoot + 'usermanagement/v1/resetPassword/0');
+      expect(req.request.method).toEqual('GET');
+      req.flush('Success');
+  }));
+
+  it('should send changePassword-request to server', inject(
+    [AdminCockpitService], (service: AdminCockpitService) => {
+      adminCockpitService.changePassword(0,"password","RT_20210517_74da0febeb981971f39e7620d6e03eb5").subscribe();
+      const req = httpTestingController.expectOne(config.restServiceRoot + 'usermanagement/v1/changePassword');
+      expect(req.request.method).toEqual('POST');
+      req.flush('Success');
+  }));
+
 
 });

@@ -12,6 +12,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { getTranslocoModule } from '../../../transloco-testing.module';
 import { MenuCardDetailsComponent } from '../../../menu/components/menu-card/menu-card-details/menu-card-details.component';
 import { MenuCardComponent } from '../../../menu/components/menu-card/menu-card.component';
+import { MenuComponent } from '../../../menu/container/menu.component';
 import { MenuService } from '../../../menu/services/menu.service';
 import { OrderChangeDialogComponent } from './order-change-dialog.component';
 import { dialogOrderDetails } from '../../../../in-memory-test-data/db-order-dialog-data';
@@ -26,6 +27,14 @@ import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Store } from '@ngrx/store';
 import { State } from '../../../store';
+import { config } from '../../../core/config/config';
+import { PageEvent } from '@angular/material/paginator';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import {exhaustMap, map} from 'rxjs/operators';
+import * as fromOrder from '../../../sidenav/store/selectors/order.selectors';
+import { Pipe, PipeTransform } from '@angular/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 
 const mockFilterValue = {
@@ -50,7 +59,9 @@ const mockFilterValue = {
 };
 
 const menuServiceStub = {
-  getDishes: jasmine.createSpy('getDishes').and.returnValue(menuDishes),
+  // getDishes: jasmine.createSpy('getDishes').and.returnValue(menuDishes),
+  getDishes: jasmine.createSpy('getDishes').and.returnValue(of(Promise.resolve(menuDishes))),
+  filter:  jasmine.createSpy('filter').and.callFake(()=>{}),
   menuToOrder: jasmine.createSpy('menuToOrder').and.returnValue({
     id: uuid.v4(),
     details: {
@@ -67,125 +78,127 @@ const menuServiceStub = {
     .and.returnValue(filteredMenuDishes),
 };
 
-const sidenavServiceStub = {
-  openSideNav: jasmine.createSpy('openSideNav'),
-};
-
-const STATE = {
-  menu: {
-    menu: {
-      loading: true,
-      loaded: true,
-      dishes: menuDishes.content as any[],
-      errorMessage: '',
-    },
-  },
-  sidenav: {
-    order: {
-      ids: [],
-      entities: {},
-      selectedOrderId: null,
-      errorMessage: '',
-      orderSend: {
-        token: '',
-        orderSent: false,
-        error: '',
-      },
-    },
-  },
-  auth: {
-    error: null,
-    text: null,
-    user: null,
-    token: {
-      token: '',
-    },
-  },
-};
 
 const waiterCockpitServiceStub = {
   // getOrders: jasmine.createSpy('getOrders').and.returnValue(of(orderData)),
   saveOrder: jasmine.createSpy('saveOrder').and.returnValue(of(dialogOrderDetails)),
   getTotalPrice: jasmine.createSpy('getTotalPrice').and.callThrough(),
-  filter: jasmine.createSpy('filter').and.returnValue(of(null)),
+  // filter: jasmine.createSpy('filter').and.returnValue(of(null)),
   orderComposerChange: jasmine.createSpy('orderComposerChange').and.returnValue(of(dialogOrderDetails)),
+  getDishes: jasmine.createSpy('menuService.getDishes').and.returnValue(of(Promise.resolve(menuDishes))),
+  getMenu: jasmine.createSpy('menuService.getMenu').and.returnValue(of(menuDishes)),
+  filter:  jasmine.createSpy('filter').and.callFake(()=>{}),
+  menuToOrder: jasmine.createSpy('menuService.menuToOrder').and.returnValue({
+    id: uuid.v4(),
+    details: {
+      dish: menuDishes.content[0].dish,
+      extras: menuDishes.content[0].extras,
+      orderLine: {
+        amount: 1,
+        comment: '',
+      },
+    },
+  }),
+  composeFilters: jasmine
+    .createSpy('menuService.composeFilters')
+    .and.returnValue(filteredMenuDishes),
 };
 
-xdescribe('OrderChangeDialogComponent', () => {
+const translocoServiceStub = {
+  selectTranslateObject: of({
+    reservationDateH: 'Reservation Date',
+    emailH: 'Email',
+    bookingTokenH: 'Reference Number',
+    orderStatusH: 'Status',
+    ownerH: 'Owner',
+    tableH: 'Table',
+    creationDateH: 'Creation date',
+  } as any),
+};
+
+
+fdescribe('OrderChangeDialogComponent', () => {
   let component: OrderChangeDialogComponent;
   let fixture: ComponentFixture<OrderChangeDialogComponent>;
-  let priceCalculatorService: PriceCalculatorService;
   let el: DebugElement;
   let mockStore: MockStore<fromApp.State>;
   let store: Store<State>;
+  let menuService: MenuService;
+  let snackBarService: SnackBarService;
+  let initialState;
   let configService: ConfigService;
-  let sidenavService: SidenavService;
   let waiterCockpitService: WaiterCockpitService;
+  let translocoService: TranslocoService;
 
 
 
 
   beforeEach(async(() => {
+    initialState = { config };
     TestBed.configureTestingModule({
-      schemas: [NO_ERRORS_SCHEMA],
+      // schemas: [NO_ERRORS_SCHEMA],
       declarations: [
         OrderChangeDialogComponent,
-        MenuCardComponent,
-        MenuCardDetailsComponent,
       ],
       providers: [
-        PriceCalculatorService,
         TranslocoService,
         ConfigService,
         SnackBarService,
-        { provide: SidenavService, useValue: sidenavServiceStub },
-        // { provide: MenuService, useValue: menuServiceStub },
-        MenuService,
+        { provide: MenuService, useValue: menuServiceStub },
         { provide: MAT_DIALOG_DATA, useValue: dialogOrderDetails },
-        provideMockStore({ initialState: STATE }),
+        provideMockStore({ initialState }),
+        // provideMockStore({ initialState }),
         { provide: WaiterCockpitService, useValue: waiterCockpitServiceStub },
       ],
       imports: [
                 BrowserAnimationsModule,
                 ReactiveFormsModule,
-                WaiterCockpitModule,
-                MatDialogModule,
+                // WaiterCockpitModule,
                 getTranslocoModule(),
                 CoreModule,
       ],
     }).compileComponents().then(() => {
-    mockStore = TestBed.inject(MockStore);
+      menuService= TestBed.inject(MenuService);
+      waiterCockpitService= TestBed.inject(WaiterCockpitService);
+      snackBarService=TestBed.inject(SnackBarService);
+      fixture = TestBed.createComponent(OrderChangeDialogComponent);
+      component = fixture.componentInstance;
+      el = fixture.debugElement;
     store = TestBed.inject(Store);
-    priceCalculatorService = TestBed.inject(PriceCalculatorService);
-    sidenavService = TestBed.inject(SidenavService);
-    fixture = TestBed.createComponent(OrderChangeDialogComponent);
-    component = fixture.componentInstance;
     configService = new ConfigService(store);
-    el = fixture.debugElement;
-    waiterCockpitService = TestBed.inject(WaiterCockpitService);
-    fixture.detectChanges();
+    translocoService = TestBed.inject(TranslocoService);
+    spyOn(component,'filter').and.callFake(()=>{});
+    spyOn(component.menuService,'getDishes').and.returnValue(of(menuDishes));
     });
   }));
 
   it('should create', () => {
+    fixture.detectChanges();
     expect(component).toBeTruthy();
+    // let comp = new OrderChangeDialogComponent();
+    // expect(comp).toBeTruthy();
   });
 
-  it('should create3', () => {
-    expect(1).toBe(2);
-  });
 
-    it('should create 2', fakeAsync(() => {
-      fixture.detectChanges();
-      tick();
-      const name = el.query(By.css('.nameData'));
-      const email = el.query(By.css('.emailData'));
-      expect(email.nativeElement.textContent.trim()).toBe('user0@mail.com');
-      expect(name.nativeElement.textContent.trim()).toBe('user0');
-      expect(component).toBeTruthy();
-      expect(component.datat[0].bookingToken).toEqual(dialogOrderDetails.booking.bookingToken);
-      expect(component).toBeFalsy();
-    }));
+
+  // it('should create3', () => {
+  //   expect(1).toBe(2);
+  // });
+  //
+  //   it('should create 2', fakeAsync(() => {
+  //     spyOn(translocoService, 'selectTranslateObject').and.returnValue(
+  //       translocoServiceStub.selectTranslateObject,
+  //     );
+  //     fixture.detectChanges();
+  //     tick();
+  //     const name = el.query(By.css('.nameData'));
+  //     const email = el.query(By.css('.emailData'));
+  //     expect(email.nativeElement.textContent.trim()).toBe('user0@mail.com');
+  //     expect(name.nativeElement.textContent.trim()).toBe('user0');
+  //     expect(component).toBeTruthy();
+  //     expect(component.datat[0].bookingToken).toEqual(dialogOrderDetails.booking.bookingToken);
+  //     expect(component).toBeFalsy();
+  //   }));
 });
 
 

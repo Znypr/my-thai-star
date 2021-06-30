@@ -78,13 +78,14 @@ fdescribe('ResetPasswordCockpitComponent', () => {
 // const submit = fixture.debugElement.nativeElement.querySelector('#submitButton');
 
 
-    const button = el.query(By.css('#submitButton'));
+    const button = fixture.debugElement.nativeElement.querySelector('#submitButton');
+
 
     passwordField.value="password";
     passwordField.dispatchEvent(new Event('input'));
     passwordConfirmField.value="password2";
     passwordConfirmField.dispatchEvent(new Event('input'));
-    button.nativeElement.click();
+    button.click();
     fixture.detectChanges();
     tick();
     expect(adminCockpitService.snackBar).toHaveBeenCalled();
@@ -98,13 +99,13 @@ fdescribe('ResetPasswordCockpitComponent', () => {
     spyOn(adminCockpitService, 'snackBar');
     const passwordField = fixture.debugElement.nativeElement.querySelector('#Password');
     const passwordConfirmField = fixture.debugElement.nativeElement.querySelector('#confirmPassword');
-    const button = el.query(By.css('#submitButton'));
+    const button = fixture.debugElement.nativeElement.querySelector('#submitButton');
 
     passwordField.value="password";
     passwordField.dispatchEvent(new Event('input'));
     passwordConfirmField.value="password";
     passwordConfirmField.dispatchEvent(new Event('input'));
-    button.nativeElement.click();
+    button.click();
     fixture.detectChanges();
     tick();
     expect(adminCockpitService.snackBar).toHaveBeenCalled();

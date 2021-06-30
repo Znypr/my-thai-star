@@ -11,7 +11,6 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.jboss.aerogear.security.otp.api.Base32;
@@ -21,8 +20,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.devonfw.application.mtsj.bookingmanagement.dataaccess.api.BookingEntity;
 import com.devonfw.application.mtsj.general.common.api.UserProfile;
@@ -311,7 +308,6 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
 
     Objects.requireNonNull(user, "user");
     UserEntity userEntity = getBeanMapper().map(getUserDao().findByUsername(user.getUsername()), UserEntity.class);
-
     // initialize, validate userEntity here if necessary
     userEntity.setTwoFactorStatus(user.getTwoFactorStatus());
     UserEntity resultEntity = getUserDao().save(userEntity);
@@ -405,23 +401,6 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
     profile.setId(userEto.getId());
     profile.setRole(Role.getRoleById(userEto.getUserRoleId()));
     return profile;
-  }
-
-  private String getClientUrl() {
-
-    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-    String clientUrl = request.getHeader("origin");
-    if (clientUrl == null) {
-      return "http://localhost:" + this.clientPort;
-    }
-    return clientUrl;
-  }
-
-  @Override
-  public Long getIdUserByResetToken(String token) {
-
-    // getResetDao().findAll();
-    return null;
   }
 
 }

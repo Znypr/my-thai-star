@@ -43,12 +43,6 @@ public interface Usermanagement {
   public UserEto changePassword(UserEto user);
 
   /**
-   * @param token ResetToken
-   * @return id of User
-   */
-  public Long getIdUserByResetToken(String token);
-
-  /**
    * Returns a User by its userName 'userName'.
    *
    * @param userName The userName 'userName' of the User.
