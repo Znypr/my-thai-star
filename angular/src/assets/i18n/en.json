@@ -73,7 +73,7 @@
     "date": "Date",
     "name": "Name",
     "email": "Email",
-    "assistants": "Amount of guests",
+    "assistants": "Table guests",
     "friends": "Friends",
     "terms": "Accept terms",
     "dateTime": "Date and time",
@@ -82,12 +82,7 @@
     "comment": "Comment",
     "total": "Total",
     "referenceNumber": "Reference number",
-    "orderStatus": "Status", 
-    "paid":"Paid",
-    "tableName": "Table Name",
-    "alexaId": "Alexa ID",
-    "owner":"Owner",
-    "table":"Table ID"
+    "orderStatus": "Status"
   },
   "bookTable": {
     "title": "You can invite your friends to lunch or book a table",
@@ -121,7 +116,6 @@
     "orders": "Orders",
     "reservations": "Reservations",
     "archive": "Archive",
-    "tables": "Tables",
     "userActions": {
       "user": "User",
       "pairing": "Set two-factor authentication",
@@ -199,7 +193,6 @@
   "cockpit": {
     "createUser": "Create User",
     "filter": "Filter",
-    "addTable":"Add Table",
     "order-archive": {
       "title": "Order Archive",
       "dialogTitle": "ORDER DETAILS - REFERENCE NUMBER",
@@ -224,22 +217,13 @@
         "commentsH": "Comments",
         "extrasH": "Extra",
         "quantityH": "Quantity",
-        "priceH": "Price",
-        "dishSelection":"Dish Selection"
+        "priceH": "Price"
       },
       "orderStatus": {
         "open": "Open",
         "preparing": "Preparing",
         "delivered": "Delivered",
-        "cancelled": "Cancelled",
-        "all":"All"
-      },
-      "payment":{
-        "paid":"Paid",
-        "notPaid":"Not Paid",
-        "all": "All",
-        "yes":"Yes",
-        "no": "No"
+        "cancelled": "Cancelled"
       }
     },
     "reservations": {
@@ -248,15 +232,8 @@
       "dialogTable": {
         "guestEmailH": "Guest email",
         "acceptanceH": "Acceptances and declines",
-        "assistantsH": "Guests"
+        "assistantsH": "Assistants"
       }
-    },
-    "tables": {
-      "title": "Table Overview",
-      "alexaSelect": "Alexa Selection",
-      "idH": "Table ID",
-      "nameH": "Table Name",
-      "alexaDeviceH":"Alexa Device"
     },
     "table": {
       "reservationDateH": "Reservation Date",

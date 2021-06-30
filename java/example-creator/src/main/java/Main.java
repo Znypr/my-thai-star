@@ -36,7 +36,8 @@ public class Main {
         For Windows users change chromedrive to chromedriver.exe
          */
         System.setProperty("webdriver.chrome.driver", "java/example-creator/driver/chromedriver");
-        System.setProperty("webdriver.gecko.driver", "java/example-creator/driver/geckodriver/geckodriver");
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Joost\\Desktop\\Projekte\\my-thai-star\\java\\example-creator\\driver\\chromedriver.exe");
+        //System.setProperty("webdriver.gecko.driver", "java/example-creator/driver/geckodriver/geckodriver");
 
         ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
 

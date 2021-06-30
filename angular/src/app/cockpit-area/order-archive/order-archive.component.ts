@@ -2,7 +2,6 @@ import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {Sort} from '@angular/material/sort';
-import { Title } from '@angular/platform-browser';
 import {TranslocoService} from '@ngneat/transloco';
 import * as moment from 'moment';
 import {Subscription} from 'rxjs';
@@ -39,8 +38,8 @@ export class OrderArchiveComponent implements OnInit, OnDestroy {
   columns: any[];
 
   displayedColumns: string[] = [
-    'booking.tableId',
     'booking.bookingDate',
+    'booking.email',
     'booking.bookingToken',
     'orderStatus',
   ];
@@ -55,14 +54,12 @@ export class OrderArchiveComponent implements OnInit, OnDestroy {
   };
 
   constructor(
-    title: Title,
     private dialog: MatDialog,
     private translocoService: TranslocoService,
     private waiterCockpitService: WaiterCockpitService,
     private configService: ConfigService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
   ) {
-    title.setTitle('Archive');
     this.pageSizes = this.configService.getValues().pageSizes;
     this.data = dialogData;
   }
@@ -99,8 +96,8 @@ export class OrderArchiveComponent implements OnInit, OnDestroy {
       .selectTranslateObject('cockpit.table', {}, lang)
       .subscribe((cockpitTable) => {
         this.columns = [
-          {name: 'booking.tableId', label: cockpitTable.tableH},
           {name: 'booking.bookingDate', label: cockpitTable.reservationDateH},
+          {name: 'booking.email', label: cockpitTable.emailH},
           {name: 'booking.bookingToken', label: cockpitTable.bookingTokenH},
           {name: 'orderStatus', label: cockpitTable.orderStatusH},
         ];
@@ -125,38 +122,10 @@ export class OrderArchiveComponent implements OnInit, OnDestroy {
       });
   }
 
-  getTranslationPathState(orderStatus: string) : string {
-    let path = "cockpit.orders.orderStatus.";
-
-    if(orderStatus == "open") return path += "open";
-    if(orderStatus == "preparing") return path += "preparing";
-    if(orderStatus == "delivered") return path += "delivered";
-    if(orderStatus == "cancelled") return path += "cancelled";
-  }
-
-  getTranslationPathPaid(paid: boolean) : string {
-    let path = "cockpit.orders.payment.";
-
-    if(paid) return path += "yes";
-    else return path += "no";
-  }
-
   clearFilters(filters: any): void {
-    this.filters.orderStatus = undefined;
     filters.reset();
     this.applyFilters();
     this.pagingBar.firstPage();
-  }
-
-  filterState(value: any) : void {
-    if(value == "all")  this.filters.orderStatus = null;
-    else this.filters.orderStatus = value;
-  }
-
-  checkOrderStatus() : string {
-    if(this.filters.orderStatus != undefined)
-      return this.filters.orderStatus;
-    else return "all";
   }
 
   page(pagingEvent: PageEvent): void {

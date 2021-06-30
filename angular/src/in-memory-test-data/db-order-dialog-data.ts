@@ -101,7 +101,7 @@ export const dialogOrderDetails = {
       dish: {
         modificationCounter: 1,
         id: 2,
-        name: 'Thai Green Chicken Curry',
+        name: 'Thai green chicken curry',
         description: `Master this aromatic, creamy & extremely tasty chicken Thai green curry recipe from Jamie Oliver & treat
                         yourself to an authentic taste of South East Asia.`,
         price: 14.75,

@@ -70,7 +70,7 @@
     "date": "Datum",
     "name": "Name",
     "email": "Email",
-    "assistants": "Anzahl Gäste",
+    "assistants": "Tischgäste",
     "friends": "Freunde",
     "terms": "Bedingungen akzeptieren",
     "dateTime": "Datum und Uhrzeit",
@@ -79,12 +79,7 @@
     "comment": "Kommentar",
     "total": "Gesamt",
     "referenceNumber": "Referenznummer",
-    "orderStatus": "Status",
-    "paid":"Bezahlt",
-    "tableName": "Tisch Name",
-    "alexaId": "Alexa ID",
-    "owner":"Eigentümer",
-    "table":"Tisch ID"
+    "orderStatus": "Status"
   },
   "bookTable": {
     "title": "Du kannst deine Freunde zum Mittagessen einladen oder einen Tisch buchen",
@@ -118,7 +113,6 @@
     "orders": "Bestellungen",
     "reservations": "Reservierungen",
     "archive": "Archiv",
-    "tables": "Tische",
     "userActions": {
       "user": "Benutzer",
       "pairing": "Zwei-Faktor-Authentifizierung einstellen",
@@ -196,7 +190,6 @@
   "cockpit": {
     "createUser": "Nutzer anlegen",
     "filter": "Filter",
-    "addTable":"Tisch hinzufügen",
     "order-archive": {
       "title": "Bestellungs Archiv",
       "dialogTitle": "BESTELLDETAILS - REFERENZNUMMER",
@@ -208,7 +201,7 @@
         "priceH": "Preis"
       },
       "orderStatus": {
-        "open": "Wiederöffnen",
+        "open": "Wieder Öffnen",
         "paid": "Bezahlt",
         "cancelled": "Storniert"
       }
@@ -221,22 +214,13 @@
         "commentsH": "Kommentare",
         "extrasH": "Extra",
         "quantityH": "Anzahl",
-        "priceH": "Preis",
-        "dishSelection":"Gerichtauswahl"
+        "priceH": "Preis"
       },
       "orderStatus": {
         "open": "Offen",
         "preparing": "In Zubereitung",
         "delivered": "Geliefert",
-        "cancelled": "Storniert",
-        "all":"Alle"
-      },
-      "payment":{
-        "paid":"Bezahlt",
-        "notPaid":"Nicht Bezahlt",
-        "all": "Alle",
-        "yes":"Ja",
-        "no": "Nein"
+        "cancelled": "Storniert"
       }
     },
     "reservations": {
@@ -245,15 +229,8 @@
       "dialogTable": {
         "guestEmailH": "Gäste email",
         "acceptanceH": "Zusagen und Absagen",
-        "assistantsH": "Gäste"
+        "assistantsH": "Teilnehmer"
       }
-    },
-    "tables": {
-      "title": "Tisch Übersicht",
-      "alexaSelect": "Alexa Auswahl",
-      "idH": "Tisch ID",
-      "nameH": "Tisch Name",
-      "alexaDeviceH":"Alexa Gerät"
     },
     "table": {
       "reservationDateH": "Reservierungsdatum",

@@ -29,18 +29,6 @@ export interface DishResponse {
   content: DishView;
 }
 
-export interface TableResponse {
-  pageable: Pageable;
-  content: TableView;
-}
-
-export interface TableView {
-  id: number;
-  seatsNumber: number;
-  tableName: string;
-  alexaID: string;
-}
-
 // BOOKING
 export interface ReservationView {
   booking: BookingView;
@@ -55,7 +43,6 @@ export interface BookingView {
   tableId?: number;
   bookingToken?: number;
   creationDate?: string;
-  needHelp: boolean;
 }
 
 export interface FriendsInvite {
@@ -70,7 +57,7 @@ export interface OrderDishView {
   };
 }
 
-export interface  OrderView {
+export interface OrderView {
   dish: {
     id: number;
     name: string;
@@ -125,7 +112,6 @@ export interface OrderListView {
   orderLines: OrderView[];
   booking: BookingView;
   orderStatus: string;
-  paid: Boolean;
 }
 
 export interface OrderDishListView {
@@ -197,11 +183,6 @@ export interface SaveOrderResponse {
   invitedGuestId: number;
   modificationCounter: number;
   revision: any;
-}
-
-export interface Table {
-  id: number;
-  seats: number;
 }
 
 // Roles

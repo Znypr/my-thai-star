@@ -47,7 +47,7 @@ const configServiceStub = {
     .and.returnValue(of('http://localhost:8081/mythaistar/services/rest/')),
 };
 
-fdescribe('UserAreaService', () => {
+describe('UserAreaService', () => {
   let httpTestingController: HttpTestingController;
   let userAreaService: UserAreaService;
   let mockStore: MockStore;

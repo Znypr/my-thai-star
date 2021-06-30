@@ -1,8 +1,8 @@
 import {WaiterCockpitService} from '../services/waiter-cockpit.service';
 import {ReservationView} from '../../shared/view-models/interfaces';
 import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
-import {PageEvent, MatPaginator} from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import {Sort} from '@angular/material/sort';
 import {ReservationDialogComponent} from './reservation-dialog/reservation-dialog.component';
 import {
@@ -10,11 +10,9 @@ import {
   Pageable,
 } from '../../shared/backend-models/interfaces';
 import * as moment from 'moment';
-import {ConfigService} from '../../core/config/config.service';
-import {TranslocoService} from '@ngneat/transloco';
-import {Subscription} from 'rxjs';
-import {Title} from '@angular/platform-browser';
-import {SortDirection} from '../../menu/components/menu-filters/filter-sort/filter-sort.component';
+import { ConfigService } from '../../core/config/config.service';
+import { TranslocoService } from '@ngneat/transloco';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cockpit-reservation-cockpit',
@@ -36,31 +34,23 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
   totalReservations: number;
 
   columns: any[];
-  displayedColumns: string[] = ['needHelp', 'owner', 'bookingDate', 'assistants', 'table'];
+  displayedColumns: string[] = ['bookingDate', 'email', 'bookingToken'];
 
   pageSizes: number[];
 
   filters: FilterCockpit = {
-    tableId: undefined,
-    name: undefined,
+    bookingDate: undefined,
+    email: undefined,
+    bookingToken: undefined,
+
   };
 
-  tables: any[] = [
-    {id: 0},
-    {id: 1},
-    {id: 2},
-    {id: 3}
-  ];
-
-
   constructor(
-    title: Title,
     private waiterCockpitService: WaiterCockpitService,
     private translocoService: TranslocoService,
     private dialog: MatDialog,
     private configService: ConfigService,
   ) {
-    title.setTitle('Reservations');
     this.pageSizes = this.configService.getValues().pageSizes;
   }
 
@@ -83,22 +73,11 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
       .selectTranslateObject('cockpit.table', {}, lang)
       .subscribe((cockpitTable) => {
         this.columns = [
-          {name: 'booking.needHelp', label: cockpitTable.needHelpH},
-          {name: 'booking.owner', label: cockpitTable.ownerH},
           {name: 'booking.bookingDate', label: cockpitTable.reservationDateH},
-          {name: 'booking.assistants', label: cockpitTable.assistantsH},
-          {name: 'booking.table', label: cockpitTable.tableH},
-          {name: 'booking.tableSelect', label: cockpitTable.tableSelect}
+          {name: 'booking.email', label: cockpitTable.emailH},
+          {name: 'booking.bookingToken', label: cockpitTable.bookingTokenH}
         ];
       });
-  }
-
-  getGuestAmount(element) : number {
-    let amount = 1;
-    for(let guest of element.invitedGuests) {
-      if(guest.accepted) amount++;
-    }
-    return amount;
   }
 
   filter(): void {
@@ -107,18 +86,6 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
   }
 
   applyFilters(): void {
-    const customPageable = new Pageable();
-    customPageable.pageSize = 24;
-    customPageable.pageNumber = 0;
-    // customPageable.sort = {
-      // property: 'id',
-      // direction: SortDirection.DESC
-    // };
-    this.waiterCockpitService.getTables(customPageable, this.sorting, this.filters).subscribe((data: any) => {
-      this.tables = data.content;
-      console.log(this.tables);
-    });
-
     this.waiterCockpitService
       .getReservations(this.pageable, this.sorting, this.filters)
       .subscribe((data: any) => {
@@ -163,17 +130,6 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
       width: '80%',
       data: selection,
     });
-  }
-
-  noHelpNeeded(element: any): boolean {
-    return !element.booking.needHelp;
-  }
-
-  onChange(tableId: any, reservation: any): void {
-    console.log(tableId); // selected tableId of element
-    reservation.booking.tableId = tableId;
-    console.log(reservation);
-    this.waiterCockpitService.updateBooking(reservation).subscribe();
   }
 
   ngOnDestroy(): void {

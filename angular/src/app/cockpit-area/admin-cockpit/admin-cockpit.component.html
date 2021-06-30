@@ -1,139 +1,109 @@
-<p>ADMIN SEITE</p>
+<form (ngSubmit)="getUserInput($event)" #filterForm>
+  <div>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ 'cockpit.createUser' | transloco }}</mat-panel-title>
+      </mat-expansion-panel-header>
 
-<!-- <div>
-  <mat-expansion-panel data-name="orderFilter">
-    <mat-expansion-panel-header>
-        <mat-panel-title>Accounts</mat-panel-title>
-    </mat-expansion-panel-header>
-  </mat-expansion-panel>
-</div> -->
+      <div class="formRow">
+        <div class="formDesktopRow">
+          <!-- username column -->
+          <mat-form-field class="searchBy">
+            <mat-label>{{ columns[0].label }}</mat-label>
+            <input id="Username" matInput ngModel required="required"/>
+          </mat-form-field>
 
-<form class="form" (ngSubmit)="getUserInput($event);">
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>Nutzer anlegen</mat-panel-title>
-    </mat-expansion-panel-header>
-    <mat-form-field appearance="fill">
-      <mat-label>Username</mat-label>
-      <input id="Username" matInput placeholder="Username" [formControl]="username">
-      <mat-error>
-        Please enter a username
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Email</mat-label>
-      <input id="Email" type="email" name="email" matInput placeholder="user@mail.com" [formControl]="email">
-      <mat-error id="EmailError">
-        Please enter a valid email address
-      </mat-error>
-    </mat-form-field>
-    <!-- <mat-form-field appearance="fill">
-      <mat-label>Role</mat-label>
-      <input id="Role" type="number" min="0" max="3" matInput placeholder="0-3">
-    </mat-form-field> -->
-    <mat-form-field appearance="fill">
-      <mat-label>Role</mat-label>
-      <select matNativeControl id="Role">
-        <option *ngFor="let element of config.roles" [value]="element.permission">
-          {{element.name}}
-        </option>
-      </select>
-    </mat-form-field>
-    <!-- <mat-form-field appearance="fill">
-    <mat-label>Role</mat-label>
-      <mat-select>
-        <mat-option matInput id="Role" type="number" *ngFor="let element of config.roles" value="element.permission">
-          {{element.name}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field> -->
+          <!-- email column -->
+          <mat-form-field class="searchBy" required="required">
+            <mat-label>{{ columns[1].label }}</mat-label>
+            <input id="Email" type="email" matInput ngModel [email]="true" required="required"/>
+            <mat-error id="EmailError">
+              Please enter a valid email address
+            </mat-error>
+          </mat-form-field>
 
-    <!-- TODO: recreate select -->
+          <!-- role column -->
+          <mat-form-field class="searchBy">
+            <mat-label>{{ columns[2].label }}</mat-label>
+            <select matNativeControl id="Role">
+              <option *ngFor="let role of roles" [value]="role.permission">
+                {{role.label}}
+              </option>
+            </select>
+          </mat-form-field>
 
+          <!-- password column -->
+          <mat-form-field class="searchBy">
+            <mat-label>{{ columns[4].label }}</mat-label>
+            <input required id="Password" matInput [type]="hide ? 'password' : 'text'"/>
+            <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Enter your password</mat-label>
-      <input [formControl]="password" id="Password" matInput [type]="hide ? 'password' : 'text'" placeholder="I<3MOM">
-      <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-              [attr.aria-pressed]="hide">
-        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </button>
-      <mat-error>
-        Please enter a password
-      </mat-error>
-    </mat-form-field>
+        </div>
+      </div>
 
-    <button id="submitButton" mat-button type="submit"> Neuen Nutzer anlegen</button>
-  </mat-expansion-panel>
+      <div class="align-right">
+        <button mat-button type="button" color="warn" (click)="clearFilters(filterForm)">
+          {{ 'buttons.reset' | transloco }}
+        </button>
+        <button id="submitButton" mat-button type="submit" color="accent">
+          {{ 'buttons.create' | transloco }}
+        </button>
+      </div>
+
+    </mat-expansion-panel>
+  </div>
 </form>
 
-<div class="tableContainer">
-  <table mat-table [dataSource]="users">
+<mat-card>
 
-    <!-- id Column -->
-    <ng-container matColumnDef="user.id">
-      <th mat-header-cell *matHeaderCellDef> ID</th>
-      <td id="User" mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
+  <mat-card-title>{{ 'cockpit.users.title' | transloco }}</mat-card-title>
+  <mat-divider></mat-divider>
 
-    <!-- username Column -->
-    <ng-container matColumnDef="user.username">
-      <th mat-header-cell *matHeaderCellDef> Username</th>
-      <td mat-cell *matCellDef="let element"> {{element.username}} </td>
-    </ng-container>
+  <div class="tableContainer">
 
-    <!-- email Column -->
-    <ng-container matColumnDef="user.email">
-      <th mat-header-cell *matHeaderCellDef> Email</th>
-      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-    </ng-container>
+    <table mat-table [dataSource]="users">
 
-    <!-- role Column -->
-    <!-- <ng-container matColumnDef="user.idRole">
-      <th mat-header-cell *matHeaderCellDef> Role </th>
-      <td mat-cell *matCellDef="let element"> {{ element.userRoleId }} </td>
-    </ng-container> -->
-    <ng-container matColumnDef="user.idRole">
-      <th mat-header-cell *matHeaderCellDef> Role</th>
-      <!-- <td mat-cell *matCellDef="let element">
-        <span *ngIf="element.userRoleId === 0"> CUSTOMER</span>
-        <span *ngIf="element.userRoleId === 1"> WAITER</span>
-        <span *ngIf="element.userRoleId === 2"> MANAGER</span>
-        <span *ngIf="element.userRoleId === 3"> ADMIN</span>
-      </td> -->
 
-      <td mat-cell *matCellDef="let user">
-        <div *ngFor="let element of config.roles">
-          <span *ngIf="user.userRoleId === element.permission">  {{element.name}} </span>
-        </div>
-      </td>
+      <!-- username column -->
+      <ng-container matColumnDef="user.username">
+        <th mat-header-cell *matHeaderCellDef>{{ columns[0].label }}</th>
+        <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+      </ng-container>
 
-      <!-- <td mat-cell *ngFor="let element of config.roles"> {{element.name}}
-      </td> -->
-    </ng-container>
+      <!-- email column -->
+      <ng-container matColumnDef="user.email">
+        <th mat-header-cell *matHeaderCellDef>{{ columns[1].label }}</th>
+        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selected(row)"></tr>
+      <!-- role column -->
+      <ng-container matColumnDef="user.idRole">
+        <th mat-header-cell *matHeaderCellDef>{{ columns[2].label }}</th>
+        <td mat-cell *matCellDef="let element">
+          <span *ngIf="element.userRoleId === 0"> {{ roles[0].label }}</span>
+          <span *ngIf="element.userRoleId === 1"> {{ roles[1].label }}</span>
+          <span *ngIf="element.userRoleId === 2"> {{ roles[2].label }}</span>
+          <span *ngIf="element.userRoleId === 3"> {{ roles[3].label }}</span>
+        </td>
+      </ng-container>
 
-  </table>
-</div>
-<mat-paginator #pagingBar [length]="totalUsers" [pageSize]="pageSize" [pageSizeOptions]="pageSizes"
-               [showFirstLastButtons]="true" (page)="page($event)">
-</mat-paginator>
+      <!-- id column -->
+      <ng-container matColumnDef="user.id">
+        <th mat-header-cell *matHeaderCellDef class="lastColumn">{{ columns[3].label }}</th>
+        <td mat-cell *matCellDef="let element" class="lastColumn">{{ element.id }}</td>
+      </ng-container>
 
-<!-- <button mat-button type="button" (click)="changePassword()"> log Token </button> -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selected(row)"></tr>
+    </table>
+  </div>
+  <mat-paginator #pagingBar [length]="totalUsers" [pageSize]="pageSize" [pageSizeOptions]="pageSizes"
+                 [showFirstLastButtons]="true" (page)="page($event)">
+  </mat-paginator>
 
-<!-- <button mat-button type="button" (click)="onButtonClick('RT_20210517_74da0febeb981971f39e7620d6e03eb5')"> onButtonClick </button>
+</mat-card>
 
-<button mat-button type="button" (click)="funk()"> funk </button> -->
-
-<!-- <button mat-button type="button" (click)="onButtonClick('RT_20210517_74da0febeb981971f39e7620d6e03eb5')"> get Token </button>
-<button mat-button type="button" (click)="funk()"> log Token </button> -->
-<!-- <mat-expansion-panel-header>
-    <mat-panel-title>{{ 'cockpit.filter' | transloco }}</mat-panel-title>
-</mat-expansion-panel-header>
-<mat-progress-bar
-  *ngIf="!orders"
-  color="accent"
-  mode="indeterminate">
-</mat-progress-bar> -->

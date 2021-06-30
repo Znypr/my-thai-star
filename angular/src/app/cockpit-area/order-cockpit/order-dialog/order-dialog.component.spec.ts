@@ -27,7 +27,7 @@ describe('OrderDialogComponent', () => {
         {provide: MAT_DIALOG_DATA, useValue: dialogOrderDetails},
         WaiterCockpitService,
         PriceCalculatorService,
-        provideMockStore({ initialState }),
+        provideMockStore({initialState}),
         ConfigService
       ],
       imports: [

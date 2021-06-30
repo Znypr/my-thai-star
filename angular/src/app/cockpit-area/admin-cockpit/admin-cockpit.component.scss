@@ -47,9 +47,9 @@ th {
   font-weight: bold;
 }
 
-// td:not(:nth-child(1)) {
-//   word-break: break-all;
-// }
+.lastColumn {
+  text-align: right;
+}
 
 .noResults {
   padding: 16px;

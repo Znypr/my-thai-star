@@ -34,9 +34,9 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
   columnst: any[];
   displayedColumnsT: string[] = [
     'bookingDate',
+    'creationDate',
     'name',
-    'paid',
-    'orderStatus',
+    'email',
     'tableId',
   ];
 
@@ -102,11 +102,11 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
       .selectTranslateObject('cockpit.table', {}, lang)
       .subscribe((cockpitTable) => {
         this.columnst = [
-          { name: 'bookingDate', label: cockpitTable.reservationDateH },
-          { name: 'name', label: cockpitTable.ownerH },
-          { name: 'paid', label: cockpitTable.paidH },
-          { name: 'orderStatus', label: cockpitTable.orderStatusH },
-          { name: 'tableId', label: cockpitTable.tableH },
+          {name: 'bookingDate', label: cockpitTable.reservationDateH},
+          {name: 'creationDate', label: cockpitTable.creationDateH},
+          {name: 'name', label: cockpitTable.ownerH},
+          {name: 'email', label: cockpitTable.emailH},
+          {name: 'tableId', label: cockpitTable.tableH},
         ];
       });
 
@@ -127,23 +127,6 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
         ];
       });
   }
-
-  getTranslationPathState(orderStatus: string) : string {
-    let path = "cockpit.orders.orderStatus.";
-
-    if(orderStatus == "open") return path += "open";
-    if(orderStatus == "preparing") return path += "preparing";
-    if(orderStatus == "delivered") return path += "delivered";
-    if(orderStatus == "cancelled") return path += "cancelled";
-  }
-
-  getTranslationPathPaid(paid: boolean) : string {
-    let path = "cockpit.orders.payment.";
-
-    if(paid) return path += "yes";
-    else return path += "no";
-  }
-
 
   page(pagingEvent: PageEvent): void {
     this.currentPage = pagingEvent.pageIndex + 1;

@@ -40,7 +40,7 @@ table {
 }
 
 th {
-  width: 33%;
+  width: 25%;
   font-weight: bold;
 }
 
@@ -50,15 +50,6 @@ td:not(:nth-child(1)) {
 
 .noResults {
   padding: 16px;
-}
-
-.flex {
-  display: inline-flex;
-  justify-content: space-between;
-}
-
-.flexchild {
-  flex-grow: 1;
 }
 
 @media (max-width: 599px) {

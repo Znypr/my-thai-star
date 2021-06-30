@@ -68,6 +68,7 @@ class TestBedSetUp {
       ],
       imports: [
         MatDialogModule,
+
         BrowserAnimationsModule,
         ReactiveFormsModule,
         getTranslocoModule(),
@@ -77,7 +78,7 @@ class TestBedSetUp {
   }
 }
 
-fdescribe('OrderCockpitComponent', () => {
+describe('OrderCockpitComponent', () => {
   let component: OrderCockpitComponent;
   let fixture: ComponentFixture<OrderCockpitComponent>;
   let store: Store<State>;
@@ -87,7 +88,6 @@ fdescribe('OrderCockpitComponent', () => {
   let translocoService: TranslocoService;
   let configService: ConfigService;
   let el: DebugElement;
-  let overlay: HTMLElement;
 
   beforeEach(async(() => {
     initialState = { config };
@@ -114,7 +114,6 @@ fdescribe('OrderCockpitComponent', () => {
     expect(component).toBeTruthy();
     expect(component.orders).toEqual(orderData.content);
     expect(component.totalOrders).toBe(8);
-    tick();
   }));
 
   it('should go to next page of orders', () => {
@@ -127,7 +126,7 @@ fdescribe('OrderCockpitComponent', () => {
     expect(component.totalOrders).toBe(8);
   });
 
-  it('should clear form and reset', fakeAsync(() => {
+  fit('should clear form and reset', fakeAsync(() => {
     const clearFilter = el.query(By.css('.orderClearFilters'));
     click(clearFilter);
     fixture.detectChanges();
@@ -136,19 +135,12 @@ fdescribe('OrderCockpitComponent', () => {
     expect(component.totalOrders).toBe(8);
   }));
 
-  fit('should open OrderDialogComponent dialog on click of row and close by closeButton', fakeAsync(() => {
+  it('should open OrderDialogComponent dialog on click of row', fakeAsync(() => {
     fixture.detectChanges();
-    const clearFilter = el.queryAll(By.css('#Booking'));
+    const clearFilter = el.queryAll(By.css('.mat-row'));
     click(clearFilter[0]);
     tick();
     expect(dialog.open).toHaveBeenCalled();
-
-    // close functionality in order dialog test
-    // const closeButton = OrderDialogComponent.queryAll(By.css('#close'));
-    // click(closeButton[0].nativeElement);
-    // tick();
-    // fixture.detectChanges();
-    // expect(dialog.open).toBeTruthy();
   }));
 
   it('should filter the order table on click of submit', fakeAsync(() => {
@@ -160,223 +152,19 @@ fdescribe('OrderCockpitComponent', () => {
     expect(component.totalOrders).toBe(8);
   }));
 
-  it('should filter the order table on click of submit', fakeAsync(() => {
-    fixture.detectChanges();
-    const submit = el.query(By.css('.orderApplyFilters'));
-    click(submit);
-    tick();
-    expect(component.orders).toEqual(orderData.content);
-    expect(component.totalOrders).toBe(8);
-  }));
-
-  // //C47
-  // fit('should change status preparing in cancelled', fakeAsync(() => {
-  //   fixture.detectChanges();
-  //   const clearFilter = el.queryAll(By.css('#optionForStatus'));
-  //   click(clearFilter[0]);
-  //   tick();
-  //   expect(dialog.open).toHaveBeenCalled();
-  // }));
-
-  // //C50 + C49
-  fit('should change status open -> prepairing but not preparing -> open', fakeAsync(() => {
-    //try to change open -> preparing
+  //C50
+  it('should change status open in prepairing', fakeAsync(() => {
     fixture.detectChanges();
     spyOn(component, 'onChange');
     const row = el.query(By.css('#selectStatus')).nativeElement;
     row.click();
-    tick();
     fixture.detectChanges();
     const selectOptions = el.queryAll(By.css('#optionForStatus'));
     selectOptions[1].nativeElement.click();
-    tick();
     fixture.detectChanges();
     expect(component.onChange).toHaveBeenCalled();
-
-    //try to change preparing -> open
-    row.click();
-    tick();
-    fixture.detectChanges();
-    selectOptions[0].nativeElement.click();
-    tick();
-    fixture.detectChanges();
-    expect(component.onChange).toHaveBeenCalledTimes(1);
-
     flush();
   }));
-
-//C51
-  fit('should change status open -> delivered', fakeAsync(() => {
-    //try to change open -> delivered
-    fixture.detectChanges();
-    spyOn(component, 'onChange');
-    const row = el.query(By.css('#selectStatus')).nativeElement;
-    row.click();
-    tick();
-    fixture.detectChanges();
-    const selectOptions = el.queryAll(By.css('#optionForStatus'));
-    selectOptions[2].nativeElement.click();
-    tick();
-    fixture.detectChanges();
-    expect(component.onChange).toHaveBeenCalled();
-
-    flush();
-  }));
-
-//C52
-  fit('should change status open -> cancelled', fakeAsync(() => {
-    //try to change open -> delivered
-    fixture.detectChanges();
-    spyOn(component, 'onChange');
-    const row = el.query(By.css('#selectStatus')).nativeElement;
-    row.click();
-    tick();
-    fixture.detectChanges();
-    const selectOptions = el.queryAll(By.css('#optionForStatus'));
-    selectOptions[3].nativeElement.click();
-    tick();
-    fixture.detectChanges();
-    expect(component.onChange).toHaveBeenCalled();
-
-    flush();
-  }));
-
-  //C47
-  fit('should change status preparing -> cancelled', fakeAsync(() => {
-    //try to change open -> delivered
-    fixture.detectChanges();
-    spyOn(component, 'onChange');
-    const row = el.queryAll(By.css('#selectStatus'));
-    row[2].nativeElement.click();
-    tick();
-    fixture.detectChanges();
-    const selectOptions = el.queryAll(By.css('#optionForStatus'));
-    selectOptions[3].nativeElement.click();
-    tick();
-    fixture.detectChanges();
-    expect(component.onChange).toHaveBeenCalled();
-
-    flush();
-  }));
-
-  //C48
-  fit('should change status preparing -> cancelled', fakeAsync(() => {
-    //try to change open -> delivered
-    fixture.detectChanges();
-    spyOn(component, 'onChange');
-    const row = el.queryAll(By.css('#selectStatus'));
-    row[2].nativeElement.click();
-    tick();
-    fixture.detectChanges();
-    const selectOptions = el.queryAll(By.css('#optionForStatus'));
-    selectOptions[2].nativeElement.click();
-    tick();
-    fixture.detectChanges();
-    expect(component.onChange).toHaveBeenCalled();
-
-    flush();
-  }));
-
-  //C48
-  fit('should change not change status cancelled -> open/preparing/delivered', fakeAsync(() => {
-    //try to change cancelled -> open
-    fixture.detectChanges();
-    spyOn(component, 'onChange');
-    const row = el.queryAll(By.css('#selectStatus'));
-    row[4].nativeElement.click();
-    tick();
-    fixture.detectChanges();
-    const selectOptions = el.queryAll(By.css('#optionForStatus'));
-    selectOptions[0].nativeElement.click();
-    tick();
-    fixture.detectChanges();
-    expect(component.onChange).not.toHaveBeenCalled();
-
-    //try to change cancelled -> preparing
-    row[4].nativeElement.click();
-    tick();
-    fixture.detectChanges();
-    selectOptions[1].nativeElement.click();
-    tick();
-    fixture.detectChanges();
-    expect(component.onChange).not.toHaveBeenCalled();
-
-    //try to change cancelled -> delivered
-    row[4].nativeElement.click();
-    tick();
-    fixture.detectChanges();
-    selectOptions[2].nativeElement.click();
-    tick();
-    fixture.detectChanges();
-    expect(component.onChange).not.toHaveBeenCalled();
-
-    flush();
-  }));
-
-  //C53 + C54
-  fit('should change paid', fakeAsync(() => {
-    //try to change paid
-    fixture.detectChanges();
-    spyOn(component, 'updatePaid');
-    const box = el.query(By.css('#paidCheckbox')).nativeElement;
-    // box[0].nativeElement.click();
-    box.click();
-    tick();
-    fixture.detectChanges();
-    tick();
-    expect(component.updatePaid).toHaveBeenCalledTimes(1);
-
-    // try to change back
-    box.click();
-    tick();
-    fixture.detectChanges();
-    tick();
-    expect(component.updatePaid).toHaveBeenCalledTimes(2);
-  }));
-
-  // fit('should change status open -> delivered', fakeAsync(() => {
-  //   //try to change open -> delivered
-  //   fixture.detectChanges();
-  //   spyOn(component, 'onChange');
-  //   const row = el.query(By.css('#selectStatus')).nativeElement;
-  //   row.click();
-  //   tick();
-  //   fixture.detectChanges();
-  //   const selectOptions = el.queryAll(By.css('#optionForStatus'));
-  //   selectOptions[2].nativeElement.click();
-  //   tick();
-  //   fixture.detectChanges();
-  //   expect(component.onChange).toHaveBeenCalled();
-  //
-  //   flush();
-  // }));
-
-  // //C50
-  // fit('should change status open in prepairing', async() => {
-  //   fixture.detectChanges();
-  //   spyOn(component, 'onChange');
-  //   const row = el.query(By.css('#selectStatus')).nativeElement;
-  //   row.click();
-  //   fixture.detectChanges();
-  //   const selectOptions = el.queryAll(By.css('#optionForStatus'));
-  //   selectOptions[1].nativeElement.click();
-  //   fixture.detectChanges();
-  //   expect(component.onChange).toHaveBeenCalled();
-  // });
-
-//   it('should be able to get the value text from a select (classic test)', () => {
-//   fixture.detectChanges();
-//   const compiledDom = fixture.debugElement.nativeElement;
-//   const select = compiledDom.querySelector('#selectStatus');
-//   select.click();
-//   fixture.detectChanges();
-//   const optionSelectList: NodeListOf<HTMLElement> = overlay.querySelectorAll('#optionForStatus');
-//
-//   optionSelectList[1].click();
-//   fixture.detectChanges();
-//
-//   expect(select.textContent).toEqual('preparing');
-// });
 
 });
 

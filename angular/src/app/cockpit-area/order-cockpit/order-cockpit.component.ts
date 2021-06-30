@@ -2,7 +2,6 @@ import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
-import { Title } from '@angular/platform-browser';
 import { TranslocoService } from '@ngneat/transloco';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
@@ -13,7 +12,6 @@ import {
 } from '../../shared/backend-models/interfaces';
 import { OrderListView } from '../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
-import { OrderChangeDialogComponent } from './order-change-dialog/order-change-dialog.component';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 
 @Component({
@@ -39,37 +37,33 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
 
   data: any;
   columns: any[];
-  columnsb: any[];
   columnss: any[];
 
   displayedColumns: string[] = [
-    'booking.tableId',
     'booking.bookingDate',
-    'booking.owner',
+    'booking.email',
+    'booking.bookingToken',
     'paid',
     'orderStatus',
-    'orderEdit',
   ];
 
   pageSizes: number[];
 
-  test: any;
-
   filters: FilterCockpit = {
-    tableId: undefined,
+    bookingDate: undefined,
+    email: undefined,
+    bookingToken: undefined,
     orderStatus: undefined,
     paid: undefined,
   };
 
   constructor(
-    title: Title,
     private dialog: MatDialog,
     private translocoService: TranslocoService,
     private waiterCockpitService: WaiterCockpitService,
     private configService: ConfigService,
     @Inject(MAT_DIALOG_DATA) dialogData: any,
   ) {
-    title.setTitle('Orders');
     this.pageSizes = this.configService.getValues().pageSizes;
     this.data = dialogData;
   }
@@ -82,9 +76,9 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       moment.locale(this.translocoService.getActiveLang());
     });
 
-    // setInterval(() => {
-    //   this.applyFilters(); // api call
-    // }, 10000);
+    setInterval(() => {
+      this.applyFilters(); // api call
+    }, 10000);
   }
 
   setOrderStatus(lang: string): void {
@@ -108,19 +102,11 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       .selectTranslateObject('cockpit.table', {}, lang)
       .subscribe((cockpitTable) => {
         this.columns = [
-          { name: 'booking.tableId', label: cockpitTable.tableH },
-          { name: 'booking.owner', label: cockpitTable.ownerH },
-          { name: 'booking.bookingDate', label: cockpitTable.reservationDateH },
-          { name: 'paid', label: cockpitTable.paidH },
-          { name: 'orderStatus', label: cockpitTable.orderStatusH },
-        ];
-      });
-
-       this.translocoSubscription = this.translocoService
-      .selectTranslateObject('buttons', {}, lang)
-      .subscribe((button) => {
-        this.columnsb = [
-          { name: 'orderEdit', label: button.action },
+          {name: 'booking.bookingDate', label: cockpitTable.reservationDateH},
+          {name: 'booking.email', label: cockpitTable.emailH},
+          {name: 'booking.bookingToken', label: cockpitTable.bookingTokenH},
+          {name: 'paid', label: cockpitTable.paidH},
+          {name: 'orderStatus', label: cockpitTable.orderStatusH},
         ];
       });
   }
@@ -143,40 +129,11 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       });
   }
 
-  checkOrderStatus() : string {
-    if(this.filters.orderStatus != undefined)
-      return this.filters.orderStatus;
-    else return "all";
-  }
-
-  checkPaid() : string {
-    if(this.filters.paid != undefined)
-      if(this.filters.paid == true) 
-        return "true";
-      else 
-        return "false";
-    else return "all";
-  }
-
   clearFilters(filters: any): void {
-    this.filters.paid = undefined;
-    this.filters.orderStatus = undefined;
     filters.reset();
     this.applyFilters();
     this.pagingBar.firstPage();
   }
-
-  filterPaid(value: any) : void {
-    if(value == "all")  this.filters.paid = null;
-    else if(value == "true") this.filters.paid = true;
-    else this.filters.paid = false;
-  }
-
-  filterState(value: any) : void {
-    if(value == "all")  this.filters.orderStatus = null;
-    else this.filters.orderStatus = value;
-  }
-
 
   page(pagingEvent: PageEvent): void {
     this.pageable = {
@@ -205,13 +162,6 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
     });
   }
 
-  editOrder(selection: OrderListView): void {
-    this.dialog.open(OrderChangeDialogComponent, {
-      width: '80%',
-      data: selection,
-    });
-  }
-
   updatePaid(paid: any, element: any): void {
     element.order.paid = paid.checked;
     this.waiterCockpitService
@@ -219,22 +169,6 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
       .subscribe((data: any) => {
       this.applyFilters();
     });
-  }
-
-  getTranslationPathState(orderStatus: string) : string {
-    let path = "cockpit.orders.orderStatus.";
-
-    if(orderStatus == "open") return path += "open";
-    if(orderStatus == "preparing") return path += "preparing";
-    if(orderStatus == "delivered") return path += "delivered";
-    if(orderStatus == "cancelled") return path += "cancelled";
-  }
-
-  getTranslationPathPaid(paid: boolean) : string {
-    let path = "cockpit.orders.payment.";
-
-    if(paid) return path += "yes";
-    else return path += "no";
   }
 
   onChange(orderStatus: string, element: any ): void {
@@ -248,11 +182,6 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
 
   disableOption(orderStatus: string, element: any) : boolean {
     return this.disableCurrentStatusOption(orderStatus, element) || this.checkValidStatusTransition(orderStatus, element);
-  }
-
-  checkIfOpen(element: any) : boolean {
-    if(element.order.orderStatus == "open") return false;
-    else return true;
   }
 
    disableCurrentStatusOption(orderStatus: string, element: any): boolean {

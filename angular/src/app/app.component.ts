@@ -1,20 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { SidenavService } from './sidenav/services/sidenav.service';
-import { AuthService } from './core/authentication/auth.service';
-import { ElectronService } from 'ngx-electron';
-import { find } from 'lodash';
+import {SidenavService} from './sidenav/services/sidenav.service';
+import {AuthService} from './core/authentication/auth.service';
+import {ElectronService} from 'ngx-electron';
+import {find} from 'lodash';
 import * as moment from 'moment';
 import * as fromRoot from './store';
 import * as fromAuth from './user-area/store';
 import * as fromConfig from './core/config/store';
-import { fadeAnimation } from './core/animations/fade.animation';
-import { PredictionCockpitComponent } from './cockpit-area/prediction-cockpit/prediction-cockpit.component';
-import { ClusteringCockpitComponent } from './cockpit-area/clustering-cockpit/clustering-cockpit.component';
-import { ConfigService } from './core/config/config.service'; //HEEEEEEEEREEEEEEEEEEEE!!!
-import { Observable } from 'rxjs';
-import { select, Store } from '@ngrx/store';
-import { TranslocoService } from '@ngneat/transloco';
+import {fadeAnimation} from './core/animations/fade.animation';
+import {PredictionCockpitComponent} from './cockpit-area/prediction-cockpit/prediction-cockpit.component';
+import {AdminCockpitComponent} from './cockpit-area/admin-cockpit/admin-cockpit.component';
+import {OrderCockpitComponent} from './cockpit-area/order-cockpit/order-cockpit.component';
+import {ClusteringCockpitComponent} from './cockpit-area/clustering-cockpit/clustering-cockpit.component';
+import {ConfigService} from './core/config/config.service'; //HEEEEEEEEREEEEEEEEEEEE!!!
+import {Observable} from 'rxjs';
+import {select, Store} from '@ngrx/store';
+import {TranslocoService} from '@ngneat/transloco';
 
 @Component({
   selector: 'app-public-main',
