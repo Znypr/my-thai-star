@@ -27,7 +27,6 @@ import { click } from '../../shared/common/test-utils';
 import { ascSortOrder } from '../../../in-memory-test-data/db-order-asc-sort';
 import { orderData } from '../../../in-memory-test-data/db-order';
 
-
 const mockDialog = {
   open: jasmine.createSpy('dialog.open').and.returnValue({
     afterClosed: () => of(true),
@@ -48,7 +47,6 @@ const translocoServiceStub = {
 
 const waiterCockpitServiceStub = {
   getOrders: jasmine.createSpy('getOrders').and.returnValue(of(orderData)),
-  // updatePaid: jasmine.createSpy('updatePaid').and.returnValue(of(null)),
 };
 
 const waiterCockpitServiceSortStub = {
@@ -70,10 +68,6 @@ class TestBedSetUp {
       ],
       imports: [
         MatDialogModule,
-<<<<<<< HEAD
-=======
-
->>>>>>> adminbugs
         BrowserAnimationsModule,
         ReactiveFormsModule,
         getTranslocoModule(),
@@ -133,7 +127,7 @@ fdescribe('OrderCockpitComponent', () => {
     expect(component.totalOrders).toBe(8);
   });
 
-  fit('should clear form and reset', fakeAsync(() => {
+  it('should clear form and reset', fakeAsync(() => {
     const clearFilter = el.query(By.css('.orderClearFilters'));
     click(clearFilter);
     fixture.detectChanges();
@@ -142,9 +136,8 @@ fdescribe('OrderCockpitComponent', () => {
     expect(component.totalOrders).toBe(8);
   }));
 
-  it('should open OrderDialogComponent dialog on click of row and close by closeButton', fakeAsync(() => {
+  fit('should open OrderDialogComponent dialog on click of row and close by closeButton', fakeAsync(() => {
     fixture.detectChanges();
-    tick();
     const clearFilter = el.queryAll(By.css('#Booking'));
     click(clearFilter[0]);
     tick();
@@ -167,7 +160,6 @@ fdescribe('OrderCockpitComponent', () => {
     expect(component.totalOrders).toBe(8);
   }));
 
-<<<<<<< HEAD
   it('should filter the order table on click of submit', fakeAsync(() => {
     fixture.detectChanges();
     const submit = el.query(By.css('.orderApplyFilters'));
@@ -187,7 +179,7 @@ fdescribe('OrderCockpitComponent', () => {
   // }));
 
   // //C50 + C49
-  it('should change status open -> prepairing but not preparing -> open', fakeAsync(() => {
+  fit('should change status open -> prepairing but not preparing -> open', fakeAsync(() => {
     //try to change open -> preparing
     fixture.detectChanges();
     spyOn(component, 'onChange');
@@ -214,7 +206,7 @@ fdescribe('OrderCockpitComponent', () => {
   }));
 
 //C51
-  it('should change status open -> delivered', fakeAsync(() => {
+  fit('should change status open -> delivered', fakeAsync(() => {
     //try to change open -> delivered
     fixture.detectChanges();
     spyOn(component, 'onChange');
@@ -232,7 +224,7 @@ fdescribe('OrderCockpitComponent', () => {
   }));
 
 //C52
-  it('should change status open -> cancelled', fakeAsync(() => {
+  fit('should change status open -> cancelled', fakeAsync(() => {
     //try to change open -> delivered
     fixture.detectChanges();
     spyOn(component, 'onChange');
@@ -250,7 +242,7 @@ fdescribe('OrderCockpitComponent', () => {
   }));
 
   //C47
-  it('should change status preparing -> cancelled', fakeAsync(() => {
+  fit('should change status preparing -> cancelled', fakeAsync(() => {
     //try to change open -> delivered
     fixture.detectChanges();
     spyOn(component, 'onChange');
@@ -268,7 +260,7 @@ fdescribe('OrderCockpitComponent', () => {
   }));
 
   //C48
-  it('should change status preparing -> cancelled', fakeAsync(() => {
+  fit('should change status preparing -> cancelled', fakeAsync(() => {
     //try to change open -> delivered
     fixture.detectChanges();
     spyOn(component, 'onChange');
@@ -286,7 +278,7 @@ fdescribe('OrderCockpitComponent', () => {
   }));
 
   //C48
-  it('should not change status cancelled -> open/preparing/delivered', fakeAsync(() => {
+  fit('should change not change status cancelled -> open/preparing/delivered', fakeAsync(() => {
     //try to change cancelled -> open
     fixture.detectChanges();
     spyOn(component, 'onChange');
@@ -322,35 +314,25 @@ fdescribe('OrderCockpitComponent', () => {
   }));
 
   //C53 + C54
-  it('should change paid', async() => {
+  fit('should change paid', fakeAsync(() => {
     //try to change paid
     fixture.detectChanges();
-    // tick();
-    spyOn(component,'updatePaid').and.callThrough();
-    const box = fixture.debugElement.nativeElement.querySelector('#paidCheckbox');
-    expect(component.updatePaid).toHaveBeenCalledTimes(0);
+    spyOn(component, 'updatePaid');
+    const box = el.query(By.css('#paidCheckbox')).nativeElement;
     // box[0].nativeElement.click();
     box.click();
-    box.dispatchEvent(new Event('click'));
+    tick();
     fixture.detectChanges();
-    // tick();
-    await fixture.whenStable().then(() => {
-      fixture.detectChanges(); // <--- this line
-      expect(box).toBeTruthy();
-
-    });
-    // expect(component.updatePaid).toHaveBeenCalledTimes(1);
+    tick();
+    expect(component.updatePaid).toHaveBeenCalledTimes(1);
 
     // try to change back
-    // box.click();
-    // tick();
-    // fixture.detectChanges();
-    // tick();
-    // expect(component.updatePaid).toHaveBeenCalledTimes(2);
-  });
-
-
-
+    box.click();
+    tick();
+    fixture.detectChanges();
+    tick();
+    expect(component.updatePaid).toHaveBeenCalledTimes(2);
+  }));
 
   // fit('should change status open -> delivered', fakeAsync(() => {
   //   //try to change open -> delivered
@@ -395,25 +377,10 @@ fdescribe('OrderCockpitComponent', () => {
 //
 //   expect(select.textContent).toEqual('preparing');
 // });
-=======
-  //C50
-it('should change status open in prepairing', fakeAsync(() => {
-  fixture.detectChanges();
-  spyOn(component, 'onChange');
-  const row = el.query(By.css('#selectStatus')).nativeElement;
-  row.click();
-  fixture.detectChanges();
-  const selectOptions = el.queryAll(By.css('#optionForStatus'));
-  selectOptions[1].nativeElement.click();
-  fixture.detectChanges();
-  expect(component.onChange).toHaveBeenCalled();
-  flush();
-}));
->>>>>>> adminbugs
 
 });
 
-fdescribe('TestingOrderCockpitComponentWithSortOrderData', () => {
+describe('TestingOrderCockpitComponentWithSortOrderData', () => {
   let component: OrderCockpitComponent;
   let fixture: ComponentFixture<OrderCockpitComponent>;
   let store: Store<State>;

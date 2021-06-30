@@ -14,17 +14,17 @@ import { dialogOrderDetails } from '../../../../in-memory-test-data/db-order-dia
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-fdescribe('OrderDialogComponent', () => {
+describe('OrderDialogComponent', () => {
   let component: OrderDialogComponent;
   let fixture: ComponentFixture<OrderDialogComponent>;
   let initialState;
   let el: DebugElement;
 
   beforeEach(async(() => {
-    initialState = { config };
+    initialState = {config};
     TestBed.configureTestingModule({
       providers: [
-        { provide: MAT_DIALOG_DATA, useValue: dialogOrderDetails },
+        {provide: MAT_DIALOG_DATA, useValue: dialogOrderDetails},
         WaiterCockpitService,
         PriceCalculatorService,
         provideMockStore({ initialState }),
