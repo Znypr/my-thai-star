@@ -38,7 +38,7 @@ VALUES (1, 1, 'Garlic Paradise Salad',
         'From the world-famous Gilroy Garlic Festival to a fierce 40-clove garlic salad in San Francisco and a gut-busting garlic sandwich in Philly, we feature the tastiest places to get your garlic on.',
         '7.9900000000', 1);
 INSERT INTO Dish (id, modificationCounter, name, description, price, idImage)
-VALUES (2, 1, 'Thai green chicken curry',
+VALUES (2, 1, 'Thai Green Chicken Curry',
         'Master this aromatic, creamy & extremely tasty chicken Thai green curry recipe from Jamie Oliver & treat yourself to an authentic taste of South East Asia.',
         '14.7500000000', 2);
 INSERT INTO Dish (id, modificationCounter, name, description, price, idImage)
