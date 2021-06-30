@@ -44,7 +44,8 @@ public class Main {
         String json_body = "{\"username\":\"admin\",\"password\":\"waiter\"}";
 
         try {
-            HttpResponse res = bo.basicPostWithHttpResponse(json_body, "http://localhost:8081" + "/mythaistar/login");
+
+            String res = bo.basicPost(json_body, "http://localhost:8081" + "/mythaistar/login");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NotFound notFound) {
