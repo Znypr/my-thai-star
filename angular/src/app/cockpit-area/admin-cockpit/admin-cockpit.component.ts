@@ -52,6 +52,7 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   resetTokenEntity: any;
   //
   columns: any[];
+  roles: any[];
   //
   displayedColumns: string[] = [
     'user.id',
