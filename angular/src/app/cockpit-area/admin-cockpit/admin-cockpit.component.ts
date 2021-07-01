@@ -55,10 +55,10 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
   roles: any[];
   //
   displayedColumns: string[] = [
-    'user.id',
     'user.username',
     'user.email',
     'user.idRole',
+    'user.id',
   ];
 
   pageSizes: number[];

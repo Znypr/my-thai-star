@@ -14,10 +14,13 @@
     "applyFilters": "Apply Filters",
     "removeComment": "Remove Comment",
     "addComment": "Add comment",
-    "create":"Create",
-    "reset":"Reset",
-    "delete":"Delete",
-    "save":"Save"
+    "create": "Create",
+    "add": "Add",
+    "delete": "Delete",
+    "reset": "Reset",
+    "edit": "Edit",
+    "help": "Help",
+    "action": "Action"
   },
   "table": {
     "rowsPage": "Rows per page",
@@ -56,13 +59,22 @@
       "unpaidSuccess": "Payment successful removed",
       "paidFail": "Payment failed"
     },
-    "deleteUser":{
-      "success":"User was successfully removed",
-      "fail":"User couldn't be removed"
+    "deleteUser": {
+      "success": "User was successfully removed",
+      "fail": "User couldn't be removed"
     },
-    "createUser":{
-      "success":"User successfully created",
-      "fail":"Email or username already exists"
+    "createUser": {
+      "success": "User successfully created",
+      "fail": "Email or username already exists"
+    },
+    "table": {
+      "deleteSuccess": "Table removed successfully",
+      "deleteFail": "Table couldn't be removed",
+      "addSuccess": "Table added successfully",
+      "addFail": "Table couldn't be added"
+    },
+    "orderChange": {
+      "reset": "Order edit was reset"
     }
   },
   "formFields": {
@@ -82,12 +94,12 @@
     "comment": "Comment",
     "total": "Total",
     "referenceNumber": "Reference number",
-    "orderStatus": "Status", 
-    "paid":"Paid",
+    "orderStatus": "Status",
+    "paid": "Paid",
     "tableName": "Table Name",
     "alexaId": "Alexa ID",
-    "owner":"Owner",
-    "table":"Table ID"
+    "owner": "Owner",
+    "table": "Table ID"
   },
   "bookTable": {
     "title": "You can invite your friends to lunch or book a table",

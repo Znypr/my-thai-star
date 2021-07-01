@@ -15,10 +15,13 @@
     "applyFilters": "Filter anwenden",
     "removeComment": "Kommentar entfernen",
     "addComment": "Kommentar hinzufügen",
-    "create":"Erstellen",
-    "reset":"Zurücksetzen",
-    "delete":"Löschen",
-    "save":"Speichern"
+    "add": "Hinzufügen",
+    "delete": "Entfernen",
+    "reset": "Zurücksetzen",
+    "edit": "Bearbeiten",
+    "help": "Hilfe",
+    "action": "Aktion",
+    "create": "Erstellen"
   },
   "table": {
     "rowsPage": "Zeilen pro Seite",
@@ -57,9 +60,18 @@
       "unpaidSuccess": "Bezahlung erfolgreich entfernt",
       "paidFail": "Bezahlung fehlgeschlagen"
     },
-    "deleteUser":{
-      "success":"Benutzer wurde erfolgreich entfernt",
-      "fail":"Benutzer konnte nicht entfernt werden"
+    "deleteUser": {
+      "success": "Benutzer wurde erfolgreich entfernt",
+      "fail": "Benutzer konnte nicht entfernt werden"
+    },
+    "table": {
+      "deleteSuccess": "Tisch erfolgreich entfernt",
+      "deleteFail": "Tisch konnte nicht entfernt werden",
+      "addSuccess": "Tisch erfolgreich hinzugefügt",
+      "addFail": "Tisch konnte nicht hinzugefügt werden"
+    },
+    "orderChange": {
+      "reset": "Bestellungsänderung wurde zurückgesetzt"
     }
   },
   "formFields": {
@@ -263,7 +275,10 @@
       "paidH": "Bezahlt",
       "ownerH": "Eigentümer",
       "tableH": "Tisch",
-      "creationDateH": "Erstelldatum"
+      "creationDateH": "Erstelldatum",
+      "tableSelect": "Tisch Auswahl",
+      "needHelpH": "Hilfe erforderlich",
+      "assistantsH": "Gäste"
     },
     "users": {
         "title": "Benutzer Übersicht",
