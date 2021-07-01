@@ -21,12 +21,18 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { click } from '../../shared/common/test-utils';
 import { userData } from '../../../in-memory-test-data/db-admin-data';
+import { TranslocoService } from '@ngneat/transloco';
+import { getTranslocoModule } from '../../transloco-testing.module';
+import {SnackBarService} from 'app/core/snack-bar/snack-bar.service';
 
 const adminCockpitServiceStub = {
-  getUsers: jasmine.createSpy('getUsers').and.returnValue(of(userData
-
-  )),
+  getUsers: jasmine.createSpy('getUsers').and.returnValue(of(userData)),
   snackBar(){return null;},
+  //snackBar: jasmine.createSpy('snackBar').and.returnValue(of("Alle Felder müssen ausgefüllt sein", "verstanden")),
+};
+
+const snackBarServiceStub = {
+  openSnack(a,b,c){return null;},
   //snackBar: jasmine.createSpy('snackBar').and.returnValue(of("Alle Felder müssen ausgefüllt sein", "verstanden")),
 };
 const mockDialog = {
@@ -34,6 +40,23 @@ const mockDialog = {
     afterClosed: () => of(true),
   }),
 };
+
+const translocoServiceStub = {
+  selectTranslateObject: of({
+    title: "User Overview",
+    usernameH:"Username",
+    emailH:"Email",
+    roleH:"Role",
+    idH:"ID",
+    passwordH:"Password",
+    inputTitle:"Create User",
+    waiter:"Waiter",
+    customer:"Customer",
+    manager:"Manager",
+    admin:"Admin",
+
+  } as any),
+  };
 
 class TestBedSetUp {
   static loadAdminCockpitServiceStud(adminCockpitStub: any): any {
@@ -48,6 +71,10 @@ class TestBedSetUp {
         },
         ConfigService,
         AdminDialogComponent,
+        TranslocoService,
+        { provide: SnackBarService, useValue:
+          snackBarServiceStub
+        },
         provideMockStore({ initialState }),
       ],
       imports: [
@@ -55,6 +82,7 @@ class TestBedSetUp {
         BrowserAnimationsModule,
         ReactiveFormsModule,
         CoreModule,
+        getTranslocoModule(),
       ],
     });
   }
@@ -69,6 +97,8 @@ fdescribe('AdminCockpitComponent', () => {
   let dialog: MatDialog;
   let configService: ConfigService;
   let el: DebugElement;
+  let translocoService: TranslocoService;
+  let snackBarService: SnackBarService;
 
 //   beforeEach(async(() => {
 //     TestBed.configureTestingModule({
@@ -91,17 +121,39 @@ fdescribe('AdminCockpitComponent', () => {
         el = fixture.debugElement;
         store = TestBed.inject(Store);
         configService = new ConfigService(store);
+        translocoService = TestBed.inject(TranslocoService);
         adminCockpitService = TestBed.inject(AdminCockpitService);
+        snackBarService= TestBed.inject(SnackBarService);
         dialog = TestBed.inject(MatDialog);
+        component.roles= [
+          {label: 'roles.customer', permission: 0},
+          {label: 'roles.waiter', permission: 1},
+          {label: 'roles.manager', permission: 2},
+          {label: 'roles.admin', permission: 3}
+        ];
+        component.columns=[
+          {name: 'username', label: 'cockpitTable.usernameH'},
+          {name: 'email', label: 'cockpitTable.emailH'},
+          {name: 'role', label: 'cockpitTable.roleH'},
+          {name: 'id', label: 'cockpitTable.idH'},
+          {name: 'password', label: 'cockpitTable.passwordH'}
+        ];
       });
   }));
 
-  it('should create', () => {
+  it('should create', fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
     expect(component).toBeTruthy();
-  });
+  }));
 
   //C1 + C2
   it('should request adding a user', fakeAsync(() => {
+    // spyOn(translocoService, 'selectTranslateObject').and.returnValue(
+    //   translocoServiceStub.selectTranslateObject,
+    // );
+    spyOn(translocoService, 'selectTranslateObject').and.callThrough(
+    );
     fixture.detectChanges();
     spyOn(component, 'getUserInput');
     //expect(component.getUserInput).toHaveBeenCalledTimes(0);
@@ -203,20 +255,22 @@ it('should create user with symbols', () => {
 it('should open snackBar if not all fields are provided', fakeAsync(() => {
   fixture.detectChanges();
   tick();
-  spyOn(adminCockpitService,'snackBar').and.callThrough();
-  //expect(adminCockpitService.snackBar).toHaveBeenCalledTimes(0);
-  const username = el.query(By.css('#Username'));
-  const email = el.query(By.css('#Email'));
-  const role = el.query(By.css('#Role'));
-  const password = el.query(By.css('#Password'));
-  const submit = el.query(By.css('#submitButton'));
+  spyOn(snackBarService,'openSnack').and.callFake(()=>{});
+  expect(snackBarService.openSnack).toHaveBeenCalledTimes(0);
+  const username = fixture.debugElement.nativeElement.querySelector('#Username');
+  const email = fixture.debugElement.nativeElement.querySelector('#Email');
+  const role = fixture.debugElement.nativeElement.querySelector('#Role');
+  const password = fixture.debugElement.nativeElement.querySelector('#Password');
+  const submit = fixture.debugElement.nativeElement.querySelector('#submitButton');
 
-  username.nativeElement.value="Jürgen";
-  username.nativeElement.dispatchEvent(new Event('input'));
-  submit.nativeElement.click();
+  username.value="Jürgen";
+  username.dispatchEvent(new Event('input'));
   fixture.detectChanges();
   tick();
-  expect(adminCockpitService.snackBar).toHaveBeenCalledTimes(1);
+  submit.click();
+  fixture.detectChanges();
+  tick();
+  expect(snackBarService.openSnack).toHaveBeenCalledTimes(1);
 }));
 
 

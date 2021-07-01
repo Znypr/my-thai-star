@@ -151,7 +151,7 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
       event.target.Password.value
     ];
 
-    if(event.target.Username.value != null && event.target.Email.value != null && event.target.Role.value != null && event.target.Password.value != null) {
+  if(this.username.valid && this.email.valid && this.password.valid){
       const responseOfCreation = this.adminCockpitService.addUser(info[0], info[1], info[2], info[3]).subscribe(res => {
           this.applyFilters();
         },

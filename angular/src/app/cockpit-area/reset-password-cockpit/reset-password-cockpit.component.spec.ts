@@ -14,6 +14,8 @@ import { click } from '../../shared/common/test-utils';
 import { DebugElement } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs/internal/observable/of';
+import { TranslocoService } from '@ngneat/transloco';
+import { getTranslocoModule } from '../../transloco-testing.module';
 
 
 
@@ -32,13 +34,15 @@ fdescribe('ResetPasswordCockpitComponent', () => {
         // { provide: MAT_DIALOG_DATA, useValue: dialogOrderDetails },
         ConfigService,
         AdminCockpitService,
+        TranslocoService,
         provideMockStore({ initialState }),
       ],
       imports: [
         BrowserAnimationsModule,
         // AdminCockpitModule,
         CoreModule,
-        RouterTestingModule
+        RouterTestingModule,
+        getTranslocoModule(),
       ],
       declarations: [ ResetPasswordCockpitComponent ]
     })

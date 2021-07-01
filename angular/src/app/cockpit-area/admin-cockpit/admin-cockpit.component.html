@@ -71,7 +71,7 @@
       <!-- username column -->
       <ng-container matColumnDef="user.username">
         <th mat-header-cell *matHeaderCellDef>{{ columns[0].label }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+        <td id="User" mat-cell *matCellDef="let element">{{ element.username }}</td>
       </ng-container>
 
       <!-- email column -->
@@ -106,4 +106,3 @@
   </mat-paginator>
 
 </mat-card>
-
