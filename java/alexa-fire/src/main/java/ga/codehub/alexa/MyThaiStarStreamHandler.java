@@ -21,7 +21,7 @@ import ga.codehub.alexa.handlers.*;
 public class MyThaiStarStreamHandler extends SkillStreamHandler {
     // Add your base URL below
     public static final String ALEXA_SKILL_ID = "amzn1.ask.skill.c3ce8e9c-81f3-4a53-bf3d-53db70026366";
-    public static final String BASE_URL = "https://fd4568544e53.ngrok.io/mythaistar/services/rest";
+    public static final String BASE_URL = "https://91e7b89be27b.ngrok.io/mythaistar/services/rest";
 
     private static Skill getSkill() {
         return Skills.standard()
