@@ -39,7 +39,7 @@ public class Main {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\Joost\\Desktop\\Projekte\\my-thai-star\\java\\example-creator\\driver\\chromedriver.exe");
         System.setProperty("webdriver.gecko.driver", "java/example-creator/driver/geckodriver/geckodriver");
 
-        ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
+        ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
 
         //login in a user;
         String json_body = "{\"username\":\"admin\",\"password\":\"waiter\"}";
