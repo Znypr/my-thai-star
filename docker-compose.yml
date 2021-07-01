@@ -1,5 +1,4 @@
 version: '3'
-
 services:
   database:
     build: 'database/'
@@ -7,7 +6,7 @@ services:
     container_name: 'database'
     image: mysql
     ports:
-      - '3306:3306'
+      - '3307:3306'
     environment:
       - MYSQL_ROOT_PASSWORD=root
     networks:
@@ -33,6 +32,8 @@ services:
     restart: always
     container_name: 'mts_java'
     image: my-thai-star/java:latest
+    depends_on:
+      - "database"
     networks:
       - my-thai-star
 networks:

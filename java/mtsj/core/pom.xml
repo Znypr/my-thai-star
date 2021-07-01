@@ -308,11 +308,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-            <excludes>
-                <exclude>config/application.properties</exclude>
-            </excludes>
-        </configuration>
       </plugin>
     </plugins>
   </build>

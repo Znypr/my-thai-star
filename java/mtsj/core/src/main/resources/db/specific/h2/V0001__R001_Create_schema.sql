@@ -1,225 +1,1203 @@
--- This is the SQL script for setting up the DDL for the h2 database
--- In a typical project you would only distinguish between main and test for flyway SQLs
--- However, in this sample application we provide support for multiple databases in parallel
--- You can simply choose the DB of your choice by providing -Pmysql, -Ppostgresql, ... in your maven build
+-- MySQL Workbench Forward Engineering
 
-CREATE SEQUENCE HIBERNATE_SEQUENCE START WITH 1000000;
+SET
+@OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET
+@OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET
+@OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
--- *** Table ***
-CREATE TABLE "Table" (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  modificationCounter INTEGER NOT NULL,
-  seatsNumber INTEGER NOT NULL,
-  tableName VARCHAR (255) NULL,
-  alexaId VARCHAR (255) NULL,
-  CONSTRAINT PK_Table PRIMARY KEY(id)
-);
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema mythai
+-- -----------------------------------------------------
 
--- *** UserRole ***
-CREATE TABLE UserRole (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  modificationCounter INTEGER NOT NULL,
-  name VARCHAR (255),
-  active BOOLEAN,
-  CONSTRAINT PK_UserRole PRIMARY KEY(id)
-);
+-- -----------------------------------------------------
+-- Schema mythai
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mythai` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE
+`mythai` ;
 
--- *** User ***
-CREATE TABLE User(
-                     id                  BIGINT       NOT NULL AUTO_INCREMENT,
-                     modificationCounter INTEGER      NOT NULL,
-                     username            VARCHAR(255) NOT NULL,
-                     password            VARCHAR(255) NULL,
-                     secret              VARCHAR(255) NULL,
-                     twoFactorStatus     BOOLEAN      NULL DEFAULT ((0)),
-                     email               VARCHAR(120) NOT NULL,
-                     idRole              BIGINT       NOT NULL,
-                     CONSTRAINT PK_User PRIMARY KEY (id),
-                     UNIQUE KEY user_name (username) NOCHECK,
-                     UNIQUE KEY user_email (email) NOCHECK,
--- constraint uq1 unique key (username) NOCHECK,
--- constraint uq2 unique key (email) NOCHECK,
-                     CONSTRAINT FK_User_idRole FOREIGN KEY (idRole) REFERENCES UserRole (id) NOCHECK
-);
+-- -----------------------------------------------------
+-- Table `mythai`.`BinaryObject`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`BinaryObject`
+(
+    `id`
+    BIGINT
+    NOT
+    NULL,
+    `modificationCounter`
+    INT
+    NOT
+    NULL,
+    `content`
+    LONGBLOB
+    NULL
+    DEFAULT
+    NULL,
+    `mimeType`
+    VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    `filesize` BIGINT NULL DEFAULT NULL,
+    PRIMARY KEY
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
 
--- *** ResetToken ***
-CREATE TABLE ResetToken (
-id BIGINT NOT NULL AUTO_INCREMENT,
-modificationCounter INTEGER NOT NULL,
-idUser BIGINT NOT NULL,
-expires TIMESTAMP NOT NULL,
-token VARCHAR (255) NOT NULL,
-flag BIT NOT NULL,
-CONSTRAINT PK_ResetToken PRIMARY KEY(id),
-CONSTRAINT FK_ResetToken_idUser FOREIGN KEY(idUser) REFERENCES User(id) NOCHECK
-);
 
--- *** Booking ***
-CREATE TABLE Booking (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  modificationCounter INTEGER NOT NULL,
-  idUser BIGINT,
-  name VARCHAR (255) NOT NULL,
-  bookingToken VARCHAR (255),
-  comment VARCHAR (4000),
-  email VARCHAR (255) NOT NULL,
-  bookingDate TIMESTAMP NOT NULL,
-  expirationDate TIMESTAMP,
-  creationDate TIMESTAMP,
-  cancelled BOOLEAN NOT NULL DEFAULT ((0)) ,
-  bookingType INTEGER,
-  idTable BIGINT,
-  idOrder BIGINT,
-  assistants INTEGER,
-  needHelp BOOLEAN NOT NULL DEFAULT ((0)) ,
-  CONSTRAINT PK_Booking PRIMARY KEY(id),
-  CONSTRAINT FK_Booking_idUser FOREIGN KEY(idUser) REFERENCES User(id) NOCHECK,
-  CONSTRAINT FK_Booking_idTable FOREIGN KEY(idTable) REFERENCES "Table"(id) NOCHECK
-);
+-- -----------------------------------------------------
+-- Table `mythai`.`UserRole`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`UserRole`
+(
+    `id`
+    BIGINT
+    NOT
+    NULL,
+    `modificationCounter`
+    INT
+    NOT
+    NULL,
+    `active`
+    BIT
+(
+    1
+) NOT NULL,
+    `name` VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    PRIMARY KEY
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
 
--- *** InvitedGuest ***
-CREATE TABLE InvitedGuest (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  modificationCounter INTEGER NOT NULL,
-  idBooking BIGINT NOT NULL,
-  guestToken VARCHAR (255),
-  email VARCHAR (60),
-  accepted BOOLEAN,
-  modificationDate TIMESTAMP,
-  idOrder BIGINT,
-  CONSTRAINT PK_InvitedGuest PRIMARY KEY(id),
-  CONSTRAINT FK_InvitedGuest_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK
-);
 
--- *** OrderDish ***
-CREATE TABLE Orders (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  modificationCounter INTEGER NOT NULL,
-  idBooking BIGINT NOT NULL,
-  idInvitedGuest BIGINT,
-  idHost BIGINT,
-  orderStatus VARCHAR (255) NOT NULL,
-  paid BOOLEAN NOT NULL,
-  CONSTRAINT PK_Order PRIMARY KEY(id),
-  CONSTRAINT FK_Order_idBooking FOREIGN KEY(idBooking) REFERENCES Booking(id) NOCHECK,
-  CONSTRAINT FK_Order_idInvitedGuest FOREIGN KEY(idInvitedGuest) REFERENCES InvitedGuest(id) NOCHECK
-);
+-- -----------------------------------------------------
+-- Table `mythai`.`User`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`User`
+(
+    `id`
+    BIGINT
+    NOT
+    NULL,
+    `modificationCounter`
+    INT
+    NOT
+    NULL,
+    `email`
+    VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    `password` VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    `secret` VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    `twoFactorStatus` BIT
+(
+    1
+) NOT NULL,
+    `username` VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    `idRole` BIGINT NULL DEFAULT NULL,
+    PRIMARY KEY
+(
+    `id`
+),
+    INDEX `FKjd0ft4x6tx0s5bofbwgb5edmc`
+(
+    `idRole` ASC
+),
+    CONSTRAINT `FKjd0ft4x6tx0s5bofbwgb5edmc`
+    FOREIGN KEY
+(
+    `idRole`
+)
+    REFERENCES `mythai`.`UserRole`
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
 
--- *** Category ***
-CREATE TABLE Category (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  modificationCounter INTEGER NOT NULL,
-  name VARCHAR (255),
-  description VARCHAR (4000),
-  showOrder INTEGER,
-  CONSTRAINT PK_Category PRIMARY KEY(id)
-);
 
--- *** Image ***
-CREATE TABLE Image (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  modificationCounter INTEGER NOT NULL,
-  name VARCHAR(255),
-  content blob,
-  contentType INTEGER,
-  mimeType VARCHAR(255),
-  CONSTRAINT PK_Image PRIMARY KEY(id)
-);
+-- -----------------------------------------------------
+-- Table `mythai`.`Table`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`Table`
+(
+    `id`
+    BIGINT
+    NOT
+    NULL,
+    `modificationCounter`
+    INT
+    NOT
+    NULL,
+    `alexaID`
+    VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    `seatsNumber` INT NULL DEFAULT NULL,
+    `tableName` VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    PRIMARY KEY
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
 
--- *** Dish ***
-CREATE TABLE Dish (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  modificationCounter INTEGER NOT NULL,
-  name VARCHAR (255),
-  description VARCHAR (4000),
-  price DECIMAL (16,10),
-  idImage BIGINT UNIQUE NOT NULL,
-  CONSTRAINT PK_Dish PRIMARY KEY(id),
-  CONSTRAINT FK_Dish_idImage FOREIGN KEY(idImage) REFERENCES Image(id) NOCHECK
-);
 
--- *** DishCategory ***
-CREATE TABLE DishCategory (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  modificationCounter INTEGER NOT NULL,
-  idDish BIGINT NOT NULL,
-  idCategory BIGINT NOT NULL,
-  CONSTRAINT PK_DishCategory PRIMARY KEY(id),
-  CONSTRAINT FK_DishCategory_idDish FOREIGN KEY(idDish) REFERENCES Dish(id) NOCHECK,
-  CONSTRAINT FK_DishCategory_idCategory FOREIGN KEY(idCategory) REFERENCES Category(id) NOCHECK
-);
+-- -----------------------------------------------------
+-- Table `mythai`.`InvitedGuest`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`InvitedGuest`
+(
+    `id`
+    BIGINT
+    NOT
+    NULL,
+    `modificationCounter`
+    INT
+    NOT
+    NULL,
+    `accepted`
+    BIT
+(
+    1
+) NOT NULL,
+    `email` VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    `guestToken` VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    `modificationDate` DATETIME
+(
+    6
+) NULL DEFAULT NULL,
+    `idBooking` BIGINT NULL DEFAULT NULL,
+    `idOrder` BIGINT NULL DEFAULT NULL,
+    PRIMARY KEY
+(
+    `id`
+),
+    INDEX `FKjtcygv56myq0hgr6ps8i3tydt`
+(
+    `idBooking` ASC
+),
+    INDEX `FKhskl8tosaoe4xiddvyqsxuell`
+(
+    `idOrder` ASC
+),
+    CONSTRAINT `FKhskl8tosaoe4xiddvyqsxuell`
+    FOREIGN KEY
+(
+    `idOrder`
+)
+    REFERENCES `mythai`.`Orders`
+(
+    `id`
+),
+    CONSTRAINT `FKjtcygv56myq0hgr6ps8i3tydt`
+    FOREIGN KEY
+(
+    `idBooking`
+)
+    REFERENCES `mythai`.`Booking`
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
 
--- *** Ingredient ***
-CREATE TABLE Ingredient (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  modificationCounter INTEGER NOT NULL,
-  name VARCHAR (255),
-  description VARCHAR (4000),
-  price DECIMAL (16,10),
-  CONSTRAINT PK_Ingredient PRIMARY KEY(id)
-);
 
--- *** DishIngredient ***
-CREATE TABLE DishIngredient (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  modificationCounter INTEGER NOT NULL,
-  idDish BIGINT NOT NULL,
-  idIngredient BIGINT NOT NULL,
-  CONSTRAINT PK_DishIngredient PRIMARY KEY(id),
-  CONSTRAINT FK_DishIngredient_idDish FOREIGN KEY(idDish) REFERENCES Dish(id) NOCHECK,
-  CONSTRAINT FK_DishIngredient_idIngredient FOREIGN KEY(idIngredient) REFERENCES Ingredient(id) NOCHECK
-);
+-- -----------------------------------------------------
+-- Table `mythai`.`Orders`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`Orders`
+(
+    `id`
+    BIGINT
+    NOT
+    NULL,
+    `modificationCounter`
+    INT
+    NOT
+    NULL,
+    `orderStatus`
+    VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    `paid` BIT
+(
+    1
+) NULL DEFAULT NULL,
+    `idBooking` BIGINT NULL DEFAULT NULL,
+    `idHost` BIGINT NULL DEFAULT NULL,
+    `idInvitedGuest` BIGINT NULL DEFAULT NULL,
+    PRIMARY KEY
+(
+    `id`
+),
+    INDEX `FK3nmhg5f8u4mof3jf7qalq881f`
+(
+    `idBooking` ASC
+),
+    INDEX `FKrio26qtivi0ba0y1m6cn5iw2`
+(
+    `idHost` ASC
+),
+    INDEX `FK6g39ixtd11m1ey2i1pjkj6w3c`
+(
+    `idInvitedGuest` ASC
+),
+    CONSTRAINT `FK3nmhg5f8u4mof3jf7qalq881f`
+    FOREIGN KEY
+(
+    `idBooking`
+)
+    REFERENCES `mythai`.`Booking`
+(
+    `id`
+),
+    CONSTRAINT `FK6g39ixtd11m1ey2i1pjkj6w3c`
+    FOREIGN KEY
+(
+    `idInvitedGuest`
+)
+    REFERENCES `mythai`.`InvitedGuest`
+(
+    `id`
+),
+    CONSTRAINT `FKrio26qtivi0ba0y1m6cn5iw2`
+    FOREIGN KEY
+(
+    `idHost`
+)
+    REFERENCES `mythai`.`Booking`
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
 
--- *** OrderLine ***
-CREATE TABLE OrderLine (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  modificationCounter INTEGER NOT NULL,
-  idDish BIGINT NOT NULL,
-  amount INTEGER,
-  comment VARCHAR (255),
-  idOrder BIGINT NOT NULL,
-  CONSTRAINT PK_OrderLine PRIMARY KEY(id),
-  CONSTRAINT FK_OrderLine_idDish FOREIGN KEY(idDish) REFERENCES Dish(id) NOCHECK,
-  CONSTRAINT FK_OrderLine_idOrder FOREIGN KEY(idOrder) REFERENCES Orders(id) NOCHECK
-);
 
--- *** OrderDishExtraIngredient ***
-CREATE TABLE OrderDishExtraIngredient (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  modificationCounter INTEGER,
-  idOrderLine BIGINT NOT NULL,
-  idIngredient BIGINT NOT NULL,
-  CONSTRAINT PK_OrderDishExtraIngredient PRIMARY KEY(id),
-  CONSTRAINT FK_OrderDishExtraIngredient_idOrderLine FOREIGN KEY(idOrderLine) REFERENCES OrderLine(id) NOCHECK,
-  CONSTRAINT FK_OrderDishExtraIngredient_idIngredient FOREIGN KEY(idIngredient) REFERENCES Ingredient(id) NOCHECK
-);
+-- -----------------------------------------------------
+-- Table `mythai`.`Booking`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`Booking`
+(
+    `id`
+    BIGINT
+    NOT
+    NULL,
+    `modificationCounter`
+    INT
+    NOT
+    NULL,
+    `assistants`
+    INT
+    NULL
+    DEFAULT
+    NULL,
+    `bookingDate`
+    DATETIME
+(
+    6
+) NULL DEFAULT NULL,
+    `bookingToken` VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    `bookingType` INT NULL DEFAULT NULL,
+    `cancelled` BIT
+(
+    1
+) NULL DEFAULT NULL,
+    `comment` VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    `creationDate` DATETIME
+(
+    6
+) NULL DEFAULT NULL,
+    `email` VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    `expirationDate` DATETIME
+(
+    6
+) NULL DEFAULT NULL,
+    `name` VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    `needHelp` BIT
+(
+    1
+) NOT NULL,
+    `idOrder` BIGINT NULL DEFAULT NULL,
+    `idTable` BIGINT NULL DEFAULT NULL,
+    `idUser` BIGINT NULL DEFAULT NULL,
+    PRIMARY KEY
+(
+    `id`
+),
+    INDEX `FKpv7jumy2028779fcu0rw1d28j`
+(
+    `idOrder` ASC
+),
+    INDEX `FK92imuix6bgb91i71cwyvsrrfv`
+(
+    `idTable` ASC
+),
+    INDEX `FK81lk1eknh2kyskih5b9t2e07u`
+(
+    `idUser` ASC
+),
+    CONSTRAINT `FK81lk1eknh2kyskih5b9t2e07u`
+    FOREIGN KEY
+(
+    `idUser`
+)
+    REFERENCES `mythai`.`User`
+(
+    `id`
+),
+    CONSTRAINT `FK92imuix6bgb91i71cwyvsrrfv`
+    FOREIGN KEY
+(
+    `idTable`
+)
+    REFERENCES `mythai`.`Table`
+(
+    `id`
+),
+    CONSTRAINT `FKpv7jumy2028779fcu0rw1d28j`
+    FOREIGN KEY
+(
+    `idOrder`
+)
+    REFERENCES `mythai`.`Orders`
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
 
--- *** UserFavourite ***
-CREATE TABLE UserFavourite (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  modificationCounter INTEGER NOT NULL,
-  idUser BIGINT NOT NULL,
-  idDish BIGINT NOT NULL,
-  CONSTRAINT PK_UserFavourite PRIMARY KEY(id),
-  CONSTRAINT FK_UserFavourite_idUser FOREIGN KEY(idUser) REFERENCES User(id) NOCHECK,
-  CONSTRAINT FK_UserFavourite_idDish FOREIGN KEY(idDish) REFERENCES Dish(id) NOCHECK
-);
 
--- *************************************************************************
+-- -----------------------------------------------------
+-- Table `mythai`.`Category`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`Category`
+(
+    `id`
+    BIGINT
+    NOT
+    NULL,
+    `modificationCounter`
+    INT
+    NOT
+    NULL,
+    `description`
+    VARCHAR
+(
+    1500
+) NULL DEFAULT NULL,
+    `name` VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    `showOrder` INT NOT NULL,
+    PRIMARY KEY
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
 
--- *** BinaryObject (BLOBs) ***
-CREATE TABLE BinaryObject (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  modificationCounter INTEGER NOT NULL,
-  content BLOB(2147483647),
-  filesize BIGINT NOT NULL,
-  mimeType VARCHAR(255),
-  PRIMARY KEY (ID)
-);
 
--- *** RevInfo (Commit log for envers audit trail) ***
-CREATE TABLE RevInfo(
-  id BIGINT NOT NULL GENERATED BY DEFAULT AS IDENTITY (START WITH 1),
-  "timestamp" BIGINT NOT NULL,
-  userLogin VARCHAR(255)
-);
+-- -----------------------------------------------------
+-- Table `mythai`.`Image`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`Image`
+(
+    `id`
+    BIGINT
+    NOT
+    NULL,
+    `modificationCounter`
+    INT
+    NOT
+    NULL,
+    `content`
+    LONGBLOB
+    NULL
+    DEFAULT
+    NULL,
+    `contentType`
+    INT
+    NULL
+    DEFAULT
+    NULL,
+    `mimeType`
+    VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    `name` VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    PRIMARY KEY
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mythai`.`Dish`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`Dish`
+(
+    `id`
+    BIGINT
+    NOT
+    NULL,
+    `modificationCounter`
+    INT
+    NOT
+    NULL,
+    `description`
+    VARCHAR
+(
+    15000
+) NULL DEFAULT NULL,
+    `name` VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    `price` DECIMAL
+(
+    19,
+    2
+) NULL DEFAULT NULL,
+    `idImage` BIGINT NULL DEFAULT NULL,
+    PRIMARY KEY
+(
+    `id`
+),
+    INDEX `FK1n03jmsl7nwwglxkj3b4kpqjy`
+(
+    `idImage` ASC
+),
+    CONSTRAINT `FK1n03jmsl7nwwglxkj3b4kpqjy`
+    FOREIGN KEY
+(
+    `idImage`
+)
+    REFERENCES `mythai`.`Image`
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mythai`.`DishCategory`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`DishCategory`
+(
+    `idDish`
+    BIGINT
+    NOT
+    NULL,
+    `idCategory`
+    BIGINT
+    NOT
+    NULL,
+    INDEX
+    `FKptrcgsor0gs7x4bnprgya8ns7`
+(
+    `idCategory`
+    ASC
+),
+    INDEX `FK1yurwbj17p8v4kow9ccl0flsf`
+(
+    `idDish` ASC
+),
+    CONSTRAINT `FK1yurwbj17p8v4kow9ccl0flsf`
+    FOREIGN KEY
+(
+    `idDish`
+)
+    REFERENCES `mythai`.`Dish`
+(
+    `id`
+),
+    CONSTRAINT `FKptrcgsor0gs7x4bnprgya8ns7`
+    FOREIGN KEY
+(
+    `idCategory`
+)
+    REFERENCES `mythai`.`Category`
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mythai`.`Ingredient`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`Ingredient`
+(
+    `id`
+    BIGINT
+    NOT
+    NULL,
+    `modificationCounter`
+    INT
+    NOT
+    NULL,
+    `description`
+    VARCHAR
+(
+    1500
+) NULL DEFAULT NULL,
+    `name` VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    `price` DECIMAL
+(
+    19,
+    2
+) NULL DEFAULT NULL,
+    PRIMARY KEY
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mythai`.`DishIngredient`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`DishIngredient`
+(
+    `idDish`
+    BIGINT
+    NOT
+    NULL,
+    `idIngredient`
+    BIGINT
+    NOT
+    NULL,
+    INDEX
+    `FK4qd3ud1u5dkch9y945x3ndjsb`
+(
+    `idIngredient`
+    ASC
+),
+    INDEX `FKs0r9aqqcdve0ms7hnr6xpxax3`
+(
+    `idDish` ASC
+),
+    CONSTRAINT `FK4qd3ud1u5dkch9y945x3ndjsb`
+    FOREIGN KEY
+(
+    `idIngredient`
+)
+    REFERENCES `mythai`.`Ingredient`
+(
+    `id`
+),
+    CONSTRAINT `FKs0r9aqqcdve0ms7hnr6xpxax3`
+    FOREIGN KEY
+(
+    `idDish`
+)
+    REFERENCES `mythai`.`Dish`
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mythai`.`OrderLine`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`OrderLine`
+(
+    `id`
+    BIGINT
+    NOT
+    NULL,
+    `modificationCounter`
+    INT
+    NOT
+    NULL,
+    `amount`
+    INT
+    NULL
+    DEFAULT
+    NULL,
+    `comment`
+    VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    `idDish` BIGINT NULL DEFAULT NULL,
+    `idOrder` BIGINT NULL DEFAULT NULL,
+    PRIMARY KEY
+(
+    `id`
+),
+    INDEX `FKi0udpr0p4d8jj918n8qrhu4r8`
+(
+    `idDish` ASC
+),
+    INDEX `FKnkdil8u5vyy892n03xn8umphb`
+(
+    `idOrder` ASC
+),
+    CONSTRAINT `FKi0udpr0p4d8jj918n8qrhu4r8`
+    FOREIGN KEY
+(
+    `idDish`
+)
+    REFERENCES `mythai`.`Dish`
+(
+    `id`
+),
+    CONSTRAINT `FKnkdil8u5vyy892n03xn8umphb`
+    FOREIGN KEY
+(
+    `idOrder`
+)
+    REFERENCES `mythai`.`Orders`
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mythai`.`OrderDishExtraIngredient`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`OrderDishExtraIngredient`
+(
+    `idOrderLine`
+    BIGINT
+    NOT
+    NULL,
+    `idIngredient`
+    BIGINT
+    NOT
+    NULL,
+    INDEX
+    `FKgl8vsoqb9o5y363dwx9bs325e`
+(
+    `idIngredient`
+    ASC
+),
+    INDEX `FKa00i8gboyae585i1mklv5uvjf`
+(
+    `idOrderLine` ASC
+),
+    CONSTRAINT `FKa00i8gboyae585i1mklv5uvjf`
+    FOREIGN KEY
+(
+    `idOrderLine`
+)
+    REFERENCES `mythai`.`OrderLine`
+(
+    `id`
+),
+    CONSTRAINT `FKgl8vsoqb9o5y363dwx9bs325e`
+    FOREIGN KEY
+(
+    `idIngredient`
+)
+    REFERENCES `mythai`.`Ingredient`
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mythai`.`OrderedDishesPerDay`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`OrderedDishesPerDay`
+(
+    `id`
+    BIGINT
+    NOT
+    NULL,
+    `modificationCounter`
+    INT
+    NOT
+    NULL,
+    `amount`
+    INT
+    NULL
+    DEFAULT
+    NULL,
+    `bookingdate`
+    DATETIME
+(
+    6
+) NULL DEFAULT NULL,
+    `designation` VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    `temperature` DOUBLE NULL DEFAULT NULL,
+    `idDish` BIGINT NULL DEFAULT NULL,
+    PRIMARY KEY
+(
+    `id`
+),
+    INDEX `FKfsfd5v4ysupeqqqy75edw9u5v`
+(
+    `idDish` ASC
+),
+    CONSTRAINT `FKfsfd5v4ysupeqqqy75edw9u5v`
+    FOREIGN KEY
+(
+    `idDish`
+)
+    REFERENCES `mythai`.`Dish`
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mythai`.`OrderedDishesPerMonth`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`OrderedDishesPerMonth`
+(
+    `id`
+    BIGINT
+    NOT
+    NULL,
+    `modificationCounter`
+    INT
+    NOT
+    NULL,
+    `amount`
+    INT
+    NULL
+    DEFAULT
+    NULL,
+    `bookingdate`
+    DATETIME
+(
+    6
+) NULL DEFAULT NULL,
+    `temperature` DOUBLE NULL DEFAULT NULL,
+    `idDish` BIGINT NULL DEFAULT NULL,
+    PRIMARY KEY
+(
+    `id`
+),
+    INDEX `FKn9p9iov10kpqytk2bs8n8qcfd`
+(
+    `idDish` ASC
+),
+    CONSTRAINT `FKn9p9iov10kpqytk2bs8n8qcfd`
+    FOREIGN KEY
+(
+    `idDish`
+)
+    REFERENCES `mythai`.`Dish`
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mythai`.`PREDICTION_ALL_FORECAST`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`PREDICTION_ALL_FORECAST`
+(
+    `id`
+    BIGINT
+    NOT
+    NULL,
+    `modificationCounter`
+    INT
+    NOT
+    NULL,
+    `forecast`
+    DOUBLE
+    NULL
+    DEFAULT
+    NULL,
+    `timestamp`
+    INT
+    NULL
+    DEFAULT
+    NULL,
+    `IDDISH`
+    BIGINT
+    NULL
+    DEFAULT
+    NULL,
+    PRIMARY
+    KEY
+(
+    `id`
+),
+    INDEX `FKj4fn1cu50nlr9t5cxkujux4i`
+(
+    `IDDISH` ASC
+),
+    CONSTRAINT `FKj4fn1cu50nlr9t5cxkujux4i`
+    FOREIGN KEY
+(
+    `IDDISH`
+)
+    REFERENCES `mythai`.`Dish`
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mythai`.`PREDICTION_ALL_MODELS`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`PREDICTION_ALL_MODELS`
+(
+    `id`
+    BIGINT
+    NOT
+    NULL,
+    `modificationCounter`
+    INT
+    NOT
+    NULL,
+    `value`
+    VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    `IDDISH` BIGINT NULL DEFAULT NULL,
+    PRIMARY KEY
+(
+    `id`
+),
+    INDEX `FKhuns5c07hnud026ah4f7y74rk`
+(
+    `IDDISH` ASC
+),
+    CONSTRAINT `FKhuns5c07hnud026ah4f7y74rk`
+    FOREIGN KEY
+(
+    `IDDISH`
+)
+    REFERENCES `mythai`.`Dish`
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mythai`.`PREDICTION_FORECAST_DATA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`PREDICTION_FORECAST_DATA`
+(
+    `timestamp`
+    INT
+    NOT
+    NULL,
+    `holiday`
+    INT
+    NOT
+    NULL,
+    `temperature`
+    DOUBLE
+    NOT
+    NULL,
+    PRIMARY
+    KEY
+(
+    `timestamp`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mythai`.`ResetToken`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`ResetToken`
+(
+    `id`
+    BIGINT
+    NOT
+    NULL,
+    `modificationCounter`
+    INT
+    NOT
+    NULL,
+    `expires`
+    DATETIME
+(
+    6
+) NULL DEFAULT NULL,
+    `flag` BIT
+(
+    1
+) NOT NULL,
+    `idUser` BIGINT NULL DEFAULT NULL,
+    `token` VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    PRIMARY KEY
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mythai`.`RevInfo`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`RevInfo`
+(
+    `id`
+    BIGINT
+    NOT
+    NULL,
+    `timestamp`
+    BIGINT
+    NULL
+    DEFAULT
+    NULL,
+    `userLogin`
+    VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    PRIMARY KEY
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mythai`.`UserFavourite`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`UserFavourite`
+(
+    `id`
+    BIGINT
+    NOT
+    NULL,
+    `modificationCounter`
+    INT
+    NOT
+    NULL,
+    `idDish`
+    BIGINT
+    NULL
+    DEFAULT
+    NULL,
+    `idUser`
+    BIGINT
+    NULL
+    DEFAULT
+    NULL,
+    PRIMARY
+    KEY
+(
+    `id`
+),
+    INDEX `FK4ixstlq44dd43dx92qef32aot`
+(
+    `idDish` ASC
+),
+    INDEX `FK2ou2pnxulb89rkkr34yq9ehfg`
+(
+    `idUser` ASC
+),
+    CONSTRAINT `FK2ou2pnxulb89rkkr34yq9ehfg`
+    FOREIGN KEY
+(
+    `idUser`
+)
+    REFERENCES `mythai`.`User`
+(
+    `id`
+),
+    CONSTRAINT `FK4ixstlq44dd43dx92qef32aot`
+    FOREIGN KEY
+(
+    `idDish`
+)
+    REFERENCES `mythai`.`Dish`
+(
+    `id`
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mythai`.`flyway_schema_history`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`flyway_schema_history`
+(
+    `installed_rank`
+    INT
+    NOT
+    NULL,
+    `version`
+    VARCHAR
+(
+    50
+) NULL DEFAULT NULL,
+    `description` VARCHAR
+(
+    200
+) NOT NULL,
+    `type` VARCHAR
+(
+    20
+) NOT NULL,
+    `script` VARCHAR
+(
+    1000
+) NOT NULL,
+    `checksum` INT NULL DEFAULT NULL,
+    `installed_by` VARCHAR
+(
+    100
+) NOT NULL,
+    `installed_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `execution_time` INT NOT NULL,
+    `success` TINYINT
+(
+    1
+) NOT NULL,
+    PRIMARY KEY
+(
+    `installed_rank`
+),
+    INDEX `flyway_schema_history_s_idx`
+(
+    `success` ASC
+))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mythai`.`hibernate_sequence`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`hibernate_sequence`
+(
+    `next_val` BIGINT NULL DEFAULT NULL
+)
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mythai`.`hibernate_sequences`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mythai`.`hibernate_sequences`
+(
+    `sequence_name` VARCHAR
+(
+    255
+) NOT NULL,
+    `next_val` INT NOT NULL)
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+SET
+SQL_MODE=@OLD_SQL_MODE;
+SET
+FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET
+UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
