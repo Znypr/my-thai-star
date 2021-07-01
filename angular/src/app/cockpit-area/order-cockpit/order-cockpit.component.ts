@@ -13,6 +13,7 @@ import {
 } from '../../shared/backend-models/interfaces';
 import { OrderListView } from '../../shared/view-models/interfaces';
 import { WaiterCockpitService } from '../services/waiter-cockpit.service';
+// @ts-ignore
 import { OrderChangeDialogComponent } from './order-change-dialog/order-change-dialog.component';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 
@@ -151,9 +152,9 @@ export class OrderCockpitComponent implements OnInit, OnDestroy {
 
   checkPaid() : string {
     if(this.filters.paid != undefined)
-      if(this.filters.paid == true) 
+      if (this.filters.paid == true)
         return "true";
-      else 
+      else
         return "false";
     else return "all";
   }
