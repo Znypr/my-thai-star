@@ -11,11 +11,17 @@ import {
   FilterAdminCockpit,
   Pageable,
 } from '../../shared/backend-models/interfaces';
-import { AdminDialogComponent } from './admin-dialog/admin-dialog.component';
-import * as config from '../../config'
-import { Title } from '@angular/platform-browser';
+import {AdminDialogComponent} from './admin-dialog/admin-dialog.component';
+import * as config from '../../config';
+import {Title} from '@angular/platform-browser';
 import { FilterFormData } from 'app/menu/components/menu-filters/menu-filters.component';
-import { SnackBarService } from 'app/core/snack-bar/snack-bar.service';
+import {SnackBarService} from 'app/core/snack-bar/snack-bar.service';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 
 @Component({
@@ -39,32 +45,31 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
 
   pageSize = 8;
 
-  @ViewChild('pagingBar', { static: true }) pagingBar: MatPaginator;
-  
+  @ViewChild('pagingBar', {static: true}) pagingBar: MatPaginator;
+  //
   users: UserListView[] = [];
   totalUsers: number;
-  resetTokenEntity:any;
-  
+  resetTokenEntity: any;
+  //
   columns: any[];
-  roles: any[];
-  
+  //
   displayedColumns: string[] = [
+    'user.id',
     'user.username',
     'user.email',
     'user.idRole',
-    'user.id',
   ];
 
   pageSizes: number[];
-  
-  
+
+
   filters: FilterAdminCockpit = {
+    id: undefined,
     username: undefined,
     email: undefined,
     idRole: undefined,
-    id: undefined,
   };
-  
+
   constructor(
     private dialog: MatDialog,
     private snackBarService: SnackBarService,
@@ -72,60 +77,50 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
     private adminCockpitService: AdminCockpitService,
     private configService: ConfigService,
     title: Title
-    ) {
-      title.setTitle('Admin Cockpit');
-      this.pageSizes = this.configService.getValues().pageSizes;
-    }
-    
-    ngOnInit() {
-      this.applyFilters();
-      this.translocoService.langChanges$.subscribe((event: any) => {
-        this.setTableHeaders(event);
-      moment.locale(this.translocoService.getActiveLang());
-    });
-    }
+  ) {
+    title.setTitle('Admin Cockpit');
+    this.pageSizes = this.configService.getValues().pageSizes;
+  }
 
-    setTableHeaders(lang: string): void {
-        this.translocoService
-          .selectTranslateObject('cockpit.users', {}, lang)
-          .subscribe((cockpitTable) => {
-            this.columns = [
-            { name: 'username', label: cockpitTable.usernameH },
-            { name: 'email', label: cockpitTable.emailH },
-            { name: 'role', label: cockpitTable.roleH },
-            { name: 'id', label: cockpitTable.idH },
-            { name: 'password', label: cockpitTable.passwordH }
-          ];
-        });
 
-        this.translocoService
-          .selectTranslateObject('cockpit.users.roles', {}, lang)
-          .subscribe((roles) => {
-            this.roles = [
-              { label: roles.customer, permission: 0  },
-              { label: roles.waiter, permission: 1  },
-              { label: roles.manager, permission: 2  },
-              { label: roles.admin, permission: 3  }
-          ];
-        });
-    }
+  setTableHeaders(lang: string): void {
+    this.translocoService
+      .selectTranslateObject('cockpit.users', {}, lang)
+      .subscribe((cockpitTable) => {
+        this.columns = [
+          {name: 'username', label: cockpitTable.usernameH},
+          {name: 'email', label: cockpitTable.emailH},
+          {name: 'role', label: cockpitTable.roleH},
+          {name: 'id', label: cockpitTable.idH},
+          {name: 'password', label: cockpitTable.passwordH}
+        ];
+      });
 
-  // onButtonClick(token: String){
-  //   this.adminCockpitService.getUserIdByToken(token).subscribe(
-  //     (data: any) => {
-  //       if (!data) {
-  //         this.resetTokenEntity = [];
-  //         alert('Hallo');
-  //       } else {
-  //         this.resetTokenEntity = data;
-  //       }
-  //   });
-  // }
-  
-  //   funk(){
-  //   console.log(this.resetTokenEntity);
-  //   return true;
-  // }
+    this.translocoService
+      .selectTranslateObject('cockpit.users.roles', {}, lang)
+      .subscribe((roles) => {
+        this.roles = [
+          {label: roles.customer, permission: 0},
+          {label: roles.waiter, permission: 1},
+          {label: roles.manager, permission: 2},
+          {label: roles.admin, permission: 3}
+        ];
+      });
+  }
+
+  email = new FormControl('', [
+    Validators.required,
+    Validators.pattern(this.REGEXP_EMAIL),
+  ]);
+
+  username = new FormControl('', [
+    Validators.required
+  ]);
+  password = new FormControl('', [
+    Validators.required
+  ]);
+
+
   applyFilters(): void {
     this.adminCockpitService
       .getUsers(this.pageable, this.sorting, this.filters)
@@ -141,10 +136,11 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
 
   selected(selection: UserListView): void {
     this.dialog.open(AdminDialogComponent, {
-      width: '50%',
+      width: '80%',
       data: selection,
     });
   }
+
 
   getUserInput(event: any) {
     const info = [
@@ -154,18 +150,17 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
       event.target.Password.value
     ];
 
-    if(event.target.Username.value != null && event.target.Email.value != null && event.target.Role.value != null && event.target.Password.value != null){
+    if(event.target.Username.value != null && event.target.Email.value != null && event.target.Role.value != null && event.target.Password.value != null) {
       const responseOfCreation = this.adminCockpitService.addUser(info[0], info[1], info[2], info[3]).subscribe(res => {
-        this.applyFilters();
-      },
-        err =>
-        {
-           this.snackBarService.openSnack(this.translocoService.translate('alerts.createUser.fail'), 3000, 'red');
+          this.applyFilters();
+        },
+        err => {
+          this.snackBarService.openSnack(this.translocoService.translate('alerts.createUser.fail'), 3000, 'red');
         });
 
-        this.snackBarService.openSnack(this.translocoService.translate('alerts.createUser.success'), 3000, 'green');
-    return responseOfCreation;
-  }
+      this.snackBarService.openSnack(this.translocoService.translate('alerts.createUser.success'), 3000, 'green');
+      return responseOfCreation;
+    }
     return null;
   }
 
@@ -176,7 +171,6 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
     this.pagingBar.firstPage();
   }
 
-
   page(pagingEvent: PageEvent): void {
     this.pageable = {
       pageSize: pagingEvent.pageSize,
@@ -184,6 +178,15 @@ export class AdminCockpitComponent implements OnInit, OnDestroy {
       sort: this.pageable.sort,
     };
     this.applyFilters();
+  }
+
+
+  ngOnInit() {
+    this.applyFilters();
+    this.translocoService.langChanges$.subscribe((event: any) => {
+      this.setTableHeaders(event);
+      moment.locale(this.translocoService.getActiveLang());
+    });
   }
 
   ngOnDestroy() {

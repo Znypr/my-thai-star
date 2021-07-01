@@ -10,13 +10,13 @@
           <!-- username column -->
           <mat-form-field class="searchBy">
             <mat-label>{{ columns[0].label }}</mat-label>
-            <input id="Username" matInput ngModel required="required" />
+            <input id="Username" matInput ngModel required="required" [formControl]="username"/>
           </mat-form-field>
 
           <!-- email column -->
           <mat-form-field class="searchBy" required="required">
             <mat-label>{{ columns[1].label }}</mat-label>
-            <input id="Email" type="email"matInput ngModel [email]="true" required="required" />
+            <input id="Email" type="email" matInput ngModel [email]="true" required="required" [formControl]="email"/>
             <mat-error id="EmailError">
               Please enter a valid email address
             </mat-error>
@@ -35,7 +35,7 @@
           <!-- password column -->
           <mat-form-field class="searchBy">
             <mat-label>{{ columns[4].label }}</mat-label>
-            <input required id="Password" matInput [type]="hide ? 'password' : 'text'" />
+            <input required id="Password" matInput [type]="hide ? 'password' : 'text'" [formControl]="password"/>
             <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
               [attr.aria-pressed]="hide">
               <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
@@ -66,9 +66,8 @@
   <div class="tableContainer">
 
     <table mat-table [dataSource]="users">
-      
-      
-      
+
+
       <!-- username column -->
       <ng-container matColumnDef="user.username">
         <th mat-header-cell *matHeaderCellDef>{{ columns[0].label }}</th>
