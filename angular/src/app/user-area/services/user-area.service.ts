@@ -54,7 +54,6 @@ export class UserAreaService {
         ),
       ),
     );
-    
   }
 
   register(email: string, password: string): void {

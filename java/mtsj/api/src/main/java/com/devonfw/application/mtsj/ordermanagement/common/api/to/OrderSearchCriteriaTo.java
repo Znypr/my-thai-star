@@ -22,11 +22,7 @@ public class OrderSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
   private String bookingToken;
 
-  private Boolean paid;
-
   private String orderStatus;
-
-  private Long tableId;
 
   private StringSearchConfigTo hostTokenOption;
 
@@ -198,25 +194,4 @@ public class OrderSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
     this.orderStatus = orderStatus;
   }
-
-  public Long getTableId() {
-
-    return this.tableId;
-  }
-
-  public void setTableId(Long tableId) {
-
-    this.tableId = tableId;
-  }
-
-  public Boolean getPaid() {
-
-    return this.paid;
-  }
-
-  public void setPaid(Boolean paid) {
-
-    this.paid = paid;
-  }
 }
-

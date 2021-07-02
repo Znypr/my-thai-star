@@ -15,14 +15,14 @@ public interface PredictionModelData extends ApplicationEntity {
   /**
    * @return the model property key
    */
-  public String getID();
+  public String getKey();
 
-    /**
-     * Set the model property key
-     *
-     * @param key the model property key
-     */
-    public void setID(String key);
+  /**
+   * Set the model property key
+   *
+   * @param key the model property key
+   */
+  public void setKey(String key);
 
   /**
    * @return the model property value

@@ -16,36 +16,42 @@ package ga.codehub.alexa;
 import com.amazon.ask.Skill;
 import com.amazon.ask.SkillStreamHandler;
 import com.amazon.ask.Skills;
-import ga.codehub.alexa.handlers.*;
+
+import ga.codehub.alexa.handlers.AskForHelpIntentHandler;
+import ga.codehub.alexa.handlers.BookingIntentHandler;
+import ga.codehub.alexa.handlers.CancelandStopIntentHandler;
+import ga.codehub.alexa.handlers.FallbackIntentHandler;
+import ga.codehub.alexa.handlers.HelpIntentHandler;
+import ga.codehub.alexa.handlers.InformationIntentHandler;
+import ga.codehub.alexa.handlers.InhouseOrderIntentHandler;
+import ga.codehub.alexa.handlers.LaunchRequestHandler;
+import ga.codehub.alexa.handlers.MenuIntentHandler;
+import ga.codehub.alexa.handlers.OrderDialogIntentHandler;
+import ga.codehub.alexa.handlers.OrderIntentHandler;
+import ga.codehub.alexa.handlers.SessionEndedRequestHandler;
+import ga.codehub.alexa.handlers.ShoppingCartIntentHandler;
 
 public class MyThaiStarStreamHandler extends SkillStreamHandler {
-    // Add your base URL below
-    public static final String ALEXA_SKILL_ID = "amzn1.ask.skill.c3ce8e9c-81f3-4a53-bf3d-53db70026366";
-    public static final String BASE_URL = "https://fd4568544e53.ngrok.io/mythaistar/services/rest";
+  // Add your base URL below
+  public static final String ALEXA_SKILL_ID = "amzn1.ask.skill.8770069f-276d-405b-b09d-63d3112e9510";
 
-    private static Skill getSkill() {
-        return Skills.standard()
-                .addRequestHandlers(
-                        new CancelandStopIntentHandler(),
-                        new BookingIntentHandler(),
-                        new MenuIntentHandler(),
-                        new HelpIntentHandler(),
-                        new LaunchRequestHandler(),
-                        new SessionEndedRequestHandler(),
-                        new OrderIntentHandler(),
-                        new OrderDialogIntentHandler(),
-                        new InhouseOrderIntentHandler(),
-                        new ShoppingCartIntentHandler(),
-                        new InformationIntentHandler(),
-                        new AskForHelpIntentHandler(),
-                        new FallbackIntentHandler())
-                // Add your skill id below
-                .withSkillId(ALEXA_SKILL_ID)
-                .build();
-    }
+  public static final String BASE_URL = "https://bb70e0b90be0.ngrok.io/mythaistar/services/rest";
 
-    public MyThaiStarStreamHandler() {
-        super(getSkill());
-    }
+  private static Skill getSkill() {
+
+    return Skills.standard()
+        .addRequestHandlers(new CancelandStopIntentHandler(), new BookingIntentHandler(), new MenuIntentHandler(),
+            new HelpIntentHandler(), new LaunchRequestHandler(), new SessionEndedRequestHandler(),
+            new OrderIntentHandler(), new OrderDialogIntentHandler(), new InhouseOrderIntentHandler(),
+            new ShoppingCartIntentHandler(), new InformationIntentHandler(), new AskForHelpIntentHandler(),
+            new FallbackIntentHandler())
+        // Add your skill id below
+        .withSkillId(ALEXA_SKILL_ID).build();
+  }
+
+  public MyThaiStarStreamHandler() {
+
+    super(getSkill());
+  }
 
 }

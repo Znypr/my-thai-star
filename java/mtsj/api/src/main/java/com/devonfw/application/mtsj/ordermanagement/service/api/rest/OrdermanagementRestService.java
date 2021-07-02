@@ -1,9 +1,6 @@
 package com.devonfw.application.mtsj.ordermanagement.service.api.rest;
 
-import java.util.List;
-
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -51,26 +48,25 @@ public interface OrdermanagementRestService {
   @Path("/order/")
   public OrderEto saveOrder(OrderCto cto);
 
-    /**
-     * Delegates to {@link Ordermanagement#updateOrderStatus}.
-     *
-     * @param {@link OrderCto} to be updated
-     * @return the updated {@link OrderCto}
-     */
-    @POST
-    @Path("/order/changeState/")
-    public OrderCto updateOrderStatus(OrderEto order);
+  /**
+   * Delegates to {@link Ordermanagement#updateOrderStatus}.
+   *
+   * @param {@link OrderCto} to be updated
+   * @return the updated {@link OrderCto}
+   */
+  @POST
+  @Path("/order/changeState/")
+  public OrderCto updateOrderStatus(OrderEto order);
 
-    /**
-     * Delegates to {@link Ordermanagement#updatePaid}.
-     *
-     * @param {@link OrderCto} to be updated
-     * @return the updated {@link OrderCto}
-     */
-    @POST
-    @Path("/order/paid/")
-    public OrderCto updatePaid(OrderEto order);
-
+  /**
+   * Delegates to {@link Ordermanagement#updatePaid}.
+   *
+   * @param {@link OrderCto} to be updated
+   * @return the updated {@link OrderCto}
+   */
+  @POST
+  @Path("/order/paid/")
+  public OrderCto updatePaid(OrderEto order);
 
   /**
    * Delegates to {@link Ordermanagement#deleteOrder}.
@@ -105,11 +101,11 @@ public interface OrdermanagementRestService {
   @Path("/orderline/{id}/")
   public OrderLineEto getOrderLine(@PathParam("id") long id);
 
-    /**
-     * Delegates to {@link Ordermanagement#}.
-     *
-     * @param searchCriteriaTo the pagination and search criteria to be used for finding orderlines.
-     * @return the {@link Page list} of matching {@link OrderLineEto}s.
+  /**
+   * Delegates to {@link Ordermanagement#}.
+   *
+   * @param searchCriteriaTo the pagination and search criteria to be used for finding orderlines.
+   * @return the {@link Page list} of matching {@link OrderLineEto}s.
    */
   @Path("/orderline/search")
   @POST

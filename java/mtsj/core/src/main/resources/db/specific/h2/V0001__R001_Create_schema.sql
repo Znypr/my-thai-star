@@ -25,21 +25,21 @@ CREATE TABLE UserRole (
 );
 
 -- *** User ***
-CREATE TABLE User(
-                     id                  BIGINT       NOT NULL AUTO_INCREMENT,
-                     modificationCounter INTEGER      NOT NULL,
-                     username            VARCHAR(255) NOT NULL,
-                     password            VARCHAR(255) NULL,
-                     secret              VARCHAR(255) NULL,
-                     twoFactorStatus     BOOLEAN      NULL DEFAULT ((0)),
-                     email               VARCHAR(120) NOT NULL,
-                     idRole              BIGINT       NOT NULL,
-                     CONSTRAINT PK_User PRIMARY KEY (id),
-                     UNIQUE KEY user_name (username) NOCHECK,
-                     UNIQUE KEY user_email (email) NOCHECK,
+CREATE TABLE User (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  modificationCounter INTEGER NOT NULL,
+  username VARCHAR (255) NOT NULL,
+  password VARCHAR (255) NULL,
+  secret VARCHAR (255) NULL,
+  twoFactorStatus BOOLEAN NULL DEFAULT ((0)),
+  email VARCHAR (120) NOT NULL,
+  idRole BIGINT NOT NULL,
+  CONSTRAINT PK_User PRIMARY KEY(id),
+  UNIQUE KEY user_name (username) NOCHECK,
+  UNIQUE KEY user_email (email) NOCHECK,
 -- constraint uq1 unique key (username) NOCHECK,
 -- constraint uq2 unique key (email) NOCHECK,
-                     CONSTRAINT FK_User_idRole FOREIGN KEY (idRole) REFERENCES UserRole (id) NOCHECK
+  CONSTRAINT FK_User_idRole FOREIGN KEY(idRole) REFERENCES UserRole(id) NOCHECK
 );
 
 -- *** ResetToken ***

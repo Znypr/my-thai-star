@@ -1,6 +1,5 @@
 {
   "buttons": {
-    "createUser": "Neuen Nutzer anlegen",
     "cancel": "Abbrechen",
     "apply": "Bestätigen",
     "close": "Schließen",
@@ -15,10 +14,11 @@
     "applyFilters": "Filter anwenden",
     "removeComment": "Kommentar entfernen",
     "addComment": "Kommentar hinzufügen",
-    "create":"Erstellen",
-    "reset":"Zurücksetzen",
-    "delete":"Löschen",
-    "save":"Speichern"
+    "add": "Hinzufügen",
+    "delete": "Entfernen",
+     "reset": "Zurücksetzen",
+    "edit": "Bearbeiten",
+    "help": "Hilfe"
   },
   "table": {
     "rowsPage": "Zeilen pro Seite",
@@ -29,12 +29,7 @@
     "accessError": "Zugang verweigert, bitte erst einloggen",
     "genericError": "Ein Fehler ist aufgetreten, bitte versuche es später noch einmal",
     "urlError": "Url nicht gefunden, bitte versuche es noch einmal",
-    "resetPassword": {
-      "notification":"Email zum Passwort zurücksetzen wurde an Benutzer versendet",
-      "success":"Änderung des Passworts war erfolgreich",
-      "fail":"Änderung des Passworts schlug fehl"
-    },
-    "emailConfirmations": {
+    "email confirmations": {
       "invitationAccept": "Einladung erfolgreich angenommen",
       "invitationReject": "Einladung erfolgreich abgelehnt",
       "bookingCancel": "Buchung erfolgreich abgebrochen",
@@ -57,9 +52,11 @@
       "unpaidSuccess": "Bezahlung erfolgreich entfernt",
       "paidFail": "Bezahlung fehlgeschlagen"
     },
-    "deleteUser":{
-      "success":"Benutzer wurde erfolgreich entfernt",
-      "fail":"Benutzer konnte nicht entfernt werden"
+    "table": {
+      "deleteSuccess": "Tisch erfolgreich entfernt",
+      "deleteFail": "Tisch konnte nicht entfernt werden",
+      "addSuccess": "Tisch erfolgreich hinzugefügt",
+      "addFail": "Tisch konnte nicht hinzugefügt werden"
     }
   },
   "formFields": {
@@ -70,7 +67,7 @@
     "date": "Datum",
     "name": "Name",
     "email": "Email",
-    "assistants": "Anzahl Gäste",
+    "assistants": "Tischgäste",
     "friends": "Freunde",
     "terms": "Bedingungen akzeptieren",
     "dateTime": "Datum und Uhrzeit",
@@ -80,11 +77,8 @@
     "total": "Gesamt",
     "referenceNumber": "Referenznummer",
     "orderStatus": "Status",
-    "paid":"Bezahlt",
     "tableName": "Tisch Name",
-    "alexaId": "Alexa ID",
-    "owner":"Eigentümer",
-    "table":"Tisch ID"
+    "alexaId": "Alexa ID"
   },
   "bookTable": {
     "title": "Du kannst deine Freunde zum Mittagessen einladen oder einen Tisch buchen",
@@ -111,7 +105,6 @@
     }
   },
   "main": {
-    "users": "Benutzer",
     "home": "Startseite",
     "menu": "Menü",
     "book": "Tisch buchen",
@@ -194,7 +187,6 @@
     }
   },
   "cockpit": {
-    "createUser": "Nutzer anlegen",
     "filter": "Filter",
     "addTable":"Tisch hinzufügen",
     "order-archive": {
@@ -228,15 +220,7 @@
         "open": "Offen",
         "preparing": "In Zubereitung",
         "delivered": "Geliefert",
-        "cancelled": "Storniert",
-        "all":"Alle"
-      },
-      "payment":{
-        "paid":"Bezahlt",
-        "notPaid":"Nicht Bezahlt",
-        "all": "Alle",
-        "yes":"Ja",
-        "no": "Nein"
+        "cancelled": "Storniert"
       }
     },
     "reservations": {
@@ -245,7 +229,7 @@
       "dialogTable": {
         "guestEmailH": "Gäste email",
         "acceptanceH": "Zusagen und Absagen",
-        "assistantsH": "Gäste"
+        "assistantsH": "Teilnehmer"
       }
     },
     "tables": {
@@ -263,31 +247,9 @@
       "paidH": "Bezahlt",
       "ownerH": "Eigentümer",
       "tableH": "Tisch",
-      "creationDateH": "Erstelldatum"
-    },
-    "users": {
-        "title": "Benutzer Übersicht",
-        "usernameH":"Benutzername",
-        "emailH":"Email",
-        "roleH":"Rolle",
-        "idH":"ID",
-        "passwordH":"Passwort",
-        "inputTitle":"Benutzer erstellen",
-        "roles": {
-          "waiter":"Kellner",
-          "customer":"Kunde",
-          "manager":"Manager",
-          "admin":"Admin"
-        }
-    },
-    "userDialog": {
-      "user":"Aktueller Benutzer",
-      "reset":"Password zurücksetzen"
-    },
-    "resetPassword": {
-      "title":"Ändern Sie ihr Passwort",
-      "enter":"Geben Sie ein Passwort ein",
-      "confirm":"Bestätigen Sie das Passwort"
+      "creationDateH": "Erstelldatum",
+      "tableSelect": "Tisch Auswahl",
+      "needHelpH": "Hilfe erforderlich"
     }
   }
 }

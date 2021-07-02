@@ -14,7 +14,7 @@ import {ConfigService} from '../../core/config/config.service';
 import {TranslocoService} from '@ngneat/transloco';
 import {Subscription} from 'rxjs';
 import {Title} from '@angular/platform-browser';
-import {SortDirection} from '../../menu/components/menu-filters/filter-sort/filter-sort.component';
+import {SortDirection} from "../../menu/components/menu-filters/filter-sort/filter-sort.component";
 
 @Component({
   selector: 'app-cockpit-reservation-cockpit',
@@ -36,13 +36,15 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
   totalReservations: number;
 
   columns: any[];
-  displayedColumns: string[] = ['needHelp', 'owner', 'bookingDate', 'assistants', 'table'];
+  displayedColumns: string[] = ['needHelp', 'bookingDate', 'email', 'bookingToken', 'table'];
 
   pageSizes: number[];
 
   filters: FilterCockpit = {
-    tableId: undefined,
-    name: undefined,
+    bookingDate: undefined,
+    email: undefined,
+    bookingToken: undefined,
+
   };
 
   tables: any[] = [
@@ -68,6 +70,7 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
 
     this.applyFilters();
 
+
     this.translocoService.langChanges$.subscribe((event: any) => {
       this.setTableHeaders(event);
       moment.locale(this.translocoService.getActiveLang());
@@ -84,21 +87,13 @@ export class ReservationCockpitComponent implements OnInit, OnDestroy {
       .subscribe((cockpitTable) => {
         this.columns = [
           {name: 'booking.needHelp', label: cockpitTable.needHelpH},
-          {name: 'booking.owner', label: cockpitTable.ownerH},
           {name: 'booking.bookingDate', label: cockpitTable.reservationDateH},
-          {name: 'booking.assistants', label: cockpitTable.assistantsH},
+          {name: 'booking.email', label: cockpitTable.emailH},
+          {name: 'booking.bookingToken', label: cockpitTable.bookingTokenH},
           {name: 'booking.table', label: cockpitTable.tableH},
           {name: 'booking.tableSelect', label: cockpitTable.tableSelect}
         ];
       });
-  }
-
-  getGuestAmount(element) : number {
-    let amount = 1;
-    for(let guest of element.invitedGuests) {
-      if(guest.accepted) amount++;
-    }
-    return amount;
   }
 
   filter(): void {

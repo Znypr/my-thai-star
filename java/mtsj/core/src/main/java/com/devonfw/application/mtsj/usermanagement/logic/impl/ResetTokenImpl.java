@@ -77,7 +77,7 @@ public class ResetTokenImpl implements ResetToken {
     try {
       StringBuilder resetMailContent = new StringBuilder();
       resetMailContent.append("MY THAI STAR").append("\n");
-      resetMailContent.append("Hi ").append(user.getUsername()).append("\n");
+      resetMailContent.append("Hi ").append(user.getEmail()).append("\n");
       resetMailContent.append("You have requested a password reset");
 
       // TODO akkus <RestPath needs to be implemented and added here>

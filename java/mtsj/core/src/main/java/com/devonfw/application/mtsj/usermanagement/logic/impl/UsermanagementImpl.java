@@ -307,7 +307,9 @@ public class UsermanagementImpl extends AbstractComponentFacade implements Userm
   public UserEto saveUserTwoFactor(UserEto user) {
 
     Objects.requireNonNull(user, "user");
+    System.err.println("hi1");
     UserEntity userEntity = getBeanMapper().map(getUserDao().findByUsername(user.getUsername()), UserEntity.class);
+    System.err.println("hi2");
     // initialize, validate userEntity here if necessary
     userEntity.setTwoFactorStatus(user.getTwoFactorStatus());
     UserEntity resultEntity = getUserDao().save(userEntity);

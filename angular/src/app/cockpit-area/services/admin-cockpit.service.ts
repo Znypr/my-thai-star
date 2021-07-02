@@ -78,23 +78,14 @@ export class AdminCockpitService {
     );
   }
 
-
-  getUserIdByToken(token: String): Observable<{}> {
-    let path = this.tokenRestPath;
-    return this.restServiceRoot$.pipe(
-      exhaustMap((restServiceRoot) =>
-        this.http.get(`${restServiceRoot}${path}/${token}`)
-      )
-    );
-  }
-
   // changePassword(userId: number) {
   //   let path = this.addUserRestPath;
   // }
 
-  // delete certain user from database by id
+// delete certain user from database by id
   deleteUser(userId: number): Observable<{}> {
     let path = this.deleteUserRestPath;
+    this._snackBar.open("gelöscht", "verstanden");
     let result= this.restServiceRoot$.pipe(
       exhaustMap((restServiceRoot) =>
         this.http.delete(`${restServiceRoot}${path}/${userId}`),
@@ -103,7 +94,7 @@ export class AdminCockpitService {
     return result;
   }
 
-  // admin can add a user
+// admin can add a user
   addUser(username: string, email: string, userRoleId: number, password: string) {
     let path = this.addUserRestPath;
     return this.restServiceRoot$.pipe(
@@ -141,15 +132,6 @@ export class AdminCockpitService {
   async reloadPage(url: string): Promise<boolean> {
     await this.router.navigateByUrl('/restaurant', { skipLocationChange: true });
     return this.router.navigateByUrl(url);
-  }
-
-  userComposer(userList: UserView[]): UserView[] {
-    const users: UserView[] = cloneDeep(userList);
-    // map(users, (u: UserViewResult) => {
-    //   o.users.id = this.priceCalculator.getPrice(o);
-    //   o.extras = map(o.extras, 'name').join(', ');
-    // });
-    return users;
   }
 
 }

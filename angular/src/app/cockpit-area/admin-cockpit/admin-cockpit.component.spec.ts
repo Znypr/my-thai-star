@@ -66,6 +66,7 @@ fdescribe('AdminCockpitComponent', () => {
   let store: Store<State>;
   let initialState;
   let adminCockpitService: AdminCockpitService;
+  // let adminDialogComponent: AdminDialogComponent;
   let dialog: MatDialog;
   let configService: ConfigService;
   let el: DebugElement;

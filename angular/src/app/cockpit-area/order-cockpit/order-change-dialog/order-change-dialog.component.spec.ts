@@ -167,8 +167,6 @@ fdescribe('OrderChangeDialogComponent', () => {
     store = TestBed.inject(Store);
     configService = new ConfigService(store);
     translocoService = TestBed.inject(TranslocoService);
-    spyOn(component,'filter').and.callFake(()=>{});
-    spyOn(component.menuService,'getDishes').and.returnValue(of(menuDishes));
     });
   }));
 

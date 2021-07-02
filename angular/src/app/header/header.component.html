@@ -44,29 +44,26 @@
         routerLinkActive="navBottomBorder"
         [routerLinkActiveOptions]="{ exact: true }"
       >
-        {{ 'main.users' | transloco | uppercase }}
+      <!-- TODO: remove hard-coded admin title  -->
+      ADMIN
+        {{ 'main.menu' | transloco | uppercase }}
       </a>
       <a
-      mat-tab-link
-      routerLink="/orders"
-      routerLinkActive="navBottomBorder"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
-      {{ 'main.orders' | transloco | uppercase }}
-    </a>
-    <a mat-tab-link routerLink="/order-archive" routerLinkActive="navBottomBorder"
-      [routerLinkActiveOptions]="{ exact: true }">
-      {{ 'main.archive' | transloco | uppercase }}
-    </a>
-    <a
-      mat-tab-link
-      routerLink="/reservations"
-      routerLinkActive="navBottomBorder"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
-      {{ 'main.reservations' | transloco | uppercase }}
-    </a>
-      
+        mat-tab-link
+        routerLink="/menu"
+        routerLinkActive="navBottomBorder"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        {{ 'main.menu' | transloco | uppercase }}
+      </a>
+      <a
+        mat-tab-link
+        routerLink="/bookTable"
+        routerLinkActive="navBottomBorder"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        {{ 'main.book' | transloco | uppercase }}
+      </a>
     </nav>
   </div>
   <div *ngIf="(auth.getRole() | async) === 'WAITER'" class="forDesktop">

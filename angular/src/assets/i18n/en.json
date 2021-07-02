@@ -14,10 +14,11 @@
     "applyFilters": "Apply Filters",
     "removeComment": "Remove Comment",
     "addComment": "Add comment",
-    "create":"Create",
-    "reset":"Reset",
-    "delete":"Delete",
-    "save":"Save"
+    "add": "Add",
+    "delete": "Delete",
+    "reset": "Reset",
+    "edit": "Edit",
+    "help": "Help"
   },
   "table": {
     "rowsPage": "Rows per page",
@@ -28,12 +29,7 @@
     "accessError": "Access denied, please log in first",
     "genericError": "An error has ocurred, please try again later",
     "urlError": "Url not found, please try again",
-    "resetPassword": {
-      "notification":"Email to reset password has been sent to user",
-      "success":"Password was successfully updated",
-      "fail":"Password update failed"
-    },
-    "emailConfirmations": {
+    "email confirmations": {
       "invitationAccept": "Invitation succesfully accepted",
       "invitationReject": "Invitation succesfully rejected",
       "bookingCancel": "Booking succesfully cancelled",
@@ -56,13 +52,11 @@
       "unpaidSuccess": "Payment successful removed",
       "paidFail": "Payment failed"
     },
-    "deleteUser":{
-      "success":"User was successfully removed",
-      "fail":"User couldn't be removed"
-    },
-    "createUser":{
-      "success":"User successfully created",
-      "fail":"Email or username already exists"
+    "table": {
+      "deleteSuccess": "Table removed successfully",
+      "deleteFail": "Table couldn't be removed",
+      "addSuccess": "Table added successfully",
+      "addFail": "Table couldn't be added"
     }
   },
   "formFields": {
@@ -73,7 +67,7 @@
     "date": "Date",
     "name": "Name",
     "email": "Email",
-    "assistants": "Amount of guests",
+    "assistants": "Table guests",
     "friends": "Friends",
     "terms": "Accept terms",
     "dateTime": "Date and time",
@@ -83,11 +77,8 @@
     "total": "Total",
     "referenceNumber": "Reference number",
     "orderStatus": "Status", 
-    "paid":"Paid",
     "tableName": "Table Name",
-    "alexaId": "Alexa ID",
-    "owner":"Owner",
-    "table":"Table ID"
+    "alexaId": "Alexa ID"
   },
   "bookTable": {
     "title": "You can invite your friends to lunch or book a table",
@@ -114,7 +105,6 @@
     }
   },
   "main": {
-    "users": "Users",
     "home": "Home",
     "menu": "Menu",
     "book": "Book table",
@@ -197,7 +187,6 @@
     }
   },
   "cockpit": {
-    "createUser": "Create User",
     "filter": "Filter",
     "addTable":"Add Table",
     "order-archive": {
@@ -231,15 +220,7 @@
         "open": "Open",
         "preparing": "Preparing",
         "delivered": "Delivered",
-        "cancelled": "Cancelled",
-        "all":"All"
-      },
-      "payment":{
-        "paid":"Paid",
-        "notPaid":"Not Paid",
-        "all": "All",
-        "yes":"Yes",
-        "no": "No"
+        "cancelled": "Cancelled"
       }
     },
     "reservations": {
@@ -248,7 +229,7 @@
       "dialogTable": {
         "guestEmailH": "Guest email",
         "acceptanceH": "Acceptances and declines",
-        "assistantsH": "Guests"
+        "assistantsH": "Assistants"
       }
     },
     "tables": {
@@ -266,31 +247,9 @@
       "paidH": "Paid",
       "ownerH": "Owner",
       "tableH": "Table",
-      "creationDateH": "Creation date"
-    },
-    "users": {
-        "title": "User Overview",
-        "usernameH":"Username",
-        "emailH":"Email",
-        "roleH":"Role",
-        "idH":"ID",
-        "passwordH":"Password",
-        "inputTitle":"Create User",
-        "roles": {
-          "waiter":"Waiter",
-          "customer":"Customer",
-          "manager":"Manager",
-          "admin":"Admin"
-        }
-    },
-    "userDialog": {
-      "user":"Current User",
-      "reset":"reset Password"
-    },
-    "resetPassword": {
-      "title":"Change your password",
-      "enter":"Enter your password",
-      "confirm":"Confirm your password"
+      "creationDateH": "Creation date",
+      "tableSelect": "Table Selection",
+      "needHelpH": "Help required"
     }
   }
 }

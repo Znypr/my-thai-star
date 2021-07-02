@@ -1,7 +1,5 @@
 package com.devonfw.application.mtsj.ordermanagement.service.impl.rest;
 
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -29,11 +27,13 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
 
   @Override
   public OrderCto updateOrderStatus(OrderEto order) {
+
     return this.ordermanagement.updateOrderStatus(order);
   }
 
-    @Override
+  @Override
   public OrderCto updatePaid(OrderEto order) {
+
     return this.ordermanagement.updatePaid(order);
   }
 
@@ -45,6 +45,7 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
 
   @Override
   public OrderEto saveOrder(OrderCto order) {
+
     return this.ordermanagement.saveOrder(order);
   }
 
@@ -80,7 +81,7 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
   }
 
   @Override
-  public Page<OrderedDishesCto> findOrderedDishes(OrderedDishesSearchCriteriaTo searchCriteriaTo){
+  public Page<OrderedDishesCto> findOrderedDishes(OrderedDishesSearchCriteriaTo searchCriteriaTo) {
 
     return this.ordermanagement.findOrderedDishes(searchCriteriaTo);
   }

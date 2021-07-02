@@ -143,10 +143,6 @@ export class TableCockpitComponent implements OnInit, OnDestroy {
     });
   }
 
-  reset(form: any) : void {
-    form.reset();
-  }
-
   ngOnDestroy(): void {
     this.translocoSubscription.unsubscribe();
   }

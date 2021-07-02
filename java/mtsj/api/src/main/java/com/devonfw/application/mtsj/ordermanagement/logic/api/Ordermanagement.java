@@ -25,7 +25,7 @@ public interface Ordermanagement {
    * @return The {@link OrderCto} with state 'orderStatus'
    */
   OrderCto updateOrderStatus(OrderEto order);
-  
+
   /**
    * Returns an Order with updated payment state
    *
@@ -41,7 +41,6 @@ public interface Ordermanagement {
    * @return The {@link OrderCto} with id 'id'
    */
   OrderCto findOrder(Long id);
-
 
   /**
    * Returns a paginated list of Orders matching the search criteria. Needs Authorization.
@@ -123,7 +122,6 @@ public interface Ordermanagement {
    */
   // PaginatedListTo<OrderLineEto> findOrderLineEtos(OrderLineSearchCriteriaTo criteria);
   Page<OrderLineCto> findOrderLineCtos(OrderLineSearchCriteriaTo criteria);
-
 
   Page<OrderedDishesCto> findOrderedDishes(OrderedDishesSearchCriteriaTo criteria);
 
