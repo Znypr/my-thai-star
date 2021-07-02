@@ -37,9 +37,9 @@ public class AlexaTest {
             "https://www.amazon.com/ap/signin?openid.pape.preferred_auth_policies=Singlefactor&openid.pape.max_auth_age=7200000&openid.return_to=https%3A%2F%2Fdeveloper.amazon.com%2Falexa%2Fconsole%2Fask%2Fbuild%2Fcustom%2Famzn1.ask.skill.c3ce8e9c-81f3-4a53-bf3d-53db70026366%2Fdevelopment%2Fde_DE%2Finvocation&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_dante_us&openid.mode=checkid_setup&marketPlaceId=ATVPDKIKX0DER&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&");
     this.driver.manage().window().setSize(new Dimension(1200, 800));
 
-    this.driver.findElement(By.id("ap_email")).sendKeys("scheid_jannik@gmx.de");
+    this.driver.findElement(By.id("ap_email")).sendKeys("");
     this.driver.findElement(By.id("ap_password")).click();
-    this.driver.findElement(By.id("ap_password")).sendKeys("dko39mAk!");
+    this.driver.findElement(By.id("ap_password")).sendKeys("");
     this.driver.findElement(By.id("ap_password")).sendKeys(Keys.ENTER);
     Thread.sleep(5000);
     this.driver.findElement(By.cssSelector(".col > .p-0")).click();
